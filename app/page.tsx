@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
-import { Loader2, Zap, ExternalLink, Database, ChevronDown, X, Search } from "lucide-react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { Loader2, Zap, ExternalLink, Database, ChevronDown, X, Search, Filter } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -98,35 +98,65 @@ const LEGENDARY_IDS = new Set([
   818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832,
 ]);
 
-interface CollapsibleFilterSectionProps {
-  title: string;
+interface CompactFilterDropdownProps {
+  label: string;
+  value: string;
   isOpen: boolean;
   onToggle: () => void;
   children: React.ReactNode;
+  minWidth?: string;
 }
 
-const CollapsibleFilterSection = ({
-  title,
+const CompactFilterDropdown = ({
+  label,
+  value,
   isOpen,
   onToggle,
   children,
-}: CollapsibleFilterSectionProps) => (
-  <div className="border-b-2 border-black">
-    <button
-      onClick={onToggle}
-      className="w-full bg-cream hover:bg-charcoal hover:text-cream transition-colors duration-200 px-4 py-3 font-grotesk font-semibold text-left text-black flex items-center justify-between"
-    >
-      <span>{title}</span>
-      <ChevronDown
-        size={18}
-        className={`transform transition-transform duration-200 ${
-          isOpen ? "rotate-180" : ""
-        }`}
-      />
-    </button>
-    {isOpen && <div className="p-4 bg-white border-t-2 border-black">{children}</div>}
-  </div>
-);
+  minWidth = "min-w-[200px]",
+}: CompactFilterDropdownProps) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        if (isOpen) onToggle();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isOpen, onToggle]);
+
+  return (
+    <div ref={dropdownRef} className="relative">
+      <button
+        onClick={onToggle}
+        className="h-10 md:h-12 px-3 md:px-4 bg-cream hover:bg-charcoal hover:text-cream border-2 border-black font-mono text-xs md:text-sm text-black whitespace-nowrap flex items-center gap-2 transition-colors duration-200"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+      >
+        <span className="font-semibold">{label}:</span>
+        <span className="font-normal truncate max-w-[60px] md:max-w-[100px]">{value}</span>
+        <ChevronDown
+          size={14}
+          className={`transform transition-transform duration-200 flex-shrink-0 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+      {isOpen && (
+        <div
+          className={`absolute top-full left-0 mt-1 bg-white border-2 border-black ${minWidth} max-w-[90vw] max-h-[60vh] overflow-y-auto z-50 slasher`}
+        >
+          <div className="p-3 md:p-4">{children}</div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 interface MultiSelectCheckboxesProps {
   options: string[];
@@ -154,21 +184,21 @@ const MultiSelectCheckboxes = ({
   return (
     <div className="space-y-2">
       {showSelectAll && (
-        <label className="flex items-center gap-2 cursor-pointer mb-3 pb-3 border-b border-charcoal">
+        <label className="flex items-center gap-2 cursor-pointer mb-2 pb-2 border-b border-charcoal">
           <input
             type="checkbox"
             checked={isAllSelected}
             onChange={handleSelectAll}
             className="w-4 h-4 cursor-pointer"
           />
-          <span className="font-mono text-sm text-black">
+          <span className="font-mono text-xs md:text-sm text-black">
             {isAllSelected ? "Deselect All" : "Select All"}
           </span>
         </label>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-1.5">
         {options.map((option) => (
-          <label key={option} className="flex items-center gap-2 cursor-pointer">
+          <label key={option} className="flex items-center gap-2 cursor-pointer hover:bg-cream p-1">
             <input
               type="checkbox"
               checked={selected.includes(option)}
@@ -179,9 +209,9 @@ const MultiSelectCheckboxes = ({
                   onChange(selected.filter((s) => s !== option));
                 }
               }}
-              className="w-4 h-4 cursor-pointer"
+              className="w-4 h-4 cursor-pointer flex-shrink-0"
             />
-            <span className="font-mono text-sm text-black">{option}</span>
+            <span className="font-mono text-xs md:text-sm text-black">{option}</span>
           </label>
         ))}
       </div>
@@ -243,11 +273,11 @@ const ActiveFilterChips = ({ filters, onRemoveFilter }: ActiveFilterChipsProps) 
   if (chips.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1.5 md:gap-2">
       {chips.map((chip, index) => (
         <div
           key={index}
-          className="bg-black text-cream px-3 py-1 text-xs font-mono flex items-center gap-2 slasher border border-black"
+          className="bg-black text-cream px-2 md:px-3 py-1 text-[10px] md:text-xs font-mono flex items-center gap-1.5 slasher border border-black"
         >
           <span>{chip.label}</span>
           <button
@@ -255,7 +285,7 @@ const ActiveFilterChips = ({ filters, onRemoveFilter }: ActiveFilterChipsProps) 
             className="hover:text-marigold transition-colors"
             aria-label={`Remove ${chip.label}`}
           >
-            <X size={14} />
+            <X size={12} className="md:w-3.5 md:h-3.5" />
           </button>
         </div>
       ))}
@@ -279,27 +309,16 @@ export default function Home() {
     forms: [],
     regions: [],
   });
-  const [isPanelOpen, setIsPanelOpen] = useState(true);
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    teamSize: true,
-    regions: false,
-    types: false,
-    legendary: false,
-    evolution: false,
-    fullyEvolved: false,
-    gender: false,
-    nature: false,
-    forms: false,
-    display: false,
-  });
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [typeCache, setTypeCache] = useState<Record<string, Set<number>>>({});
   const [natureSearch, setNatureSearch] = useState("");
 
-  const toggleSection = useCallback((section: string) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
+  const toggleDropdown = useCallback((dropdown: string) => {
+    setOpenDropdown((prev) => (prev === dropdown ? null : dropdown));
+  }, []);
+
+  const closeAllDropdowns = useCallback(() => {
+    setOpenDropdown(null);
   }, []);
 
   const getValidPokemonIds = async (): Promise<number[]> => {
@@ -357,13 +376,13 @@ export default function Home() {
         `https://pokeapi.co/api/v2/type/${typeName}`
       );
       const data = await response.json();
-      const ids = new Set(
+      const ids = new Set<number>(
         data.pokemon
           .map((p: { pokemon: { url: string } }) => {
             const id = parseInt(p.pokemon.url.split("/")[6]);
             return id <= 1025 ? id : null;
           })
-          .filter((id: number | null) => id !== null)
+          .filter((id: number | null): id is number => id !== null)
       );
 
       setTypeCache((prev) => ({
@@ -499,6 +518,69 @@ export default function Home() {
     );
   }, [natureSearch]);
 
+  const getFilterDisplayValue = (key: keyof FilterState): string => {
+    switch (key) {
+      case "teamSize":
+        return String(filters.teamSize);
+      case "regions":
+        return filters.regions.length === 0
+          ? "All"
+          : filters.regions.length === 1
+          ? filters.regions[0]
+          : `${filters.regions.length}`;
+      case "types":
+        return filters.types.length === 0
+          ? "Any"
+          : filters.types.length === 1
+          ? filters.types[0].charAt(0).toUpperCase() + filters.types[0].slice(1)
+          : `${filters.types.length}`;
+      case "legendaryStatus":
+        return filters.legendaryStatus.length === 0
+          ? "All"
+          : filters.legendaryStatus.length === 1
+          ? filters.legendaryStatus[0]
+          : `${filters.legendaryStatus.length}`;
+      case "evolutionStage":
+        return filters.evolutionStage.length === 0
+          ? "All"
+          : filters.evolutionStage.length === 1
+          ? filters.evolutionStage[0]
+          : `${filters.evolutionStage.length}`;
+      case "fullyEvolved":
+        return filters.fullyEvolved.length === 0
+          ? "All"
+          : filters.fullyEvolved.length === 1
+          ? filters.fullyEvolved[0]
+          : `${filters.fullyEvolved.length}`;
+      case "genders":
+        return filters.genders.length === 0
+          ? "All"
+          : filters.genders.length === 1
+          ? filters.genders[0]
+          : `${filters.genders.length}`;
+      case "natures":
+        return filters.natures.length === 0
+          ? "All"
+          : filters.natures.length === 1
+          ? filters.natures[0]
+          : `${filters.natures.length}`;
+      case "forms":
+        return filters.forms.length === 0
+          ? "All"
+          : filters.forms.length === 1
+          ? filters.forms[0]
+          : `${filters.forms.length}`;
+      case "displayFormat":
+        return filters.displayFormat === "both"
+          ? "Both"
+          : filters.displayFormat === "name-only"
+          ? "Name"
+          : "Sprite";
+      default:
+        return "All";
+    }
+  };
+
   return (
     <main className="min-h-screen bg-cream p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
@@ -514,249 +596,254 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Filter Panel */}
-        <div className="mb-8">
-          <button
-            onClick={() => setIsPanelOpen(!isPanelOpen)}
-            className="w-full md:w-auto bg-black text-cream font-grotesk font-semibold px-6 py-3 border-2 border-black slasher flex items-center justify-between gap-3 hover:bg-charcoal transition-colors duration-200"
-          >
-            <span>FILTERS</span>
-            <ChevronDown
-              size={20}
-              className={`transform transition-transform duration-200 ${
-                isPanelOpen ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-
-          {isPanelOpen && (
-            <div className="mt-4 bg-white border-4 border-black slasher">
-              <div className="divide-y-2 divide-black">
-                {/* Team Size Section */}
-                <CollapsibleFilterSection
-                  title="TEAM SIZE"
-                  isOpen={openSections.teamSize}
-                  onToggle={() => toggleSection("teamSize")}
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-4">
-                      <input
-                        type="range"
-                        min="1"
-                        max="6"
-                        value={filters.teamSize}
-                        onChange={(e) =>
-                          setFilters({
-                            ...filters,
-                            teamSize: parseInt(e.target.value),
-                          })
-                        }
-                        className="flex-1 h-2 bg-cream border-2 border-black cursor-pointer"
-                      />
-                      <span className="font-mono text-sm text-black font-semibold bg-cream border border-black px-3 py-1 w-12 text-center">
-                        {filters.teamSize}
-                      </span>
-                    </div>
-                    <p className="text-xs text-charcoal font-mono">Select 1-6 Pokémon</p>
+        {/* Compact Filter Toolbar */}
+        <div className="mb-6">
+          <div className="bg-white border-2 border-black p-3 md:p-4 slasher">
+            <div className="flex flex-wrap items-center gap-2 md:gap-3">
+              {/* Team Size Filter */}
+              <CompactFilterDropdown
+                label="Team"
+                value={getFilterDisplayValue("teamSize")}
+                isOpen={openDropdown === "teamSize"}
+                onToggle={() => toggleDropdown("teamSize")}
+                minWidth="min-w-[180px]"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="range"
+                      min="1"
+                      max="6"
+                      value={filters.teamSize}
+                      onChange={(e) =>
+                        setFilters({
+                          ...filters,
+                          teamSize: parseInt(e.target.value),
+                        })
+                      }
+                      className="flex-1 h-2 bg-cream border-2 border-black cursor-pointer"
+                    />
+                    <span className="font-mono text-sm text-black font-semibold bg-cream border border-black px-2 py-1 w-10 text-center">
+                      {filters.teamSize}
+                    </span>
                   </div>
-                </CollapsibleFilterSection>
+                  <p className="text-[10px] md:text-xs text-charcoal font-mono">1-6 Pokémon</p>
+                </div>
+              </CompactFilterDropdown>
 
-                {/* Regions Section */}
-                <CollapsibleFilterSection
-                  title="REGIONS"
-                  isOpen={openSections.regions}
-                  onToggle={() => toggleSection("regions")}
-                >
-                  <MultiSelectCheckboxes
-                    options={REGIONS.map((r) => r.name)}
-                    selected={filters.regions}
-                    onChange={(regions) => setFilters({ ...filters, regions })}
-                    showSelectAll={true}
-                  />
-                </CollapsibleFilterSection>
+              {/* Region Filter */}
+              <CompactFilterDropdown
+                label="Region"
+                value={getFilterDisplayValue("regions")}
+                isOpen={openDropdown === "regions"}
+                onToggle={() => toggleDropdown("regions")}
+                minWidth="min-w-[220px]"
+              >
+                <MultiSelectCheckboxes
+                  options={REGIONS.map((r) => r.name)}
+                  selected={filters.regions}
+                  onChange={(regions) => setFilters({ ...filters, regions })}
+                  showSelectAll={true}
+                />
+              </CompactFilterDropdown>
 
-                {/* Types Section */}
-                <CollapsibleFilterSection
-                  title="TYPES"
-                  isOpen={openSections.types}
-                  onToggle={() => toggleSection("types")}
-                >
-                  <MultiSelectCheckboxes
-                    options={POKEMON_TYPES.map(
-                      (t) => t.charAt(0).toUpperCase() + t.slice(1)
-                    )}
-                    selected={filters.types.map(
-                      (t) => t.charAt(0).toUpperCase() + t.slice(1)
-                    )}
-                    onChange={(types) =>
-                      setFilters({
-                        ...filters,
-                        types: types.map((t) => t.toLowerCase()),
-                      })
-                    }
-                    showSelectAll={true}
-                  />
-                </CollapsibleFilterSection>
+              {/* Type Filter */}
+              <CompactFilterDropdown
+                label="Type"
+                value={getFilterDisplayValue("types")}
+                isOpen={openDropdown === "types"}
+                onToggle={() => toggleDropdown("types")}
+                minWidth="min-w-[200px]"
+              >
+                <MultiSelectCheckboxes
+                  options={POKEMON_TYPES.map(
+                    (t) => t.charAt(0).toUpperCase() + t.slice(1)
+                  )}
+                  selected={filters.types.map(
+                    (t) => t.charAt(0).toUpperCase() + t.slice(1)
+                  )}
+                  onChange={(types) =>
+                    setFilters({
+                      ...filters,
+                      types: types.map((t) => t.toLowerCase()),
+                    })
+                  }
+                  showSelectAll={true}
+                />
+              </CompactFilterDropdown>
 
-                {/* Legendary Status Section */}
-                <CollapsibleFilterSection
-                  title="LEGENDARY STATUS"
-                  isOpen={openSections.legendary}
-                  onToggle={() => toggleSection("legendary")}
-                >
-                  <MultiSelectCheckboxes
-                    options={LEGENDARY_OPTIONS}
-                    selected={filters.legendaryStatus}
-                    onChange={(legendaryStatus) =>
-                      setFilters({ ...filters, legendaryStatus })
-                    }
-                    showSelectAll={true}
-                  />
-                </CollapsibleFilterSection>
+              {/* Legendary Filter */}
+              <CompactFilterDropdown
+                label="Rarity"
+                value={getFilterDisplayValue("legendaryStatus")}
+                isOpen={openDropdown === "legendary"}
+                onToggle={() => toggleDropdown("legendary")}
+                minWidth="min-w-[200px]"
+              >
+                <MultiSelectCheckboxes
+                  options={LEGENDARY_OPTIONS}
+                  selected={filters.legendaryStatus}
+                  onChange={(legendaryStatus) =>
+                    setFilters({ ...filters, legendaryStatus })
+                  }
+                  showSelectAll={true}
+                />
+              </CompactFilterDropdown>
 
-                {/* Evolution Stage Section */}
-                <CollapsibleFilterSection
-                  title="EVOLUTION STAGE"
-                  isOpen={openSections.evolution}
-                  onToggle={() => toggleSection("evolution")}
-                >
-                  <MultiSelectCheckboxes
-                    options={EVOLUTION_STAGES}
-                    selected={filters.evolutionStage}
-                    onChange={(evolutionStage) =>
-                      setFilters({ ...filters, evolutionStage })
-                    }
-                    showSelectAll={true}
-                  />
-                </CollapsibleFilterSection>
+              {/* Evolution Stage Filter */}
+              <CompactFilterDropdown
+                label="Stage"
+                value={getFilterDisplayValue("evolutionStage")}
+                isOpen={openDropdown === "evolution"}
+                onToggle={() => toggleDropdown("evolution")}
+                minWidth="min-w-[180px]"
+              >
+                <MultiSelectCheckboxes
+                  options={EVOLUTION_STAGES}
+                  selected={filters.evolutionStage}
+                  onChange={(evolutionStage) =>
+                    setFilters({ ...filters, evolutionStage })
+                  }
+                  showSelectAll={true}
+                />
+              </CompactFilterDropdown>
 
-                {/* Fully Evolved Section */}
-                <CollapsibleFilterSection
-                  title="FULLY EVOLVED"
-                  isOpen={openSections.fullyEvolved}
-                  onToggle={() => toggleSection("fullyEvolved")}
-                >
-                  <MultiSelectCheckboxes
-                    options={FULLY_EVOLVED_OPTIONS}
-                    selected={filters.fullyEvolved}
-                    onChange={(fullyEvolved) =>
-                      setFilters({ ...filters, fullyEvolved })
-                    }
-                    showSelectAll={false}
-                  />
-                </CollapsibleFilterSection>
+              {/* Fully Evolved Filter */}
+              <CompactFilterDropdown
+                label="Evolved"
+                value={getFilterDisplayValue("fullyEvolved")}
+                isOpen={openDropdown === "fullyEvolved"}
+                onToggle={() => toggleDropdown("fullyEvolved")}
+                minWidth="min-w-[180px]"
+              >
+                <MultiSelectCheckboxes
+                  options={FULLY_EVOLVED_OPTIONS}
+                  selected={filters.fullyEvolved}
+                  onChange={(fullyEvolved) =>
+                    setFilters({ ...filters, fullyEvolved })
+                  }
+                  showSelectAll={false}
+                />
+              </CompactFilterDropdown>
 
-                {/* Gender Section */}
-                <CollapsibleFilterSection
-                  title="GENDER"
-                  isOpen={openSections.gender}
-                  onToggle={() => toggleSection("gender")}
-                >
-                  <MultiSelectCheckboxes
-                    options={GENDERS}
-                    selected={filters.genders}
-                    onChange={(genders) => setFilters({ ...filters, genders })}
-                    showSelectAll={true}
-                  />
-                </CollapsibleFilterSection>
+              {/* Gender Filter */}
+              <CompactFilterDropdown
+                label="Gender"
+                value={getFilterDisplayValue("genders")}
+                isOpen={openDropdown === "gender"}
+                onToggle={() => toggleDropdown("gender")}
+                minWidth="min-w-[160px]"
+              >
+                <MultiSelectCheckboxes
+                  options={GENDERS}
+                  selected={filters.genders}
+                  onChange={(genders) => setFilters({ ...filters, genders })}
+                  showSelectAll={true}
+                />
+              </CompactFilterDropdown>
 
-                {/* Nature Section */}
-                <CollapsibleFilterSection
-                  title="NATURES"
-                  isOpen={openSections.nature}
-                  onToggle={() => toggleSection("nature")}
-                >
-                  <div className="space-y-3">
-                    <div className="relative">
-                      <Search size={16} className="absolute left-3 top-3 text-charcoal" />
-                      <input
-                        type="text"
-                        placeholder="Search natures..."
-                        value={natureSearch}
-                        onChange={(e) => setNatureSearch(e.target.value)}
-                        className="w-full bg-cream border-2 border-black px-3 py-2 pl-10 font-mono text-sm text-black placeholder-charcoal"
-                      />
-                    </div>
-                    <MultiSelectCheckboxes
-                      options={filteredNatures}
-                      selected={filters.natures}
-                      onChange={(natures) => setFilters({ ...filters, natures })}
-                      showSelectAll={true}
+              {/* Nature Filter */}
+              <CompactFilterDropdown
+                label="Nature"
+                value={getFilterDisplayValue("natures")}
+                isOpen={openDropdown === "nature"}
+                onToggle={() => toggleDropdown("nature")}
+                minWidth="min-w-[200px]"
+              >
+                <div className="space-y-2">
+                  <div className="relative">
+                    <Search size={14} className="absolute left-2 top-2.5 text-charcoal" />
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      value={natureSearch}
+                      onChange={(e) => setNatureSearch(e.target.value)}
+                      className="w-full bg-cream border-2 border-black px-2 py-2 pl-8 font-mono text-xs text-black placeholder-charcoal"
                     />
                   </div>
-                </CollapsibleFilterSection>
-
-                {/* Forms Section */}
-                <CollapsibleFilterSection
-                  title="FORMS"
-                  isOpen={openSections.forms}
-                  onToggle={() => toggleSection("forms")}
-                >
                   <MultiSelectCheckboxes
-                    options={FORM_OPTIONS}
-                    selected={filters.forms}
-                    onChange={(forms) => setFilters({ ...filters, forms })}
+                    options={filteredNatures}
+                    selected={filters.natures}
+                    onChange={(natures) => setFilters({ ...filters, natures })}
                     showSelectAll={true}
                   />
-                </CollapsibleFilterSection>
+                </div>
+              </CompactFilterDropdown>
 
-                {/* Display Format Section */}
-                <CollapsibleFilterSection
-                  title="DISPLAY FORMAT"
-                  isOpen={openSections.display}
-                  onToggle={() => toggleSection("display")}
-                >
-                  <div className="space-y-2">
-                    {DISPLAY_FORMATS.map((format) => (
-                      <label
-                        key={format}
-                        className="flex items-center gap-2 cursor-pointer"
-                      >
-                        <input
-                          type="radio"
-                          name="displayFormat"
-                          checked={
-                            filters.displayFormat ===
-                            (format === "Name Only"
+              {/* Forms Filter */}
+              <CompactFilterDropdown
+                label="Forms"
+                value={getFilterDisplayValue("forms")}
+                isOpen={openDropdown === "forms"}
+                onToggle={() => toggleDropdown("forms")}
+                minWidth="min-w-[180px]"
+              >
+                <MultiSelectCheckboxes
+                  options={FORM_OPTIONS}
+                  selected={filters.forms}
+                  onChange={(forms) => setFilters({ ...filters, forms })}
+                  showSelectAll={true}
+                />
+              </CompactFilterDropdown>
+
+              {/* Display Format Filter */}
+              <CompactFilterDropdown
+                label="Display"
+                value={getFilterDisplayValue("displayFormat")}
+                isOpen={openDropdown === "display"}
+                onToggle={() => toggleDropdown("display")}
+                minWidth="min-w-[180px]"
+              >
+                <div className="space-y-1.5">
+                  {DISPLAY_FORMATS.map((format) => (
+                    <label
+                      key={format}
+                      className="flex items-center gap-2 cursor-pointer hover:bg-cream p-1"
+                    >
+                      <input
+                        type="radio"
+                        name="displayFormat"
+                        checked={
+                          filters.displayFormat ===
+                          (format === "Name Only"
+                            ? "name-only"
+                            : format === "Sprite Only"
+                            ? "sprite-only"
+                            : "both")
+                        }
+                        onChange={() => {
+                          const formatValue =
+                            format === "Name Only"
                               ? "name-only"
                               : format === "Sprite Only"
                               ? "sprite-only"
-                              : "both")
-                          }
-                          onChange={() => {
-                            const formatValue =
-                              format === "Name Only"
-                                ? "name-only"
-                                : format === "Sprite Only"
-                                ? "sprite-only"
-                                : "both";
-                            setFilters({
-                              ...filters,
-                              displayFormat: formatValue,
-                            });
-                          }}
-                          className="w-4 h-4 cursor-pointer"
-                        />
-                        <span className="font-mono text-sm text-black">{format}</span>
-                      </label>
-                    ))}
-                  </div>
-                </CollapsibleFilterSection>
-              </div>
+                              : "both";
+                          setFilters({
+                            ...filters,
+                            displayFormat: formatValue,
+                          });
+                          closeAllDropdowns();
+                        }}
+                        className="w-4 h-4 cursor-pointer flex-shrink-0"
+                      />
+                      <span className="font-mono text-xs md:text-sm text-black">{format}</span>
+                    </label>
+                  ))}
+                </div>
+              </CompactFilterDropdown>
 
               {/* Reset Button */}
               {hasActiveFilters && (
-                <div className="p-4 border-t-2 border-black">
-                  <button
-                    onClick={resetFilters}
-                    className="w-full bg-black text-cream hover:bg-charcoal font-grotesk font-semibold px-4 py-2 text-sm transition-colors duration-200 slasher"
-                  >
-                    RESET ALL FILTERS
-                  </button>
-                </div>
+                <button
+                  onClick={resetFilters}
+                  className="h-10 md:h-12 px-3 md:px-4 bg-black text-cream hover:bg-charcoal font-mono text-xs md:text-sm border-2 border-black transition-colors duration-200 ml-auto"
+                  aria-label="Reset all filters"
+                >
+                  RESET
+                </button>
               )}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Active Filters Chips */}
@@ -767,20 +854,20 @@ export default function Home() {
         )}
 
         {/* Generate Button */}
-        <div className="flex justify-center mb-12">
+        <div className="flex justify-center mb-8 md:mb-12">
           <button
             onClick={generateTeam}
             disabled={loading}
-            className="bg-marigold hover:bg-marigold-hover text-black font-grotesk font-bold text-xl px-12 py-6 slasher transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 border-2 border-black"
+            className="w-full md:w-auto bg-marigold hover:bg-marigold-hover text-black font-grotesk font-bold text-lg md:text-xl px-8 md:px-12 py-4 md:py-6 slasher transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 border-2 border-black"
           >
             {loading ? (
-              <span className="flex items-center gap-3">
-                <Loader2 className="animate-spin" size={24} />
+              <span className="flex items-center justify-center gap-3">
+                <Loader2 className="animate-spin" size={20} />
                 GENERATING...
               </span>
             ) : (
-              <span className="flex items-center gap-3">
-                <Zap size={24} />
+              <span className="flex items-center justify-center gap-3">
+                <Zap size={20} />
                 GENERATE TEAM
               </span>
             )}
