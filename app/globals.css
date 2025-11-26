@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FBE9BB;
+  --foreground: #0F0F0F;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-grotesk: var(--font-space-grotesk);
+  --font-mono: var(--font-space-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+/* Reset border radius globally */
+* {
+  border-radius: 0px !important;
+}
+
+/* Slasher cut-corner effect utility */
+.slasher {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+
+/* Blend multiply for Pokémon images */
+.blend-multiply {
+  mix-blend-mode: multiply;
+}
