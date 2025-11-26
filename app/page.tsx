@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
-import { Loader2, Zap, ExternalLink, Database, ChevronDown, X, Search, Filter } from "lucide-react";
+import { Loader2, Zap, ExternalLink, Database, ChevronDown, X, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -131,31 +131,31 @@ const CompactFilterDropdown = ({
   }, [isOpen, onToggle]);
 
   return (
-    <div ref={dropdownRef} className="relative">
-      <button
-        onClick={onToggle}
-        className="h-10 md:h-12 px-3 md:px-4 bg-cream hover:bg-charcoal hover:text-cream border-2 border-black font-mono text-xs md:text-sm text-black whitespace-nowrap flex items-center gap-2 transition-colors duration-200"
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-      >
-        <span className="font-semibold">{label}:</span>
-        <span className="font-normal truncate max-w-[60px] md:max-w-[100px]">{value}</span>
-        <ChevronDown
-          size={14}
-          className={`transform transition-transform duration-200 flex-shrink-0 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-      {isOpen && (
-        <div
-          className={`absolute top-full left-0 mt-1 bg-white border-2 border-black ${minWidth} max-w-[90vw] max-h-[60vh] overflow-y-auto z-50 slasher`}
-        >
-          <div className="p-3 md:p-4">{children}</div>
-        </div>
-      )}
-    </div>
-  );
+     <div ref={dropdownRef} className="relative overflow-visible">
+       <button
+         onClick={onToggle}
+         className="h-10 md:h-12 px-3 md:px-4 bg-cream hover:bg-charcoal hover:text-cream border-2 border-black font-mono text-xs md:text-sm text-black whitespace-nowrap flex items-center gap-2 transition-colors duration-200"
+         aria-expanded={isOpen}
+         aria-haspopup="true"
+       >
+         <span className="font-semibold">{label}:</span>
+         <span className="font-normal truncate max-w-[60px] md:max-w-[100px]">{value}</span>
+         <ChevronDown
+           size={14}
+           className={`transform transition-transform duration-200 flex-shrink-0 ${
+             isOpen ? "rotate-180" : ""
+           }`}
+         />
+       </button>
+       {isOpen && (
+         <div
+           className={`absolute top-full left-0 mt-1 bg-white border-2 border-black ${minWidth} max-w-[90vw] max-h-[60vh] overflow-y-auto z-50 slasher`}
+         >
+           <div className="p-3 md:p-4">{children}</div>
+         </div>
+       )}
+     </div>
+   );
 };
 
 interface MultiSelectCheckboxesProps {
@@ -597,37 +597,39 @@ export default function Home() {
         </div>
 
         {/* Compact Filter Toolbar */}
-        <div className="mb-6">
-          <div className="bg-white border-2 border-black p-3 md:p-4 slasher">
-            <div className="flex flex-wrap items-center gap-2 md:gap-3">
+         <div className="mb-6 overflow-visible">
+           <div className="bg-white border-2 border-black p-3 md:p-4 slasher overflow-visible">
+             <div className="flex flex-wrap items-center gap-2 md:gap-3 overflow-visible">
               {/* Team Size Filter */}
               <CompactFilterDropdown
                 label="Team"
                 value={getFilterDisplayValue("teamSize")}
                 isOpen={openDropdown === "teamSize"}
                 onToggle={() => toggleDropdown("teamSize")}
-                minWidth="min-w-[180px]"
+                minWidth="min-w-[160px]"
               >
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="range"
-                      min="1"
-                      max="6"
-                      value={filters.teamSize}
-                      onChange={(e) =>
-                        setFilters({
-                          ...filters,
-                          teamSize: parseInt(e.target.value),
-                        })
-                      }
-                      className="flex-1 h-2 bg-cream border-2 border-black cursor-pointer"
-                    />
-                    <span className="font-mono text-sm text-black font-semibold bg-cream border border-black px-2 py-1 w-10 text-center">
-                      {filters.teamSize}
-                    </span>
-                  </div>
-                  <p className="text-[10px] md:text-xs text-charcoal font-mono">1-6 Pokémon</p>
+                <div className="space-y-1.5">
+                  {[1, 2, 3, 4, 5, 6].map((size) => (
+                    <label
+                      key={size}
+                      className="flex items-center gap-2 cursor-pointer hover:bg-cream p-1"
+                    >
+                      <input
+                        type="radio"
+                        name="teamSize"
+                        checked={filters.teamSize === size}
+                        onChange={() => {
+                          setFilters({
+                            ...filters,
+                            teamSize: size,
+                          });
+                          closeAllDropdowns();
+                        }}
+                        className="w-4 h-4 cursor-pointer flex-shrink-0"
+                      />
+                      <span className="font-mono text-xs md:text-sm text-black">{size}</span>
+                    </label>
+                  ))}
                 </div>
               </CompactFilterDropdown>
 
