@@ -321,6 +321,38 @@ export default function Home() {
     setOpenDropdown(null);
   }, []);
 
+  // Close dropdowns on scroll
+  useEffect(() => {
+    if (!openDropdown) return;
+
+    const handleScroll = (e: Event) => {
+      // Don't close if scrolling inside a dropdown menu
+      const target = e.target as Element;
+      const dropdownElement = target.closest('.max-h-[60vh]');
+      if (dropdownElement) return;
+      
+      closeAllDropdowns();
+    };
+
+    const handleWheel = (e: Event) => {
+      // Don't close if scrolling inside a dropdown menu
+      const target = e.target as Element;
+      const dropdownElement = target.closest('.max-h-[60vh]');
+      if (dropdownElement) return;
+      
+      closeAllDropdowns();
+    };
+
+    // Attach listeners with capture phase for early detection
+    window.addEventListener('scroll', handleScroll, true);
+    window.addEventListener('wheel', handleWheel, true);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+      window.removeEventListener('wheel', handleWheel, true);
+    };
+  }, [openDropdown, closeAllDropdowns]);
+
   const getValidPokemonIds = async (): Promise<number[]> => {
     let validIds = new Set<number>();
 
