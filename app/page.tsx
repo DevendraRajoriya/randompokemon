@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Loader2, Zap, ExternalLink, Database, ChevronDown, X, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -116,10 +117,17 @@ const CompactFilterDropdown = ({
   minWidth = "min-w-[200px]",
 }: CompactFilterDropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
         if (isOpen) onToggle();
       }
     };
@@ -130,32 +138,49 @@ const CompactFilterDropdown = ({
     }
   }, [isOpen, onToggle]);
 
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY + 4,
+        left: rect.left + window.scrollX,
+      });
+    }
+  }, [isOpen]);
+
   return (
-     <div ref={dropdownRef} className="relative overflow-visible">
-       <button
-         onClick={onToggle}
-         className="h-10 md:h-12 px-3 md:px-4 bg-cream hover:bg-charcoal hover:text-cream border-2 border-black font-mono text-xs md:text-sm text-black whitespace-nowrap flex items-center gap-2 transition-colors duration-200"
-         aria-expanded={isOpen}
-         aria-haspopup="true"
-       >
-         <span className="font-semibold">{label}:</span>
-         <span className="font-normal truncate max-w-[60px] md:max-w-[100px]">{value}</span>
-         <ChevronDown
-           size={14}
-           className={`transform transition-transform duration-200 flex-shrink-0 ${
-             isOpen ? "rotate-180" : ""
-           }`}
-         />
-       </button>
-       {isOpen && (
-         <div
-           className={`absolute top-full left-0 mt-1 bg-white border-2 border-black ${minWidth} max-w-[90vw] max-h-[60vh] overflow-y-auto z-50 slasher`}
-         >
-           <div className="p-3 md:p-4">{children}</div>
-         </div>
-       )}
-     </div>
-   );
+    <div className="relative">
+      <button
+        ref={buttonRef}
+        onClick={onToggle}
+        className="h-10 md:h-12 px-3 md:px-4 bg-cream hover:bg-charcoal hover:text-cream border-2 border-black font-mono text-xs md:text-sm text-black whitespace-nowrap flex items-center gap-2 transition-colors duration-200"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+      >
+        <span className="font-semibold">{label}:</span>
+        <span className="font-normal truncate max-w-[60px] md:max-w-[100px]">{value}</span>
+        <ChevronDown
+          size={14}
+          className={`transform transition-transform duration-200 flex-shrink-0 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+      {isOpen && typeof window !== "undefined" && createPortal(
+        <div
+          ref={dropdownRef}
+          className={`fixed bg-white border-2 border-black ${minWidth} max-w-[90vw] max-h-[60vh] overflow-y-auto z-50 slasher`}
+          style={{
+            top: `${dropdownPosition.top}px`,
+            left: `${dropdownPosition.left}px`,
+          }}
+        >
+          <div className="p-3 md:p-4">{children}</div>
+        </div>,
+        document.body
+      )}
+    </div>
+  );
 };
 
 interface MultiSelectCheckboxesProps {
