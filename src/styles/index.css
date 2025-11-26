@@ -1,0 +1,199 @@
+/* Cypherpunk Theme Variables */
+:root {
+  --cypherpunk-bg: #FBE9BB;
+  --cypherpunk-primary: #000000;
+  --cypherpunk-secondary: #333333;
+  --cypherpunk-accent: #FF0000;
+  --cypherpunk-border: #000000;
+  --cypherpunk-text: #000000;
+  --cypherpunk-text-muted: #666666;
+  
+  /* Typography */
+  --font-mono: 'Courier New', 'Monaco', 'Menlo', monospace;
+  --font-sans: 'Helvetica', 'Arial', sans-serif;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Grid System */
+  --grid-columns: 12;
+  --grid-gutter: 1rem;
+  
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-mono);
+  background-color: var(--cypherpunk-bg);
+  color: var(--cypherpunk-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  border-bottom: 3px solid var(--cypherpunk-primary);
+  padding-bottom: var(--space-sm);
+}
+
+h2 {
+  font-size: 2rem;
+  border-bottom: 2px solid var(--cypherpunk-primary);
+  padding-bottom: var(--space-xs);
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: var(--space-md);
+}
+
+a {
+  color: var(--cypherpunk-primary);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  border-bottom-color: var(--cypherpunk-accent);
+}
+
+/* Grid System */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.grid {
+  display: grid;
+  gap: var(--grid-gutter);
+}
+
+.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
+.grid-cols-12 { grid-template-columns: repeat(12, 1fr); }
+
+/* Responsive Grid */
+@media (min-width: 640px) {
+  .sm\:grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+  .sm\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .sm\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .sm\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .sm\:grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
+  .sm\:grid-cols-12 { grid-template-columns: repeat(12, 1fr); }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .md\:grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
+  .md\:grid-cols-12 { grid-template-columns: repeat(12, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+  .lg\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .lg\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .lg\:grid-cols-6 { grid-template-columns: repeat(6, 1fr); }
+  .lg\:grid-cols-12 { grid-template-columns: repeat(12, 1fr); }
+}
+
+/* Utility Classes */
+.slasher-accent {
+  position: relative;
+  display: inline-block;
+}
+
+.slasher-accent::before {
+  content: '/';
+  position: absolute;
+  left: -1rem;
+  color: var(--cypherpunk-accent);
+  font-weight: bold;
+}
+
+.card {
+  background: var(--cypherpunk-bg);
+  border: 2px solid var(--cypherpunk-border);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--cypherpunk-accent);
+  transform: translateY(-2px);
+}
+
+.btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--cypherpunk-bg);
+  border: 2px solid var(--cypherpunk-primary);
+  color: var(--cypherpunk-primary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: var(--cypherpunk-primary);
+  color: var(--cypherpunk-bg);
+  border-color: var(--cypherpunk-accent);
+}
+
+.btn-accent {
+  background: var(--cypherpunk-accent);
+  color: var(--cypherpunk-bg);
+  border-color: var(--cypherpunk-accent);
+}
+
+.btn-accent:hover {
+  background: var(--cypherpunk-bg);
+  color: var(--cypherpunk-accent);
+}

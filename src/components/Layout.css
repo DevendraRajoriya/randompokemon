@@ -1,0 +1,83 @@
+.header {
+  background: var(--cypherpunk-bg);
+  border-bottom: 3px solid var(--cypherpunk-primary);
+  padding: var(--space-md) 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--cypherpunk-primary);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.nav-logo:hover {
+  color: var(--cypherpunk-accent);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.nav-link {
+  color: var(--cypherpunk-primary);
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-sm) var(--space-md);
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  border-color: var(--cypherpunk-accent);
+  color: var(--cypherpunk-accent);
+}
+
+.nav-link.active {
+  background: var(--cypherpunk-primary);
+  color: var(--cypherpunk-bg);
+  border-color: var(--cypherpunk-primary);
+}
+
+.footer {
+  background: var(--cypherpunk-bg);
+  border-top: 3px solid var(--cypherpunk-primary);
+  padding: var(--space-md) 0;
+  margin-top: auto;
+}
+
+.footer-text {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--cypherpunk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  
+  .nav-links {
+    gap: var(--space-md);
+  }
+  
+  .nav-link {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.875rem;
+  }
+}
