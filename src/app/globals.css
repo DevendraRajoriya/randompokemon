@@ -1,0 +1,218 @@
+﻿@import "tailwindcss";
+
+:root {
+  --background: #FBE9BB;
+  --foreground: #0F0F0F;
+}
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-grotesk: var(--font-space-grotesk);
+  --font-mono: var(--font-space-mono);
+
+  /* Core brand colors */
+  --color-cream: #FBE9BB;
+  --color-black: #0F0F0F;
+  --color-charcoal: #2C2A26;
+  --color-marigold: #F5BC22;
+  --color-indigo: #2E0D8B;
+  --color-brass: #AC8D39;
+  --color-grey: #A5A5A5;
+
+  /* Custom bare color tokens used across multiple pages for hover & bg states */
+  --color-red: #DC2626;
+  --color-blue: #2563EB;
+  --color-brown: #78350F;
+  --color-green: #16A34A;
+  --color-purple: #9333EA;
+  --color-pink: #DB2777;
+  --color-orange: #EA580C;
+  --color-cyan: #0891B2;
+  --color-teal: #0D9488;
+  --color-yellow: #EAB308;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+/* Reset border radius globally */
+* {
+  border-radius: 0px;
+}
+
+/* Slasher cut-corner effect utility */
+.slasher {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+}
+
+/* Blend multiply for Pokemon images */
+.blend-multiply {
+  mix-blend-mode: multiply;
+}
+
+/* Rich Tan / Heavy Cardboard with noise texture */
+.bg-heavy {
+  background-color: #F6E7BF !important;
+  /* Rich Tan / Wet Sand */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+  color: #0F0F0F !important;
+  /* Black Text for readability */
+  border: 2px solid #0F0F0F;
+}
+
+/* Smooth Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.2s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Slide Up Animation (for PWA install prompt) */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+/* Button Hover Effects */
+.btn-hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-hover-lift:active {
+  transform: translateY(0);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Card Hover Effects */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Filter chip animations */
+.filter-chip {
+  animation: scaleIn 0.2s ease-out;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.filter-chip:hover {
+  transform: scale(1.05);
+}
+
+/* Pokemon card stagger animation */
+.pokemon-card {
+  animation: fadeIn 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+.pokemon-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.pokemon-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.pokemon-card:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.pokemon-card:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.pokemon-card:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.pokemon-card:nth-child(6) {
+  animation-delay: 0.3s;
+}

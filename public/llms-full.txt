@@ -1,0 +1,126 @@
+# Random Pokemon Generator — Complete Documentation
+
+## Overview
+Random Pokemon Generator (https://www.randompokemon.co) is a free, web-based tool for generating random Pokemon teams. It supports all 1,025 Pokemon across Generations 1-9 (Kanto, Johto, Hoenn, Sinnoh, Unova, Kalos, Alola, Galar, and Paldea). The tool is designed for Nuzlocke challenges, Draft League play, Randomizer runs, Soul Link challenges, and casual team building.
+
+## How It Works
+1. Visit https://www.randompokemon.co
+2. A random team of 6 Pokemon is automatically generated on page load
+3. Optionally apply filters to customize your team:
+   - **Team Size**: Choose 1-6 Pokemon
+   - **Type Filter**: Filter by any of the 18 Pokemon types (Normal, Fire, Water, Electric, Grass, Ice, Fighting, Poison, Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel, Fairy)
+   - **Region Filter**: Filter by region (Kanto Gen 1, Johto Gen 2, Hoenn Gen 3, Sinnoh Gen 4, Unova Gen 5, Kalos Gen 6, Alola Gen 7, Galar Gen 8, Paldea Gen 9, plus sub-regions like Kitakami, Blueberry Academy, Hisui)
+   - **Rarity Filter**: Filter by Sub-Legendary, Legendary, Mythical, Paradox, or Ultra Beast
+   - **Evolution Stage**: Filter by Unevolved, Evolved Once, Evolved Twice
+   - **Fully Evolved**: Filter by Not Fully Evolved or Fully Evolved
+   - **Gender**: Filter by Male, Female, or Genderless
+   - **Nature**: Filter by any of the 25 Pokemon Natures
+   - **Forms**: Include Alternate Forms, Mega Evolutions, or Gigantamax Forms
+   - **Display Format**: Show Name Only, Sprite Only, or Both
+4. Click "GENERATE TEAM" to create a new random team with your filters applied
+5. Click any Pokemon to view its detailed stats, abilities, and moves
+6. Save teams locally for later reference
+7. Share teams with friends via shareable links
+
+## All Available Pages
+
+### Main Tool
+- **Random Pokemon Generator** (Homepage): https://www.randompokemon.co
+  - The primary tool for generating random Pokemon teams with full filtering support
+
+### Specialized Generators
+- **Shiny Pokemon Generator**: https://www.randompokemon.co/shiny-pokemon-generator
+  - Generate teams of rare shiny Pokemon with alternate color palettes
+- **Legendary Pokemon Generator**: https://www.randompokemon.co/legendary-pokemon-generator
+  - Generate teams exclusively from Legendary, Mythical, and Ultra Beast Pokemon
+- **Starter Pokemon Generator**: https://www.randompokemon.co/starter-pokemon-generator
+  - Generate teams from all starter Pokemon across all 9 generations (Grass/Fire/Water trio)
+- **Nuzlocke Generator**: https://www.randompokemon.co/nuzlocke-generator
+  - Specialized generator optimized for Nuzlocke challenge rules
+- **Draft League Generator**: https://www.randompokemon.co/draft-league-generator
+  - Generate teams for competitive Pokemon Draft League formats
+
+### Region-Specific Generators
+- **Paldea Pokemon Generator (Gen 9)**: https://www.randompokemon.co/paldea-pokemon-generator
+  - Pokemon from Scarlet & Violet, including Paradox forms, Kitakami DLC, and Indigo Disk DLC
+- **Galar Pokemon Generator (Gen 8)**: https://www.randompokemon.co/galar-pokemon-generator
+  - Pokemon from Sword & Shield, including Dynamax and Gigantamax forms
+- **Alola Pokemon Generator (Gen 7)**: https://www.randompokemon.co/alola-pokemon-generator
+  - Pokemon from Sun & Moon, including Alolan forms, Z-Moves, and Ultra Beasts
+- **Kalos Pokemon Generator (Gen 6)**: https://www.randompokemon.co/kalos-pokemon-generator
+  - Pokemon from X & Y, including Mega Evolutions and the Fairy type introduction
+- **Hoenn Pokemon Generator (Gen 3)**: https://www.randompokemon.co/hoenn-pokemon-generator
+  - Pokemon from Ruby, Sapphire & Emerald
+- **Kanto Pokemon Generator (Gen 1)**: https://www.randompokemon.co/kanto-pokemon-generator
+  - The original 151 Pokemon from Red, Blue & Yellow
+
+### Guides & Resources
+- **Nuzlocke Rules Guide**: https://www.randompokemon.co/guide
+  - Complete guide to Nuzlocke rules, variants (Wedlocke, Soul Link, Egglocke, Wonderlocke), and strategies
+- **Complete Pokedex**: https://www.randompokemon.co/pokedex
+  - Browse all 1,025 Pokemon with stats, types, abilities, and evolution chains
+
+### Individual Pokemon Pages
+- Each of the 1,025 Pokemon has a dedicated page at: https://www.randompokemon.co/pokemon/[name]
+  - Example: https://www.randompokemon.co/pokemon/pikachu
+  - Includes: Official artwork, types, base stats, abilities, evolution chain, moves, and competitive analysis
+
+## Pokemon Database Coverage
+The generator includes Pokemon from every main series game:
+- **Generation 1 (Kanto)**: Pokemon #001-#151 — Red, Blue, Yellow, FireRed, LeafGreen, Let's Go
+- **Generation 2 (Johto)**: Pokemon #152-#251 — Gold, Silver, Crystal, HeartGold, SoulSilver
+- **Generation 3 (Hoenn)**: Pokemon #252-#386 — Ruby, Sapphire, Emerald, Omega Ruby, Alpha Sapphire
+- **Generation 4 (Sinnoh)**: Pokemon #387-#493 — Diamond, Pearl, Platinum, Brilliant Diamond, Shining Pearl, Legends: Arceus
+- **Generation 5 (Unova)**: Pokemon #494-#649 — Black, White, Black 2, White 2
+- **Generation 6 (Kalos)**: Pokemon #650-#721 — X, Y
+- **Generation 7 (Alola)**: Pokemon #722-#809 — Sun, Moon, Ultra Sun, Ultra Moon
+- **Generation 8 (Galar)**: Pokemon #810-#905 — Sword, Shield, Isle of Armor, Crown Tundra
+- **Generation 9 (Paldea)**: Pokemon #906-#1025 — Scarlet, Violet, The Teal Mask, The Indigo Disk
+
+## Rarity Categories
+- **Sub-Legendary**: Articuno, Zapdos, Moltres, Raikou, Entei, Suicune, Regirock, Regice, Registeel, Latias, Latios, Uxie, Mesprit, Azelf, Cresselia, Cobalion, Terrakion, Virizion, Tornadus, Thundurus, Landorus, Type: Null, Silvally, Tapu Koko, Tapu Lele, Tapu Bulu, Tapu Fini, Kubfu, Urshifu, Glastrier, Spectrier, Calyrex, Enamorus, Wo-Chien, Chien-Pao, Ting-Lu, Chi-Yu, Okidogi, Munkidori, Fezandipiti
+- **Legendary**: Mewtwo, Lugia, Ho-Oh, Kyogre, Groudon, Rayquaza, Dialga, Palkia, Giratina, Reshiram, Zekrom, Kyurem, Xerneas, Yveltal, Zygarde, Cosmog, Cosmoem, Solgaleo, Lunala, Necrozma, Zacian, Zamazenta, Eternatus, Koraidon, Miraidon, Terapagos
+- **Mythical**: Mew, Celebi, Jirachi, Deoxys, Phione, Manaphy, Darkrai, Shaymin, Arceus, Victini, Keldeo, Meloetta, Genesect, Diancie, Hoopa, Volcanion, Magearna, Marshadow, Zeraora, Meltan, Melmetal, Zarude, Pecharunt
+- **Ultra Beast**: Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, Guzzlord, Poipole, Naganadel, Stakataka, Blacephalon
+- **Paradox**: Great Tusk, Scream Tail, Brute Bonnet, Flutter Mane, Slither Wing, Sandy Shocks, Iron Treads, Iron Bundle, Iron Hands, Iron Jugulis, Iron Moth, Iron Thorns, Walking Wake, Iron Leaves, Gouging Fire, Raging Bolt
+
+## Technical Architecture
+- **Framework**: Next.js (React) with TypeScript
+- **Data Source**: PokeAPI (https://pokeapi.co) — RESTful Pokemon data API
+- **Rendering**: Hybrid server-side rendering (SSR) for SEO content + client-side rendering for interactive features
+- **Caching**: Service Worker with cache-first strategy for API responses and sprites
+- **Mobile**: Fully responsive design, PWA installable, offline capable
+- **Performance**: Optimized images, dynamic imports, skeleton loaders, preconnect to API endpoints
+- **Accessibility**: ARIA labels, keyboard navigation, proper heading hierarchy, semantic HTML
+
+## Frequently Asked Questions
+
+Q: Does this include Gen 9 Pokemon?
+A: Yes. All 1,025 Pokemon through Generation 9 are included, covering Pokemon Scarlet and Violet base game, The Teal Mask DLC, and The Indigo Disk DLC.
+
+Q: How many Pokemon are in the database?
+A: 1,025 Pokemon from all 9 generations. This includes all standard Pokemon, regional forms, and special categories like Paradox Pokemon and Ultra Beasts.
+
+Q: How do I generate a random Pokemon team?
+A: Visit the homepage and click "GENERATE TEAM". A team of 6 random Pokemon is also automatically generated when you first load the page.
+
+Q: What is a Nuzlocke challenge?
+A: A Nuzlocke is a set of self-imposed hardcore Pokemon rules: If a Pokemon faints it must be released (or permanently boxed), you can only catch the first Pokemon encountered on each route, and you must nickname all your Pokemon.
+
+Q: Can I exclude Legendary Pokemon?
+A: Yes. Use the Rarity filter dropdown to select or exclude Legendary, Mythical, Ultra Beast, Paradox, and Sub-Legendary Pokemon.
+
+Q: Is this tool free?
+A: Yes, 100% free with no ads, no signup required, and no hidden costs.
+
+Q: Does it work on mobile devices?
+A: Yes. The Random Pokemon Generator is fully responsive and optimized for phones, tablets, and desktop computers with mobile-optimized touch targets and PWA support.
+
+Q: Can I save my generated teams?
+A: Yes. Use the Save Team feature to store teams locally in your browser for later reference.
+
+Q: What Nuzlocke variants are supported?
+A: The generator supports standard Nuzlocke, Wedlocke, Soul Link, Egglocke, Wonderlocke, and other challenge variants through its flexible filtering system.
+
+## Contact
+Website: https://www.randompokemon.co

@@ -1,0 +1,67 @@
+# Random Pokemon Generator
+> Free online tool for generating random Pokemon teams for Nuzlocke challenges, Draft Leagues, and casual play.
+
+## URL
+https://www.randompokemon.co
+
+## About
+Random Pokemon Generator is a free, web-based tool that lets users instantly generate random Pokemon teams from all 1,025 Pokemon across Generations 1-9 (Kanto through Paldea). No signup required.
+
+## Core Features
+- Generate random teams of 1-6 Pokemon instantly
+- Filter by Type (18 types), Region (9 regions), Rarity (Legendary/Mythical/Ultra Beast/Paradox/Sub-Legendary), Evolution Stage, Gender, Nature, and Form
+- Search any Pokemon by name with autocomplete
+- Save and load teams locally
+- Share teams with friends
+- Works on desktop, tablet, and mobile
+- Progressive Web App (PWA) support for offline use
+- Fully accessible and responsive design
+
+## Use Cases
+- **Nuzlocke Challenges**: Generate rule-compliant teams for hardcore challenge runs
+- **Draft Leagues**: Pick random teams for competitive draft formats
+- **Randomizer Runs**: Create surprise teams for blind playthroughs
+- **Casual Play**: Discover new Pokemon and team combinations
+- **Soul Link**: Generate partner teams for cooperative Nuzlocke runs
+
+## Specialized Generators
+- Shiny Pokemon Generator: https://www.randompokemon.co/shiny-pokemon-generator
+- Legendary Pokemon Generator: https://www.randompokemon.co/legendary-pokemon-generator
+- Starter Pokemon Generator: https://www.randompokemon.co/starter-pokemon-generator
+- Nuzlocke Generator: https://www.randompokemon.co/nuzlocke-generator
+- Draft League Generator: https://www.randompokemon.co/draft-league-generator
+
+## Region-Specific Generators
+- Paldea (Gen 9): https://www.randompokemon.co/paldea-pokemon-generator
+- Galar (Gen 8): https://www.randompokemon.co/galar-pokemon-generator
+- Alola (Gen 7): https://www.randompokemon.co/alola-pokemon-generator
+- Kalos (Gen 6): https://www.randompokemon.co/kalos-pokemon-generator
+- Hoenn (Gen 3): https://www.randompokemon.co/hoenn-pokemon-generator
+- Kanto (Gen 1): https://www.randompokemon.co/kanto-pokemon-generator
+
+## Guides & Resources
+- Nuzlocke Rules Guide: https://www.randompokemon.co/guide
+- Complete Pokedex: https://www.randompokemon.co/pokedex
+
+## Technical Details
+- Built with Next.js and React
+- Data sourced from PokeAPI (1,025 Pokemon)
+- Optimized for Core Web Vitals
+- Server-side rendered for SEO
+- PWA with offline caching via Service Worker
+
+## FAQ
+Q: Does this include Gen 9 Pokemon?
+A: Yes. All 1,025 Pokemon through Generation 9 including Scarlet & Violet DLC.
+
+Q: Is this free?
+A: 100% free, no ads, no signup required.
+
+Q: Does it work on mobile?
+A: Yes. Fully responsive and optimized for phones and tablets.
+
+Q: Can I exclude Legendary Pokemon?
+A: Yes. Use the Rarity filter to control which categories appear.
+
+## Contact
+Website: https://www.randompokemon.co
