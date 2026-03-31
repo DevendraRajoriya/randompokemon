@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import BackToTop from "@/components/BackToTop";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { WebVitals, PerformanceMonitor } from "@/utils/performance";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -197,6 +198,7 @@ export default function RootLayout({
         </ErrorBoundary>
         <Footer />
         <BackToTop />
+        <SpeedInsights />
       </body>
     </html>
   );
