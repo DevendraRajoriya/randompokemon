@@ -208,6 +208,20 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+        {/* Microsoft Clarity */}
+        <Script
+          id="clarity-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "wkxiy1v0bz");
+            `,
+          }}
+        />
         {/* Note: Fonts are loaded via next/font/google import, no manual preload needed */}
       </head>
       {/* suppressHydrationWarning needed because browser extensions and

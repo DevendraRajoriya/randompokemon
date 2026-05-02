@@ -110,19 +110,9 @@ function PokemonCardUI({ pokemon, stats, bst, imageDataUrl }: PokemonCardUIProps
                 overflow: "hidden",
                 position: "relative",
                 fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif",
+                boxShadow: `inset 0 0 0 6px ${typeColor}, inset 0 0 0 8px #F5BC22, inset 0 0 0 10px ${typeColor2}`,
             }}
         >
-            {/* Holographic accent border */}
-            <div
-                style={{
-                    position: "absolute",
-                    inset: 0,
-                    border: `6px solid transparent`,
-                    borderImage: `linear-gradient(135deg, ${typeColor}, #F5BC22, ${typeColor2}, #F5BC22, ${typeColor}) 1`,
-                    pointerEvents: "none",
-                    zIndex: 10,
-                }}
-            />
 
             {/* Type gradient glow overlay */}
             <div
@@ -241,24 +231,27 @@ function PokemonCardUI({ pokemon, stats, bst, imageDataUrl }: PokemonCardUIProps
             {/* ═══ ARTWORK ═══ */}
             <div
                 style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "500px",
                     position: "relative",
                     zIndex: 5,
-                    flex: "0 0 auto",
-                    height: "500px",
-                    margin: "24px 56px 0",
+                    margin: "24px 0 0",
                 }}
             >
-                {/* Glow behind artwork — no blur filter (html2canvas renders it as solid block) */}
+                {/* Glow circle — no transform, marginLeft instead of translateX */}
                 <div
                     style={{
                         position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
                         width: "500px",
                         height: "500px",
                         borderRadius: "50%",
                         background: `radial-gradient(circle, ${typeColor}20 0%, ${typeColor}10 40%, transparent 70%)`,
+                        top: 0,
+                        left: "50%",
+                        marginLeft: "-250px",
                     }}
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -270,11 +263,7 @@ function PokemonCardUI({ pokemon, stats, bst, imageDataUrl }: PokemonCardUIProps
                         height: "460px",
                         width: "460px",
                         objectFit: "contain",
-                        filter: "drop-shadow(0 16px 48px rgba(0,0,0,0.5))",
-                        position: "absolute",
-                        left: "50%",
-                        top: "0",
-                        transform: "translateX(-50%)",
+                        position: "relative",
                         zIndex: 2,
                     }}
                 />
@@ -286,7 +275,7 @@ function PokemonCardUI({ pokemon, stats, bst, imageDataUrl }: PokemonCardUIProps
                     position: "relative",
                     zIndex: 5,
                     padding: "0 56px",
-                    marginTop: "auto",
+                    marginTop: "32px",
                 }}
             >
                 {/* Stats Grid */}
@@ -507,14 +496,17 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
         // Lazy-load html2canvas only when actually needed
         const { default: html2canvas } = await import("html2canvas");
         const canvas = await html2canvas(element, {
-            scale: 2,
+            scale: 1,
             useCORS: true,
             allowTaint: false,
             backgroundColor: "#0f0f0f",
             logging: false,
             width: CARD_WIDTH,
             height: CARD_HEIGHT,
-            windowWidth: 1920,
+            windowWidth: CARD_WIDTH,
+            windowHeight: CARD_HEIGHT,
+            scrollX: 0,
+            scrollY: 0,
         });
 
         return canvas;
@@ -785,9 +777,11 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
             <div
                 style={{
                     position: "fixed",
-                    left: "-9999px",
                     top: "0",
+                    left: "0",
+                    opacity: 0,
                     pointerEvents: "none",
+                    zIndex: -1,
                 }}
                 aria-hidden="true"
             >
