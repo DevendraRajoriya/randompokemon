@@ -326,104 +326,134 @@ export default function CardGeneratorClient() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {loadingMore
                 ? Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
-                    <div
-                      key={`skeleton-${i}`}
-                      className="animate-pulse bg-white border-2 border-black slasher"
-                    >
-                      <div className="h-32 bg-gray-200" />
-                      <div className="p-3">
-                        <div className="h-4 bg-gray-200 rounded mb-2" />
-                        <div className="h-3 bg-gray-200 rounded w-2/3" />
+                    <div key={`skeleton-${i}`} className="animate-pulse bg-white border-2 border-black slasher overflow-hidden">
+                      <div className="h-2 bg-gray-200" />
+                      <div className="h-48 bg-gray-100 flex items-center justify-center">
+                        <div className="w-32 h-32 bg-gray-200 rounded-full" />
+                      </div>
+                      <div className="p-4 space-y-2">
+                        <div className="h-5 bg-gray-200 rounded w-3/4" />
+                        <div className="h-4 bg-gray-200 rounded w-1/2" />
+                        <div className="space-y-1.5 pt-1">
+                          {[1,2,3,4].map(n => <div key={n} className="h-2 bg-gray-200 rounded" />)}
+                        </div>
                       </div>
                     </div>
                   ))
                 : displayedPokemon.map((pokemon) => {
-                    const primaryType =
-                      pokemon.types[0]?.type.name || "normal";
+                    const primaryType = pokemon.types[0]?.type.name || "normal";
+                    const secondaryType = pokemon.types[1]?.type.name;
                     const typeColor = getTypeColor(primaryType);
-                    const bst = (pokemon.stats || []).reduce(
-                      (sum, s) => sum + s.base_stat,
-                      0
-                    );
+                    const secondaryColor = secondaryType ? getTypeColor(secondaryType) : typeColor;
+                    const getStat = (name: string) => pokemon.stats?.find(s => s.stat.name === name)?.base_stat || 0;
+                    const hp  = getStat("hp");
+                    const atk = getStat("attack");
+                    const def = getStat("defense");
+                    const spd = getStat("speed");
+                    const bst = (pokemon.stats || []).reduce((sum, s) => sum + s.base_stat, 0);
 
                     return (
                       <div
                         key={pokemon.id}
-                        className="group bg-white border-2 border-black slasher card-hover transition-all duration-200 overflow-hidden cursor-pointer"
+                        className="group relative bg-white border-2 border-black slasher overflow-hidden hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 cursor-pointer"
                         onClick={() => setSharePokemon(pokemon)}
                       >
-                        {/* Card Image */}
-                        <div
-                          className="relative h-32 sm:h-36 flex items-center justify-center overflow-hidden"
-                          style={{
-                            background: `linear-gradient(180deg, ${typeColor}20 0%, ${typeColor}08 100%)`,
-                          }}
-                        >
-                          {/* Pokemon ID Badge */}
-                          <div className="absolute top-2 left-2 bg-black/80 text-white text-[10px] font-mono font-bold px-1.5 py-0.5 rounded">
-                            #{String(pokemon.id).padStart(4, "0")}
+                        {/* Type-coloured accent bar */}
+                        <div className="h-1.5 sm:h-2" style={{
+                          background: secondaryType
+                            ? `linear-gradient(90deg, ${typeColor} 50%, ${secondaryColor} 50%)`
+                            : typeColor
+                        }} />
+
+                        <div className="p-2.5 sm:p-4">
+                          {/* Top row: ID + BST + Download */}
+                          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+                            <span className="font-mono text-[10px] sm:text-xs text-charcoal/60 font-semibold">
+                              #{String(pokemon.id).padStart(4, "0")}
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              {bst > 0 && (
+                                <span className="font-mono text-[9px] sm:text-[10px] bg-black/5 text-charcoal/70 px-1.5 py-0.5 font-bold">BST {bst}</span>
+                              )}
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setSharePokemon(pokemon); }}
+                                className="p-1 text-black/30 hover:text-black transition-colors"
+                                aria-label={`Download ${pokemon.name} card`}
+                              >
+                                <Download size={13} />
+                              </button>
+                            </div>
                           </div>
 
-                          {/* Share/Download Button */}
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSharePokemon(pokemon);
-                            }}
-                            className="absolute top-2 right-2 w-7 h-7 bg-white/90 border border-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-marigold"
-                            aria-label={`Download ${pokemon.name} card`}
-                          >
-                            <Download className="w-3.5 h-3.5 text-black" />
-                          </button>
+                          {/* Pokemon image */}
+                          <div className="relative w-full mb-2 sm:mb-3" style={{ paddingBottom: "75%" }}>
+                            <div className="absolute inset-0 opacity-[0.07]" style={{ background: `radial-gradient(circle, ${typeColor} 0%, transparent 70%)` }} />
+                            {getImageUrl(pokemon) ? (
+                              <Image
+                                src={getImageUrl(pokemon)}
+                                alt={`${capitalize(pokemon.name)} - ${pokemon.types.map(t => t.type.name).join("/")} type Pokemon`}
+                                fill
+                                sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 25vw"
+                                className="object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 p-1"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="absolute inset-0 flex items-center justify-center text-black/20 font-mono text-xs">No Image</div>
+                            )}
+                          </div>
 
-                          {/* Pokemon Image */}
-                          <Image
-                            src={getImageUrl(pokemon)}
-                            alt={`${capitalize(pokemon.name)} official artwork`}
-                            width={120}
-                            height={120}
-                            className="w-24 h-24 sm:w-28 sm:h-28 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
-                            loading="lazy"
-                          />
-                        </div>
-
-                        {/* Card Info */}
-                        <div className="p-2.5 sm:p-3 border-t-2 border-black">
-                          <h3 className="font-grotesk font-bold text-xs sm:text-sm text-black uppercase truncate mb-1">
+                          {/* Name */}
+                          <h3 className="font-grotesk font-bold text-sm sm:text-base text-black mb-1.5 uppercase truncate group-hover:opacity-80 transition-colors">
                             {capitalize(pokemon.name)}
                           </h3>
 
-                          {/* Type Badges */}
-                          <div className="flex gap-1 mb-1.5">
-                            {pokemon.types.map((t) => (
+                          {/* Type badges */}
+                          <div className="flex gap-1 sm:gap-1.5 mb-2 sm:mb-3 flex-wrap">
+                            {pokemon.types.map(({ type }) => (
                               <span
-                                key={t.type.name}
-                                className="text-[9px] sm:text-[10px] font-mono font-bold text-white px-1.5 py-0.5 rounded uppercase"
-                                style={{
-                                  backgroundColor: getTypeColor(t.type.name),
-                                }}
+                                key={type.name}
+                                className="font-mono text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 text-white uppercase font-bold border border-black/20 rounded-sm"
+                                style={{ backgroundColor: getTypeColor(type.name) }}
                               >
-                                {t.type.name}
+                                {type.name}
                               </span>
                             ))}
                           </div>
 
-                          {/* BST */}
-                          <div className="flex justify-between items-center">
-                            <span className="font-mono text-[10px] text-charcoal">
-                              BST
-                            </span>
-                            <span className="font-mono text-xs font-bold text-black">
-                              {bst}
-                            </span>
+                          {/* Mini stat bars */}
+                          {pokemon.stats && pokemon.stats.length > 0 && (
+                            <div className="space-y-1 sm:space-y-1.5 mb-2 sm:mb-3">
+                              {[
+                                { label: "HP",  value: hp },
+                                { label: "ATK", value: atk },
+                                { label: "DEF", value: def },
+                                { label: "SPD", value: spd },
+                              ].map(stat => (
+                                <div key={stat.label} className="flex items-center gap-1 sm:gap-1.5">
+                                  <span className="font-mono text-[8px] sm:text-[9px] text-charcoal/50 w-5 sm:w-6 text-right font-bold flex-shrink-0">{stat.label}</span>
+                                  <div className="flex-1 h-1 sm:h-1.5 bg-black/5 overflow-hidden">
+                                    <div
+                                      className="h-full transition-all duration-500"
+                                      style={{
+                                        width: `${Math.min((stat.value / 255) * 100, 100)}%`,
+                                        backgroundColor: stat.value >= 100 ? "#000" : stat.value >= 70 ? "#333" : typeColor,
+                                      }}
+                                    />
+                                  </div>
+                                  <span className="font-mono text-[8px] sm:text-[9px] text-charcoal/40 w-5 font-bold flex-shrink-0 tabular-nums">{stat.value}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* CTA */}
+                          <div className="w-full text-center font-mono font-bold text-[10px] sm:text-xs py-1.5 sm:py-2 border border-black/10 bg-black/[0.02] group-hover:bg-black group-hover:text-white group-hover:border-black transition-all duration-200 flex items-center justify-center gap-1">
+                            <Download size={10} /> GENERATE CARD
                           </div>
                         </div>
-
-                        {/* Hover overlay */}
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors pointer-events-none" />
                       </div>
                     );
                   })}
