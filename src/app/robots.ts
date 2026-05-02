@@ -45,7 +45,6 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: "https://www.randompokemon.co/sitemap.xml",
-    host: "https://www.randompokemon.co",
   };
 }
 
