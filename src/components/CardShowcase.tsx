@@ -21,7 +21,7 @@ export default function CardShowcase() {
           </div>
           <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] animate-fade-in">
             EXPORT <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
               TRADING CARDS
             </span>
           </h2>
@@ -58,10 +58,10 @@ export default function CardShowcase() {
           aria-label="Open Pokemon Card Generator"
         >
           {/* Decorative Backing */}
-          <div className="absolute inset-0 bg-black translate-x-4 translate-y-4 slasher opacity-20 w-[280px] md:w-[320px] transition-smooth group-hover:translate-x-6 group-hover:translate-y-6"></div>
+          <div className="absolute inset-0 bg-black translate-x-4 translate-y-4 slasher opacity-20 max-w-[320px] mx-auto transition-smooth group-hover:translate-x-6 group-hover:translate-y-6"></div>
 
           {/* THE CARD ITSELF */}
-          <div className="relative w-[280px] md:w-[320px] bg-gradient-to-br from-yellow-200 to-yellow-500 p-3 border-[8px] border-[#D4AF37] shadow-2xl transform transition-smooth group-hover:rotate-2 group-hover:scale-105 group-hover:shadow-[0_20px_60px_rgba(212,175,55,0.4)] animate-scale-in cursor-pointer">
+          <div className="relative w-[280px] md:w-[320px] bg-gradient-to-br from-yellow-200 to-yellow-500 p-3 border-[8px] border-[#D4AF37] shadow-2xl transform transition-smooth group-hover:rotate-2 group-hover:scale-105 animate-scale-in cursor-pointer">
 
             {/* Hover overlay hint */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-200 flex items-end justify-center pb-3 opacity-0 group-hover:opacity-100 z-20">
