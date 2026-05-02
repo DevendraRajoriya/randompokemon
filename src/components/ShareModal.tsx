@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { X, Download, Copy, Check, Twitter, Facebook, Link } from "lucide-react";
-// html2canvas is lazy-loaded only when user clicks download/copy
 import { getTypeColor, getTypeGradient } from "@/utils/typeColors";
 
 interface PokemonType {
@@ -53,7 +52,7 @@ interface ShareModalProps {
 
 // Card dimensions — optimized for social sharing (1080x1350 = IG post ratio)
 const CARD_WIDTH = 1080;
-const CARD_HEIGHT = 1350;
+const CARD_HEIGHT = 1500;
 
 function capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -424,11 +423,14 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
     // Calculate preview scale based on viewport
     useEffect(() => {
         const calculateScale = () => {
-            const maxPreviewWidth = Math.min(window.innerWidth - 80, 420);
-            const maxPreviewHeight = window.innerHeight * 0.48;
-            const scaleByWidth = maxPreviewWidth / CARD_WIDTH;
-            const scaleByHeight = maxPreviewHeight / CARD_HEIGHT;
-            setPreviewScale(Math.min(scaleByWidth, scaleByHeight, 0.38));
+            const isDesktop = window.innerWidth >= 768;
+            const modalWidth = Math.min(window.innerWidth * 0.96, 640) - 32;
+            const nonPreviewHeight = 260;
+            const availableHeight = window.innerHeight * 0.96 - nonPreviewHeight;
+            const scaleByWidth = modalWidth / CARD_WIDTH;
+            const scaleByHeight = availableHeight / CARD_HEIGHT;
+            const maxScale = isDesktop ? 0.52 : 0.42;
+            setPreviewScale(Math.min(scaleByWidth, scaleByHeight, maxScale));
         };
 
         calculateScale();
@@ -488,26 +490,205 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
 
     const bst = finalStats.reduce((sum, s) => sum + s.value, 0);
 
-    // Generate image from the GHOST CARD
+    // Generate image via pure Canvas API — no DOM capture, no html2canvas
     const generateImage = async (): Promise<HTMLCanvasElement | null> => {
-        const element = document.getElementById("download-card-target");
-        if (!element) return null;
+        const canvas = document.createElement("canvas");
+        canvas.width = CARD_WIDTH;
+        canvas.height = CARD_HEIGHT;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return null;
 
-        // Lazy-load html2canvas only when actually needed
-        const { default: html2canvas } = await import("html2canvas");
-        const canvas = await html2canvas(element, {
-            scale: 1,
-            useCORS: true,
-            allowTaint: false,
-            backgroundColor: "#0f0f0f",
-            logging: false,
-            width: CARD_WIDTH,
-            height: CARD_HEIGHT,
-            windowWidth: CARD_WIDTH,
-            windowHeight: CARD_HEIGHT,
-            scrollX: 0,
-            scrollY: 0,
-        });
+        const primaryType = pokemon.types[0]?.type.name || "normal";
+        const secondaryType = pokemon.types[1]?.type.name;
+        const typeColor = getTypeColor(primaryType);
+        const typeColor2 = secondaryType ? getTypeColor(secondaryType) : typeColor;
+        const name = capitalize(pokemon.name);
+
+        // ── BACKGROUND ──────────────────────────────────────────
+        const bgGrad = ctx.createLinearGradient(0, 0, CARD_WIDTH, CARD_HEIGHT);
+        bgGrad.addColorStop(0, "#0f0f0f");
+        bgGrad.addColorStop(0.4, "#1a1a2e");
+        bgGrad.addColorStop(1, "#16213e");
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
+
+        // ── TYPE GLOW OVERLAY ────────────────────────────────────
+        const glowGrad = ctx.createRadialGradient(CARD_WIDTH / 2, 0, 0, CARD_WIDTH / 2, 0, 700);
+        glowGrad.addColorStop(0, typeColor + "30");
+        glowGrad.addColorStop(1, "transparent");
+        ctx.fillStyle = glowGrad;
+        ctx.fillRect(0, 0, CARD_WIDTH, 600);
+
+        // ── HOLOGRAPHIC BORDER ───────────────────────────────────
+        const borderGrad = ctx.createLinearGradient(0, 0, CARD_WIDTH, CARD_HEIGHT);
+        borderGrad.addColorStop(0, typeColor);
+        borderGrad.addColorStop(0.25, "#F5BC22");
+        borderGrad.addColorStop(0.5, typeColor2);
+        borderGrad.addColorStop(0.75, "#F5BC22");
+        borderGrad.addColorStop(1, typeColor);
+        ctx.strokeStyle = borderGrad;
+        ctx.lineWidth = 12;
+        ctx.strokeRect(6, 6, CARD_WIDTH - 12, CARD_HEIGHT - 12);
+
+        // ── HEADER: ID ───────────────────────────────────────────
+        ctx.font = "bold 32px system-ui";
+        ctx.fillStyle = "rgba(255,255,255,0.5)";
+        ctx.fillText(`#${String(pokemon.id).padStart(4, "0")}`, 56, 90);
+
+        // ── HEADER: NAME ─────────────────────────────────────────
+        ctx.font = "900 96px system-ui";
+        ctx.fillStyle = "#ffffff";
+        ctx.shadowColor = typeColor + "80";
+        ctx.shadowBlur = 30;
+        ctx.fillText(name.toUpperCase(), 56, 185);
+        ctx.shadowBlur = 0;
+
+        // ── BST CIRCLE ───────────────────────────────────────────
+        const bstTotal = finalStats.reduce((sum, s) => sum + s.value, 0);
+        const cx = CARD_WIDTH - 120, cy = 120, r = 80;
+        const circleGrad = ctx.createRadialGradient(cx - 20, cy - 20, 0, cx, cy, r);
+        circleGrad.addColorStop(0, typeColor);
+        circleGrad.addColorStop(1, typeColor2);
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fillStyle = circleGrad;
+        ctx.fill();
+        ctx.font = "700 22px system-ui";
+        ctx.fillStyle = "rgba(255,255,255,0.7)";
+        ctx.textAlign = "center";
+        ctx.fillText("BST", cx, cy - 10);
+        ctx.font = "900 52px system-ui";
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(String(bstTotal), cx, cy + 44);
+        ctx.textAlign = "left";
+
+        // ── TYPE BADGES ──────────────────────────────────────────
+        let badgeX = 56;
+        const badgeY = 220;
+        for (const typeInfo of pokemon.types) {
+            const tColor = getTypeColor(typeInfo.type.name);
+            const label = typeInfo.type.name.toUpperCase();
+            ctx.font = "800 28px system-ui";
+            const textW = ctx.measureText(label).width;
+            const badgeW = textW + 48;
+            const badgeH = 52;
+            ctx.beginPath();
+            (ctx as CanvasRenderingContext2D & { roundRect: (...a: unknown[]) => void }).roundRect(badgeX, badgeY, badgeW, badgeH, 26);
+            ctx.fillStyle = tColor;
+            ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.fillText(label, badgeX + 24, badgeY + 36);
+            badgeX += badgeW + 16;
+        }
+
+        // ── POKÉMON ARTWORK ──────────────────────────────────────
+        if (imageDataUrl) {
+            await new Promise<void>((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    const imgSize = 480;
+                    const imgX = (CARD_WIDTH - imgSize) / 2;
+                    const imgY = 290;
+                    ctx.drawImage(img, imgX, imgY, imgSize, imgSize);
+                    resolve();
+                };
+                img.onerror = () => resolve();
+                img.src = imageDataUrl;
+            });
+        }
+
+        // ── STATS ────────────────────────────────────────────────
+        const statsY = 840;
+        const statLabelX = 56;
+        const statNumX = 200;
+        const statBarX = 280;
+        const statBarWidth = CARD_WIDTH - statBarX - 56;
+
+        for (let i = 0; i < finalStats.length; i++) {
+            const stat = finalStats[i];
+            const rowY = statsY + i * 62;
+
+            // Stat label — right-aligned into its fixed column
+            ctx.font = "700 28px system-ui";
+            ctx.fillStyle = "rgba(255,255,255,0.45)";
+            ctx.textAlign = "right";
+            ctx.fillText(formatStatLabel(stat.name), statLabelX + 80, rowY + 20);
+
+            // Stat number — left-aligned in its own fixed column
+            ctx.font = "900 40px system-ui";
+            ctx.fillStyle = "#ffffff";
+            ctx.textAlign = "left";
+            ctx.fillText(String(stat.value), statNumX, rowY + 22);
+
+            // Bar background
+            ctx.fillStyle = "rgba(255,255,255,0.08)";
+            ctx.beginPath();
+            (ctx as CanvasRenderingContext2D & { roundRect: (...a: unknown[]) => void }).roundRect(statBarX, rowY, statBarWidth, 20, 10);
+            ctx.fill();
+
+            // Bar fill
+            const pct = Math.min(stat.value / 255, 1);
+            ctx.fillStyle = getStatColor(stat.value);
+            ctx.beginPath();
+            (ctx as CanvasRenderingContext2D & { roundRect: (...a: unknown[]) => void }).roundRect(statBarX, rowY, statBarWidth * pct, 20, 10);
+            ctx.fill();
+        }
+        ctx.textAlign = "left";
+
+        // ── HEIGHT / WEIGHT / ABILITIES ──────────────────────────
+        const hwY = statsY + finalStats.length * 62 + 40;
+        ctx.strokeStyle = "rgba(255,255,255,0.08)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(56, hwY);
+        ctx.lineTo(CARD_WIDTH - 56, hwY);
+        ctx.stroke();
+
+        const heightM = pokemon.height ? (pokemon.height / 10).toFixed(1) : "?";
+        const weightKg = pokemon.weight ? (pokemon.weight / 10).toFixed(1) : "?";
+
+        ctx.font = "700 20px system-ui";
+        ctx.fillStyle = "rgba(255,255,255,0.35)";
+        ctx.fillText("HEIGHT", 56, hwY + 36);
+        ctx.fillText("WEIGHT", 240, hwY + 36);
+
+        ctx.font = "800 32px system-ui";
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText(`${heightM}m`, 56, hwY + 74);
+        ctx.fillText(`${weightKg}kg`, 240, hwY + 74);
+
+        if (pokemon.abilities && pokemon.abilities.length > 0) {
+            const abText = pokemon.abilities
+                .map((a) => capitalize(a.ability.name.replace(/-/g, " ")))
+                .join(" / ");
+            ctx.font = "700 20px system-ui";
+            ctx.fillStyle = "rgba(255,255,255,0.35)";
+            ctx.textAlign = "right";
+            ctx.fillText("ABILITIES", CARD_WIDTH - 56, hwY + 36);
+            ctx.font = "700 26px system-ui";
+            ctx.fillStyle = "rgba(255,255,255,0.8)";
+            ctx.fillText(abText, CARD_WIDTH - 56, hwY + 74);
+            ctx.textAlign = "left";
+        }
+
+        // ── FOOTER ───────────────────────────────────────────────
+        const footerY = hwY + 120;
+        ctx.strokeStyle = "rgba(255,255,255,0.06)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(56, footerY - 20);
+        ctx.lineTo(CARD_WIDTH - 56, footerY - 20);
+        ctx.stroke();
+
+        ctx.font = "800 32px system-ui";
+        ctx.fillStyle = "#F5BC22";
+        ctx.fillText("randompokemon.co", 56, footerY + 20);
+
+        ctx.font = "600 24px system-ui";
+        ctx.fillStyle = "rgba(255,255,255,0.25)";
+        ctx.textAlign = "right";
+        ctx.fillText("RANDOM POKÉMON GENERATOR", CARD_WIDTH - 56, footerY + 20);
+        ctx.textAlign = "left";
 
         return canvas;
     };
@@ -621,16 +802,16 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
 
     return (
         <div
-            className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-lg flex items-center justify-center p-3 sm:p-4"
+            className="fixed inset-0 z-[100] bg-black/85 backdrop-blur-lg flex items-center justify-center"
             onClick={onClose}
         >
             <div
-                className="bg-neutral-950 rounded-2xl max-h-[92vh] overflow-y-auto shadow-2xl border border-neutral-800"
+                className="bg-neutral-950 rounded-2xl shadow-2xl border border-neutral-800"
                 onClick={(e) => e.stopPropagation()}
-                style={{ width: "min(480px, 95vw)" }}
+                style={{ width: "min(640px, 96vw)", maxHeight: "96vh", overflowY: "auto" }}
             >
                 {/* Modal Header */}
-                <div className="flex items-center justify-between p-4 sm:p-5 border-b border-neutral-800">
+                <div className="flex items-center justify-between px-5 py-3 border-b border-neutral-800">
                     <div>
                         <h2 className="font-bold text-lg sm:text-xl text-white">{capitalizedName} Card</h2>
                         <p className="text-neutral-500 text-xs font-mono mt-0.5">Download or share as image</p>
@@ -645,7 +826,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                 </div>
 
                 {/* Card Preview */}
-                <div className="p-4 sm:p-5 flex justify-center" style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%)" }}>
+                <div className="px-4 py-3 flex justify-center" style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%)" }}>
                     <div
                         style={{
                             width: `${scaledWidth}px`,
@@ -667,7 +848,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="px-4 sm:px-5 pb-4 flex gap-2.5">
+                <div className="px-5 pb-3 flex gap-2.5">
                     <button
                         onClick={handleDownload}
                         disabled={downloading}
@@ -696,7 +877,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                 </div>
 
                 {/* Social Sharing Section */}
-                <div className="px-4 sm:px-5 pb-5 pt-3 border-t border-neutral-800">
+                <div className="px-5 pb-4 pt-3 border-t border-neutral-800">
                     <h3 className="font-mono text-[10px] sm:text-xs text-neutral-500 mb-3 text-center uppercase tracking-widest">
                         Share to
                     </h3>
@@ -771,24 +952,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                 </div>
             </div>
 
-            {/* ============================================ */}
-            {/* GHOST CARD (Hidden off-screen for capture)  */}
-            {/* ============================================ */}
-            <div
-                style={{
-                    position: "fixed",
-                    top: "0",
-                    left: "0",
-                    opacity: 0,
-                    pointerEvents: "none",
-                    zIndex: -1,
-                }}
-                aria-hidden="true"
-            >
-                <div id="download-card-target">
-                    <PokemonCardUI pokemon={pokemon} stats={finalStats} bst={bst} imageDataUrl={imageDataUrl} />
-                </div>
-            </div>
+
         </div>
     );
 }
