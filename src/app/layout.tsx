@@ -109,6 +109,9 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "PokeGen",
   },
+  other: {
+    "google-adsense-account": "ca-pub-4072027063101043",
+  },
 };
 
 // JSON-LD Structured Data - Site-wide schemas only
@@ -151,21 +154,38 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
-        {/* PWA Service Worker Registration - lazy loaded to not block render */}
+        {/* PWA Service Worker Registration */}
         <Script
           id="sw-registration"
           strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js').then(
-                  (registration) => {
-                    console.log('SW registered:', registration);
-                  },
-                  (err) => {
-                    console.log('SW registration failed:', err);
+                navigator.serviceWorker.register('/sw.js').then((registration) => {
+                  // When a new SW is found, immediately activate it
+                  registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    if (newWorker) {
+                      newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                          // Tell the new SW to skip waiting and take over
+                          newWorker.postMessage({ type: 'SKIP_WAITING' });
+                        }
+                      });
+                    }
+                  });
+                }).catch((err) => {
+                  console.warn('SW registration failed:', err);
+                });
+
+                // Reload once when the new SW takes control so users get fresh JS
+                let refreshing = false;
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                  if (!refreshing) {
+                    refreshing = true;
+                    window.location.reload();
                   }
-                );
+                });
               }
             `,
           }}
@@ -181,6 +201,13 @@ export default function RootLayout({
         {/* LLM discovery */}
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Summary" />
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLM Full Documentation" />
+        {/* Google AdSense */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4072027063101043"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         {/* Note: Fonts are loaded via next/font/google import, no manual preload needed */}
       </head>
       {/* suppressHydrationWarning needed because browser extensions and

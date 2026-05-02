@@ -585,9 +585,29 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
     };
 
     const handleInstagramShare = async () => {
+        // Try native Web Share API first (works on mobile — opens share sheet with Instagram)
+        if (typeof navigator !== "undefined" && navigator.share) {
+            try {
+                const canvas = await generateImage();
+                if (canvas) {
+                    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob((b) => resolve(b), "image/png"));
+                    if (blob) {
+                        const file = new File([blob], `${pokemon.name}-card.png`, { type: "image/png" });
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            await navigator.share({ files: [file], title: `${capitalize(pokemon.name)} Pokémon Card` });
+                            return;
+                        }
+                    }
+                }
+            } catch (err) {
+                // User cancelled or share failed — fall through to download
+                if ((err as Error).name === "AbortError") return;
+            }
+        }
+        // Fallback: download PNG then show instruction
         await handleDownload();
         setInstagramToast(true);
-        setTimeout(() => setInstagramToast(false), 3000);
+        setTimeout(() => setInstagramToast(false), 4000);
     };
 
     const handleCopyLink = async () => {
@@ -750,10 +770,10 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                         </button>
                     </div>
 
-                    {/* Instagram Toast */}
                     {instagramToast && (
-                        <div className="mt-3 bg-emerald-600/20 border border-emerald-600/30 text-emerald-400 text-xs font-mono py-2.5 px-4 rounded-lg text-center">
-                            ✓ Image saved! Open Instagram to post.
+                        <div className="mt-3 bg-neutral-800 border border-neutral-700 text-neutral-300 text-xs font-mono py-3 px-4 rounded-lg text-center leading-relaxed">
+                            📥 Card saved to your device!<br />
+                            <span className="text-neutral-400">Open Instagram → + New Post → select the saved image</span>
                         </div>
                     )}
                 </div>

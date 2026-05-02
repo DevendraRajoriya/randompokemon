@@ -1,158 +1,146 @@
 // Service Worker for Progressive Web App
-// Handles offline caching and performance optimization
+// Next.js-compatible caching strategy
+//
+// Strategy per resource type:
+//   HTML pages       → Network-only (NEVER cache — Next.js rebuilds change chunk hashes)
+//   /_next/static/   → Cache-first in PRODUCTION only (Turbopack dev uses non-hashed filenames)
+//   PokeAPI          → Cache-first  (rarely changes, saves bandwidth)
+//   Sprites          → Cache-first  (static images)
+//   Everything else  → Network-first
+//
+// IMPORTANT: In dev (localhost / LAN IPs), /_next/ chunks are NOT cached because
+// Turbopack reuses the same filename (e.g. src_abc._.js) with new content on every
+// hot reload — caching them causes hydration mismatches.
 
-const CACHE_NAME = 'pokemon-generator-v2';
-const RUNTIME_CACHE = 'pokemon-runtime-v2';
-const API_CACHE = 'pokemon-api-v1';
+// Bump this version string to force-clear all caches on next SW activation.
+const CACHE_VERSION = 'v4';
+const STATIC_CACHE  = `pokegen-static-${CACHE_VERSION}`;
+const API_CACHE     = `pokegen-api-${CACHE_VERSION}`;
 
-// Assets to cache on install
-const PRECACHE_URLS = [
-  '/',
-  '/pokedex',
-  '/guide',
-  '/manifest.json',
-];
+// Detect development environment (localhost or RFC-1918 private IPs)
+const isDev = (
+  self.location.hostname === 'localhost' ||
+  self.location.hostname === '127.0.0.1' ||
+  self.location.hostname.startsWith('10.') ||
+  self.location.hostname.startsWith('192.168.') ||
+  /^172\.(1[6-9]|2\d|3[01])\./.test(self.location.hostname)
+);
 
-// Install event - cache essential assets
+// ─── Install ──────────────────────────────────────────────────────────────────
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(PRECACHE_URLS);
-    })
-  );
+  // Skip waiting so the new SW activates immediately — no waiting for old SW to die
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches
+// ─── Activate ─────────────────────────────────────────────────────────────────
 self.addEventListener('activate', (event) => {
-  const currentCaches = [CACHE_NAME, RUNTIME_CACHE, API_CACHE];
+  const KEEP = [STATIC_CACHE, API_CACHE];
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!currentCaches.includes(cacheName)) {
-            return caches.delete(cacheName);
+    caches.keys()
+      .then((names) => Promise.all(
+        names.map((name) => {
+          if (!KEEP.includes(name)) {
+            console.log('[SW] Deleting old cache:', name);
+            return caches.delete(name);
           }
         })
-      );
-    })
+      ))
+      .then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// Fetch event - handle same-origin and cross-origin differently
+// ─── Fetch ────────────────────────────────────────────────────────────────────
 self.addEventListener('fetch', (event) => {
-  // Skip non-GET requests
-  if (event.request.method !== 'GET') {
-    return;
-  }
+  // Only intercept GET requests
+  if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
 
-  // Handle PokeAPI requests separately (cross-origin, cache-first with TTL)
+  // ── 1. PokeAPI → Cache-first (no TTL needed; URLs don't change for same data)
   if (url.hostname === 'pokeapi.co') {
-    event.respondWith(
-      caches.open(API_CACHE).then((cache) => {
-        return cache.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-
-          return fetch(event.request)
-            .then((response) => {
-              if (response && response.ok) {
-                cache.put(event.request, response.clone());
-              }
-              return response;
-            })
-            .catch(() => {
-              // Return a generic offline JSON response for API fails
-              return new Response(
-                JSON.stringify({ error: 'offline' }),
-                { headers: { 'Content-Type': 'application/json' } }
-              );
-            });
-        });
-      })
-    );
+    // Skip cache-busted requests (we added ?_cb= param) — always go to network
+    if (url.searchParams.has('_cb')) return;
+    event.respondWith(cacheFirst(event.request, API_CACHE));
     return;
   }
 
-  // Handle Pokemon sprite images (cross-origin, cache-first)
-  if (url.hostname === 'raw.githubusercontent.com' && url.pathname.includes('PokeAPI/sprites')) {
-    event.respondWith(
-      caches.open(API_CACHE).then((cache) => {
-        return cache.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-
-          return fetch(event.request)
-            .then((response) => {
-              if (response && response.ok) {
-                cache.put(event.request, response.clone());
-              }
-              return response;
-            })
-            .catch(() => {
-              return new Response('', { status: 408 });
-            });
-        });
-      })
-    );
+  // ── 2. Pokemon sprites (GitHub) → Cache-first
+  if (
+    url.hostname === 'raw.githubusercontent.com' &&
+    url.pathname.includes('PokeAPI/sprites')
+  ) {
+    event.respondWith(cacheFirst(event.request, API_CACHE));
     return;
   }
 
-  // Skip other cross-origin requests
-  if (!event.request.url.startsWith(self.location.origin)) {
+  // ── 3. Skip other cross-origin requests (fonts, analytics, etc.)
+  if (url.origin !== self.location.origin) return;
+
+  // ── 4. Next.js chunks → Network-only in DEV, Cache-first in PROD
+  //    In Turbopack dev mode, filenames like src_abc._.js stay the same
+  //    across hot reloads but their content changes → caching them breaks hydration.
+  if (url.pathname.startsWith('/_next/')) {
+    if (isDev) {
+      return; // Never intercept in dev — let browser go to network always
+    }
+    // In production, _next/static/ is content-hashed → safe to cache forever
+    if (url.pathname.startsWith('/_next/static/')) {
+      event.respondWith(cacheFirst(event.request, STATIC_CACHE));
+    }
+    // Other _next/ paths (HMR, data, etc.) → network-only even in prod
     return;
   }
 
-  // Same-origin: stale-while-revalidate for pages
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      // Return cached response if found
-      if (cachedResponse) {
-        // Update cache in background (with error handling)
-        fetch(event.request)
-          .then((response) => {
-            if (response && response.ok) {
-              caches.open(RUNTIME_CACHE).then((cache) => {
-                cache.put(event.request, response.clone());
-              });
-            }
-          })
-          .catch(() => {
-            // Network unavailable, stale cache is fine
-          });
-        return cachedResponse;
-      }
+  // ── 5. HTML pages → Network-only (always fresh)
+  const acceptsHtml = event.request.headers.get('accept')?.includes('text/html');
+  if (acceptsHtml) {
+    return;
+  }
 
-      // Fetch from network and cache same-origin pages
-      return fetch(event.request)
-        .then((response) => {
-          if (!response || response.status !== 200) {
-            return response;
-          }
-
-          const responseToCache = response.clone();
-          caches.open(RUNTIME_CACHE).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-
-          return response;
-        })
-        .catch(() => {
-          // Return offline page if available
-          return caches.match('/');
-        });
-    })
-  );
+  // ── 6. Everything else (manifest, icons, etc.) → Network-first
+  event.respondWith(networkFirst(event.request, STATIC_CACHE));
 });
 
-// Handle messages from clients
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Cache-first: return cached copy instantly; fall back to network and cache. */
+async function cacheFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(request);
+    if (response && response.ok) {
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    return new Response('', { status: 408, statusText: 'Offline' });
+  }
+}
+
+/** Network-first: try network, cache on success; fall back to cache. */
+async function networkFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  try {
+    const response = await fetch(request);
+    if (response && response.ok) {
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch {
+    const cached = await cache.match(request);
+    return cached || new Response('', { status: 408, statusText: 'Offline' });
+  }
+}
+
+// ─── Message handler ──────────────────────────────────────────────────────────
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
+  if (event.data?.type === 'SKIP_WAITING') {
     self.skipWaiting();
+  }
+  // Allow pages to request a full cache wipe (e.g. after a forced update)
+  if (event.data?.type === 'CLEAR_CACHES') {
+    caches.keys().then((names) => Promise.all(names.map((n) => caches.delete(n))));
   }
 });

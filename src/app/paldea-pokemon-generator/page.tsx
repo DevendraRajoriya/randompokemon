@@ -1,453 +1,148 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { MapPin, ArrowLeft, ExternalLink } from "lucide-react";
-import FreshnessSignal from "@/components/FreshnessSignal";
+import { ArrowLeft } from "lucide-react";
 
-const PokemonGeneratorClient = dynamic(
-  () => import("../PokemonGeneratorClient")
-);
+const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
+const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
+  loading: () => <div className="min-h-[400px] animate-pulse bg-cream border-2 border-black" />,
+});
 
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Gen 9 Random Team Generator | Paldea Pokemon Scarlet Violet",
-  description:
-    "Generate random Paldea Pokemon teams from Gen 9 (Pokemon #906-1025)! Includes Paradox Pokemon, Terapagos, and new evolutions. Updated January 2026 with latest DLC content.",
-  keywords: [
-    "gen 9 random team generator",
-    "paldea pokemon team builder",
-    "scarlet violet team generator",
-    "paradox pokemon generator",
-    "gen 9 pokemon randomizer",
-    "paldea randomizer free",
-    "scarlet violet nuzlocke generator",
-    "gen 9 team builder with filters",
-    "random pokemon scarlet violet",
+  title: "Paldea Pokemon Generator | Gen 9 Random Team Builder (Scarlet/Violet)",
+  description: "Generate random Paldea Pokemon teams from Generation 9 (#906-1025). Scarlet & Violet including Koraidon, Miraidon, Paradox Pokemon, Terastallize, and Teal Mask DLC. Updated 2026.",
+  keywords: ["paldea pokemon generator", "gen 9 random team generator", "paldea pokemon team builder", "scarlet violet team generator", "paldea randomizer", "gen 9 nuzlocke generator", "paradox pokemon generator", "terastallize team builder"],
+  alternates: { canonical: `${siteUrl}/paldea-pokemon-generator` },
+  openGraph: { title: "Paldea Pokemon Generator | Gen 9 Random Team Builder", description: "Generate random Paldea Pokemon from Gen 9! Scarlet & Violet.", url: `${siteUrl}/paldea-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Paldea Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Paldea Pokemon Generator | Gen 9 Random Team Builder", description: "Generate random Paldea Pokemon from Gen 9!", images: ["/og-image.png"] },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org", "@type": "WebApplication", name: "Paldea Pokemon Generator",
+  description: "Generate random Pokemon teams from the Paldea region (Gen 9). Pokemon #906-1025.",
+  url: `${siteUrl}/paldea-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "How many Pokemon are in Paldea?", acceptedAnswer: { "@type": "Answer", text: "Paldea introduced 120 new Pokemon (#906-1025), including Paradox Pokemon and those added in the Teal Mask and Indigo Disk DLC expansions. The Paldea Pokedex also includes many returning Pokemon from past generations." } },
+    { "@type": "Question", name: "What are Paradox Pokemon?", acceptedAnswer: { "@type": "Answer", text: "Paradox Pokemon are ancient or futuristic variants of existing Pokemon. Scarlet has Past forms (Great Tusk = ancient Donphan, Scream Tail = ancient Jigglypuff), Violet has Future forms (Iron Treads = futuristic Donphan, Iron Bundle = futuristic Delibird). They have very high stats." } },
+    { "@type": "Question", name: "What is Terastallize?", acceptedAnswer: { "@type": "Answer", text: "Terastallize changes a Pokemon's type to its hidden Tera Type for the rest of the battle, boosting STAB moves. Every Pokemon has a Tera Type — often its original type but sometimes surprising ones (e.g., Tera Flying Garchomp to avoid Ground weakness). This adds massive strategic depth." } },
+    { "@type": "Question", name: "Is Scarlet or Violet better?", acceptedAnswer: { "@type": "Answer", text: "Scarlet has ancient Past Paradox Pokemon (Great Tusk, Scream Tail, Brute Bonnet, etc.) and Professor Sada. Violet has future Iron Paradox Pokemon (Iron Treads, Iron Bundle, Iron Hands, etc.) and Professor Turo. The story is nearly identical between versions." } },
+    { "@type": "Question", name: "What are the best Paldea Pokemon for competitive play?", acceptedAnswer: { "@type": "Answer", text: "Top competitive Paldea picks: Gholdengo (Steel/Ghost, Good as Gold ability blocks status moves), Great Tusk (Ground/Fighting, versatile Paradox), Roaring Moon (Dragon/Dark, Protosynthesis sweeper), Iron Moth (Fire/Poison, Quiver Dance set), Meowscarada (Grass/Dark, 123 Speed), and Skeledirge (Fire/Ghost, tanky singer)." } },
+    { "@type": "Question", name: "What are the Paldea DLC expansions?", acceptedAnswer: { "@type": "Answer", text: "The Hidden Treasure of Area Zero: Part 1 is The Teal Mask (set in Kitakami, adds Ogerpon and returning Pokemon) and Part 2 is The Indigo Disk (set in Blueberry Academy, adds Terapagos, Archaludon, and new Paradox forms of Raikou, Cobalion, etc.)." } },
+    { "@type": "Question", name: "What is the best Paldea starter?", acceptedAnswer: { "@type": "Answer", text: "Fuecoco/Skeledirge (Fire/Ghost) is the most defensive and popular. Sprigatito/Meowscarada (Grass/Dark) is the fastest starter ever at 123 Speed. Quaxly/Quaquaval (Water/Fighting) is the most offensive. For Nuzlockes, Fuecoco's bulk makes it the easiest pick." } },
+    { "@type": "Question", name: "What is the Paldea open world like?", acceptedAnswer: { "@type": "Answer", text: "Scarlet & Violet are the first fully open-world Pokemon games. There are no loading screens between areas, Pokemon roam the overworld, and players can tackle the three story paths (Victory Road, Starfall Street, Path of Legends) in any order they choose." } },
+    { "@type": "Question", name: "What is the Ruinous Quartet?", acceptedAnswer: { "@type": "Answer", text: "The Ruinous Quartet are four legendary Pokemon sealed behind Paldean Shrines: Wo-Chien (Dark/Grass, Tablets of Ruin), Chien-Pao (Dark/Ice, Sword of Ruin), Ting-Lu (Dark/Ground, Vessel of Ruin), and Chi-Yu (Dark/Fire, Beads of Ruin). Chi-Yu and Chien-Pao were briefly banned in competitive play." } },
+    { "@type": "Question", name: "What new mechanics did Gen 9 introduce?", acceptedAnswer: { "@type": "Answer", text: "Gen 9 introduced: fully open world, Terastallize (any Pokemon can change type once per battle with a Tera Orb), Paradox Pokemon (ancient/future variants), picnics (replaced Pokemon Camp), Let's Go mechanics (send a Pokemon out to auto-battle), and the sandwich-making system for bonuses." } },
+    { "@type": "Question", name: "How does the Paldea Pokemon Generator work?", acceptedAnswer: { "@type": "Answer", text: "Select Gen 9/Paldea filter, choose team size (1-6), filter by type or exclude Paradox/legendary Pokemon for Nuzlockes, then generate. Lock your favorite picks and regenerate the rest. Free and instant — perfect for Scarlet & Violet team building, challenge runs, and competitive exploration." } },
   ],
-  alternates: {
-    canonical: `${siteUrl}/paldea-pokemon-generator`,
-  },
-  openGraph: {
-    title: "Gen 9 Random Team Generator | Paldea Pokemon Scarlet Violet",
-    description:
-      "Generate random Paldea Pokemon teams from Gen 9 (Pokemon #906-1025)! Paradox Pokemon and Terapagos included. Updated January 2026.",
-    url: `${siteUrl}/paldea-pokemon-generator`,
-    type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Paldea Pokemon Generator",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Gen 9 Random Team Generator | Paldea Pokemon Scarlet Violet",
-    description:
-      "Generate random Paldea Pokemon teams from Gen 9! Paradox Pokemon included. Updated January 2026.",
-    images: ["/og-image.png"],
-  },
 };
 
-// JSON-LD Structured Data
-const paldeaJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "Gen 9 Random Team Generator",
-  description:
-    "Generate random Pokemon teams from the Paldea region (Gen 9 - Scarlet & Violet), including Paradox Pokemon and Terapagos. Pokemon #906-1025.",
-  url: `${siteUrl}/paldea-pokemon-generator`,
-  applicationCategory: "GameApplication",
-  operatingSystem: "Any",
-  datePublished: "2024-11-15",
-  dateModified: "2026-01-13",
-  isPartOf: {
-    "@type": "WebApplication",
-    name: "Random Pokemon Generator",
-    url: siteUrl,
-  },
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
-};
-
-export default function PaldeaPokemonGeneratorPage() {
+export default function PaldeaGeneratorPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(paldeaJsonLd) }}
-      />
-      <main className="min-h-screen bg-cream px-4 py-8 sm:px-6 lg:px-8">
-        {/* Breadcrumbs */}
-        <nav className="mb-6 max-w-7xl mx-auto" aria-label="Breadcrumb">
-          <ol className="flex items-center gap-2 text-sm">
-            <li>
-              <Link
-                href="/"
-                className="text-brown hover:text-red transition-colors flex items-center gap-1"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Home
-              </Link>
-            </li>
-            <li className="text-brown/50">/</li>
-            <li className="text-brown font-semibold">
-              Paldea Pokemon Generator
-            </li>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <main className="min-h-screen bg-cream p-4 md:p-8 relative">
+        <nav className="mb-6 max-w-6xl mx-auto" aria-label="Breadcrumb">
+          <ol className="flex items-center gap-2 font-mono text-xs">
+            <li><Link href="/" className="text-charcoal hover:text-black transition-colors flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Home</Link></li>
+            <li className="text-charcoal/40">/</li>
+            <li className="text-black font-bold uppercase">Paldea Generator</li>
           </ol>
         </nav>
 
-        {/* Hero Section */}
-        <div className="max-w-7xl mx-auto mb-12 text-center">
-          <div className="inline-flex items-center gap-2 bg-red-600 text-white border-2 border-black px-4 py-2 mb-4">
-            <MapPin className="w-5 h-5" />
-            <span className="font-bold">GEN 9 • SCARLET & VIOLET</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-brown mb-4 font-space-grotesk">
-            Gen 9 Random Team Generator
-          </h1>
-          <p className="text-lg sm:text-xl text-brown/80 max-w-3xl mx-auto mb-6">
-            Generate random <strong>Paldea Pokemon teams</strong> from Generation 9 (Pokemon #906-1025)!
-            Perfect for Scarlet & Violet Nuzlockes, competitive teams, monotype runs, and Tera Raid builds.
-            Includes all Paradox Pokemon, Terapagos, and new evolutions.
+        <div className="max-w-6xl mx-auto mb-5 text-center">
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">PALDEA POKEMON GENERATOR</h1>
+          <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
+            Generate random <strong>Paldea Pokemon teams</strong> from Generation 9 (#906-1025). Scarlet &amp; Violet — the first fully open-world games — with Terastallize, Paradox Pokemon, and two DLC expansions.
           </p>
-          
-          <FreshnessSignal 
-            lastUpdated="January 13, 2026" 
-            updateFrequency="Updated monthly with new DLC Pokemon and Tera Raid events"
-          />
-
-          {/* Key Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
-            <div className="bg-red-600 text-white border-2 border-black p-4">
-              <MapPin className="w-8 h-8 mx-auto mb-2" />
-              <h3 className="font-bold mb-1">100+ New Pokemon</h3>
-              <p className="text-sm text-white/90">
-                Gen 9 exclusive species
-              </p>
-            </div>
-            <div className="bg-yellow-400 border-2 border-black p-4">
-              <span className="text-3xl mb-2 block">⚡</span>
-              <h3 className="font-bold text-gray-900 mb-1">Paradox Pokemon</h3>
-              <p className="text-sm text-gray-800">
-                Ancient & Future forms
-              </p>
-            </div>
-            <div className="bg-blue-600 text-white border-2 border-black p-4">
-              <span className="text-3xl mb-2 block">🎓</span>
-              <h3 className="font-bold mb-1">Regional Forms</h3>
-              <p className="text-sm text-white/90">
-                Paldean Tauros & Wooper
-              </p>
-            </div>
-          </div>
         </div>
 
-        {/* Generator Component - Will filter for Paldea by default */}
-        <PokemonGeneratorClient />
+        <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Paldea" />
 
-        {/* SEO Content Section */}
-        <div className="max-w-4xl mx-auto mt-16 space-y-8">
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              About the Paldea Region
-            </h2>
-            <p className="text-brown/80 leading-relaxed">
-              <strong>Paldea</strong> is the region featured in Pokemon Scarlet
-              and Pokemon Violet (Generation 9), released in November 2022. Based
-              on the Iberian Peninsula (Spain and Portugal), Paldea is the first
-              truly open-world region in mainline Pokemon games.
+        <CardShowcase />
+
+        <div className="max-w-6xl mx-auto mt-10 space-y-6">
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">REGION OVERVIEW</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">ABOUT THE PALDEA REGION</h2>
+            <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed border-l-4 border-black pl-6 mb-4">
+              <strong>Paldea</strong> is the ninth region, based on the Iberian Peninsula (Spain/Portugal). Featured in Scarlet &amp; Violet (2022) — the first fully open-world Pokemon games with no loading screens between areas. Introduced Terastallize, Paradox Pokemon, and 120 new species.
             </p>
-            <p className="text-brown/80 leading-relaxed">
-              Key features of Paldea include:
+            <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed border-l-4 border-black pl-6 mb-6">
+              Two DLC expansions: The Teal Mask (Kitakami region, Ogerpon) and The Indigo Disk (Blueberry Academy, Terapagos, new Paradox forms). Paldea has three concurrent story paths players can tackle in any order.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-brown/80 ml-4">
-              <li>
-                <strong>Open World Exploration:</strong> No linear routes - explore freely from the start
-              </li>
-              <li>
-                <strong>Terastallization:</strong> New battle mechanic changing Pokemon types
-              </li>
-              <li>
-                <strong>Paradox Pokemon:</strong> Ancient (Scarlet) and Future (Violet) exclusive forms
-              </li>
-              <li>
-                <strong>3 Story Paths:</strong> Victory Road, Path of Legends, Starfall Street
-              </li>
-              <li>
-                <strong>100+ New Pokemon:</strong> Including starters Sprigatito, Fuecoco, Quaxly
-              </li>
-            </ul>
-          </article>
-
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Paradox Pokemon (Scarlet & Violet Exclusives)
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="border-2 border-red bg-red/10 p-4">
-                <h3 className="font-bold text-red mb-3 text-xl">
-                  🔴 Pokemon Scarlet (Ancient Forms)
-                </h3>
-                <ul className="space-y-2 text-sm text-brown/80">
-                  <li>
-                    <strong>Great Tusk</strong> - Ancient Donphan (Ground/Fighting)
-                  </li>
-                  <li>
-                    <strong>Scream Tail</strong> - Ancient Jigglypuff (Fairy/Psychic)
-                  </li>
-                  <li>
-                    <strong>Brute Bonnet</strong> - Ancient Amoonguss (Grass/Dark)
-                  </li>
-                  <li>
-                    <strong>Flutter Mane</strong> - Ancient Misdreavus (Ghost/Fairy)
-                  </li>
-                  <li>
-                    <strong>Slither Wing</strong> - Ancient Volcarona (Bug/Fighting)
-                  </li>
-                  <li>
-                    <strong>Sandy Shocks</strong> - Ancient Magneton (Electric/Ground)
-                  </li>
-                  <li>
-                    <strong>Roaring Moon</strong> - Ancient Salamence (Dragon/Dark)
-                  </li>
-                  <li>
-                    <strong>Walking Wake</strong> - Ancient Suicune (Water/Dragon)
-                  </li>
-                </ul>
-              </div>
-
-              <div className="border-2 border-blue bg-blue/10 p-4">
-                <h3 className="font-bold text-blue mb-3 text-xl">
-                  🔵 Pokemon Violet (Future Forms)
-                </h3>
-                <ul className="space-y-2 text-sm text-brown/80">
-                  <li>
-                    <strong>Iron Treads</strong> - Future Donphan (Ground/Steel)
-                  </li>
-                  <li>
-                    <strong>Iron Bundle</strong> - Future Delibird (Ice/Water)
-                  </li>
-                  <li>
-                    <strong>Iron Hands</strong> - Future Hariyama (Fighting/Electric)
-                  </li>
-                  <li>
-                    <strong>Iron Jugulis</strong> - Future Hydreigon (Dark/Flying)
-                  </li>
-                  <li>
-                    <strong>Iron Moth</strong> - Future Volcarona (Fire/Poison)
-                  </li>
-                  <li>
-                    <strong>Iron Thorns</strong> - Future Tyranitar (Rock/Electric)
-                  </li>
-                  <li>
-                    <strong>Iron Valiant</strong> - Future Gallade/Gardevoir (Fairy/Fighting)
-                  </li>
-                  <li>
-                    <strong>Iron Leaves</strong> - Future Virizion (Grass/Psychic)
-                  </li>
-                </ul>
-              </div>
+            <div className="grid md:grid-cols-3 gap-3">
+              {[{ label: "120 NEW POKEMON", desc: "#906 Sprigatito to #1025 Pecharunt" }, { label: "OPEN WORLD", desc: "First fully free-roam region" }, { label: "TERASTALLIZE", desc: "Type-changing battle mechanic" }].map(item => (
+                <div key={item.label} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.label}</h3><p className="font-mono text-xs text-charcoal">{item.desc}</p></div>
+              ))}
             </div>
-          </article>
+          </section>
 
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              New Pokemon in Paldea (Gen 9 Debuts)
-            </h2>
-            <div className="space-y-4">
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">
-                  🌱 Starter Evolution Lines
-                </h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Sprigatito → Floragato → Meowscarada</strong> (Grass/Dark)<br />
-                  <strong>Fuecoco → Crocalor → Skeledirge</strong> (Fire/Ghost)<br />
-                  <strong>Quaxly → Quaxwell → Quaquaval</strong> (Water/Fighting)
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">
-                  🏆 Box Legendaries & Mythicals
-                </h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Koraidon</strong> (Fighting/Dragon) - Scarlet legendary<br />
-                  <strong>Miraidon</strong> (Electric/Dragon) - Violet legendary<br />
-                  <strong>Chi-Yu, Chien-Pao, Ting-Lu, Wo-Chien</strong> - Treasures of Ruin<br />
-                  <strong>Ogerpon</strong> - Teal Mask DLC<br />
-                  <strong>Terapagos</strong> - Indigo Disk DLC<br />
-                  <strong>Pecharunt</strong> - Mochi Mayhem DLC
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">
-                  ✨ Popular New Pokemon
-                </h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Lechonk → Oinkologne</strong> (pig Pokemon)<br />
-                  <strong>Fidough → Dachsbun</strong> (bread dog)<br />
-                  <strong>Smoliv → Dolliv → Arboliva</strong> (olive tree)<br />
-                  <strong>Pawmi → Pawmo → Pawmot</strong> (electric mouse)<br />
-                  <strong>Gimmighoul → Gholdengo</strong> (999 coins evolution)
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">
-                  🔄 New Evolutions of Old Pokemon
-                </h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Primeape → Annihilape</strong> (Fighting/Ghost)<br />
-                  <strong>Girafarig → Farigiraf</strong> (Normal/Psychic)<br />
-                  <strong>Dunsparce → Dudunsparce</strong> (Normal)<br />
-                  <strong>Bisharp → Kingambit</strong> (Dark/Steel)
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Best Paldea Pokemon for Competitive Play
-            </h2>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">LEGENDARIES</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">PALDEA LEGENDARY POKEMON</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-red pl-4">
-                <h3 className="font-bold text-brown mb-1">
-                  🔴 Ubers Tier (Restricted)
-                </h3>
-                <p className="text-sm text-brown/70">
-                  Koraidon, Miraidon, Flutter Mane, Iron Bundle (banned from OU)
-                </p>
+              <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">🏍️ RIDE LEGENDS</h3>
+                <div className="font-mono text-xs text-charcoal space-y-1">
+                  <p><strong>Koraidon</strong> (#1007) — Fighting/Dragon, 670 BST. Mascot of Pokemon Scarlet. Ancient era.</p>
+                  <p><strong>Miraidon</strong> (#1008) — Electric/Dragon, 670 BST. Mascot of Pokemon Violet. Future era.</p>
+                </div>
               </div>
-              <div className="border-l-4 border-yellow pl-4">
-                <h3 className="font-bold text-brown mb-1">
-                  🟡 OU Tier (Overused)
-                </h3>
-                <p className="text-sm text-brown/70">
-                  Gholdengo, Kingambit, Great Tusk, Iron Valiant, Baxcalibur
-                </p>
-              </div>
-              <div className="border-l-4 border-green pl-4">
-                <h3 className="font-bold text-brown mb-1">
-                  🟢 Fun Picks for Playthroughs
-                </h3>
-                <p className="text-sm text-brown/70">
-                  Tinkaton, Armarouge/Ceruledge, Pawmot, Lokix, Garganacl
-                </p>
-              </div>
+              {[
+                { title: "🏺 RUINOUS QUARTET", content: "Wo-Chien (Dark/Grass), Chien-Pao (Dark/Ice), Ting-Lu (Dark/Ground), Chi-Yu (Dark/Fire). Found by collecting Stakes at Shrines. Chi-Yu and Chien-Pao were banned from competitive play." },
+                { title: "⚡ PARADOX POKEMON", content: "Ancient forms in Scarlet (Great Tusk, Scream Tail, Brute Bonnet, Flutter Mane, Slither Wing, Sandy Shocks, Roaring Moon) and Future forms in Violet (Iron Treads, Iron Bundle, Iron Hands, Iron Jugulis, Iron Moth, Iron Thorns, Iron Valiant)." },
+                { title: "✨ MYTHICAL", content: "Pecharunt (#1025, Poison/Ghost) — introduced in The Indigo Disk DLC. Controls others with its mochi chains. Terapagos (Normal → Terastal form) is the true legendary of the Area Zero story arc." },
+              ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
-          </article>
+          </section>
 
-          {/* Related Region Generators */}
-          <div className="bg-yellow border-2 border-black p-8">
-            <h2 className="text-2xl font-bold text-brown mb-6 flex items-center gap-2">
-              <ExternalLink className="w-6 h-6" />
-              Other Region Generators
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Link
-                href="/kanto-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-red hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🔴 Kanto Pokemon (Gen 1)
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Original 151 Pokemon
-                </p>
-              </Link>
-              <Link
-                href="/galar-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-blue hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  ⚔️ Galar Pokemon (Gen 8)
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Sword & Shield region
-                </p>
-              </Link>
-              <Link
-                href="/alola-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-yellow hover:text-gray-900 transition-colors group"
-              >
-                <h3 className="font-bold mb-1">
-                  🌴 Alola Pokemon (Gen 7)
-                </h3>
-                <p className="text-sm text-brown/70">
-                  Sun & Moon region
-                </p>
-              </Link>
-              <Link
-                href="/"
-                className="block bg-white border-2 border-black p-4 hover:bg-green-700 hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🎲 All Regions Generator
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Generate from any region
-                </p>
-              </Link>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST PALDEA POKEMON (TIER LIST)</h2>
+            <div className="space-y-3">
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Koraidon, Miraidon, Iron Bundle (banned), Palafin-Hero, Chi-Yu (banned)</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Gholdengo, Great Tusk, Roaring Moon, Iron Moth, Skeledirge, Meowscarada, Flutter Mane</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Kilowattrel, Armarouge, Ceruledge, Glimmora, Bombirdier, Tinkaton</p></div>
             </div>
-          </div>
+          </section>
 
-          {/* FAQ Section */}
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Paldea Pokemon FAQs
-            </h2>
-            <div className="space-y-4">
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  How many new Pokemon are in Paldea?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Gen 9 introduced 103 completely new Pokemon species (not
-                  counting regional forms or Paradox Pokemon). Including DLC,
-                  there are 120+ new additions.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  What are Paradox Pokemon?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Paradox Pokemon are version-exclusive Pokemon that resemble
-                  ancient or future versions of existing species. Scarlet has
-                  prehistoric forms, Violet has robotic futuristic forms.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Can I catch all Pokemon in Scarlet/Violet?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Scarlet & Violet's Pokedex includes 400 Pokemon in the base
-                  game, expanded to 600+ with DLC. Not all 1000+ Pokemon are
-                  available - older legendaries require transfers from HOME.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  What is Terastallization?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Terastallization is Gen 9's battle gimmick, changing a
-                  Pokemon's type to its Tera Type (can be any of the 18 types),
-                  boosting STAB moves of that type.
-                </p>
-              </details>
+          <section className="bg-black border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-marigold px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-black uppercase tracking-widest">MORE TOOLS</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-white leading-[0.9] mb-6 uppercase">EXPLORE MORE <span className="text-marigold">GENERATORS</span></h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[{ href: "/galar-pokemon-generator", label: "GALAR (GEN 8)", desc: "Sword & Shield" }, { href: "/hoenn-pokemon-generator", label: "HOENN (GEN 3)", desc: "Ruby & Sapphire" }, { href: "/shiny-pokemon-generator", label: "SHINY POKEMON", desc: "Ultra rare variants" }, { href: "/legendary-pokemon-generator", label: "LEGENDARY", desc: "Powerful rare Pokemon" }].map(link => (
+                <Link key={link.href} href={link.href} className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-marigold hover:text-black hover:border-black transition-all group"><h3 className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">{link.label}</h3><p className="font-mono text-[10px] text-white/60 group-hover:text-black/60">{link.desc}</p></Link>
+              ))}
             </div>
-          </article>
+          </section>
+
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">FAQ</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">PALDEA POKEMON FAQ</h2>
+            <div className="space-y-3">
+              {[
+                { q: "How many Pokemon are in Paldea?", a: "Paldea introduced 120 new Pokemon (#906-1025), including those from the Teal Mask and Indigo Disk DLC expansions. The full Paldea Pokedex also includes hundreds of returning Pokemon from previous generations." },
+                { q: "What are Paradox Pokemon?", a: "Paradox Pokemon are ancient or futuristic variants of existing Pokemon. Scarlet has Past forms (Great Tusk = ancient Donphan), Violet has Future forms (Iron Treads = futuristic Donphan). Paradox Pokemon have extremely high stats and unique type combinations." },
+                { q: "What is Terastallize?", a: "Terastallize changes a Pokemon's type to its hidden Tera Type for the rest of the battle, boosting STAB. Every Pokemon has a Tera Type — often its original type but sometimes surprising ones. This enables creative strategies and type changes not otherwise possible." },
+                { q: "Is Scarlet or Violet better?", a: "Scarlet has ancient-themed Paradox Pokemon (Great Tusk, Scream Tail, etc.) and Professor Sada. Violet has future-themed Paradox Pokemon (Iron Treads, Iron Bundle, etc.) and Professor Turo. The story is nearly identical but Paradox preferences drive version choice." },
+                { q: "What are the Paldea DLC expansions?", a: "The Teal Mask takes you to Kitakami — a Japanese-inspired area with Ogerpon (Grass, 4 Tera Type forms) and returning Pokemon. The Indigo Disk is set at Blueberry Academy and adds Terapagos, new Paradox Pokemon (Walking Wake, Iron Leaves, etc.), and Archaludon." },
+                { q: "What is the best Paldea starter?", a: "Fuecoco/Skeledirge (Fire/Ghost) is the most defensive and popular for playthroughs. Meowscarada (Grass/Dark) at 123 Speed is the fastest starter ever and excellent for competitive. Quaquaval (Water/Fighting) has a unique typing and high offensive power." },
+                { q: "What is the Paldea open world like?", a: "Scarlet & Violet are the first fully open-world Pokemon games — no loading zones, Pokemon roam freely, and all three storylines (Victory Road gyms, Starfall Street Team Star, Path of Legends Titan Pokemon) can be done in any order." },
+                { q: "What is Gholdengo and why is it so good?", a: "Gholdengo (Steel/Ghost, 600 BST) has the unique ability Good as Gold — it blocks all status moves targeting it (Toxic, Will-O-Wisp, Thunder Wave). Combined with Nasty Plot and 133 Sp. Atk, it was OU's most dominant Pokemon for multiple seasons." },
+                { q: "What is the Ruinous Quartet?", a: "Wo-Chien (Dark/Grass), Chien-Pao (Dark/Ice), Ting-Lu (Dark/Ground), and Chi-Yu (Dark/Fire) are sealed behind Shrines across Paldea. Chi-Yu (Beads of Ruin, lowers all foes' Sp. Def by 25%) and Chien-Pao (Sword of Ruin) were competitively banned." },
+                { q: "What new mechanics did Gen 9 introduce?", a: "Gen 9 introduced: fully open world, Terastallize (type change once per battle), Paradox Pokemon, picnics (Pokemon bonding), Let's Go auto-battle, and the sandwich-making system for team-building bonuses (Egg Power, Encounter Power, etc.)." },
+                { q: "How does the Paldea Pokemon Generator work?", a: "Select Gen 9/Paldea filter, set team size (1-6), filter by type or evolution stage, optionally exclude Paradox/legendary Pokemon for Nuzlockes. Generate, lock favorites, regenerate the rest. Free and instant — perfect for Scarlet & Violet challenge runs." },
+              ].map(faq => (<details key={faq.q} className="bg-white border-2 border-black p-4 slasher group"><summary className="font-mono font-bold text-sm text-black uppercase cursor-pointer group-open:mb-2">{faq.q}</summary><p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">{faq.a}</p></details>))}
+            </div>
+          </section>
         </div>
       </main>
     </>

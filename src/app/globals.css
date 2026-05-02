@@ -1,8 +1,20 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 :root {
   --background: #FBE9BB;
   --foreground: #0F0F0F;
+}
+
+/* =============================================
+   DESKTOP ZOOM — scales the entire page to ~72%
+   on large screens, leaving room for ad sidebars.
+   Mobile/tablet (<1024px) are NOT affected.
+   Uses CSS zoom (layout reflow, no blurry text).
+   ============================================= */
+@media (min-width: 1024px) {
+  html {
+    zoom: 0.67;
+  }
 }
 
 /* stylelint-disable-next-line at-rule-no-unknown */

@@ -1,9 +1,10 @@
 import { Share2, Download } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 /**
  * CardShowcase Component - Export Trading Cards Feature
- * 
+ *
  * Styling Notes:
  * - Section badge: bg-black with text-white
  * - Download & Share icons: White background (bg-white) with black border (border-2 border-black)
@@ -11,7 +12,7 @@ import Image from 'next/image';
  */
 export default function CardShowcase() {
   return (
-    <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher animate-fade-in">
+    <section className="max-w-6xl mx-auto mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher animate-fade-in">
       <div className="flex flex-col lg:flex-row gap-12 items-center">
         {/* LEFT: Text Content */}
         <div className="flex-1 space-y-8">
@@ -19,15 +20,16 @@ export default function CardShowcase() {
             <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">New Feature</span>
           </div>
           <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] animate-fade-in">
-            EXPORT <br/>
+            EXPORT <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
               TRADING CARDS
             </span>
           </h2>
           <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6 animate-fade-in">
-            Turn any generated Pokémon into a high-resolution collectible card. Perfect for sharing your Nuzlocke encounters or dream team on social media.
+            Turn any generated Pokémon into a high-resolution collectible card. Perfect for
+            sharing your Nuzlocke encounters or dream team on social media.
           </p>
-          
+
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center gap-3 animate-scale-in">
               <div className="w-10 h-10 bg-white border-2 border-black flex items-center justify-center text-black transition-smooth hover:scale-110"><Download size={20} /></div>
@@ -38,16 +40,34 @@ export default function CardShowcase() {
               <span className="font-mono text-sm font-bold text-black">Instant Share</span>
             </div>
           </div>
+
+          <Link
+            href="/pokemon-card-generator"
+            className="inline-flex items-center gap-3 bg-black text-white px-6 py-3 font-mono font-bold text-sm uppercase tracking-widest slasher border-2 border-black hover:bg-marigold hover:text-black transition-all duration-200 group animate-scale-in"
+          >
+            Generate Your Card
+            <span className="group-hover:translate-x-1 transition-transform duration-200">→</span>
+          </Link>
         </div>
 
         {/* RIGHT: The Pikachu Demo Card */}
-        <div className="flex-1 relative group flex justify-center">
+        <Link
+          href="/pokemon-card-generator"
+          className="flex-1 relative group flex justify-center"
+          title="Go to Pokemon Card Generator"
+          aria-label="Open Pokemon Card Generator"
+        >
           {/* Decorative Backing */}
           <div className="absolute inset-0 bg-black translate-x-4 translate-y-4 slasher opacity-20 max-w-[320px] mx-auto transition-smooth group-hover:translate-x-6 group-hover:translate-y-6"></div>
-          
+
           {/* THE CARD ITSELF */}
-          <div className="relative w-[280px] md:w-[320px] bg-gradient-to-br from-yellow-200 to-yellow-500 p-3 border-[8px] border-[#D4AF37] shadow-2xl transform transition-smooth group-hover:rotate-2 group-hover:scale-105 animate-scale-in">
-            
+          <div className="relative w-[280px] md:w-[320px] bg-gradient-to-br from-yellow-200 to-yellow-500 p-3 border-[8px] border-[#D4AF37] shadow-2xl transform transition-smooth group-hover:rotate-2 group-hover:scale-105 animate-scale-in cursor-pointer">
+
+            {/* Hover overlay hint */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-200 flex items-end justify-center pb-3 opacity-0 group-hover:opacity-100 z-20">
+              <span className="font-mono text-[10px] font-bold text-black/70 uppercase tracking-widest bg-white/80 px-2 py-0.5 slasher">Click to create cards →</span>
+            </div>
+
             {/* Header */}
             <div className="flex justify-between items-center bg-white/90 px-3 py-1 mb-2 border-b-2 border-black/10">
               <span className="font-sans font-bold text-black text-lg">PIKACHU</span>
@@ -57,8 +77,8 @@ export default function CardShowcase() {
             {/* Art Box */}
             <div className="bg-white border-2 border-[#D4AF37] shadow-inner flex items-center justify-center h-48 mb-3 relative overflow-hidden">
               <div className="absolute inset-0 bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-yellow-100 to-transparent opacity-50"></div>
-              <Image 
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" 
+              <Image
+                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
                 alt="Pikachu Electric-type official artwork"
                 width={160}
                 height={160}
@@ -95,7 +115,8 @@ export default function CardShowcase() {
               <p className="font-mono text-[10px] text-black/60 font-bold">Generated by RandomPokemon.co</p>
             </div>
           </div>
-        </div>
+        </Link>
+
       </div>
     </section>
   );

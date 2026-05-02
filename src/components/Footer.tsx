@@ -41,6 +41,12 @@ export default function Footer() {
                 Main Generator
               </Link>
               <Link
+                href="/pokemon-card-generator"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Card Generator
+              </Link>
+              <Link
                 href="/shiny-pokemon-generator"
                 className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
               >
@@ -60,6 +66,7 @@ export default function Footer() {
               </Link>
             </nav>
           </div>
+
 
           {/* Column 3: Region Generators */}
           <div className="space-y-4">

@@ -1,487 +1,146 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { MapPin, ArrowLeft, ExternalLink } from "lucide-react";
-import FreshnessSignal from "@/components/FreshnessSignal";
+import { ArrowLeft } from "lucide-react";
 
-const PokemonGeneratorClient = dynamic(
-  () => import("../PokemonGeneratorClient")
-);
+const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
+const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
+  loading: () => <div className="min-h-[400px] animate-pulse bg-cream border-2 border-black" />,
+});
 
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Gen 2 Random Team Generator | Johto Pokemon Gold Silver Crystal",
-  description:
-    "Generate random Johto Pokemon teams from Gen 2 (Pokemon #152-251)! Includes Gold, Silver & Crystal with Legendary Beasts, Ho-Oh & Lugia. Updated January 2026.",
-  keywords: [
-    "gen 2 random team generator",
-    "johto pokemon team builder",
-    "gen 2 pokemon randomizer",
-    "gold silver team generator",
-    "johto randomizer free",
-    "legendary beasts generator",
-    "gen 2 nuzlocke generator",
-    "crystal pokemon team builder",
-    "johto pokemon with filters",
-  ],
-  alternates: {
-    canonical: `${siteUrl}/johto-pokemon-generator`,
-  },
-  openGraph: {
-    title: "Random Johto Pokemon Generator | Gen 2 Gold & Silver",
-    description:
-      "Generate random Johto Pokemon from Gen 2! Gold & Silver Pokemon with Legendary Beasts.",
-    url: `${siteUrl}/johto-pokemon-generator`,
-    type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Johto Pokemon Generator",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Random Johto Pokemon Generator | Gen 2 Gold & Silver",
-    description:
-      "Generate random Johto Pokemon from Gen 2! Legendary Beasts included.",
-    images: ["/og-image.png"],
-  },
+  title: "Johto Pokemon Generator | Gen 2 Random Team Builder (Gold/Silver/Crystal)",
+  description: "Generate random Johto Pokemon teams from Generation 2 (#152-251). Gold, Silver & Crystal including Lugia, Ho-Oh and the Legendary Beasts. Free online team builder. Updated 2026.",
+  keywords: ["johto pokemon generator", "gen 2 random team generator", "johto pokemon team builder", "gold silver team generator", "johto randomizer", "gen 2 nuzlocke generator", "heartgold soulsilver team builder", "johto pokemon picker"],
+  alternates: { canonical: `${siteUrl}/johto-pokemon-generator` },
+  openGraph: { title: "Johto Pokemon Generator | Gen 2 Random Team Builder", description: "Generate random Johto Pokemon from Gen 2! Gold, Silver & Crystal.", url: `${siteUrl}/johto-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Johto Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Johto Pokemon Generator | Gen 2 Random Team Builder", description: "Generate random Johto Pokemon from Gen 2!", images: ["/og-image.png"] },
 };
 
-// JSON-LD Structured Data
-const johtoJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "Gen 2 Random Team Generator",
-  description:
-    "Generate random Pokemon teams from the Johto region (Gen 2 - Gold, Silver & Crystal), including the Legendary Beasts, Ho-Oh, and Lugia. Pokemon #152-251.",
-  url: `${siteUrl}/johto-pokemon-generator`,
-  applicationCategory: "GameApplication",
-  operatingSystem: "Any",
-  datePublished: "2024-11-15",
-  dateModified: "2026-01-13",
-  isPartOf: {
-    "@type": "WebApplication",
-    name: "Random Pokemon Generator",
-    url: siteUrl,
-  },
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
+const jsonLd = {
+  "@context": "https://schema.org", "@type": "WebApplication", name: "Johto Pokemon Generator",
+  description: "Generate random Pokemon teams from the Johto region (Gen 2). Pokemon #152-251.",
+  url: `${siteUrl}/johto-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "How many Pokemon are in Johto?", acceptedAnswer: { "@type": "Answer", text: "Johto introduced 100 new Pokemon (#152-251), from Chikorita to Celebi, bringing the total Pokedex to 251. The HeartGold & SoulSilver remakes expanded the available Pokemon to include the full National Dex." } },
+    { "@type": "Question", name: "Which Johto starter is the best?", acceptedAnswer: { "@type": "Answer", text: "Totodile/Feraligatr is considered the strongest for playthroughs with excellent Water STAB and bulk. Typhlosion is a powerful Fire special attacker. Meganium is the most defensive but faces the hardest early gyms." } },
+    { "@type": "Question", name: "What is the Tower Duo?", acceptedAnswer: { "@type": "Answer", text: "Lugia (#249, Psychic/Flying, 680 BST) and Ho-Oh (#250, Fire/Flying, 680 BST) are the mascot legendaries of Silver and Gold respectively. Lugia is found at the Whirl Islands; Ho-Oh is found at the Bell Tower." } },
+    { "@type": "Question", name: "Why is HGSS considered the best Pokemon game?", acceptedAnswer: { "@type": "Answer", text: "HeartGold & SoulSilver are praised for their following Pokemon overworld feature (any Pokemon follows you), two full regions (Johto + Kanto), the Pokeathlon mini-game, the Pokegear, and the largest post-game content of any main series game." } },
+    { "@type": "Question", name: "What are the Legendary Beasts in Johto?", acceptedAnswer: { "@type": "Answer", text: "Raikou (Electric), Entei (Fire), and Suicune (Water) are the roaming legendaries created by Ho-Oh to resurrect the Pokemon that died in the Burned Tower. They roam across Johto and flee on contact, requiring specific strategies to catch." } },
+    { "@type": "Question", name: "What games are set in the Johto region?", acceptedAnswer: { "@type": "Answer", text: "Johto games: Pokemon Gold, Silver, Crystal (1999-2001) and remakes HeartGold & SoulSilver (2009). These are the only main series games that include two full regions — Johto and Kanto — in one game." } },
+    { "@type": "Question", name: "What new features did Gen 2 introduce?", acceptedAnswer: { "@type": "Answer", text: "Gen 2 introduced: Pokemon breeding (Day Care), held items, the day/night cycle (time-based encounters), gender differences, Special stat split into Sp. Atk/Sp. Def, Shiny Pokemon, the Steel and Dark types, and two new ball types (Apricorn Balls)." } },
+    { "@type": "Question", name: "What is the best team for HeartGold and SoulSilver?", acceptedAnswer: { "@type": "Answer", text: "A strong HGSS team: Feraligatr (Water), Ampharos (Electric), Gengar (Ghost/Poison), Heracross (Bug/Fighting), Espeon or Umbreon (Psychic/Dark), and Gyarados (Water/Flying). This gives excellent type coverage for both Johto and Kanto Leaders." } },
+    { "@type": "Question", name: "How do you catch the Legendary Beasts in HGSS?", acceptedAnswer: { "@type": "Answer", text: "Use the Poke Radar (Pokewalker) or wait for random encounters. Using a Master Ball is recommended. Alternatively, use Mean Look or Block to prevent escape, then use Arena Trap or Shadow Tag Pokemon. Suicune appears in a fixed battle at the Burned Tower in Crystal/HGSS." } },
+    { "@type": "Question", name: "What is Celebi and how do you get it?", acceptedAnswer: { "@type": "Answer", text: "Celebi (#251) is a Psychic/Grass mythical Pokemon known as the Time Travel Pokemon. In original Gold/Silver, it was event-only. In HGSS, a special Celebi unlocks a Giovanni event. It is available in Pokemon HOME through events and Pokemon Bank transfers." } },
+    { "@type": "Question", name: "How does this Johto Pokemon Generator work?", acceptedAnswer: { "@type": "Answer", text: "Select the Johto or Gen 2 filter, choose your team size (1-6), optionally filter by type or evolution stage, and click Generate. You can lock Pokemon you want to keep and regenerate the others. Perfect for Nuzlocke runs, randomizer planning, and fun team challenges." } },
+  ],
 };
 
 export default function JohtoPokemonGeneratorPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(johtoJsonLd) }}
-      />
-      <main className="min-h-screen bg-cream px-4 py-8 sm:px-6 lg:px-8">
-        {/* Breadcrumbs */}
-        <nav className="mb-6 max-w-7xl mx-auto" aria-label="Breadcrumb">
-          <ol className="flex items-center gap-2 text-sm">
-            <li>
-              <Link
-                href="/"
-                className="text-brown hover:text-red transition-colors flex items-center gap-1"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Home
-              </Link>
-            </li>
-            <li className="text-brown/50">/</li>
-            <li className="text-brown font-semibold">
-              Johto Pokemon Generator
-            </li>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <main className="min-h-screen bg-cream p-4 md:p-8 relative">
+        <nav className="mb-6 max-w-6xl mx-auto" aria-label="Breadcrumb">
+          <ol className="flex items-center gap-2 font-mono text-xs">
+            <li><Link href="/" className="text-charcoal hover:text-black transition-colors flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Home</Link></li>
+            <li className="text-charcoal/40">/</li>
+            <li className="text-black font-bold uppercase">Johto Generator</li>
           </ol>
         </nav>
 
-        {/* Hero Section */}
-        <div className="max-w-7xl mx-auto mb-12 text-center">
-          <div className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 border-2 border-black px-4 py-2 mb-4">
-            <MapPin className="w-5 h-5" />
-            <span className="font-bold">GEN 2 • GOLD & SILVER</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-brown mb-4 font-space-grotesk">
-            Gen 2 Random Team Generator
-          </h1>
-          <p className="text-lg sm:text-xl text-brown/80 max-w-3xl mx-auto mb-6">
-            Generate random <strong>Johto Pokemon teams</strong> from Generation 2 (Pokemon #152-251)!
-            Perfect for Gold, Silver & Crystal Nuzlockes, Legendary Beast hunts, and dual-region challenges.
-            Includes Ho-Oh, Lugia, and the ability to visit Kanto.
+        <div className="max-w-6xl mx-auto mb-5 text-center">
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">JOHTO POKEMON GENERATOR</h1>
+          <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
+            Generate random <strong>Johto Pokemon teams</strong> from Generation 2 (#152-251). Gold, Silver &amp; Crystal — with breeding, held items, and the legendary Tower Duo.
           </p>
-          
-          <FreshnessSignal 
-            lastUpdated="January 13, 2026" 
-            updateFrequency="Updated monthly with Legendary Beast strategies"
-          />
-
-          {/* Key Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
-            <div className="bg-yellow-400 border-2 border-black p-4">
-              <MapPin className="w-8 h-8 mx-auto mb-2 text-gray-900" />
-              <h3 className="font-bold mb-1 text-gray-900">100 New Pokemon</h3>
-              <p className="text-sm text-gray-800">
-                Plus 251 total Pokedex
-              </p>
-            </div>
-            <div className="bg-red-600 border-2 border-black p-4 text-white">
-              <span className="text-3xl mb-2 block">🦁</span>
-              <h3 className="font-bold mb-1">Legendary Beasts</h3>
-              <p className="text-sm text-white/90">
-                Raikou, Entei, Suicune
-              </p>
-            </div>
-            <div className="bg-blue-600 text-white border-2 border-black p-4">
-              <span className="text-3xl mb-2 block">🔔</span>
-              <h3 className="font-bold mb-1">Two Regions</h3>
-              <p className="text-sm text-white/90">
-                Johto + Kanto post-game
-              </p>
-            </div>
-          </div>
         </div>
 
-        {/* Generator Component */}
-        <PokemonGeneratorClient />
+        <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Johto" />
 
-        {/* SEO Content Section */}
-        <div className="max-w-4xl mx-auto mt-16 space-y-8">
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              About the Johto Region
-            </h2>
-            <p className="text-brown/80 leading-relaxed">
-              <strong>Johto</strong> is the second region in the Pokemon series,
-              featured in Pokemon Gold, Silver & Crystal (1999-2000, remakes HGSS 2009).
-              Based on Kansai, Japan, Johto introduced 100 new Pokemon,
-              Pokemon breeding, held items, and a return to Kanto post-game.
+        <CardShowcase />
+
+        <div className="max-w-6xl mx-auto mt-10 space-y-6">
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">REGION OVERVIEW</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">ABOUT THE JOHTO REGION</h2>
+            <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed border-l-4 border-black pl-6 mb-4">
+              <strong>Johto</strong> is the second Pokemon region, featured in Gold, Silver &amp; Crystal (1999-2000) and remakes HeartGold &amp; SoulSilver (2009). Based on the Kansai region of Japan (Osaka, Kyoto, Nara), it introduced breeding, held items, the day/night cycle, the Steel &amp; Dark types, and 100 new Pokemon.
             </p>
-            <p className="text-brown/80 leading-relaxed">
-              Key features of Johto include:
+            <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed border-l-4 border-black pl-6 mb-6">
+              HeartGold &amp; SoulSilver are widely considered the best Pokemon games ever made, featuring two full regions, 16 Gym Badges, and a Pokemon that follows you overworld — a feature fans have requested back ever since.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-brown/80 ml-4">
-              <li>
-                <strong>100 New Pokemon:</strong> #152 Chikorita to #251 Celebi
-              </li>
-              <li>
-                <strong>Two Regions:</strong> Complete Johto, then visit Kanto (16 Gym Badges!)
-              </li>
-              <li>
-                <strong>Pokemon Breeding:</strong> Day Care Center, eggs, baby Pokemon
-              </li>
-              <li>
-                <strong>Held Items:</strong> Pokemon can hold items for various effects
-              </li>
-              <li>
-                <strong>Dark & Steel Types:</strong> Two new types introduced
-              </li>
-              <li>
-                <strong>Day/Night Cycle:</strong> Time-based events and evolutions
-              </li>
-            </ul>
-          </article>
-
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Legendary Beasts & Tower Duo
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="border-2 border-red bg-red/10 p-4">
-                <h3 className="font-bold text-brown mb-2 text-xl">🦁 Legendary Beasts (Roaming Trio)</h3>
-                <div className="text-sm text-brown/80 space-y-2">
-                  <p>
-                    <strong>Raikou</strong> (#243) - Electric - Thunder Pokemon - Roams Johto<br />
-                    Based on raiju (thunder beast), saber-toothed tiger appearance
-                  </p>
-                  <p>
-                    <strong>Entei</strong> (#244) - Fire - Volcano Pokemon - Roams Johto<br />
-                    Based on lion/Chinese guardian lion, born from volcano eruption
-                  </p>
-                  <p>
-                    <strong>Suicune</strong> (#245) - Water - Aurora Pokemon - Roams Johto (featured in Crystal)<br />
-                    Based on qilin/leopard, purifies polluted water, Crystal mascot
-                  </p>
-                  <p className="mt-2 text-brown/60 italic">
-                    All three died in Burned Tower fire, resurrected by Ho-Oh with new forms
-                  </p>
-                </div>
-              </div>
-
-              <div className="border-2 border-yellow bg-yellow/10 p-4">
-                <h3 className="font-bold text-brown mb-2 text-xl">🔔 Tower Duo (Box Legendaries)</h3>
-                <div className="text-sm text-brown/80">
-                  <strong>Ho-Oh</strong> (#250) - Fire/Flying - Rainbow Pokemon - Gold version mascot<br />
-                  Sacred Fire signature move, Tin Tower (Bell Tower), resurrected the legendary beasts<br />
-                  <strong>Lugia</strong> (#249) - Psychic/Flying - Diving Pokemon - Silver version mascot<br />
-                  Aeroblast signature move, Whirl Islands, controls the legendary birds (Articuno/Zapdos/Moltres)
-                </div>
-              </div>
-
-              <div className="border-2 border-green bg-green/10 p-4">
-                <h3 className="font-bold text-brown mb-2">🍀 Celebi (Time Travel Pokemon)</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Celebi</strong> (#251) - Psychic/Grass - Mythical Pokemon, event-exclusive<br />
-                  Time travel ability, Ilex Forest shrine, GS Ball in Crystal (Japan-only event)
-                </p>
-              </div>
+            <div className="grid md:grid-cols-3 gap-3">
+              {[{ label: "100 NEW POKEMON", desc: "#152 Chikorita to #251 Celebi" }, { label: "BREEDING SYSTEM", desc: "First gen with Pokemon breeding" }, { label: "DAY/NIGHT CYCLE", desc: "Time-based wild encounters" }].map(item => (
+                <div key={item.label} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.label}</h3><p className="font-mono text-xs text-charcoal">{item.desc}</p></div>
+              ))}
             </div>
-          </article>
+          </section>
 
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Johto Starters & Popular Pokemon
-            </h2>
-            <div className="space-y-4">
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">🌱 Johto Starters</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Chikorita → Bayleef → Meganium</strong> (Grass) - Sauropod dinosaur<br />
-                  <strong>Cyndaquil → Quilava → Typhlosion</strong> (Fire) - Volcano-backed badger/weasel<br />
-                  <strong>Totodile → Croconaw → Feraligatr</strong> (Water) - Alligator/crocodile
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">🐉 Pseudo-Legendary</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Larvitar → Pupitar → Tyranitar</strong> (Rock/Dark)<br />
-                  600 BST, Sand Stream ability, Godzilla inspiration, only available in Mt. Silver
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">👶 Baby Pokemon & Pre-Evolutions</h3>
-                <div className="text-sm text-brown/70 space-y-1">
-                  <div><strong>Pichu</strong> (Pikachu baby) - Evolves with friendship</div>
-                  <div><strong>Cleffa, Igglybuff</strong> - Clefairy/Jigglypuff babies</div>
-                  <div><strong>Togepi → Togetic</strong> - First egg Pokemon</div>
-                  <div><strong>Tyrogue</strong> - Baby evolving to Hitmonlee/Hitmonchan/Hitmontop based on stats</div>
-                  <div><strong>Smoochum, Elekid, Magby</strong> - Jynx/Electabuzz/Magmar babies</div>
-                  <div><strong>Azurill</strong> (Gen 3) - Marill baby, but Wooper → Quagsire in Gen 2</div>
-                </div>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">⚡ Popular Johto Pokemon</h3>
-                <div className="text-sm text-brown/70 space-y-1">
-                  <div><strong>Umbreon/Espeon</strong> - Dark/Psychic Eevee evolutions (friendship based)</div>
-                  <div><strong>Kingdra</strong> - Water/Dragon (Seadra with Dragon Scale)</div>
-                  <div><strong>Scizor</strong> - Bug/Steel (Scyther with Metal Coat)</div>
-                  <div><strong>Heracross</strong> - Bug/Fighting, Megahorn + Guts ability</div>
-                  <div><strong>Houndoom</strong> - Dark/Fire, Flash Fire ability</div>
-                  <div><strong>Steelix</strong> - Steel/Ground (Onix with Metal Coat)</div>
-                  <div><strong>Blissey</strong> - Normal, highest HP stat in the game</div>
-                  <div><strong>Ampharos</strong> - Electric, Mareep evolution line</div>
-                  <div><strong>Crobat</strong> - Poison/Flying (Golbat with high friendship)</div>
-                </div>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">🥚 First Egg Pokemon</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Togepi</strong> was the first egg Pokemon players received (from Professor Elm's assistant). Hatch it, raise its happiness, and evolve it to Togetic!
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Best Johto Pokemon (Competitive Tier List)
-            </h2>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">LEGENDARIES</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">JOHTO LEGENDARY POKEMON</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-red pl-4">
-                <h3 className="font-bold text-brown mb-1">
-                  🔴 Ubers Tier (Restricted)
-                </h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Ho-Oh</strong> (Regenerator + Sacred Fire),{" "}
-                  <strong>Lugia</strong> (Multiscale wall),{" "}
-                  <strong>Celebi</strong> (versatile movepool)
-                </p>
+              <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">🗼 TOWER DUO</h3>
+                <div className="font-mono text-xs text-charcoal space-y-1">
+                  <p><strong>Lugia</strong> (#249) — Psychic/Flying, 680 BST. Mascot of Pokemon Silver. Found in Whirl Islands.</p>
+                  <p><strong>Ho-Oh</strong> (#250) — Fire/Flying, 680 BST. Mascot of Pokemon Gold. Found at Bell Tower.</p>
+                </div>
               </div>
-              <div className="border-l-4 border-yellow pl-4">
-                <h3 className="font-bold text-brown mb-1">🟡 OU Tier (Overused)</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Tyranitar</strong> (Sand Stream + Pursuit),{" "}
-                  <strong>Scizor</strong> (Technician Bullet Punch),{" "}
-                  <strong>Blissey</strong> (special wall),{" "}
-                  <strong>Kingdra</strong> (Rain Dance Swift Swim)
-                </p>
-              </div>
-              <div className="border-l-4 border-green pl-4">
-                <h3 className="font-bold text-brown mb-1">
-                  🟢 Fun UU/RU Picks
-                </h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Suicune</strong> (Calm Mind sweeper),{" "}
-                  <strong>Heracross</strong> (Megahorn + Guts),{" "}
-                  <strong>Umbreon</strong> (physical wall)
-                </p>
-              </div>
+              {[{ title: "🐃 LEGENDARY BEASTS", content: "Raikou (Electric), Entei (Fire), Suicune (Water). Roaming legendaries created by Ho-Oh to resurrect the Pokemon that perished in the Burned Tower disaster. Suicune has a fixed encounter in Crystal/HGSS." },
+              { title: "✨ CELEBI", content: "Celebi (#251) — Psychic/Grass, 600 BST. The mythical time-traveler. Originally event-exclusive; in HGSS a special Celebi unlocks a Giovanni flashback event. Now available via Pokemon HOME." }
+              ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
-          </article>
+          </section>
 
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Johto Region Trivia & Fun Facts
-            </h2>
-            <div className="space-y-4">
-              <div className="border-2 border-black p-4 bg-yellow/20">
-                <h3 className="font-bold text-brown mb-2">🗺️ Two Regions in One Game!</h3>
-                <p className="text-sm text-brown/70">
-                  Gold/Silver/Crystal let you visit <strong>both Johto and Kanto</strong>! After beating the Elite Four and Champion Lance, take a ship to Kanto and battle all 8 original Gym Leaders. Then climb Mt. Silver to face <strong>Red</strong> (the player character from Gen 1) at level 81 Pokemon!
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-blue/10">
-                <h3 className="font-bold text-brown mb-2">🥚 Breeding Introduced</h3>
-                <p className="text-sm text-brown/70">
-                  Gen 2 introduced <strong>Pokemon breeding</strong> at the Day Care Center. Leave two compatible Pokemon, get an egg, hatch baby Pokemon! This mechanic allowed IV breeding, egg moves, and introduced baby Pokemon (Pichu, Cleffa, Togepi, etc.).
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-gray-700/10">
-                <h3 className="font-bold text-brown mb-2">🌙 Day/Night Cycle</h3>
-                <p className="text-sm text-brown/70">
-                  Johto introduced a <strong>real-time day/night cycle</strong> based on the Game Boy Color's clock. Some Pokemon only appear at certain times (Hoothoot at night, Ledyba in morning). Evolutions like Umbreon (night) and Espeon (day) depend on time of day.
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-purple-600/10">
-                <h3 className="font-bold text-brown mb-2">⚔️ Dark & Steel Types</h3>
-                <p className="text-sm text-brown/70">
-                  Gen 2 introduced two new types: <strong>Dark</strong> and <strong>Steel</strong>. Dark was super effective against Psychic types (which dominated Gen 1). Many Pokemon were retroactively retyped (Magnemite became Electric/Steel).
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-red/10">
-                <h3 className="font-bold text-brown mb-2">💎 Crystal Version Features</h3>
-                <p className="text-sm text-brown/70">
-                  Pokemon Crystal (2000) was the enhanced third version with: <strong>animated Pokemon sprites</strong>, ability to play as a girl, Suicune featured in storyline, Battle Tower, and expanded Pokemon movesets. First Pokemon game with color on Game Boy Color!
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-green/10">
-                <h3 className="font-bold text-brown mb-2">🎒 Held Items</h3>
-                <p className="text-sm text-brown/70">
-                  Gen 2 introduced <strong>held items</strong>. Pokemon can hold items like Leftovers (HP restoration), Choice Band (locked move + 50% attack), Focus Sash (survive one-hit KO), evolution items (Metal Coat, King's Rock), and berries!
-                </p>
-              </div>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST JOHTO POKEMON (TIER LIST)</h2>
+            <div className="space-y-3">
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Lugia, Ho-Oh, Mega Heracross, Mega Scizor</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Scizor, Heracross, Umbreon, Espeon, Steelix, Feraligatr, Tyranitar</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Ampharos, Houndoom, Misdreavus, Quagsire, Lanturn, Skarmory</p></div>
             </div>
-          </article>
+          </section>
 
-          {/* Related Region Generators */}
-          <div className="bg-yellow border-2 border-black p-8">
-            <h2 className="text-2xl font-bold text-brown mb-6 flex items-center gap-2">
-              <ExternalLink className="w-6 h-6" />
-              Other Region Generators
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Link
-                href="/kanto-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-red hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🎮 Kanto Pokemon (Gen 1)
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Original 151 Pokemon
-                </p>
-              </Link>
-              <Link
-                href="/hoenn-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-blue hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🌊 Hoenn Pokemon (Gen 3)
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Ruby & Sapphire - Weather Trio
-                </p>
-              </Link>
-              <Link
-                href="/sinnoh-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-purple-600 hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  ⏰ Sinnoh Pokemon (Gen 4)
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Diamond & Pearl - Creation Trio
-                </p>
-              </Link>
-              <Link
-                href="/"
-                className="block bg-white border-2 border-black p-4 hover:bg-green-700 hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🎲 All Regions Generator
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Generate from any generation
-                </p>
-              </Link>
+          <section className="bg-black border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-marigold px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-black uppercase tracking-widest">MORE TOOLS</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-white leading-[0.9] mb-6 uppercase">EXPLORE MORE <span className="text-marigold">GENERATORS</span></h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[{ href: "/kanto-pokemon-generator", label: "KANTO (GEN 1)", desc: "Original 151" }, { href: "/hoenn-pokemon-generator", label: "HOENN (GEN 3)", desc: "Ruby & Sapphire" }, { href: "/sinnoh-pokemon-generator", label: "SINNOH (GEN 4)", desc: "Diamond & Pearl" }, { href: "/paldea-pokemon-generator", label: "PALDEA (GEN 9)", desc: "Scarlet & Violet" }].map(link => (
+                <Link key={link.href} href={link.href} className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-marigold hover:text-black hover:border-black transition-all group"><h3 className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">{link.label}</h3><p className="font-mono text-[10px] text-white/60 group-hover:text-black/60">{link.desc}</p></Link>
+              ))}
             </div>
-          </div>
+          </section>
 
-          {/* FAQ Section */}
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Johto Pokemon FAQs
-            </h2>
-            <div className="space-y-4">
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  How many Pokemon are in Johto?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Johto introduced <strong>100 new Pokemon</strong> (#152-251), bringing the total to 251 Pokemon across both Johto and Kanto. The Johto Pokedex in HGSS contains 256 Pokemon.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Can I catch the Legendary Beasts?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Yes! <strong>Raikou</strong>, <strong>Entei</strong>, and <strong>Suicune</strong> are roaming Pokemon that flee when encountered. Use Mean Look or a Master Ball to catch them. In Crystal, Suicune has a dedicated storyline with fixed encounters.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Which Johto starter is best?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  <strong>Typhlosion</strong> is fastest with good Special Attack. <strong>Feraligatr</strong> has high Attack and learns Ice Fang. <strong>Meganium</strong> struggles because most Johto Gyms resist Grass type. Typhlosion or Feraligatr recommended.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Should I play original GS or HeartGold/SoulSilver?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  <strong>HeartGold/SoulSilver</strong> (DS, 2009) are enhanced remakes with: Pokemon walk behind you, updated graphics, expanded post-game, Battle Frontier, Safari Zone, and Physical/Special split. HGSS are considered some of the best Pokemon games ever.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  How do I fight Red in Mt. Silver?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  After beating the Kanto Gym Leaders and obtaining all 16 badges, surf from Route 27 to Mt. Silver. Inside the cave, climb to the summit to face <strong>Red</strong>, the silent protagonist from Gen 1. His team includes level 81 Pikachu, Charizard, Blastoise, Venusaur, Snorlax, and Espeon/Lapras. Hardest trainer battle in Pokemon history!
-                </p>
-              </details>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">FAQ</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">JOHTO POKEMON FAQ</h2>
+            <div className="space-y-3">
+              {[
+                { q: "How many Pokemon are in Johto?", a: "Johto introduced 100 new Pokemon (#152-251), from Chikorita to Celebi, bringing the total to 251. The HGSS remakes expanded to include the full National Dex of 493 Pokemon." },
+                { q: "Which Johto starter is the best?", a: "Totodile/Feraligatr is strongest for playthroughs with great coverage (Ice Punch, Waterfall, Earthquake). Typhlosion is powerful offensively with Flamethrower/Fire Blast. Meganium is the most defensive and hardest to use." },
+                { q: "What is the Tower Duo?", a: "Lugia (#249) and Ho-Oh (#250) are the mascot legendaries. Both have 680 BST. Lugia is at the Whirl Islands and Ho-Oh is at the Bell Tower. In Crystal, you can catch both in one game." },
+                { q: "Why is HGSS considered the best Pokemon game?", a: "HeartGold & SoulSilver feature walking Pokemon (any of your 493 Pokemon follows you), two full regions (Johto + Kanto), 16 Gym Badges, the Pokeathlon, VS Seeker, and the richest post-game content in any main series game." },
+                { q: "What are the Legendary Beasts?", a: "Raikou (Electric), Entei (Fire), and Suicune (Water) roam Johto after you visit the Burned Tower in Ecruteak City. They flee on contact, requiring Mean Look or a Master Ball. Suicune has a fixed encounter at Cerulean Cape in Crystal/HGSS." },
+                { q: "What new features did Gen 2 introduce?", a: "Gen 2 introduced: Pokemon breeding (Day-Care), held items, day/night cycles, gender differences, the Physical/Special split (Sp. Atk and Sp. Def), Shiny Pokemon (1/8192 base rate), the Steel and Dark types, and the Apricorn Ball crafting system." },
+                { q: "What are Apricorn Balls?", a: "Apricorns are fruit trees found in Johto. Kurt in Azalea Town crafts them into special Poke Balls overnight: Lure Ball (excellent for fishing Pokemon), Friend Ball (raises caught Pokemon friendship), Heavy Ball (better for heavy Pokemon), Love Ball (same species, opposite gender), and more." },
+                { q: "What are version exclusives in Gold and Silver?", a: "Gold exclusives: Spinarak/Ariados, Gligar, Teddiursa/Ursaring, Mantine, Skarmory, Wobbuffet. Silver exclusives: Ledyba/Ledian, Delibird, Phanpy/Donphan, Heracross, Sneasel, Smoochum. Both versions share most of the 100 new Pokemon." },
+                { q: "Who is the Johto Elite Four?", a: "The Johto Elite Four: Will (Psychic), Koga (Poison, formerly Fuchsia Gym Leader), Bruno (Fighting, from Gen 1 Elite Four), Karen (Dark). Champion Lance uses a team of three Dragonites plus Charizard, Aerodactyl, and Gyarados." },
+                { q: "What is the best Johto team for a Nuzlocke?", a: "For a Johto Nuzlocke: Feraligatr (Water powerhouse), Ampharos (Electric, reliable attacker), Heracross (Bug/Fighting, high Attack), Gengar (Ghost/Poison, covers Normal immunity), Skarmory or Forretress (Steel wall), and Tyranitar (Rock/Dark, pseudo-legendary)." },
+                { q: "How does the Johto Pokemon Generator help with team building?", a: "This free generator randomly picks Johto Pokemon (#152-251) based on your filters — team size, type, rarity, evolution stage, or Nuzlocke-style restrictions. Lock Pokemon you want to keep and regenerate the rest. Great for randomizer ROMs, challenge runs, and draft leagues." },
+              ].map(faq => (<details key={faq.q} className="bg-white border-2 border-black p-4 slasher group"><summary className="font-mono font-bold text-sm text-black uppercase cursor-pointer group-open:mb-2">{faq.q}</summary><p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">{faq.a}</p></details>))}
             </div>
-          </article>
+          </section>
         </div>
       </main>
     </>

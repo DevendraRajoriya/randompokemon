@@ -1,498 +1,147 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { MapPin, ArrowLeft, ExternalLink } from "lucide-react";
-import FreshnessSignal from "@/components/FreshnessSignal";
+import { ArrowLeft } from "lucide-react";
 
-const PokemonGeneratorClient = dynamic(
-  () => import("../PokemonGeneratorClient")
-);
+const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
+const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
+  loading: () => <div className="min-h-[400px] animate-pulse bg-cream border-2 border-black" />,
+});
 
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Gen 5 Random Team Generator | Unova Pokemon Black White B2W2",
-  description:
-    "Generate random Unova Pokemon teams from Gen 5 (Pokemon #494-649). Free tool for Black, White, Black 2 & White 2 with filters for Tao Trio, Hidden Abilities, Nuzlocke runs. Updated January 2026.",
-  keywords: [
-    "gen 5 random team generator",
-    "unova pokemon generator",
-    "random unova pokemon picker",
-    "black white team builder",
-    "gen 5 pokemon randomizer",
-    "unova region randomizer",
-    "black 2 white 2 team generator",
-    "reshiram zekrom generator",
-    "kyurem generator",
-    "gen 5 nuzlocke generator",
-    "unova pokemon with filters",
-    "hidden ability pokemon generator",
-  ],
-  alternates: {
-    canonical: `${siteUrl}/unova-pokemon-generator`,
-  },
-  openGraph: {
-    title: "Gen 5 Random Team Generator | Unova Pokemon Black White",
-    description:
-      "Generate random Unova Pokemon teams from Gen 5 (Pokemon #494-649). Free tool with filters.",
-    url: `${siteUrl}/unova-pokemon-generator`,
-    type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Gen 5 Unova Pokemon Generator",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Random Unova Pokemon Generator | Gen 5 Black & White",
-    description:
-      "Generate random Unova Pokemon from Gen 5! Tao Trio included.",
-    images: ["/og-image.png"],
-  },
+  title: "Unova Pokemon Generator | Gen 5 Random Team Builder (Black/White)",
+  description: "Generate random Unova Pokemon teams from Generation 5 (#494-649). Black, White, Black 2 & White 2 including the Tao Trio, 156 new Pokemon and the best story in the series. Updated 2026.",
+  keywords: ["unova pokemon generator", "gen 5 random team generator", "unova pokemon team builder", "black white team generator", "unova randomizer", "gen 5 nuzlocke generator", "black 2 white 2 team builder"],
+  alternates: { canonical: `${siteUrl}/unova-pokemon-generator` },
+  openGraph: { title: "Unova Pokemon Generator | Gen 5 Random Team Builder", description: "Generate random Unova Pokemon from Gen 5! Black & White.", url: `${siteUrl}/unova-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Unova Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Unova Pokemon Generator | Gen 5 Random Team Builder", description: "Generate random Unova Pokemon from Gen 5!", images: ["/og-image.png"] },
 };
 
-// JSON-LD Structured Data
-const unovaJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "Gen 5 Random Team Generator",
-  alternateName: "Unova Pokemon Generator",
-  description:
-    "Generate random Pokemon teams from the Unova region (Gen 5 - Pokemon #494-649). Free tool for Black, White, Black 2, White 2 with filters for Nuzlocke, monotype challenges. Includes Tao Trio, Hidden Abilities.",
-  url: `${siteUrl}/unova-pokemon-generator`,
-  applicationCategory: "GameApplication",
-  operatingSystem: "Any",
-  datePublished: "2024-11-15",
-  dateModified: "2026-01-13",
-  isPartOf: {
-    "@type": "WebApplication",
-    name: "Random Pokemon Generator",
-    url: siteUrl,
-  },
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
+const jsonLd = {
+  "@context": "https://schema.org", "@type": "WebApplication", name: "Unova Pokemon Generator",
+  description: "Generate random Pokemon teams from the Unova region (Gen 5). Pokemon #494-649.",
+  url: `${siteUrl}/unova-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "How many Pokemon are in Unova?", acceptedAnswer: { "@type": "Answer", text: "Unova introduced 156 new Pokemon (#494-649) — the largest single-generation addition since Gen 1. Black & White also locked players to only new Unova Pokemon until post-game, making it a fresh experience." } },
+    { "@type": "Question", name: "What is the Tao Trio?", acceptedAnswer: { "@type": "Answer", text: "Reshiram (Fire/Dragon, Turboblaze), Zekrom (Electric/Dragon, Teravolt), and Kyurem (Ice/Dragon) form the Tao Trio. In B2W2, Kyurem can fuse with Reshiram to become White Kyurem (700 BST) or with Zekrom to become Black Kyurem (700 BST)." } },
+    { "@type": "Question", name: "Is Black or White better?", acceptedAnswer: { "@type": "Answer", text: "Black has Black City (city filled with trainers) and Reshiram; White has White Forest (wild Pokemon area) and Zekrom. Black 2 & White 2 are considered far superior to the originals with more content, PWT, and a larger Pokemon roster." } },
+    { "@type": "Question", name: "Why is Gen 5 considered to have the best story?", acceptedAnswer: { "@type": "Answer", text: "Black & White features N as a complex antagonist who genuinely believes Pokemon should be free, challenging the ethics of Pokemon training. Team Plasma's ideology and N's redemption arc represent the most mature, nuanced narrative in the main series." } },
+    { "@type": "Question", name: "What new features did Gen 5 introduce?", acceptedAnswer: { "@type": "Answer", text: "Gen 5 introduced: animated battle sprites for the first time, seasonal changes (weather/encounter changes with real-world seasons), the C-Gear (IR/Wi-Fi hub), Dream World (online feature), Pokemon Global Link, Triple Battles and Rotation Battles, and the Hidden Ability system." } },
+    { "@type": "Question", name: "What are the best Unova Pokemon for competitive play?", acceptedAnswer: { "@type": "Answer", text: "Top competitive Unova picks: Volcarona (Bug/Fire, Quiver Dance sweeper), Ferrothorn (Grass/Steel, the ultimate entry hazard setter), Conkeldurr (Fighting, Guts + Flame Orb), Excadrill (Ground/Steel, Sand Rush in Sand), Haxorus (Dragon, 147 Attack), and Reuniclus (Psychic, Magic Guard Trick Room)." } },
+    { "@type": "Question", name: "What games are set in Unova?", acceptedAnswer: { "@type": "Answer", text: "Pokemon Black & White (2010, DS) and Pokemon Black 2 & White 2 (2012, DS) are the only main series games set in Unova. B2W2 are direct sequels set 2 years later and are widely regarded as the best DS Pokemon games." } },
+    { "@type": "Question", name: "What is the Pokemon World Tournament in BW2?", acceptedAnswer: { "@type": "Answer", text: "The Pokemon World Tournament (PWT) is a facility in Black 2 & White 2 where you can battle Gym Leaders and Champions from every region in the series — all in one place. It is considered the greatest single post-game facility in Pokemon history." } },
+    { "@type": "Question", name: "What is the best Unova starter?", acceptedAnswer: { "@type": "Answer", text: "Oshawott/Samurott (Water) is the most reliable for playthroughs with good bulk and coverage. Snivy/Serperior is weakest in-game but has Contrary Leaf Storm in later gens (game-breaking in competitive). Tepig/Emboar (Fire/Fighting) hits hard but is frail." } },
+    { "@type": "Question", name: "What makes the Unova Pokemon Generator useful?", acceptedAnswer: { "@type": "Answer", text: "This free generator randomly picks Unova Pokemon (#494-649) based on your settings. Filter by type, rarity, or evolution stage. Exclude legendaries for Nuzlockes, lock favorites, and regenerate. Gen 5 has incredibly diverse Pokemon making this great for challenge runs and team discovery." } },
+    { "@type": "Question", name: "Who is N in Pokemon Black and White?", acceptedAnswer: { "@type": "Answer", text: "N (Natural Harmonia Gropius) is the king of Team Plasma and the primary rival/antagonist of Black & White. He was raised by Pokemon and believes they should be free from trainers. He is not evil — his motives are genuine — and he ultimately becomes an ally after being deceived by Ghetsis." } },
+  ],
 };
 
 export default function UnovaPokemonGeneratorPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(unovaJsonLd) }}
-      />
-      <main className="min-h-screen bg-cream px-4 py-8 sm:px-6 lg:px-8">
-        {/* Breadcrumbs */}
-        <nav className="mb-6 max-w-7xl mx-auto" aria-label="Breadcrumb">
-          <ol className="flex items-center gap-2 text-sm">
-            <li>
-              <Link
-                href="/"
-                className="text-brown hover:text-red transition-colors flex items-center gap-1"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Home
-              </Link>
-            </li>
-            <li className="text-brown/50">/</li>
-            <li className="text-brown font-semibold">
-              Unova Pokemon Generator
-            </li>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <main className="min-h-screen bg-cream p-4 md:p-8 relative">
+        <nav className="mb-6 max-w-6xl mx-auto" aria-label="Breadcrumb">
+          <ol className="flex items-center gap-2 font-mono text-xs">
+            <li><Link href="/" className="text-charcoal hover:text-black transition-colors flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Home</Link></li>
+            <li className="text-charcoal/40">/</li>
+            <li className="text-black font-bold uppercase">Unova Generator</li>
           </ol>
         </nav>
 
-        {/* Hero Section */}
-        <div className="max-w-7xl mx-auto mb-12 text-center">
-          <div className="inline-flex items-center gap-2 bg-gray-800 text-white border-2 border-black px-4 py-2 mb-4">
-            <MapPin className="w-5 h-5" />
-            <span className="font-bold">GEN 5 • BLACK & WHITE</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-brown mb-4 font-space-grotesk">
-            Gen 5 Random Team Generator
-          </h1>
-          <p className="text-lg sm:text-xl text-brown/80 max-w-3xl mx-auto mb-6">
-            Generate random <strong>Unova Pokemon teams</strong> from Generation 5 (Pokemon #494-649)!
-            Free tool for Black, White, Black 2 & White 2 with advanced filters for Nuzlocke runs, monotype challenges, and competitive team building.
+        <div className="max-w-6xl mx-auto mb-5 text-center">
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">UNOVA POKEMON GENERATOR</h1>
+          <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
+            Generate random <strong>Unova Pokemon teams</strong> from Generation 5 (#494-649). Black, White, Black 2 &amp; White 2 — the generation with the most Pokemon and the best story in the series.
           </p>
-
-          {/* Freshness Signal */}
-          <div className="max-w-4xl mx-auto mb-8">
-            <FreshnessSignal 
-              lastUpdated="January 13, 2026" 
-              updateFrequency="Updated monthly with event Pokemon"
-            />
-          </div>
-
-          {/* Key Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
-            <div className="bg-gray-800 text-white border-2 border-black p-4">
-              <MapPin className="w-8 h-8 mx-auto mb-2" />
-              <h3 className="font-bold mb-1">156 New Pokemon</h3>
-              <p className="text-sm text-white/90">
-                Most new Pokemon ever
-              </p>
-            </div>
-            <div className="bg-blue-600 border-2 border-black p-4 text-white">
-              <span className="text-3xl mb-2 block">🔥</span>
-              <h3 className="font-bold mb-1">Tao Trio</h3>
-              <p className="text-sm text-white/90">
-                Yin, Yang & Wuji dragons
-              </p>
-            </div>
-            <div className="bg-purple-600 text-white border-2 border-black p-4">
-              <span className="text-3xl mb-2 block">✨</span>
-              <h3 className="font-bold mb-1">Hidden Abilities</h3>
-              <p className="text-sm text-white/90">
-                Dream World introductions
-              </p>
-            </div>
-          </div>
         </div>
 
-        {/* Generator Component */}
-        <PokemonGeneratorClient />
+        <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Unova" />
 
-        {/* SEO Content Section */}
-        <div className="max-w-4xl mx-auto mt-16 space-y-8">
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              About the Unova Region
-            </h2>
-            <p className="text-brown/80 leading-relaxed">
-              <strong>Unova</strong> is the fifth region in the Pokemon series,
-              featured in Pokemon Black, White, Black 2 & White 2 (2010-2012).
-              Based on New York City, Unova introduced 156 brand new Pokemon
-              with NO old Pokemon until post-game, plus sequels instead of a
-              third version.
+        <CardShowcase />
+
+        <div className="max-w-6xl mx-auto mt-10 space-y-6">
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">REGION OVERVIEW</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">ABOUT THE UNOVA REGION</h2>
+            <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed border-l-4 border-black pl-6 mb-4">
+              <strong>Unova</strong> is the fifth region, based on New York City, USA. Featured in Black &amp; White (2010) and Black 2 &amp; White 2 (2012). It had the most new Pokemon of any generation (156) and forced players to use only new Unova Pokemon through the main story — creating a truly fresh experience.
             </p>
-            <p className="text-brown/80 leading-relaxed">
-              Key features of Unova include:
+            <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed border-l-4 border-black pl-6 mb-6">
+              B2W2 are direct sequels set 2 years later and are considered the best DS Pokemon games, featuring the Pokemon World Tournament where you battle Champions and Gym Leaders from every region.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-brown/80 ml-4">
-              <li>
-                <strong>156 New Pokemon:</strong> #494 Victini to #649 Genesect (most new Pokemon in any generation)
-              </li>
-              <li>
-                <strong>No Old Pokemon:</strong> Black & White featured ONLY new Pokemon until post-game
-              </li>
-              <li>
-                <strong>Hidden Abilities:</strong> Third ability slot introduced via Dream World
-              </li>
-              <li>
-                <strong>Seasons:</strong> Four seasons that change monthly and affect areas/Pokemon
-              </li>
-              <li>
-                <strong>Sequels:</strong> Black 2 & White 2 were direct sequels (not remakes)
-              </li>
-              <li>
-                <strong>Triple & Rotation Battles:</strong> New battle formats
-              </li>
-            </ul>
-          </article>
-
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Tao Trio & Legendary Pokemon
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="border-2 border-gray-800 bg-gray-800/10 p-4">
-                <h3 className="font-bold text-gray-800 mb-2 text-xl">🐉 Tao Trio (Box Legendaries)</h3>
-                <div className="text-sm text-brown/80 space-y-2">
-                  <p>
-                    <strong>Reshiram</strong> (#643) - Dragon/Fire - Vast White Pokemon - Yang<br />
-                    Signature: <strong>Blue Flare</strong> (130 power) - Turboblaze ability
-                  </p>
-                  <p>
-                    <strong>Zekrom</strong> (#644) - Dragon/Electric - Deep Black Pokemon - Yin<br />
-                    Signature: <strong>Bolt Strike</strong> (130 power) - Teravolt ability
-                  </p>
-                  <p>
-                    <strong>Kyurem</strong> (#646) - Dragon/Ice - Boundary Pokemon - Wuji<br />
-                    Signature: <strong>Glaciate</strong> (65 power, lowers Speed)<br />
-                    <strong>White Kyurem:</strong> Fuses with Reshiram (700 BST)<br />
-                    <strong>Black Kyurem:</strong> Fuses with Zekrom (700 BST)
-                  </p>
-                </div>
-              </div>
-
-              <div className="border-2 border-green bg-green/10 p-4">
-                <h3 className="font-bold text-brown mb-2 text-xl">🗡️ Swords of Justice</h3>
-                <div className="text-sm text-brown/80">
-                  <strong>Cobalion</strong> (#638) - Steel/Fighting - Iron Will Pokemon<br />
-                  <strong>Terrakion</strong> (#639) - Rock/Fighting - Cavern Pokemon<br />
-                  <strong>Virizion</strong> (#640) - Grass/Fighting - Grassland Pokemon<br />
-                  <strong>Keldeo</strong> (#647) - Water/Fighting - Mythical member - Secret Sword move
-                </div>
-              </div>
-
-              <div className="border-2 border-blue bg-blue/10 p-4">
-                <h3 className="font-bold text-brown mb-2">🌩️ Forces of Nature (Kami Trio)</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Tornadus</strong> (#641) - Flying - Only pure Flying type<br />
-                  <strong>Thundurus</strong> (#642) - Electric/Flying - Prankster ability<br />
-                  <strong>Landorus</strong> (#645) - Ground/Flying - Intimidate (Incarnate), Sheer Force (Therian)<br />
-                  All have <strong>Therian Formes</strong> (Reveal Glass item)
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">✨ Mythical Pokemon</h3>
-                <div className="text-sm text-brown/70 space-y-1">
-                  <div><strong>Victini</strong> (#494) - Psychic/Fire - Victory Star ability, event-exclusive</div>
-                  <div><strong>Keldeo</strong> (#647) - Water/Fighting - Fourth Musketeer, Secret Sword</div>
-                  <div><strong>Meloetta</strong> (#648) - Normal/Psychic (Aria) / Normal/Fighting (Pirouette)</div>
-                  <div><strong>Genesect</strong> (#649) - Bug/Steel - Download ability, Techno Blast</div>
-                </div>
-              </div>
+            <div className="grid md:grid-cols-3 gap-3">
+              {[{ label: "156 NEW POKEMON", desc: "#494 Victini to #649 Genesect" }, { label: "ANIMATED SPRITES", desc: "First gen with battle animations" }, { label: "SEASONAL SYSTEM", desc: "Game changes with real seasons" }].map(item => (
+                <div key={item.label} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.label}</h3><p className="font-mono text-xs text-charcoal">{item.desc}</p></div>
+              ))}
             </div>
-          </article>
+          </section>
 
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Unova Starters & Popular Pokemon
-            </h2>
-            <div className="space-y-4">
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">🌱 Unova Starters</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Snivy → Servine → Serperior</strong> (Grass) - Royal snake, Contrary ability<br />
-                  <strong>Tepig → Pignite → Emboar</strong> (Fire/Fighting) - Third Fire/Fighting starter<br />
-                  <strong>Oshawott → Dewott → Samurott</strong> (Water) - Samurai otter
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">🐉 Pseudo-Legendary</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Deino → Zweilous → Hydreigon</strong> (Dark/Dragon)<br />
-                  600 BST, evolves late (level 64), three-headed dragon
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">🔥 Popular Unova Pokemon</h3>
-                <div className="text-sm text-brown/70 space-y-1">
-                  <div><strong>Excadrill</strong> (Ground/Steel) - Sand Rush + Sandstorm = OU tier</div>
-                  <div><strong>Volcarona</strong> (Bug/Fire) - Quiver Dance sweeper, 550 BST</div>
-                  <div><strong>Chandelure</strong> (Ghost/Fire) - Highest Sp. Atk of all non-legendary Pokemon</div>
-                  <div><strong>Haxorus</strong> (Dragon) - Mold Breaker, 147 base Attack</div>
-                  <div><strong>Braviary</strong> (Normal/Flying) - Defiant ability, exclusive to Black/White</div>
-                  <div><strong>Mandibuzz</strong> (Dark/Flying) - Overcoat ability, exclusive to Black/White</div>
-                  <div><strong>Bisharp</strong> (Dark/Steel) - Defiant ability</div>
-                  <div><strong>Zoroark</strong> (Dark) - Illusion ability, event distribution</div>
-                </div>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">💎 Hidden Ability Pokemon</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Serperior</strong> (Contrary) - Leaf Storm boosts Sp. Atk instead of lowering<br />
-                  <strong>Politoed</strong> (Drizzle) - Auto-rain, dominated Gen 5 meta<br />
-                  <strong>Ninetales</strong> (Drought) - Auto-sun weather setter<br />
-                  <strong>Blaziken</strong> (Speed Boost) - Banned to Ubers
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Best Unova Pokemon (Competitive Tier List)
-            </h2>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">LEGENDARIES</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">UNOVA LEGENDARY POKEMON</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-red pl-4">
-                <h3 className="font-bold text-brown mb-1">
-                  🔴 Ubers Tier (Restricted)
-                </h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Reshiram</strong>,{" "}
-                  <strong>Zekrom</strong>,{" "}
-                  <strong>Kyurem-White</strong>,{" "}
-                  <strong>Kyurem-Black</strong>,{" "}
-                  <strong>Blaziken</strong> (Speed Boost HA)
-                </p>
+              <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">☯ TAO TRIO</h3>
+                <div className="font-mono text-xs text-charcoal space-y-1">
+                  <p><strong>Reshiram</strong> (#643) — Fire/Dragon, Turboblaze, 680 BST. Mascot of Pokemon Black.</p>
+                  <p><strong>Zekrom</strong> (#644) — Electric/Dragon, Teravolt, 680 BST. Mascot of Pokemon White.</p>
+                  <p><strong>Kyurem</strong> (#646) — Ice/Dragon, 660 BST. Fuses to form Black (700) or White Kyurem (700) in B2W2.</p>
+                </div>
               </div>
-              <div className="border-l-4 border-yellow pl-4">
-                <h3 className="font-bold text-brown mb-1">🟡 OU Tier (Overused)</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Landorus-Therian</strong> (most-used OU Pokemon),{" "}
-                  <strong>Excadrill</strong> (Sand Rush),{" "}
-                  <strong>Volcarona</strong> (Quiver Dance),{" "}
-                  <strong>Politoed</strong> (Drizzle rain setter),{" "}
-                  <strong>Thundurus</strong> (Prankster)
-                </p>
-              </div>
-              <div className="border-l-4 border-green pl-4">
-                <h3 className="font-bold text-brown mb-1">
-                  🟢 Fun VGC Picks
-                </h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Amoonguss</strong> (Spore + Regenerator),{" "}
-                  <strong>Terrakion</strong> (Rock Slide spam),{" "}
-                  <strong>Chandelure</strong> (Heat Wave)
-                </p>
-              </div>
+              {[{ title: "⚔️ SWORDS OF JUSTICE", content: "Cobalion (Steel/Fighting), Terrakion (Rock/Fighting), Virizion (Grass/Fighting), Keldeo (Water/Fighting). Based on the Three Musketeers + d'Artagnan." },
+                { title: "🌪️ FORCES OF NATURE", content: "Tornadus (Flying), Thundurus (Electric/Flying), Landorus (Ground/Flying). Have Therian Formes in B2W2. Landorus-T is top OU competitively." }
+              ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
-          </article>
+          </section>
 
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Unova Region Trivia & Fun Facts
-            </h2>
-            <div className="space-y-4">
-              <div className="border-2 border-black p-4 bg-gray-800/10">
-                <h3 className="font-bold text-brown mb-2">🗽 Based on New York City</h3>
-                <p className="text-sm text-brown/70">
-                  Unova is based on the <strong>New York City metropolitan area</strong>. Castelia City resembles Manhattan, Skyarrow Bridge is the Brooklyn Bridge, and Liberty Garden (Victini's location) is Liberty Island with the Statue of Liberty.
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-blue/10">
-                <h3 className="font-bold text-brown mb-2">🆕 Only New Pokemon (BW1)</h3>
-                <p className="text-sm text-brown/70">
-                  Black & White featured <strong>ONLY Gen 5 Pokemon</strong> until you beat the Elite Four. This was the first time since Gen 1 where no old Pokemon were available during the main story. A soft reboot to attract new players.
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-purple-600/10">
-                <h3 className="font-bold text-brown mb-2">✨ Hidden Abilities via Dream World</h3>
-                <p className="text-sm text-brown/70">
-                  Gen 5 introduced <strong>Hidden Abilities</strong> (third ability slot). Originally obtained via Pokemon Dream World website. Some Hidden Abilities broke the meta (Drought Ninetales, Drizzle Politoed, Speed Boost Blaziken).
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-green/10">
-                <h3 className="font-bold text-brown mb-2">📅 Seasonal Cycles</h3>
-                <p className="text-sm text-brown/70">
-                  Unova introduced <strong>seasons</strong> that change every month in real-time. Different Pokemon appear, areas change appearance, and Deerling/Sawsbuck change forms based on the season.
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-yellow/20">
-                <h3 className="font-bold text-brown mb-2">2️⃣ First True Sequels</h3>
-                <p className="text-sm text-brown/70">
-                  <strong>Black 2 & White 2</strong> were the first direct sequels (not third version or remake). Set 2 years after BW1, with new areas, different protagonist, and new story featuring Team Plasma split.
-                </p>
-              </div>
-
-              <div className="border-2 border-black p-4 bg-red/10">
-                <h3 className="font-bold text-brown mb-2">⚡ Most Legendary Pokemon</h3>
-                <p className="text-sm text-brown/70">
-                  Gen 5 introduced <strong>13 new legendary Pokemon</strong> (excluding mythicals): Tao Trio (3), Swords of Justice (3), Forces of Nature (3), plus Cobalion, Terrakion, Virizion, and Kyurem forms. Most legendaries in a single generation!
-                </p>
-              </div>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST UNOVA POKEMON (TIER LIST)</h2>
+            <div className="space-y-3">
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Reshiram, Zekrom, Kyurem-Black/White, Genesect (banned), Landorus-I</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Volcarona, Ferrothorn, Conkeldurr, Excadrill, Haxorus, Reuniclus, Landorus-T</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Lilligant, Chandelure, Krookodile, Mienshao, Galvantula, Braviary</p></div>
             </div>
-          </article>
+          </section>
 
-          {/* Related Region Generators */}
-          <div className="bg-yellow border-2 border-black p-8">
-            <h2 className="text-2xl font-bold text-brown mb-6 flex items-center gap-2">
-              <ExternalLink className="w-6 h-6" />
-              Other Region Generators
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Link
-                href="/sinnoh-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-blue hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  ⏰ Sinnoh Pokemon (Gen 4)
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Diamond & Pearl - Creation Trio
-                </p>
-              </Link>
-              <Link
-                href="/kalos-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-purple-600 hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🗼 Kalos Pokemon (Gen 6)
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  X & Y with Mega Evolution
-                </p>
-              </Link>
-              <Link
-                href="/johto-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-red hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🔔 Johto Pokemon (Gen 2)
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Gold & Silver with legendary beasts
-                </p>
-              </Link>
-              <Link
-                href="/"
-                className="block bg-white border-2 border-black p-4 hover:bg-green-700 hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🎲 All Regions Generator
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Generate from any generation
-                </p>
-              </Link>
+          <section className="bg-black border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-marigold px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-black uppercase tracking-widest">MORE TOOLS</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-white leading-[0.9] mb-6 uppercase">EXPLORE MORE <span className="text-marigold">GENERATORS</span></h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[{ href: "/sinnoh-pokemon-generator", label: "SINNOH (GEN 4)", desc: "Diamond & Pearl" }, { href: "/kalos-pokemon-generator", label: "KALOS (GEN 6)", desc: "X & Y" }, { href: "/alola-pokemon-generator", label: "ALOLA (GEN 7)", desc: "Sun & Moon" }, { href: "/paldea-pokemon-generator", label: "PALDEA (GEN 9)", desc: "Scarlet & Violet" }].map(link => (
+                <Link key={link.href} href={link.href} className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-marigold hover:text-black hover:border-black transition-all group"><h3 className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">{link.label}</h3><p className="font-mono text-[10px] text-white/60 group-hover:text-black/60">{link.desc}</p></Link>
+              ))}
             </div>
-          </div>
+          </section>
 
-          {/* FAQ Section */}
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Unova Pokemon FAQs
-            </h2>
-            <div className="space-y-4">
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  How many Pokemon are in Unova?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Unova introduced <strong>156 new Pokemon</strong> (#494-649), the MOST of any generation. The Unova Pokedex in Black 2/White 2 contains 300 Pokemon.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  What are Hidden Abilities?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  <strong>Hidden Abilities</strong> are a third ability slot introduced in Gen 5. Originally obtained via Pokemon Dream World website. Some are extremely powerful (Serperior's Contrary, Blaziken's Speed Boost, Politoed's Drizzle).
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Which Unova starter is best?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  <strong>Serperior</strong> with Contrary Hidden Ability is OU tier (Leaf Storm boosts instead of lowering). <strong>Emboar</strong> is decent but it's the third Fire/Fighting starter in a row. <strong>Samurott</strong> struggles with mixed stat distribution.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Should I play Black/White or Black 2/White 2?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Both! <strong>Black & White</strong> have the original story with N and Team Plasma. <strong>Black 2 & White 2</strong> are direct sequels set 2 years later with more content, Pokemon World Tournament, and access to old Pokemon earlier. Play BW1 first for story continuity.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  How do Kyurem's fusion forms work?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  In Black 2/White 2, <strong>Kyurem</strong> can fuse with Reshiram (White Kyurem) or Zekrom (Black Kyurem) using the DNA Splicers item. Both forms have 700 base stat total and are Ubers tier. You can separate them anytime.
-                </p>
-              </details>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">FAQ</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">UNOVA POKEMON FAQ</h2>
+            <div className="space-y-3">
+              {[
+                { q: "How many Pokemon are in Unova?", a: "Unova introduced 156 new Pokemon (#494-649) — the largest single generation since Gen 1. Black & White locked players to only new Pokemon until post-game, making it feel completely fresh." },
+                { q: "What is the Tao Trio?", a: "Reshiram (Fire/Dragon), Zekrom (Electric/Dragon), and Kyurem (Ice/Dragon). Kyurem can fuse with Reshiram or Zekrom in B2W2 to become White Kyurem or Black Kyurem (700 BST each)." },
+                { q: "Is Black 2 or White 2 better?", a: "Both are nearly identical. Black 2 has Black City and Reshiram; White 2 has White Forest and Zekrom. Both are direct sequels set 2 years after BW with significantly more content than the originals." },
+                { q: "Why is Gen 5 considered the best story?", a: "N's moral complexity — genuinely believing Pokemon should be free — creates real philosophical conflict. His redemption after being manipulated by Ghetsis is the most emotionally mature narrative in the main Pokemon series." },
+                { q: "What new features did Gen 5 introduce?", a: "Animated battle sprites, seasonal changes (real-world seasons affect the game), Triple and Rotation Battles, the C-Gear (IR/Wi-Fi hub), Hidden Ability system, and the Pokemon Global Link online feature." },
+                { q: "What is the Pokemon World Tournament?", a: "The PWT in B2W2 lets you battle Gym Leaders and Champions from every generation in one location. It is widely considered the greatest post-game facility in Pokemon history, with remixed boss themes." },
+                { q: "What is the best Unova starter?", a: "Oshawott/Samurott (Water) is most reliable for playthroughs. Snivy/Serperior (Grass) is competitive via Hidden Ability Contrary + Leaf Storm in Gen 6+. Tepig/Emboar (Fire/Fighting) hits hard but is slow and frail." },
+                { q: "What Unova Pokemon are best competitively?", a: "Volcarona (Quiver Dance sweeper), Ferrothorn (entry hazard king), Conkeldurr (Guts + Flame Orb brawler), Excadrill (Sand Rush in Sand), Landorus-T (OU pivot), Haxorus (147 Attack Dragon), Reuniclus (Trick Room Psychic)." },
+                { q: "What are version exclusives in Black and White?", a: "Black exclusives: Cottonee, Gothita line, Vullaby/Mandibuzz, Rufflet/Braviary, Reshiram. White exclusives: Petilil, Solosis line, Rufflet in some versions, Zekrom. Opelucid City is also visually different between versions." },
+                { q: "Who are the Unova Elite Four?", a: "Shauntal (Ghost), Grimsley (Dark), Caitlin (Psychic), and Marshal (Fighting). Champion Alder uses a diverse team. In B2W2, Champion Iris (Dragon specialist, previously Opelucid Gym Leader in White) becomes Champion." },
+                { q: "How does the Unova Pokemon Generator work?", a: "Set your team size (1-6), optionally filter by type, evolution stage, or exclude legendaries, then hit Generate. Lock picks you want to keep and regenerate the rest. Perfect for Nuzlocke runs, randomizer prep, and draft league pools." },
+              ].map(faq => (<details key={faq.q} className="bg-white border-2 border-black p-4 slasher group"><summary className="font-mono font-bold text-sm text-black uppercase cursor-pointer group-open:mb-2">{faq.q}</summary><p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">{faq.a}</p></details>))}
             </div>
-          </article>
+          </section>
         </div>
       </main>
     </>

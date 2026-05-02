@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Zap, BookOpen, MapPin, Info, ChevronDown } from "lucide-react";
@@ -23,6 +23,7 @@ const REGION_LINKS = [
 ];
 
 const MORE_LINKS = [
+    { href: "/pokemon-card-generator", label: "Card Generator" },
     { href: "/shiny-pokemon-generator", label: "Shiny Generator" },
     { href: "/legendary-pokemon-generator", label: "Legendary Generator" },
     { href: "/starter-pokemon-generator", label: "Starter Generator" },
@@ -31,10 +32,34 @@ const MORE_LINKS = [
     { href: "/about", label: "About" },
 ];
 
+
 export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [regionsOpen, setRegionsOpen] = useState(false);
+    const [moreOpen, setMoreOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    // Defer interactive state until after hydration to prevent SSR mismatch
+    useEffect(() => { setMounted(true); }, []);
+    const moreRef = useRef<HTMLDivElement>(null);
+
+    // Close More dropdown when clicking/tapping outside
+    useEffect(() => {
+        const handleOutside = (e: MouseEvent | TouchEvent) => {
+            if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+                setMoreOpen(false);
+            }
+        };
+        if (moreOpen) {
+            document.addEventListener('mousedown', handleOutside);
+            document.addEventListener('touchstart', handleOutside, { passive: true });
+            return () => {
+                document.removeEventListener('mousedown', handleOutside);
+                document.removeEventListener('touchstart', handleOutside);
+            };
+        }
+    }, [moreOpen]);
 
     // Track scroll for shadow effect
     useEffect(() => {
@@ -100,13 +125,13 @@ export default function Header() {
                                 <button
                                     onClick={() => setRegionsOpen(!regionsOpen)}
                                     className="flex items-center gap-1.5 px-3 py-2 font-mono text-xs font-semibold text-black uppercase tracking-wider hover:bg-black hover:text-cream transition-colors"
-                                    aria-expanded={regionsOpen}
+                                    aria-expanded={mounted ? regionsOpen : undefined}
                                 >
                                     <MapPin size={14} />
                                     Regions
                                     <ChevronDown
                                         size={12}
-                                        className={`transition-transform duration-200 ${regionsOpen ? "rotate-180" : ""}`}
+                                        className={`transition-transform duration-200 ${mounted && regionsOpen ? "rotate-180" : ""}`}
                                     />
                                 </button>
 
@@ -133,23 +158,40 @@ export default function Header() {
                             </div>
 
                             {/* More Dropdown */}
-                            <div className="relative group">
-                                <button className="flex items-center gap-1.5 px-3 py-2 font-mono text-xs font-semibold text-black uppercase tracking-wider hover:bg-black hover:text-cream transition-colors">
+                            <div ref={moreRef} className="relative">
+                                <button
+                                    onClick={() => setMoreOpen(!moreOpen)}
+                                    className="flex items-center gap-1.5 px-3 py-2 font-mono text-xs font-semibold text-black uppercase tracking-wider hover:bg-black hover:text-cream transition-colors"
+                                    aria-expanded={mounted ? moreOpen : undefined}
+                                >
                                     <Info size={14} />
                                     More
-                                    <ChevronDown size={12} />
+                                    <ChevronDown
+                                        size={12}
+                                        className={`transition-transform duration-200 ${mounted && moreOpen ? 'rotate-180' : ''}`}
+                                    />
                                 </button>
-                                <div className="absolute top-full right-0 mt-1 bg-white border-2 border-black min-w-[200px] z-[91] slasher shadow-[4px_4px_0px_0px_#000] hidden group-hover:block">
-                                    {MORE_LINKS.map((link) => (
-                                        <Link
-                                            key={link.href}
-                                            href={link.href}
-                                            className="block px-4 py-2.5 font-mono text-xs text-black hover:bg-marigold transition-colors border-b border-black/10 last:border-b-0"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    ))}
-                                </div>
+
+                                {moreOpen && (
+                                    <>
+                                        <div
+                                            className="fixed inset-0 z-[89]"
+                                            onClick={() => setMoreOpen(false)}
+                                        />
+                                        <div className="absolute top-full right-0 mt-1 bg-white border-2 border-black min-w-[200px] z-[91] slasher shadow-[4px_4px_0px_0px_#000]">
+                                            {MORE_LINKS.map((link) => (
+                                                <Link
+                                                    key={link.href}
+                                                    href={link.href}
+                                                    onClick={() => setMoreOpen(false)}
+                                                    className="block px-4 py-2.5 font-mono text-xs text-black hover:bg-marigold transition-colors border-b border-black/10 last:border-b-0"
+                                                >
+                                                    {link.label}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </nav>
 
@@ -157,10 +199,10 @@ export default function Header() {
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             className="md:hidden w-10 h-10 flex items-center justify-center bg-black text-cream hover:bg-charcoal transition-colors"
-                            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-                            aria-expanded={mobileMenuOpen}
+                            aria-label={mounted && mobileMenuOpen ? "Close menu" : "Open menu"}
+                            aria-expanded={mounted ? mobileMenuOpen : undefined}
                         >
-                            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                            {mounted && mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
                     </div>
                 </div>

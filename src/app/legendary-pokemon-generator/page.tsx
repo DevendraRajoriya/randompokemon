@@ -1,438 +1,138 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { Crown, ArrowLeft, ExternalLink } from "lucide-react";
-import FreshnessSignal from "@/components/FreshnessSignal";
+import { Crown, ArrowLeft } from "lucide-react";
 
-const PokemonGeneratorClient = dynamic(
-  () => import("../PokemonGeneratorClient")
-);
+const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
+const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
+  loading: () => <div className="min-h-[400px] animate-pulse bg-cream border-2 border-black" />,
+});
 
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Legendary Pokemon Generator | Random Mythical Ultra Beasts Free",
-  description:
-    "Generate random legendary Pokemon, mythical creatures, and Ultra Beasts from all 70+ legendaries! Perfect for competitive teams, draft leagues, and rare collections. Updated January 2026.",
-  keywords: [
-    "legendary pokemon randomizer free",
-    "random legendary pokemon picker",
-    "mythical pokemon generator online",
-    "ultra beast randomizer",
-    "box legendary generator",
-    "legendary trio picker",
-    "random legendary team builder",
-    "mythical pokemon picker free",
-    "legendary pokemon all gens",
-    "paradox legendary generator",
-  ],
-  alternates: {
-    canonical: `${siteUrl}/legendary-pokemon-generator`,
-  },
-  openGraph: {
-    title: "Random Legendary Pokemon Generator | Mythical & Ultra Beasts",
-    description:
-      "Generate random legendary Pokemon, mythical creatures, and Ultra Beasts for competitive teams and challenges!",
-    url: `${siteUrl}/legendary-pokemon-generator`,
-    type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Legendary Pokemon Generator",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Random Legendary Pokemon Generator | Mythical & Ultra Beasts",
-    description:
-      "Generate random legendary Pokemon, mythical creatures, and Ultra Beasts!",
-    images: ["/og-image.png"],
-  },
+  title: "Legendary Pokemon Generator | Random Legendary & Mythical Picker",
+  description: "Generate random Legendary and Mythical Pokemon from all generations. All box legendaries, Ubers, mythicals and Ultra Beasts. Updated 2026.",
+  keywords: ["legendary pokemon generator", "random legendary pokemon", "mythical pokemon generator", "uber pokemon randomizer", "legendary pokemon picker", "random legendary picker"],
+  alternates: { canonical: `${siteUrl}/legendary-pokemon-generator` },
+  openGraph: { title: "Legendary Pokemon Generator | Random Legendary Picker", description: "Generate random Legendary and Mythical Pokemon from all generations!", url: `${siteUrl}/legendary-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Legendary Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Legendary Pokemon Generator | Random Legendary Picker", description: "Generate random Legendary and Mythical Pokemon!", images: ["/og-image.png"] },
 };
 
-// JSON-LD Structured Data
-const legendaryJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "Legendary Pokemon Generator - 70+ Mythical & Ultra Beasts",
-  description:
-    "Generate random legendary Pokemon, mythical creatures, and Ultra Beasts from all generations for competitive teams and rare collections. 70+ legendaries available.",
-  url: `${siteUrl}/legendary-pokemon-generator`,
-  applicationCategory: "GameApplication",
-  operatingSystem: "Any",
-  datePublished: "2024-11-15",
-  dateModified: "2026-01-13",
-  isPartOf: {
-    "@type": "WebApplication",
-    name: "Random Pokemon Generator",
-    url: siteUrl,
-  },
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.9",
-    ratingCount: "3124",
-    bestRating: "5",
-  },
+const jsonLd = {
+  "@context": "https://schema.org", "@type": "WebApplication", name: "Legendary Pokemon Generator",
+  description: "Generate random Legendary, Sub-Legendary, and Mythical Pokemon from all generations.",
+  url: `${siteUrl}/legendary-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "How many legendary Pokemon are there?", acceptedAnswer: { "@type": "Answer", text: "As of Gen 9, there are over 60 true Legendaries, 50+ Sub-Legendaries, and 25+ Mythicals — over 135 powerful rare Pokemon in total across all 9 generations." } },
+    { "@type": "Question", name: "What is the strongest legendary Pokemon?", acceptedAnswer: { "@type": "Answer", text: "Arceus has 720 BST (120 in every stat). Mega Mewtwo Y and Mega Rayquaza both reach 780 BST. Eternamax Eternatus has 1125 BST but is unobtainable. Koraidon and Miraidon (Gen 9) are 670 BST." } },
+    { "@type": "Question", name: "What is the difference between Legendary and Mythical?", acceptedAnswer: { "@type": "Answer", text: "Legendaries can be caught in-game through the main story or post-game. Mythicals (like Mew, Celebi, Jirachi) were historically event-only, though many are now obtainable via Pokemon HOME or modern events." } },
+    { "@type": "Question", name: "Can you use legendaries in competitive play?", acceptedAnswer: { "@type": "Answer", text: "Most box legendaries (Mewtwo, Rayquaza, Arceus, etc.) are banned to the Ubers tier. Sub-Legendaries like Landorus-T, Heatran, and the Tapus are allowed in standard OU play. VGC has special rules each season allowing specific legendaries." } },
+    { "@type": "Question", name: "What are Ultra Beasts?", acceptedAnswer: { "@type": "Answer", text: "Ultra Beasts are extradimensional Pokemon from Gen 7 (Alola). They include Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, and Guzzlord. They all have the Beast Boost ability and skewed stat distributions. Pheromosa was banned to Ubers." } },
+    { "@type": "Question", name: "What are Paradox Pokemon?", acceptedAnswer: { "@type": "Answer", text: "Paradox Pokemon from Gen 9 (Paldea) are ancient or futuristic variants of existing Pokemon. Scarlet has Past forms (Great Tusk, Roaring Moon, Flutter Mane) and Violet has Future forms (Iron Treads, Iron Valiant, Iron Moth). Several were banned from competitive play." } },
+    { "@type": "Question", name: "What is the first legendary Pokemon?", acceptedAnswer: { "@type": "Answer", text: "The Legendary Birds — Articuno, Zapdos, and Moltres — are the first legendary Pokemon in the Pokedex (#144-146). Mewtwo (#150) is the most powerful Gen 1 legendary, and Mew (#151) is the first Mythical." } },
+    { "@type": "Question", name: "What is the rarest legendary Pokemon?", acceptedAnswer: { "@type": "Answer", text: "Mythicals like Mew, Celebi, Jirachi, and Deoxys were historically the rarest — only obtainable through limited-time events. Shiny-locked legendaries require specific methods like Dynamax Adventures or special event distributions to obtain." } },
+    { "@type": "Question", name: "Which legendary has the highest base stat total?", acceptedAnswer: { "@type": "Answer", text: "Eternamax Eternatus has 1125 BST — the highest of any Pokemon — but it is unobtainable. Among obtainable Pokemon: Mega Mewtwo X/Y and Mega Rayquaza share 780 BST, followed by Arceus (720 BST) and fused legendaries like Black Kyurem and White Kyurem (700 BST)." } },
+    { "@type": "Question", name: "What is a good legendary team?", acceptedAnswer: { "@type": "Answer", text: "A strong Ubers legendary team might include: Arceus (tank/support), Mega Rayquaza or Kyogre (attacker), Zacian-Crowned (fast physical sweeper), Necrozma-Dusk Mane (Steel/Dragon wall), Yveltal (Dark/Flying pivot), and Calyrex-Shadow (Ghost/Psychic sweeper)." } },
+    { "@type": "Question", name: "What does this Legendary Pokemon Generator do?", acceptedAnswer: { "@type": "Answer", text: "This free Legendary Pokemon Generator randomly picks Legendary and Mythical Pokemon from all 9 generations. Filter by generation, type, or legendary category. Perfect for Ubers team building, randomizer runs that include legendaries, or just exploring the most powerful Pokemon in the series." } },
+  ],
 };
 
 export default function LegendaryPokemonGeneratorPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(legendaryJsonLd) }}
-      />
-      <main className="min-h-screen bg-cream px-4 py-8 sm:px-6 lg:px-8">
-        {/* Breadcrumbs */}
-        <nav className="mb-6 max-w-7xl mx-auto" aria-label="Breadcrumb">
-          <ol className="flex items-center gap-2 text-sm">
-            <li>
-              <Link
-                href="/"
-                className="text-brown hover:text-red transition-colors flex items-center gap-1"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Home
-              </Link>
-            </li>
-            <li className="text-brown/50">/</li>
-            <li className="text-brown font-semibold">
-              Legendary Pokemon Generator
-            </li>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <main className="min-h-screen bg-cream p-4 md:p-8 relative">
+        <nav className="mb-6 max-w-6xl mx-auto" aria-label="Breadcrumb">
+          <ol className="flex items-center gap-2 font-mono text-xs">
+            <li><Link href="/" className="text-charcoal hover:text-black transition-colors flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Home</Link></li>
+            <li className="text-charcoal/40">/</li>
+            <li className="text-black font-bold uppercase">Legendary Generator</li>
           </ol>
         </nav>
 
-        {/* Hero Section */}
-        <div className="max-w-7xl mx-auto mb-12 text-center">
-          <div className="inline-flex items-center gap-2 bg-red-600 text-white border-2 border-black px-4 py-2 mb-4">
-            <Crown className="w-5 h-5 animate-pulse" />
-            <span className="font-bold">LEGENDARY & MYTHICAL</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-brown mb-4 font-space-grotesk">
-            Legendary Pokemon Generator
-          </h1>
-          <p className="text-lg sm:text-xl text-brown/80 max-w-3xl mx-auto mb-6">
-            Generate random <strong>legendary Pokemon</strong>, mythical
-            creatures, and Ultra Beasts from all 70+ legendaries! Perfect for competitive teams, draft
-            leagues, VGC battles, and challenging yourself with the most powerful Pokemon across all generations.
+        <div className="max-w-6xl mx-auto mb-5 text-center">
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">LEGENDARY POKEMON GENERATOR</h1>
+          <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
+            Generate random <strong>Legendary and Mythical Pokemon</strong> from all generations. Box legendaries, Sub-Legendaries, Ultra Beasts, Paradox forms, and Mythicals.
           </p>
-          
-          <FreshnessSignal 
-            lastUpdated="January 13, 2026" 
-            updateFrequency="Updated monthly with new legendary releases and competitive strategies"
-          />
-
-          {/* Key Features */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
-            <div className="bg-red-600 text-white border-2 border-black p-4">
-              <Crown className="w-8 h-8 mx-auto mb-2" />
-              <h3 className="font-bold mb-1">70+ Legendaries</h3>
-              <p className="text-sm text-white/90">
-                All box legends, trios & mythicals
-              </p>
-            </div>
-            <div className="bg-yellow-400 border-2 border-black p-4">
-              <span className="text-3xl mb-2 block">⚡</span>
-              <h3 className="font-bold text-gray-900 mb-1">Ultra Beasts</h3>
-              <p className="text-sm text-gray-800">
-                Gen 7 interdimensional Pokemon</p>
-            </div>
-            <div className="bg-blue-600 text-white border-2 border-black p-4">
-              <span className="text-3xl mb-2 block">🎯</span>
-              <h3 className="font-bold mb-1">Filter by Type</h3>
-              <p className="text-sm text-white/90">
-                Psychic, Dragon, Steel & more
-              </p>
-            </div>
-          </div>
         </div>
 
-        {/* Generator Component - Will filter for legendaries by default */}
-        <PokemonGeneratorClient />
+        <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultLegendary={["Legendary", "Sub-Legendary", "Mythical"]} />
 
-        {/* SEO Content Section */}
-        <div className="max-w-4xl mx-auto mt-16 space-y-8">
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              What is a Legendary Pokemon?
-            </h2>
-            <p className="text-brown/80 leading-relaxed">
-              <strong>Legendary Pokemon</strong> are extremely rare, powerful
-              Pokemon that appear in Pokemon lore and games as unique,
-              one-of-a-kind creatures. They typically have higher base stats (580+
-              BST), unique typings, and play crucial roles in their respective
-              regions' stories.
-            </p>
-            <p className="text-brown/80 leading-relaxed">
-              Our <strong>random legendary Pokemon generator</strong> includes:
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-brown/80 ml-4">
-              <li>
-                <strong>Box Legendaries:</strong> Mewtwo, Lugia, Ho-Oh, Rayquaza,
-                Dialga, Palkia, Giratina, Reshiram, Zekrom, Xerneas, Yveltal,
-                Solgaleo, Lunala, Zacian, Zamazenta, Koraidon, Miraidon
-              </li>
-              <li>
-                <strong>Legendary Trios:</strong> Birds (Articuno, Zapdos,
-                Moltres), Beasts (Raikou, Entei, Suicune), Regis (Regirock,
-                Regice, Registeel), Lake Guardians, Forces of Nature
-              </li>
-              <li>
-                <strong>Mythical Pokemon:</strong> Mew, Celebi, Jirachi, Deoxys,
-                Darkrai, Shaymin, Victini, Genesect, Magearna, Marshadow, Zarude
-              </li>
-              <li>
-                <strong>Ultra Beasts:</strong> Nihilego, Buzzwole, Pheromosa,
-                Xurkitree, Celesteela, Kartana, Guzzlord, Poipole, Naganadel,
-                Stakataka, Blacephalon
-              </li>
-            </ul>
-          </article>
+        <CardShowcase />
 
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              How to Use the Legendary Pokemon Generator
-            </h2>
-            <ol className="list-decimal list-inside space-y-3 text-brown/80">
-              <li>
-                <strong>Set Team Size:</strong> Choose 1-6 legendary Pokemon for
-                your team
-              </li>
-              <li>
-                <strong>Apply Filters:</strong> Select legendary status, types, or
-                specific generations
-              </li>
-              <li>
-                <strong>Include Mythicals:</strong> Toggle to include
-                event-exclusive mythical Pokemon
-              </li>
-              <li>
-                <strong>Generate:</strong> Click to reveal your legendary team
-              </li>
-              <li>
-                <strong>Build Strategies:</strong> Plan movesets and team synergy
-                for competitive play
-              </li>
-            </ol>
-          </article>
-
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Most Powerful Legendary Pokemon (Competitive Tier List)
-            </h2>
-            <div className="space-y-4">
-              <div className="border-2 border-red bg-red/10 p-4">
-                <h3 className="font-bold text-red mb-2">🔴 Ubers Tier (Banned)</h3>
-                <p className="text-sm text-brown/70">
-                  Mewtwo, Rayquaza, Dialga, Palkia, Giratina, Kyogre, Groudon,
-                  Zacian-Crowned, Calyrex-Shadow, Eternatus - Too powerful for
-                  standard play
-                </p>
-              </div>
-              <div className="border-2 border-yellow bg-yellow/20 p-4">
-                <h3 className="font-bold text-brown mb-2">🟡 OU Tier (Allowed)</h3>
-                <p className="text-sm text-brown/70">
-                  Landorus-Therian, Heatran, Tapu Fini, Zapdos, Tornadus-Therian
-                  - Competitive but balanced
-                </p>
-              </div>
-              <div className="border-2 border-blue bg-blue/10 p-4">
-                <h3 className="font-bold text-blue mb-2">
-                  🔵 UU Tier (Underused)
-                </h3>
-                <p className="text-sm text-brown/70">
-                  Latios, Suicune, Terrakion, Cobalion, Azelf - Strong niche
-                  picks
-                </p>
-              </div>
-              <div className="border-2 border-green bg-green/10 p-4">
-                <h3 className="font-bold text-green mb-2">🟢 Lower Tiers</h3>
-                <p className="text-sm text-brown/70">
-                  Articuno, Regigigas, Phione - Less competitive but still fun!
-                </p>
-              </div>
+        <div className="max-w-6xl mx-auto mt-10 space-y-6">
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">LEGENDARY TIERS</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">TYPES OF LEGENDARY POKEMON</h2>
+            <div className="grid md:grid-cols-2 gap-3">
+              {[
+                { title: "BOX LEGENDARIES", desc: "The mascots on game covers. Mewtwo, Lugia, Rayquaza, Dialga, Reshiram, Xerneas, Solgaleo, Zacian, Koraidon and more." },
+                { title: "SUB-LEGENDARIES", desc: "Legendary trios and duos. Birds, Beasts, Regis, Lake Guardians, Swords of Justice, Tapus, and Ruinous quartet." },
+                { title: "MYTHICAL POKEMON", desc: "Event-exclusive rarities: Mew, Celebi, Jirachi, Deoxys, Darkrai, Shaymin, Arceus, Victini, Genesect, Diancie and more." },
+                { title: "ULTRA BEASTS", desc: "Extradimensional Pokemon from Gen 7: Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, Guzzlord." },
+              ].map(item => (
+                <div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-2">{item.title}</h3><p className="font-mono text-xs text-charcoal leading-relaxed">{item.desc}</p></div>
+              ))}
             </div>
-          </article>
+          </section>
 
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Legendary Pokemon by Generation
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen I (Kanto)</h3>
-                <p className="text-sm text-brown/70">
-                  Articuno, Zapdos, Moltres, Mewtwo, Mew
-                </p>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">POWER RANKINGS</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">STRONGEST LEGENDARY POKEMON</h2>
+            <div className="space-y-3">
+              <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">👑 HIGHEST BST LEGENDARIES</h3>
+                <div className="font-mono text-xs text-charcoal space-y-1">
+                  <p><strong>Eternamax Eternatus</strong> — 1125 BST (unobtainable form)</p>
+                  <p><strong>Mega Mewtwo X/Y & Mega Rayquaza</strong> — 780 BST</p>
+                  <p><strong>Arceus</strong> — 720 BST (120 in every stat)</p>
+                  <p><strong>Zacian/Zamazenta Crowned, Kyurem-Black/White</strong> — 720 BST</p>
+                </div>
               </div>
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen II (Johto)</h3>
-                <p className="text-sm text-brown/70">
-                  Raikou, Entei, Suicune, Lugia, Ho-Oh, Celebi
-                </p>
-              </div>
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen III (Hoenn)</h3>
-                <p className="text-sm text-brown/70">
-                  Regirock, Regice, Registeel, Latias, Latios, Kyogre, Groudon,
-                  Rayquaza, Jirachi, Deoxys
-                </p>
-              </div>
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen IV (Sinnoh)</h3>
-                <p className="text-sm text-brown/70">
-                  Uxie, Mesprit, Azelf, Dialga, Palkia, Heatran, Regigigas,
-                  Giratina, Cresselia, Darkrai, Shaymin, Arceus
-                </p>
-              </div>
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen V (Unova)</h3>
-                <p className="text-sm text-brown/70">
-                  Cobalion, Terrakion, Virizion, Tornadus, Thundurus, Reshiram,
-                  Zekrom, Landorus, Kyurem, Keldeo, Meloetta, Genesect
-                </p>
-              </div>
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen VI (Kalos)</h3>
-                <p className="text-sm text-brown/70">
-                  Xerneas, Yveltal, Zygarde, Diancie, Hoopa, Volcanion
-                </p>
-              </div>
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen VII (Alola)</h3>
-                <p className="text-sm text-brown/70">
-                  Type: Null, Silvally, Tapu Koko, Tapu Lele, Tapu Bulu, Tapu
-                  Fini, Cosmog line, Necrozma, Magearna, Marshadow, Zeraora,
-                  Meltan, Melmetal + 11 Ultra Beasts
-                </p>
-              </div>
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen VIII (Galar)</h3>
-                <p className="text-sm text-brown/70">
-                  Zacian, Zamazenta, Eternatus, Kubfu, Urshifu, Regieleki,
-                  Regidrago, Glastrier, Spectrier, Calyrex, Zarude
-                </p>
-              </div>
-              <div className="border-2 border-black p-4 bg-cream">
-                <h3 className="font-bold text-brown mb-2">Gen IX (Paldea)</h3>
-                <p className="text-sm text-brown/70">
-                  Koraidon, Miraidon, Chi-Yu, Chien-Pao, Ting-Lu, Wo-Chien, Ogerpon, Terapagos, Pecharunt
-                </p>
-              </div>
+              {[
+                { title: "🔴 UBERS TIER", content: "Arceus, Mewtwo, Rayquaza, Kyogre, Groudon, Dialga, Palkia, Giratina, Reshiram, Zekrom, Xerneas, Yveltal, Solgaleo, Lunala, Necrozma, Zacian, Koraidon, Miraidon." },
+                { title: "🟡 BEST COMPETITIVE PICKS", content: "Landorus-T (Ground/Flying), Heatran (Fire/Steel), Tapu Koko (Electric/Fairy), Cresselia (Psychic), Regieleki (Electric)." },
+              ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
-          </article>
+          </section>
 
-          {/* Related Tools Section */}
-          <div className="bg-yellow border-2 border-black p-8">
-            <h2 className="text-2xl font-bold text-brown mb-6 flex items-center gap-2">
-              <ExternalLink className="w-6 h-6" />
-              Related Pokemon Generators
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Link
-                href="/shiny-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-red hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  ✨ Shiny Pokemon Generator
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Generate rare shiny legendary variants
-                </p>
-              </Link>
-              <Link
-                href="/starter-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-blue hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🌱 Starter Pokemon Generator
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Pick random starters from all regions
-                </p>
-              </Link>
-              <Link
-                href="/"
-                className="block bg-white border-2 border-black p-4 hover:bg-green-700 hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🎲 Main Pokemon Generator
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Full random Pokemon team builder
-                </p>
-              </Link>
-              <Link
-                href="/draft-league-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-brown hover:text-white transition-colors group"
-              >
-                <h3 className="font-bold mb-1 group-hover:text-white">
-                  🏆 Draft League Generator
-                </h3>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Build balanced competitive draft pools
-                </p>
-              </Link>
+          <section className="bg-black border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-marigold px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-black uppercase tracking-widest">MORE TOOLS</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-white leading-[0.9] mb-6 uppercase">EXPLORE MORE <span className="text-marigold">GENERATORS</span></h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {[{ href: "/shiny-pokemon-generator", label: "SHINY POKEMON", desc: "Ultra rare variants" }, { href: "/starter-pokemon-generator", label: "STARTER POKEMON", desc: "All starter picks" }, { href: "/hoenn-pokemon-generator", label: "HOENN (GEN 3)", desc: "Ruby & Sapphire" }, { href: "/", label: "ALL REGIONS", desc: "Full generator" }].map(link => (
+                <Link key={link.href} href={link.href} className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-marigold hover:text-black hover:border-black transition-all group"><h3 className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">{link.label}</h3><p className="font-mono text-[10px] text-white/60 group-hover:text-black/60">{link.desc}</p></Link>
+              ))}
             </div>
-          </div>
+          </section>
 
-          {/* FAQ Section */}
-          <article className="bg-white border-2 border-black p-8 space-y-6">
-            <h2 className="text-3xl font-bold text-brown border-b-2 border-black pb-3">
-              Legendary Pokemon FAQs
-            </h2>
-            <div className="space-y-4">
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  What's the difference between Legendary and Mythical Pokemon?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Legendary Pokemon can be caught in-game (Mewtwo, Rayquaza),
-                  while Mythical Pokemon are event-exclusive (Mew, Celebi, Jirachi). Both are powerful and rare.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Are legendary Pokemon allowed in competitive play?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Some are! "Restricted" formats allow 2 box legendaries per team. Standard OU bans most, but sub-legendaries like Landorus-T and Heatran are common.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Which legendary Pokemon is the strongest?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Competitively: Mega Rayquaza, Zacian-Crowned, or Calyrex-Shadow. Lore-wise: Arceus (literal Pokemon god). For VGC: Calyrex-Shadow dominates.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  Can legendary Pokemon breed?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  No, most legendary/mythical Pokemon cannot breed (except Manaphy producing Phione). They're in the "Undiscovered" egg group.
-                </p>
-              </details>
-              <details className="border-2 border-black p-4 bg-cream">
-                <summary className="font-bold text-brown cursor-pointer">
-                  What are Ultra Beasts?
-                </summary>
-                <p className="mt-2 text-brown/70 text-sm">
-                  Ultra Beasts are extradimensional Pokemon from Gen VII with alien designs and the "Beast Boost" ability. Examples: Buzzwole, Kartana, Celesteela.
-                </p>
-              </details>
+          <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
+            <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">FAQ</span></div>
+            <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">LEGENDARY POKEMON FAQ</h2>
+            <div className="space-y-3">
+              {[
+                { q: "How many legendary Pokemon are there?", a: "As of Gen 9, there are 60+ true Legendaries, 50+ Sub-Legendaries, and 25+ Mythicals — over 135 powerful rare Pokemon in total across all 9 generations." },
+                { q: "What is the strongest legendary Pokemon?", a: "Arceus has 720 BST (120 in every stat). Mega Mewtwo Y and Mega Rayquaza both reach 780 BST. Eternamax Eternatus has 1125 BST but is unobtainable. Koraidon and Miraidon are 670 BST." },
+                { q: "What is the difference between Legendary and Mythical?", a: "Legendaries can be caught in-game through story or post-game. Mythicals (Mew, Celebi, Jirachi, etc.) were historically event-only, though many are now available via Pokemon HOME or events." },
+                { q: "Can you use legendaries in competitive play?", a: "Most box legendaries are banned to Ubers. Sub-Legendaries like Landorus-T, Heatran, and the Tapus are allowed in standard OU. VGC has special seasonal rules that sometimes allow specific restricted legendaries." },
+                { q: "What are Ultra Beasts?", a: "Ultra Beasts from Gen 7 include Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, and Guzzlord. They all have Beast Boost ability. Pheromosa was banned to Ubers for its extreme Speed and Attack." },
+                { q: "What are Paradox Pokemon?", a: "Gen 9 Paradox Pokemon are ancient or futuristic variants of existing Pokemon. Past forms in Scarlet (Great Tusk, Flutter Mane) and Future forms in Violet (Iron Treads, Iron Valiant). Several (Chi-Yu, Chien-Pao) were banned from competitive." },
+                { q: "What is the first legendary Pokemon?", a: "The Legendary Birds — Articuno (#144), Zapdos (#145), Moltres (#146) — are first in the Pokedex. Mewtwo (#150) is the most powerful Gen 1 legendary, and Mew (#151) is the first Mythical Pokemon." },
+                { q: "Which legendary has the highest BST?", a: "Eternamax Eternatus has 1125 BST but is unobtainable. Among obtainable: Mega Mewtwo X/Y and Mega Rayquaza share 780 BST, followed by Arceus (720 BST) and fused legendaries Black/White Kyurem (700 BST)." },
+                { q: "What is a good Ubers legendary team?", a: "A strong Ubers team: Arceus-Ground (support), Mega Rayquaza (attacker), Zacian-Crowned (physical sweeper), Necrozma-DM (Steel/Dragon wall), Yveltal (Dark/Flying pivot), and Calyrex-Shadow (Ghost/Psychic sweeper)." },
+                { q: "What is the rarest legendary Pokemon?", a: "Mythicals like Mew, Celebi, Jirachi, and Deoxys were historically rarest — event-only distributions. Shiny-locked legendaries require Dynamax Adventures or special methods. Shiny Mew from original events is arguably the rarest legitimately owned legendary." },
+                { q: "What does this Legendary Pokemon Generator do?", a: "This free generator randomly picks Legendary and Mythical Pokemon from all 9 generations. Filter by generation, type, or legendary category. Perfect for Ubers team building, randomizer runs including legendaries, or exploring the most powerful Pokemon in the series." },
+              ].map(faq => (<details key={faq.q} className="bg-white border-2 border-black p-4 slasher group"><summary className="font-mono font-bold text-sm text-black uppercase cursor-pointer group-open:mb-2">{faq.q}</summary><p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">{faq.a}</p></details>))}
             </div>
-          </article>
+          </section>
         </div>
       </main>
     </>

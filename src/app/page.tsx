@@ -224,10 +224,11 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto relative">
-        {/* Server-Rendered H1 for SEO - visible to Google crawlers */}
+      <div className="max-w-6xl mx-auto relative">
+        {/* Server-Rendered H1 for SEO */}
         <div className="mb-8 md:mb-12 text-center">
-          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2">
+
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">
             RANDOM POKEMON GENERATOR
           </h1>
           <p className="font-mono text-sm md:text-base text-charcoal max-w-2xl mx-auto mb-6 leading-relaxed">
@@ -236,170 +237,80 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Interactive Client Generator - loads after initial render */}
+        {/* Interactive Client Generator */}
         <HomeClient />
 
-        {/* Topical Authority Hub - Server-rendered for SEO */}
-        <section className="mt-12 md:mt-16 mb-8 border-2 border-black p-4 sm:p-6 md:p-12 slasher">
+        {/* Card Showcase Section - shown right after generated team */}
+        <CardShowcase />
+
+        {/* Explore Generators */}
+        <section className="mt-12 md:mt-16 mb-8 border-2 border-black p-4 sm:p-6 md:p-10 slasher">
           <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
             <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">SPECIALIZED TOOLS</span>
           </div>
-          <h2 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-4 uppercase">
-            EXPLORE MORE <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
-              GENERATORS
-            </span>
+          <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl text-black leading-[0.9] mb-4 uppercase">
+            EXPLORE MORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">GENERATORS</span>
           </h2>
-          <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed mb-8">
-            Discover our specialized Pokemon generators for specific types, regions, and challenges. Each tool is optimized for different playstyles and team building strategies.
+          <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed mb-8">
+            Discover our specialized Pokemon generators for specific types, regions, and challenges.
           </p>
 
-          {/* Type-Based Generators */}
+          {/* Type-Based */}
           <div className="mb-8">
-            <h3 className="font-grotesk font-bold text-xl sm:text-2xl text-black mb-4 uppercase border-b-2 border-black pb-2">
-              By Pokemon Type
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              <Link
-                href="/shiny-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-red hover:text-white transition-colors group slasher"
-              >
+            <h3 className="font-mono font-bold text-sm text-black mb-4 uppercase border-b-2 border-black pb-2 tracking-wider">By Pokemon Type</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <Link href="/shiny-pokemon-generator" className="block bg-white border-2 border-black p-4 hover:bg-black hover:text-white transition-colors group slasher">
                 <span className="text-2xl mb-2 block">✨</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Shiny Pokemon Generator</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Generate ultra-rare shiny variants with alternate color palettes
-                </p>
+                <h4 className="font-mono font-bold text-sm mb-1 group-hover:text-white uppercase">Shiny Pokemon</h4>
+                <p className="font-mono text-xs text-charcoal group-hover:text-white/70">Ultra-rare shiny color variants</p>
               </Link>
-              <Link
-                href="/legendary-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-blue hover:text-white transition-colors group slasher"
-              >
+              <Link href="/legendary-pokemon-generator" className="block bg-white border-2 border-black p-4 hover:bg-black hover:text-white transition-colors group slasher">
                 <span className="text-2xl mb-2 block">👑</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Legendary Pokemon Generator</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Get powerful legendary, mythical Pokemon & Ultra Beasts
-                </p>
+                <h4 className="font-mono font-bold text-sm mb-1 group-hover:text-white uppercase">Legendary Pokemon</h4>
+                <p className="font-mono text-xs text-charcoal group-hover:text-white/70">Legendary, mythical & Ultra Beasts</p>
               </Link>
-              <Link
-                href="/starter-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-green-700 hover:text-white transition-colors group slasher"
-              >
+              <Link href="/starter-pokemon-generator" className="block bg-white border-2 border-black p-4 hover:bg-black hover:text-white transition-colors group slasher">
                 <span className="text-2xl mb-2 block">🌱</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Starter Pokemon Generator</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Pick random starters from all 9 generations (Grass/Fire/Water)
-                </p>
+                <h4 className="font-mono font-bold text-sm mb-1 group-hover:text-white uppercase">Starter Pokemon</h4>
+                <p className="font-mono text-xs text-charcoal group-hover:text-white/70">All 9 generations of starters</p>
               </Link>
-              <Link
-                href="/pokemon-card-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-purple hover:text-white transition-colors group slasher"
-              >
+              <Link href="/pokemon-card-generator" className="block bg-white border-2 border-black p-4 hover:bg-black hover:text-white transition-colors group slasher">
                 <span className="text-2xl mb-2 block">🎴</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Pokemon Card Generator</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Create & download premium trading cards for any Pokemon
-                </p>
+                <h4 className="font-mono font-bold text-sm mb-1 group-hover:text-white uppercase">Card Generator</h4>
+                <p className="font-mono text-xs text-charcoal group-hover:text-white/70">Create & download trading cards</p>
               </Link>
             </div>
           </div>
 
-          {/* Region-Based Generators */}
-          <div>
-            <h3 className="font-grotesk font-bold text-xl sm:text-2xl text-black mb-4 uppercase border-b-2 border-black pb-2">
-              By Region
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              <Link
-                href="/paldea-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-red hover:text-white transition-colors group slasher"
-              >
-                <span className="text-2xl mb-2 block">🏫</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Paldea Pokemon (Gen 9)</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Scarlet & Violet Pokemon + Paradox forms
-                </p>
-              </Link>
-              <Link
-                href="/galar-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-blue hover:text-white transition-colors group slasher"
-              >
-                <span className="text-2xl mb-2 block">⚔️</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Galar Pokemon (Gen 8)</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Sword & Shield region with Dynamax Pokemon
-                </p>
-              </Link>
-              <Link
-                href="/alola-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-amber-200 hover:text-gray-900 transition-colors group slasher"
-              >
-                <span className="text-2xl mb-2 block">🌴</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-gray-900">Alola Pokemon (Gen 7)</h4>
-                <p className="text-sm text-brown/70 group-hover:text-gray-800">
-                  Sun & Moon region + Alolan forms & Ultra Beasts
-                </p>
-              </Link>
-              <Link
-                href="/kalos-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-purple-700 hover:text-white transition-colors group slasher"
-              >
-                <span className="text-2xl mb-2 block">🗼</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Kalos Pokemon (Gen 6)</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  X & Y region with Mega Evolutions & Fairy types
-                </p>
-              </Link>
-              <Link
-                href="/kanto-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-indigo-700 hover:text-white transition-colors group slasher"
-              >
-                <span className="text-2xl mb-2 block">🔴</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Kanto Pokemon (Gen 1)</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Original 151 Pokemon from Red, Blue & Yellow
-                </p>
-              </Link>
-              <Link
-                href="/hoenn-pokemon-generator"
-                className="block bg-white border-2 border-black p-4 hover:bg-green-700 hover:text-white transition-colors group slasher"
-              >
-                <span className="text-2xl mb-2 block">🌊</span>
-                <h4 className="font-bold text-base sm:text-lg mb-1 group-hover:text-white">Hoenn Pokemon (Gen 3)</h4>
-                <p className="text-sm text-brown/70 group-hover:text-white/90">
-                  Ruby, Sapphire & Emerald region Pokemon
-                </p>
-              </Link>
+          {/* By Region */}
+          <div className="mb-8">
+            <h3 className="font-mono font-bold text-sm text-black mb-4 uppercase border-b-2 border-black pb-2 tracking-wider">By Region</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3">
+              <Link href="/paldea-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">🏫 Paldea (Gen 9)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">Scarlet & Violet</p></Link>
+              <Link href="/galar-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">⚔️ Galar (Gen 8)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">Sword & Shield</p></Link>
+              <Link href="/alola-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">🌴 Alola (Gen 7)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">Sun & Moon</p></Link>
+              <Link href="/kalos-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">🗼 Kalos (Gen 6)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">X & Y</p></Link>
+              <Link href="/unova-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">🗽 Unova (Gen 5)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">Black & White</p></Link>
+              <Link href="/sinnoh-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">💎 Sinnoh (Gen 4)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">Diamond & Pearl</p></Link>
+              <Link href="/hoenn-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">🌊 Hoenn (Gen 3)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">Ruby & Sapphire</p></Link>
+              <Link href="/johto-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">🔔 Johto (Gen 2)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">Gold & Silver</p></Link>
+              <Link href="/kanto-pokemon-generator" className="block bg-white border-2 border-black p-3 hover:bg-black hover:text-white transition-colors group slasher"><h4 className="font-mono font-bold text-xs mb-0.5 group-hover:text-white uppercase">🔴 Kanto (Gen 1)</h4><p className="font-mono text-[10px] text-charcoal group-hover:text-white/70">Red, Blue & Yellow</p></Link>
             </div>
           </div>
 
-          {/* Challenge-Based Generators Link */}
-          <div className="mt-8 bg-black text-white p-4 sm:p-6 slasher">
-            <h3 className="font-grotesk font-bold text-lg sm:text-xl mb-3 uppercase">💀 Challenge Mode Generators</h3>
-            <p className="font-mono text-sm mb-4 text-white/80">
-              Specialized generators for hardcore challenge runs:
-            </p>
+          {/* Challenge Mode */}
+          <div className="bg-black text-white p-4 sm:p-6 slasher">
+            <h3 className="font-mono font-bold text-sm mb-3 uppercase tracking-wider">💀 Challenge Mode Generators</h3>
+            <p className="font-mono text-xs mb-4 text-white/70">Specialized generators for hardcore challenge runs:</p>
             <div className="flex flex-wrap gap-3">
-              <Link
-                href="/nuzlocke-generator"
-                className="bg-red text-white px-4 py-2 border-2 border-white hover:bg-white hover:text-red transition-colors font-bold text-sm min-h-[44px] flex items-center"
-              >
-                Nuzlocke Generator →
-              </Link>
-              <Link
-                href="/draft-league-generator"
-                className="bg-blue text-white px-4 py-2 border-2 border-white hover:bg-white hover:text-blue transition-colors font-bold text-sm min-h-[44px] flex items-center"
-              >
-                Draft League Generator →
-              </Link>
+              <Link href="/nuzlocke-generator" className="bg-marigold text-black px-4 py-2 border-2 border-marigold hover:bg-white hover:text-black transition-colors font-mono font-bold text-xs uppercase tracking-wider min-h-[44px] flex items-center slasher">Nuzlocke Generator →</Link>
+              <Link href="/draft-league-generator" className="bg-white/10 text-white px-4 py-2 border-2 border-white/30 hover:bg-marigold hover:text-black hover:border-marigold transition-colors font-mono font-bold text-xs uppercase tracking-wider min-h-[44px] flex items-center slasher">Draft League Generator →</Link>
             </div>
           </div>
         </section>
 
-        {/* Static SEO Content - Server-rendered for crawlers */}
+        {/* Static SEO Content */}
         <StaticSeoContent />
-
-        {/* Card Showcase Section */}
-        <CardShowcase />
 
         {/* SEO Content Section */}
         <SeoContent />

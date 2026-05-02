@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import PokemonDetailClient from "./PokemonDetailClient";
+import { PokemonCardButton } from "./PokemonDetailClient";
 
 // ============ TYPES ============
 interface PokemonType {
@@ -512,54 +513,46 @@ export default async function PokemonDetailPage({ params }: Props) {
             </ol>
           </nav>
 
-          {/* Prev / Next Navigation */}
-          <div className="flex justify-between items-center mb-6 md:mb-8 gap-4">
-            {prevId ? (
-              <Link
-                href={`/pokemon/${prevId}`}
-                className="flex items-center gap-2 bg-white border-2 border-black px-3 sm:px-4 py-2 font-mono text-xs sm:text-sm hover:bg-cream transition-all min-h-[44px] group"
-              >
-                <span className="text-charcoal group-hover:text-black transition-colors">← #{String(prevId).padStart(4, "0")}</span>
-              </Link>
-            ) : <div />}
-            {nextId ? (
-              <Link
-                href={`/pokemon/${nextId}`}
-                className="flex items-center gap-2 bg-white border-2 border-black px-3 sm:px-4 py-2 font-mono text-xs sm:text-sm hover:bg-cream transition-all min-h-[44px] group"
-              >
-                <span className="text-charcoal group-hover:text-black transition-colors">#{String(nextId).padStart(4, "0")} →</span>
-              </Link>
-            ) : <div />}
-          </div>
 
           {/* Hero Header */}
-          <header className="bg-heavy border-4 border-black slasher p-5 sm:p-6 md:p-8 mb-6 md:mb-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-              <div className="flex items-center gap-3 flex-wrap">
-                <h1 className="font-sans font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black uppercase tracking-tighter">
-                  {capitalizedName}
-                </h1>
-                {(pokemon.species.isLegendary || pokemon.species.isMythical) && (
-                  <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-mono text-[10px] sm:text-xs font-bold px-2 sm:px-3 py-1 border border-black uppercase">
-                    {pokemon.species.isMythical ? "Mythical" : "Legendary"}
-                  </span>
-                )}
+          <header className="bg-white border-2 border-black slasher mb-6 md:mb-8 overflow-hidden">
+            {/* Black accent top bar */}
+            <div className="bg-black px-5 sm:px-6 md:px-8 py-2 flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs text-white/60 uppercase tracking-widest">Pokédex</span>
+                <span className="font-mono text-xs text-white/30">/</span>
+                <span className="font-mono text-xs font-bold text-white tracking-widest">#{String(pokemon.id).padStart(4, "0")}</span>
+                <span className="font-mono text-xs text-white/50 uppercase">{pokemon.species.generation}</span>
               </div>
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="font-mono text-lg sm:text-xl md:text-2xl text-black font-bold">
-                  #{String(pokemon.id).padStart(4, "0")}
+              {(pokemon.species.isLegendary || pokemon.species.isMythical) && (
+                <span className="font-mono text-[10px] font-bold text-black bg-marigold px-3 py-1 uppercase tracking-widest slasher">
+                  {pokemon.species.isMythical ? "✦ MYTHICAL" : "✦ LEGENDARY"}
                 </span>
-                <span className="bg-marigold px-3 py-1 slasher border border-black font-mono text-[10px] sm:text-xs font-bold text-black uppercase">
-                  {pokemon.species.generation}
-                </span>
-              </div>
+              )}
             </div>
-            {/* Pokedex Entry in Hero */}
-            {pokemon.species.flavorText && (
-              <p className="font-mono text-sm sm:text-base text-charcoal leading-relaxed italic mt-4 max-w-3xl">
-                &ldquo;{pokemon.species.flavorText}&rdquo;
+
+            {/* Main hero body */}
+            <div className="p-5 sm:p-6 md:p-8">
+              <h1 className="font-grotesk font-bold text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-black uppercase tracking-tight leading-none mb-2">
+                {capitalizedName}
+              </h1>
+              <p className="font-mono text-xs text-charcoal uppercase tracking-widest mb-4 flex flex-wrap gap-x-3 gap-y-1">
+                <span>{pokemon.species.genus}</span>
+                <span className="text-black/20">•</span>
+                <span>{typesDisplay} Type</span>
+                <span className="text-black/20">•</span>
+                <span>BST <strong className="text-black">{totalStats}</strong></span>
+                <span className="text-black/20">•</span>
+                <span>Best: <strong className="text-black">{formatStatName(highestStat.stat.name)} {highestStat.base_stat}</strong></span>
               </p>
-            )}
+              {pokemon.species.flavorText && (
+                <div className="border-l-4 border-black pl-4 mt-4">
+                  <p className="font-mono text-sm sm:text-base text-charcoal leading-relaxed italic max-w-3xl">
+                    &ldquo;{pokemon.species.flavorText}&rdquo;
+                  </p>
+                </div>
+              )}
+            </div>
           </header>
 
           {/* Main Grid */}
@@ -569,9 +562,9 @@ export default async function PokemonDetailPage({ params }: Props) {
             <div className="lg:col-span-5 space-y-4 md:space-y-6">
 
               {/* Artwork Box */}
-              <div className="bg-white border-4 border-black slasher p-4 sm:p-6 md:p-8">
+              <div className="bg-white border-2 border-black slasher p-4 sm:p-6 md:p-8">
                 <div className="mx-auto max-w-[240px] sm:max-w-[280px] md:max-w-[320px]">
-                  <div className="relative w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center rounded-sm overflow-hidden">
+                  <div className="relative w-full aspect-square flex items-center justify-center overflow-hidden">
                     <Image
                       src={pokemon.sprites.other?.["official-artwork"]?.front_default || pokemon.sprites.other?.home?.front_default || pokemon.sprites.front_default || ""}
                       alt={`${capitalizedName} official artwork - ${typesDisplay} type Pokemon from ${pokemon.species.generation}`}
@@ -585,7 +578,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                 </div>
 
                 {/* Type Badges */}
-                <div className="flex gap-2 sm:gap-3 justify-center mt-5 sm:mt-6 flex-wrap">
+                <div className="flex gap-2 sm:gap-3 justify-center mt-4 flex-wrap">
                   {pokemon.types.map((typeInfo) => (
                     <Link
                       key={typeInfo.type.name}
@@ -600,10 +593,15 @@ export default async function PokemonDetailPage({ params }: Props) {
                     </Link>
                   ))}
                 </div>
+
+                {/* Generate Card Button */}
+                <div className="mt-4 border-t-2 border-black pt-4">
+                  <PokemonCardButton pokemon={pokemon} />
+                </div>
               </div>
 
               {/* Physical Data + Training */}
-              <div className="bg-white border-4 border-black slasher p-5 sm:p-6">
+              <div className="bg-white border-2 border-black slasher p-5 sm:p-6">
                 <div className="inline-block bg-black px-3 py-1 mb-4">
                   <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">PROFILE</span>
                 </div>
@@ -629,7 +627,7 @@ export default async function PokemonDetailPage({ params }: Props) {
               </div>
 
               {/* Abilities */}
-              <div className="bg-white border-4 border-black slasher p-5 sm:p-6">
+              <div className="bg-cream border-2 border-black slasher p-5 sm:p-6">
                 <div className="inline-block bg-black px-3 py-1 mb-4">
                   <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">ABILITIES</span>
                 </div>
@@ -637,14 +635,14 @@ export default async function PokemonDetailPage({ params }: Props) {
                   {pokemon.abilities.map((abilityInfo, index) => (
                     <div
                       key={index}
-                      className={`flex items-center justify-between gap-3 border-2 border-black px-4 py-2.5 ${abilityInfo.is_hidden ? "bg-purple-50 border-purple-300" : "bg-cream"}`}
+                      className="flex items-center justify-between gap-3 border-2 border-black px-4 py-2.5 bg-white"
                     >
                       <span className="font-mono text-sm text-black uppercase font-semibold">
                         {abilityInfo.ability.name.replace(/-/g, " ")}
                       </span>
                       {abilityInfo.is_hidden && (
-                        <span className="font-mono text-[10px] bg-purple-200 text-purple-800 px-2 py-0.5 font-bold uppercase flex-shrink-0">
-                          Hidden
+                        <span className="font-mono text-[10px] bg-black text-white px-2 py-0.5 font-bold uppercase flex-shrink-0 slasher">
+                          HIDDEN
                         </span>
                       )}
                     </div>
@@ -657,7 +655,7 @@ export default async function PokemonDetailPage({ params }: Props) {
             <div className="lg:col-span-7 space-y-4 md:space-y-6">
 
               {/* Combat Statistics */}
-              <div className="bg-white border-4 border-black slasher p-5 sm:p-6 md:p-8">
+              <div className="bg-white border-2 border-black slasher p-5 sm:p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="inline-block bg-black px-3 py-1">
                     <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">BASE STATS</span>
@@ -679,7 +677,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                             {stat.base_stat}
                           </span>
                         </div>
-                        <div className="w-full h-5 sm:h-6 bg-gray-100 border-2 border-black relative overflow-hidden">
+                        <div className="w-full h-5 sm:h-6 bg-black/5 border-2 border-black relative overflow-hidden">
                           <div
                             className="h-full transition-all duration-700 ease-out"
                             style={{ width: `${pct}%`, backgroundColor: color }}
@@ -701,11 +699,12 @@ export default async function PokemonDetailPage({ params }: Props) {
 
               {/* Evolution Chain */}
               {evolutionChain.length > 1 && (
-                <div className="bg-white border-4 border-black slasher p-5 sm:p-6">
+                <div className="bg-white border-2 border-black slasher p-5 sm:p-6">
                   <div className="inline-block bg-black px-3 py-1 mb-5">
                     <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">EVOLUTION CHAIN</span>
                   </div>
-                  <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2">
+                  <div className="overflow-x-auto pb-2">
+                  <div className="flex items-center justify-center gap-1 sm:gap-2 min-w-max mx-auto">
                     {evolutionChain.map((evo, index) => {
                       const isCurrentPokemon = evo.name.toLowerCase() === pokemon.name.toLowerCase();
                       const formattedEvoName = capitalize(evo.name);
@@ -724,7 +723,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                             </div>
                           )}
                           {isCurrentPokemon ? (
-                            <div className="flex flex-col items-center bg-marigold border-2 border-black p-2 sm:p-3 min-w-[70px] sm:min-w-[90px]">
+                            <div className="flex flex-col items-center bg-black border-2 border-black p-2 sm:p-3 min-w-[70px] sm:min-w-[90px]">
                               <div className="relative w-12 h-12 sm:w-16 sm:h-16">
                                 <Image
                                   src={spriteUrl}
@@ -735,14 +734,14 @@ export default async function PokemonDetailPage({ params }: Props) {
                                   unoptimized
                                 />
                               </div>
-                              <span className="font-mono text-[10px] sm:text-xs font-bold text-black text-center mt-1 uppercase">
+                              <span className="font-mono text-[10px] sm:text-xs font-bold text-white text-center mt-1 uppercase">
                                 {formattedEvoName}
                               </span>
                             </div>
                           ) : (
                             <Link
                               href={`/pokemon/${evo.name.toLowerCase()}`}
-                              className="flex flex-col items-center bg-cream hover:bg-marigold border-2 border-black p-2 sm:p-3 min-w-[70px] sm:min-w-[90px] transition-colors"
+                              className="flex flex-col items-center bg-white hover:bg-black hover:text-white border-2 border-black p-2 sm:p-3 min-w-[70px] sm:min-w-[90px] transition-all group"
                             >
                               <div className="relative w-12 h-12 sm:w-16 sm:h-16">
                                 <Image
@@ -754,7 +753,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                                   unoptimized
                                 />
                               </div>
-                              <span className="font-mono text-[10px] sm:text-xs font-bold text-black text-center mt-1 uppercase">
+                              <span className="font-mono text-[10px] sm:text-xs font-bold text-black group-hover:text-white text-center mt-1 uppercase">
                                 {formattedEvoName}
                               </span>
                             </Link>
@@ -762,6 +761,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                         </div>
                       );
                     })}
+                  </div>
                   </div>
                   {currentEvoIndex >= 0 && (
                     <p className="font-mono text-xs text-charcoal text-center mt-3">
@@ -774,7 +774,7 @@ export default async function PokemonDetailPage({ params }: Props) {
               )}
 
               {/* Explore By Type */}
-              <div className="bg-white border-4 border-black slasher p-5 sm:p-6">
+              <div className="bg-white border-2 border-black slasher p-5 sm:p-6">
                 <div className="inline-block bg-black px-3 py-1 mb-4">
                   <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">EXPLORE BY TYPE</span>
                 </div>
@@ -802,27 +802,46 @@ export default async function PokemonDetailPage({ params }: Props) {
               <div className="grid grid-cols-2 gap-3">
                 <Link
                   href="/pokedex"
-                  className="bg-purple-300 hover:brightness-110 text-black font-mono font-bold text-xs sm:text-sm px-4 py-3 sm:py-4 text-center border-4 border-black transition-all slasher flex items-center justify-center gap-2 min-h-[48px]"
+                  className="bg-cream hover:bg-black hover:text-white text-black font-mono font-bold text-xs sm:text-sm px-4 py-3 sm:py-4 text-center border-2 border-black transition-all slasher flex items-center justify-center gap-2 min-h-[48px]"
                 >
                   📖 POKÉDEX
                 </Link>
                 <Link
                   href="/"
-                  className="bg-[#4ADE80] hover:brightness-110 text-black font-mono font-bold text-xs sm:text-sm px-4 py-3 sm:py-4 text-center border-4 border-black transition-all slasher flex items-center justify-center gap-2 min-h-[48px]"
+                  className="bg-black hover:bg-charcoal text-white font-mono font-bold text-xs sm:text-sm px-4 py-3 sm:py-4 text-center border-2 border-black transition-all slasher flex items-center justify-center gap-2 min-h-[48px]"
                 >
                   ⚡ GENERATOR
                 </Link>
+              </div>
+
+              {/* Battle Role Analysis */}
+              <div className="bg-cream border-2 border-black slasher p-5 sm:p-6">
+                <div className="inline-block bg-black px-3 py-1 mb-4">
+                  <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">BATTLE ROLE</span>
+                </div>
+                <div className="space-y-2">
+                  {pokemon.stats.map((stat) => {
+                    const role = getBattleRole(stat.stat.name);
+                    const isHighest = stat.stat.name === highestStat.stat.name;
+                    return (
+                      <div key={stat.stat.name} className="flex items-center justify-between gap-2 px-3 py-2 border-2 border-black bg-white">
+                        <span className="font-mono text-xs uppercase font-bold text-charcoal">{formatStatName(stat.stat.name)}</span>
+                        <span className="font-mono text-[10px] text-charcoal">{role}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
 
           {/* SEO Content Section — Server-rendered */}
-          <article className="mt-8 md:mt-12 bg-white border-4 border-black slasher p-5 sm:p-6 md:p-8">
+          <article className="mt-8 md:mt-12 bg-white border-2 border-black slasher p-5 sm:p-6 md:p-8">
             <div className="inline-block bg-black px-3 py-1 mb-6">
               <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">TRAINER INTEL</span>
             </div>
 
-            <h2 className="font-sans font-bold text-xl sm:text-2xl md:text-3xl mb-5 sm:mb-6 text-black uppercase">
+            <h2 className="font-grotesk font-bold text-xl sm:text-2xl md:text-3xl mb-5 sm:mb-6 text-black uppercase">
               About {capitalizedName}
             </h2>
 
@@ -869,6 +888,9 @@ export default async function PokemonDetailPage({ params }: Props) {
                   {formatStatName(highestStat.stat.name)} ({highestStat.base_stat})
                 </strong>, making it a strong choice for trainers looking for{" "}
                 <strong className="text-black">{getBattleRole(highestStat.stat.name)}</strong>.
+                <strong className="text-black"> Competitive viability:</strong> With a BST of <strong className="text-black">{totalStats}</strong>,
+                {" "}{capitalizedName} is considered <strong className="text-black">{totalStats >= 600 ? "exceptional — pseudo-legendary tier" : totalStats >= 500 ? "very strong" : totalStats >= 400 ? "solid" : "moderate BST"}</strong>.
+                {" "}Trainers should build movesets that capitalise on this strength while covering type weaknesses.
               </p>
 
               <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
@@ -883,6 +905,16 @@ export default async function PokemonDetailPage({ params }: Props) {
                 {capitalizedName} offers unique strengths worth considering.
               </p>
 
+              <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
+                <strong className="text-black">Capture difficulty:</strong> {capitalizedName} has a capture rate of{" "}
+                <strong className="text-black">{pokemon.species.captureRate}/255</strong> —{" "}
+                {pokemon.species.captureRate >= 200 ? "very easy to catch with standard Poké Balls" :
+                  pokemon.species.captureRate >= 120 ? "moderate difficulty; Great Balls recommended" :
+                    pokemon.species.captureRate >= 60 ? "difficult; use Ultra Balls with a status condition" :
+                      "extremely difficult — use Ultra Balls and apply Sleep or Paralysis first"}.
+                {" "}Growth rate: <strong className="text-black">{capitalize(pokemon.species.growthRate)}</strong>.
+              </p>
+
               {otherEvolutions.length > 0 && (
                 <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
                   Want to learn about related Pokémon? Check out{" "}
@@ -895,7 +927,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                     return (
                       <span key={evo.name}>
                         {index > 0 && separator}
-                        <Link href={`/pokemon/${evo.name.toLowerCase()}`} className="text-indigo hover:underline font-semibold">
+                        <Link href={`/pokemon/${evo.name.toLowerCase()}`} className="text-black underline font-semibold hover:no-underline">
                           {formatted}
                         </Link>
                       </span>
@@ -903,16 +935,32 @@ export default async function PokemonDetailPage({ params }: Props) {
                   })}.
                 </p>
               )}
+
+              {/* Generate Card CTA */}
+              <div className="mt-6 border-t-2 border-black pt-6 flex flex-col sm:flex-row gap-3">
+                <Link
+                  href={`/pokemon-card-generator?pokemon=${pokemon.name.toLowerCase()}`}
+                  className="flex-1 flex items-center justify-center gap-2 bg-black hover:bg-charcoal text-white font-mono font-bold text-sm uppercase tracking-widest px-6 py-4 border-2 border-black slasher transition-smooth"
+                >
+                  🃏 GENERATE {capitalizedName.toUpperCase()} CARD
+                </Link>
+                <Link
+                  href="/"
+                  className="flex-1 flex items-center justify-center gap-2 bg-cream hover:bg-black hover:text-white text-black font-mono font-bold text-sm uppercase tracking-widest px-6 py-4 border-2 border-black slasher transition-smooth"
+                >
+                  ⚡ RANDOM TEAM GENERATOR
+                </Link>
+              </div>
             </div>
           </article>
 
           {/* FAQ Section — Server-rendered, keyword-rich */}
-          <section className="mt-8 md:mt-12 bg-white border-4 border-black slasher p-5 sm:p-6 md:p-8">
+          <section className="mt-8 md:mt-12 bg-white border-2 border-black slasher p-5 sm:p-6 md:p-8">
             <div className="inline-block bg-black px-3 py-1 mb-6">
               <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">FAQ</span>
             </div>
 
-            <h2 className="font-sans font-bold text-xl sm:text-2xl md:text-3xl mb-2 text-black uppercase">
+            <h2 className="font-grotesk font-bold text-xl sm:text-2xl md:text-3xl mb-2 text-black uppercase">
               Frequently Asked Questions About {capitalizedName}
             </h2>
             <p className="font-mono text-xs sm:text-sm text-charcoal mb-6">

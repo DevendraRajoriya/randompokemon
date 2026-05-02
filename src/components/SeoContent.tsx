@@ -14,35 +14,35 @@ export default function SeoContent() {
   return (
     <>
       {/* Section 1: The Advanced Random Pokemon Generator */}
-      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher">
+      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
         <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
           <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">PROTOCOL V1.0</span>
         </div>
-        <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-8 uppercase">
+        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl  text-black leading-[0.9] mb-8 uppercase">
           ADVANCED <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
             POKEMON GENERATOR
           </span>
         </h2>
         <div className="space-y-4">
-          <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6">
+          <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
             Welcome to the most comprehensive random Pokemon generator available on the internet. Our advanced protocol supports every generation of Pokemon games—from the original Red and Blue (Generation 1) through the latest entries including Pokemon Scarlet and Violet (Generation 9), and we&apos;re ready for the upcoming Pokemon Legends: Z-A.
           </p>
-          <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6">
+          <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
             With access to over 1,025 unique Pokemon species, our generator provides trainers with an unparalleled tool for team building, challenge runs, and competitive preparation. The cypherpunk-inspired interface ensures a sleek, no-nonsense experience focused entirely on functionality and speed.
           </p>
-          <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6">
+          <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
             Our database is continuously updated to include new Pokemon forms, regional variants (Alolan, Galarian, Hisuian, and Paldean forms), Paradox Pokemon, and special event distributions.
           </p>
         </div>
       </section>
 
       {/* Section 2: How to Use */}
-      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher">
+      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
         <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
           <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">USER GUIDE</span>
         </div>
-        <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-4 uppercase">
+        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl  text-black leading-[0.9] mb-4 uppercase">
           HOW TO USE <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
             THIS GENERATOR
@@ -98,18 +98,18 @@ export default function SeoContent() {
       </section>
 
       {/* Section 3: Nuzlocke Tools */}
-      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher">
+      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
         <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
           <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">CHALLENGE MODE</span>
         </div>
-        <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-8 uppercase">
+        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl  text-black leading-[0.9] mb-8 uppercase">
           Best Random Pokemon <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
             Generator for Nuzlocke Runs
           </span>
         </h2>
-        <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6 mb-8">
-          Our random Pokemon generator has become the go-to tool for the Nuzlocke community. Use our generator to pre-determine starter options, simulate encounter tables, or generate replacement Pokemon for fallen team members. Perfect for Classic Nuzlocke, Hardcore Nuzlocke, and Randomizer challenge runs across all generations. <Link href="/nuzlocke-generator" className="text-indigo-600 hover:text-indigo-800 underline font-bold">Learn more about Nuzlocke strategies →</Link>
+        <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6 mb-8">
+          Our random Pokemon generator has become the go-to tool for the Nuzlocke community. Use our generator to pre-determine starter options, simulate encounter tables, or generate replacement Pokemon for fallen team members. Perfect for Classic Nuzlocke, Hardcore Nuzlocke, and Randomizer challenge runs across all generations. <Link href="/nuzlocke-generator" className="text-black hover:text-charcoal underline font-bold">Learn more about Nuzlocke strategies →</Link>
         </p>
         <div className="border-2 border-black bg-white p-6 md:p-8 slasher">
           <h3 className="font-sans font-bold uppercase text-xl md:text-2xl text-black mb-6">
@@ -119,35 +119,35 @@ export default function SeoContent() {
             <div className="flex items-start gap-4 border-b border-black/10 pb-4">
               <span className="bg-marigold text-black font-mono text-xs font-bold px-2 py-1 slasher">01</span>
               <div>
-                <span className="font-sans font-bold text-black">Classic Nuzlocke</span>
+                <span className="font-mono font-bold text-sm text-black uppercase">Classic Nuzlocke</span>
                 <p className="font-mono text-sm text-charcoal mt-1">Generate random starter trios or simulate route encounters for ROM hacks and fan games.</p>
               </div>
             </div>
             <div className="flex items-start gap-4 border-b border-black/10 pb-4">
               <span className="bg-marigold text-black font-mono text-xs font-bold px-2 py-1 slasher">02</span>
               <div>
-                <span className="font-sans font-bold text-black">SoulLink Challenges</span>
+                <span className="font-mono font-bold text-sm text-black uppercase">SoulLink Challenges</span>
                 <p className="font-mono text-sm text-charcoal mt-1">Generate paired teams for two players running synchronized Nuzlocke runs.</p>
               </div>
             </div>
             <div className="flex items-start gap-4 border-b border-black/10 pb-4">
               <span className="bg-marigold text-black font-mono text-xs font-bold px-2 py-1 slasher">03</span>
               <div>
-                <span className="font-sans font-bold text-black">Draft Leagues</span>
-                <p className="font-mono text-sm text-charcoal mt-1">Create randomized draft pools for competitive Pokemon draft leagues and tournaments. <Link href="/draft-league-generator" className="text-indigo-600 hover:text-indigo-800 underline">See draft guide →</Link></p>
+                <span className="font-mono font-bold text-sm text-black uppercase">Draft Leagues</span>
+                <p className="font-mono text-sm text-charcoal mt-1">Create randomized draft pools for competitive Pokemon draft leagues and tournaments. <Link href="/draft-league-generator" className="text-black hover:text-charcoal underline">See draft guide →</Link></p>
               </div>
             </div>
             <div className="flex items-start gap-4 border-b border-black/10 pb-4">
               <span className="bg-marigold text-black font-mono text-xs font-bold px-2 py-1 slasher">04</span>
               <div>
-                <span className="font-sans font-bold text-black">Randomizer Seeds</span>
-                <p className="font-mono text-sm text-charcoal mt-1">Preview potential team compositions before starting a randomized ROM playthrough. <Link href="/randomizer-guide" className="text-indigo-600 hover:text-indigo-800 underline">Read randomizer guide →</Link></p>
+                <span className="font-mono font-bold text-sm text-black uppercase">Randomizer Seeds</span>
+                <p className="font-mono text-sm text-charcoal mt-1">Preview potential team compositions before starting a randomized ROM playthrough. <Link href="/randomizer-guide" className="text-black hover:text-charcoal underline">Read randomizer guide →</Link></p>
               </div>
             </div>
             <div className="flex items-start gap-4">
               <span className="bg-marigold text-black font-mono text-xs font-bold px-2 py-1 slasher">05</span>
               <div>
-                <span className="font-sans font-bold text-black">Wonderlocke Prep</span>
+                <span className="font-mono font-bold text-sm text-black uppercase">Wonderlocke Prep</span>
                 <p className="font-mono text-sm text-charcoal mt-1">Generate expectations for Wonder Trade-based challenge runs.</p>
               </div>
             </div>
@@ -156,11 +156,11 @@ export default function SeoContent() {
       </section>
 
       {/* Section 4: Core Features */}
-      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher">
+      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
         <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
           <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">SYSTEM SPECS</span>
         </div>
-        <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-8 uppercase">
+        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl  text-black leading-[0.9] mb-8 uppercase">
           CORE <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
             CAPABILITIES
@@ -169,7 +169,7 @@ export default function SeoContent() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <div>
             <div className="bg-black text-white p-4 slasher">
-              <h3 className="font-sans font-bold text-lg md:text-xl">Type Filtering System</h3>
+              <h3 className="font-mono font-bold text-sm md:text-xl">Type Filtering System</h3>
             </div>
             <div className="border-2 border-black border-t-0 p-4 bg-white">
               <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
@@ -179,7 +179,7 @@ export default function SeoContent() {
           </div>
           <div>
             <div className="bg-black text-white p-4 slasher">
-              <h3 className="font-sans font-bold text-lg md:text-xl">Legendary &amp; Rarity Toggle</h3>
+              <h3 className="font-mono font-bold text-sm md:text-xl">Legendary &amp; Rarity Toggle</h3>
             </div>
             <div className="border-2 border-black border-t-0 p-4 bg-white">
               <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
@@ -189,7 +189,7 @@ export default function SeoContent() {
           </div>
           <div>
             <div className="bg-black text-white p-4 slasher">
-              <h3 className="font-sans font-bold text-lg md:text-xl">Sprite &amp; Artwork Modes</h3>
+              <h3 className="font-mono font-bold text-sm md:text-xl">Sprite &amp; Artwork Modes</h3>
             </div>
             <div className="border-2 border-black border-t-0 p-4 bg-white">
               <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
@@ -199,7 +199,7 @@ export default function SeoContent() {
           </div>
           <div>
             <div className="bg-black text-white p-4 slasher">
-              <h3 className="font-sans font-bold text-lg md:text-xl">Complete Pokedex Database</h3>
+              <h3 className="font-mono font-bold text-sm md:text-xl">Complete Pokedex Database</h3>
             </div>
             <div className="border-2 border-black border-t-0 p-4 bg-white">
               <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
@@ -211,42 +211,42 @@ export default function SeoContent() {
       </section>
 
       {/* Section 5: Scarlet & Violet Support */}
-      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher">
+      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
         <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
           <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">GEN 9 COMPATIBLE</span>
         </div>
-        <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-8 uppercase">
+        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl  text-black leading-[0.9] mb-8 uppercase">
           Best Random Pokemon Generator<br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
             for Scarlet & Violet
           </span>
         </h2>
         <div className="space-y-6">
-          <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6">
+          <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
             Fully optimized for Pokemon Scarlet and Violet (Generation 9), our generator includes all Paldean Pokemon, regional forms, and Paradox Pokemon from both games. Whether you&apos;re planning a playthrough of the main story, tackling the Academy Ace Tournament, or preparing for Tera Raid battles, our tool generates balanced teams compatible with the latest generation.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-red-50 border-2 border-black p-4 slasher">
-              <h3 className="font-sans font-bold text-lg text-gray-900 mb-2 uppercase">Paldean Pokemon</h3>
-              <p className="font-mono text-sm text-gray-800 leading-relaxed">
+            <div className="bg-white border-2 border-black p-4 slasher">
+              <h3 className="font-mono font-bold text-sm text-black mb-2 uppercase">Paldean Pokemon</h3>
+              <p className="font-mono text-sm text-charcoal leading-relaxed">
                 All new Gen 9 species including starters Sprigatito, Fuecoco, and Quaxly, plus Legendaries Koraidon and Miraidon. Filter by Paldea region to generate teams exclusively from the newest games.
               </p>
             </div>
-            <div className="bg-purple-50 border-2 border-black p-4 slasher">
-              <h3 className="font-sans font-bold text-lg text-gray-900 mb-2 uppercase">Paradox Pokemon</h3>
-              <p className="font-mono text-sm text-gray-800 leading-relaxed">
+            <div className="bg-white border-2 border-black p-4 slasher">
+              <h3 className="font-mono font-bold text-sm text-black mb-2 uppercase">Paradox Pokemon</h3>
+              <p className="font-mono text-sm text-charcoal leading-relaxed">
                 Toggle &quot;Paradox&quot; in rarity filters to include exclusive Ancient (Scarlet) and Future (Violet) forms like Iron Valiant, Roaring Moon, and Walking Wake. Perfect for post-game team building.
               </p>
             </div>
-            <div className="bg-blue-50 border-2 border-black p-4 slasher">
-              <h3 className="font-sans font-bold text-lg text-gray-900 mb-2 uppercase">Terastallize Planning</h3>
-              <p className="font-mono text-sm text-gray-800 leading-relaxed">
+            <div className="bg-white border-2 border-black p-4 slasher">
+              <h3 className="font-mono font-bold text-sm text-black mb-2 uppercase">Terastallize Planning</h3>
+              <p className="font-mono text-sm text-charcoal leading-relaxed">
                 Use type filters to plan Tera Type strategies. Generate mono-type teams or mixed teams with type coverage for Scarlet & Violet&apos;s Terastallize mechanic.
               </p>
             </div>
-            <div className="bg-green-50 border-2 border-black p-4 slasher">
-              <h3 className="font-sans font-bold text-lg text-gray-900 mb-2 uppercase">DLC Compatible</h3>
-              <p className="font-mono text-sm text-gray-800 leading-relaxed">
+            <div className="bg-white border-2 border-black p-4 slasher">
+              <h3 className="font-mono font-bold text-sm text-black mb-2 uppercase">DLC Compatible</h3>
+              <p className="font-mono text-sm text-charcoal leading-relaxed">
                 Includes Pokemon from The Teal Mask and The Indigo Disk DLC expansions. Generate teams featuring Ogerpon, Terapagos, and all returning Pokemon from Kitakami and Blueberry Academy.
               </p>
             </div>
@@ -255,18 +255,15 @@ export default function SeoContent() {
       </section>
 
       {/* Section 6: Filter Features */}
-      <section className="mt-12 md:mt-16 mb-8 bg-white border-4 border-black p-6 md:p-12 slasher">
-        <div className="inline-block bg-marigold px-4 py-1 slasher border-2 border-black mb-4">
-          <span className="font-mono text-xs font-bold text-black uppercase tracking-widest">FILTERING ENGINE</span>
+      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
+        <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
+          <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">FILTERING ENGINE</span>
         </div>
-        <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-8 uppercase">
-          Filter Pokemon by Type, <br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
-            Region & Legendary Status
-          </span>
+        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl text-black leading-[0.9] mb-6 uppercase">
+          FILTER POKEMON BY <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">TYPE, REGION & RARITY</span>
         </h2>
-        <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-marigold pl-6 mb-8">
-          Our advanced filtering system gives you surgical precision when generating Pokemon teams. Combine multiple filters to create highly specific team compositions, or leave filters open for maximum randomization. The choice is yours.
+        <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed border-l-4 border-black pl-6 mb-8">
+          Our advanced filtering system gives you surgical precision when generating Pokemon teams. Combine multiple filters to create highly specific team compositions, or leave filters open for maximum randomization.
         </p>
         
         <div className="space-y-6">
@@ -274,7 +271,7 @@ export default function SeoContent() {
           <div className="border-2 border-black p-6 bg-cream slasher">
             <div className="flex items-center gap-3 mb-4">
               <span className="bg-black text-white font-mono text-xs font-bold px-3 py-1 slasher">TYPE FILTER</span>
-              <h3 className="font-sans font-bold text-2xl text-black uppercase">18 Pokemon Types Available</h3>
+              <h3 className="font-mono font-bold text-sm uppercase text-black uppercase">18 Pokemon Types Available</h3>
             </div>
             <p className="font-mono text-sm text-charcoal mb-4 leading-relaxed">
               Select from all 18 Pokemon types: Normal, Fire, Water, Electric, Grass, Ice, Fighting, Poison, Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel, and Fairy. Choose multiple types to broaden your pool, or select one type for a pure monotype team challenge. Dual-type Pokemon are included when either of their types match your filter.
@@ -293,22 +290,22 @@ export default function SeoContent() {
           <div className="border-2 border-black p-6 bg-cream slasher">
             <div className="flex items-center gap-3 mb-4">
               <span className="bg-black text-white font-mono text-xs font-bold px-3 py-1 slasher">REGION FILTER</span>
-              <h3 className="font-sans font-bold text-2xl text-black uppercase">10 Generations & Regions</h3>
+              <h3 className="font-mono font-bold text-sm uppercase text-black uppercase">10 Generations & Regions</h3>
             </div>
             <p className="font-mono text-sm text-charcoal mb-4 leading-relaxed">
               Filter Pokemon by their native region across all nine generations plus Hisui. Perfect for generation-specific challenges or nostalgia runs. Select multiple regions to create cross-generation teams.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs font-mono font-bold">
-              <div className="bg-red-50 text-gray-900 p-2 border-2 border-black text-center">GEN 1: KANTO</div>
-              <div className="bg-yellow-50 text-gray-900 p-2 border-2 border-black text-center">GEN 2: JOHTO</div>
-              <div className="bg-blue-50 text-gray-900 p-2 border-2 border-black text-center">GEN 3: HOENN</div>
-              <div className="bg-purple-50 text-gray-900 p-2 border-2 border-black text-center">GEN 4: SINNOH</div>
-              <div className="bg-green-50 text-gray-900 p-2 border-2 border-black text-center">GEN 5: UNOVA</div>
-              <div className="bg-pink-50 text-gray-900 p-2 border-2 border-black text-center">GEN 6: KALOS</div>
-              <div className="bg-orange-50 text-gray-900 p-2 border-2 border-black text-center">GEN 7: ALOLA</div>
-              <div className="bg-indigo-50 text-gray-900 p-2 border-2 border-black text-center">GEN 8: GALAR</div>
-              <div className="bg-cyan-50 text-gray-900 p-2 border-2 border-black text-center">GEN 8: HISUI</div>
-              <div className="bg-red-50 text-gray-900 p-2 border-2 border-black text-center">GEN 9: PALDEA</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 1: KANTO</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 2: JOHTO</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 3: HOENN</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 4: SINNOH</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 5: UNOVA</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 6: KALOS</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 7: ALOLA</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 8: GALAR</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 8: HISUI</div>
+              <div className="bg-white text-black p-2 border-2 border-black text-center">GEN 9: PALDEA</div>
             </div>
           </div>
 
@@ -316,7 +313,7 @@ export default function SeoContent() {
           <div className="border-2 border-black p-6 bg-cream slasher">
             <div className="flex items-center gap-3 mb-4">
               <span className="bg-black text-white font-mono text-xs font-bold px-3 py-1 slasher">RARITY FILTER</span>
-              <h3 className="font-sans font-bold text-2xl text-black uppercase">Granular Legendary Control</h3>
+              <h3 className="font-mono font-bold text-sm uppercase text-black uppercase">Granular Legendary Control</h3>
             </div>
             <p className="font-mono text-sm text-charcoal mb-4 leading-relaxed">
               Precisely control which special Pokemon appear in your random teams. Toggle Legendary, Mythical, Paradox, and Ultra Beast classifications independently. Essential for Nuzlocke runs with specific legendary clauses.
@@ -325,28 +322,28 @@ export default function SeoContent() {
               <div className="flex items-center gap-3 bg-white border border-black p-3">
                 <span className="text-2xl">🔱</span>
                 <div>
-                  <span className="font-sans font-bold text-black">LEGENDARY</span>
+                  <span className="font-mono font-bold text-sm text-black uppercase">LEGENDARY</span>
                   <p className="font-mono text-xs text-charcoal">Box-art legendaries like Mewtwo, Lugia, Rayquaza, Dialga, Reshiram, Xerneas, Solgaleo, Zacian, and Koraidon</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-white border border-black p-3">
                 <span className="text-2xl">✨</span>
                 <div>
-                  <span className="font-sans font-bold text-black">MYTHICAL</span>
+                  <span className="font-mono font-bold text-sm text-black uppercase">MYTHICAL</span>
                   <p className="font-mono text-xs text-charcoal">Event-exclusive Pokemon like Mew, Celebi, Jirachi, Darkrai, Victini, Genesect, Diancie, Marshadow, and Zarude</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-white border border-black p-3">
                 <span className="text-2xl">⚔️</span>
                 <div>
-                  <span className="font-sans font-bold text-black">PARADOX</span>
+                  <span className="font-mono font-bold text-sm text-black uppercase">PARADOX</span>
                   <p className="font-mono text-xs text-charcoal">Ancient and Future forms exclusive to Scarlet & Violet (Iron Valiant, Roaring Moon, Walking Wake, Iron Leaves)</p>
                 </div>
               </div>
               <div className="flex items-center gap-3 bg-white border border-black p-3">
                 <span className="text-2xl">👾</span>
                 <div>
-                  <span className="font-sans font-bold text-black">ULTRA BEAST</span>
+                  <span className="font-mono font-bold text-sm text-black uppercase">ULTRA BEAST</span>
                   <p className="font-mono text-xs text-charcoal">Interdimensional Pokemon from Gen 7 (Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, Guzzlord)</p>
                 </div>
               </div>
@@ -356,61 +353,58 @@ export default function SeoContent() {
       </section>
 
       {/* Section 7: Why Use Generator */}
-      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher">
+      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
         <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
           <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">USE CASES</span>
         </div>
-        <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-8 uppercase">
-          Why Use a Random<br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
-            Pokemon Generator?
-          </span>
+        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl text-black leading-[0.9] mb-6 uppercase">
+          WHY USE A RANDOM <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">POKEMON GENERATOR?</span>
         </h2>
         <div className="space-y-6">
-          <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6">
-            Random Pokemon generators inject fresh excitement into Pokemon games you&apos;ve played dozens of times. Instead of using the same team of favorites, embrace chaos and discover hidden gems you&apos;ve never trained before. Random teams force you to adapt strategies, learn new type matchups, and appreciate Pokemon you might have overlooked.
+          <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed border-l-4 border-black pl-6">
+            Random Pokemon generators inject fresh excitement into Pokemon games you&apos;ve played dozens of times. Instead of using the same team of favorites, embrace chaos and discover hidden gems you&apos;ve never trained before.
           </p>
           
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="bg-green-50 border-2 border-black p-5 slasher">
-              <h3 className="font-sans font-bold text-lg text-gray-900 mb-3 uppercase flex items-center gap-2">
-                <span className="text-green-600">✓</span> Break the Meta
+            <div className="bg-white border-2 border-black p-5 slasher">
+              <h3 className="font-mono font-bold text-sm text-black mb-3 uppercase flex items-center gap-2">
+                <span className="text-black">✓</span> Break the Meta
               </h3>
-              <p className="font-mono text-sm text-gray-800 leading-relaxed">
+              <p className="font-mono text-sm text-charcoal leading-relaxed">
                 Tired of the same Garchomp, Metagross, and Blaziken teams? Random generation forces you out of your comfort zone and into uncharted territory. You might discover that Dunsparce is actually viable, or that Ledian can surprise you in unexpected ways.
               </p>
             </div>
             
-            <div className="bg-blue-50 border-2 border-black p-5 slasher">
-              <h3 className="font-sans font-bold text-lg text-gray-900 mb-3 uppercase flex items-center gap-2">
-                <span className="text-blue-600">✓</span> Perfect for Streamers
+            <div className="bg-white border-2 border-black p-5 slasher">
+              <h3 className="font-mono font-bold text-sm text-black mb-3 uppercase flex items-center gap-2">
+                <span className="text-black">✓</span> Perfect for Streamers
               </h3>
-              <p className="font-mono text-sm text-gray-800 leading-relaxed">
+              <p className="font-mono text-sm text-charcoal leading-relaxed">
                 Content creators love random Pokemon generators because they create unpredictable, engaging content. Chat can suggest filter combinations, viewers stay invested in unusual team compositions, and no two playthroughs are ever the same.
               </p>
             </div>
             
-            <div className="bg-purple-50 border-2 border-black p-5 slasher">
-              <h3 className="font-sans font-bold text-lg text-gray-900 mb-3 uppercase flex items-center gap-2">
-                <span className="text-purple-600">✓</span> Learn Type Coverage
+            <div className="bg-white border-2 border-black p-5 slasher">
+              <h3 className="font-mono font-bold text-sm text-black mb-3 uppercase flex items-center gap-2">
+                <span className="text-black">✓</span> Learn Type Coverage
               </h3>
-              <p className="font-mono text-sm text-gray-800 leading-relaxed">
+              <p className="font-mono text-sm text-charcoal leading-relaxed">
                 Working with random teams teaches you the importance of type coverage and balanced team building. You&apos;ll quickly learn which types cover each other&apos;s weaknesses and which Pokemon have surprisingly good move pools.
               </p>
             </div>
             
-            <div className="bg-red-50 border-2 border-black p-5 slasher">
-              <h3 className="font-sans font-bold text-lg text-gray-900 mb-3 uppercase flex items-center gap-2">
-                <span className="text-red-600">✓</span> Challenge Run Prep
+            <div className="bg-white border-2 border-black p-5 slasher">
+              <h3 className="font-mono font-bold text-sm text-black mb-3 uppercase flex items-center gap-2">
+                <span className="text-black">✓</span> Challenge Run Prep
               </h3>
-              <p className="font-mono text-sm text-gray-800 leading-relaxed">
+              <p className="font-mono text-sm text-charcoal leading-relaxed">
                 Before starting a Nuzlocke, Wonderlocke, or Randomizer run, use our generator to mentally prepare for the kinds of teams you might encounter. Practice team-building with constraints before your actual playthrough begins.
               </p>
             </div>
           </div>
 
           <div className="bg-marigold border-4 border-black p-6 slasher">
-            <h3 className="font-sans font-bold text-2xl text-black mb-4 uppercase">Popular Generator Challenges</h3>
+            <h3 className="font-mono font-bold text-sm uppercase text-black mb-4 uppercase">Popular Generator Challenges</h3>
             <ul className="space-y-2 font-mono text-sm text-black">
               <li className="flex items-start gap-2">
                 <span className="font-bold">→</span>
@@ -438,24 +432,24 @@ export default function SeoContent() {
       </section>
 
       {/* Section 8: Why Choose Us */}
-      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher">
+      <section className="mt-12 md:mt-16 mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
         <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
           <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">BENCHMARKS</span>
         </div>
-        <h2 className="font-sans font-bold text-4xl md:text-5xl lg:text-6xl text-black leading-[0.9] mb-8 uppercase">
+        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl  text-black leading-[0.9] mb-8 uppercase">
           WHY CHOOSE <br/>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
             THIS TOOL?
           </span>
         </h2>
         <div className="space-y-4">
-          <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6">
+          <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
             Unlike other random Pokemon generators, our protocol is built with performance and accuracy as top priorities. The database pulls directly from verified Pokemon API sources ensuring that all information—types, sprites, and Pokédex numbers—is accurate and up-to-date.
           </p>
-          <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6">
+          <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
             The minimalist cypherpunk design philosophy means zero bloat, zero unnecessary animations, and zero wasted time. Our generator works flawlessly on desktop computers, tablets, and mobile devices.
           </p>
-          <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6">
+          <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
             Join the thousands of trainers who trust our random Pokemon generator for their team-building needs. From casual fans to hardcore Nuzlockers, our tool serves the entire Pokemon community with speed, reliability, and style.
           </p>
         </div>

@@ -85,6 +85,8 @@ async function getPokemonList(): Promise<{ list: PokemonListItem[]; count: numbe
   }
 }
 
+import { Suspense } from "react";
+
 export default async function PokedexPage() {
   const { list, count } = await getPokemonList();
 
@@ -94,7 +96,9 @@ export default async function PokedexPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(pokedexJsonLd) }}
       />
-      <PokedexClient initialPokemonList={list} totalCount={count} />
+      <Suspense fallback={null}>
+        <PokedexClient initialPokemonList={list} totalCount={count} />
+      </Suspense>
     </>
   );
 }

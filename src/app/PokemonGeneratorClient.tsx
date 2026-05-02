@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -188,16 +188,34 @@ function stripPokemonData(raw: Record<string, unknown>): Pokemon {
   };
 }
 
-async function fetchPokemonById(id: number): Promise<Pokemon> {
+async function fetchPokemonById(id: number, retries = 3): Promise<Pokemon> {
   const cached = pokemonCache.get(id);
   if (cached) return cached;
 
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-  if (!res.ok) throw new Error(`API returned ${res.status} for Pokemon ${id}`);
-  const raw = await res.json();
-  const stripped = stripPokemonData(raw);
-  pokemonCache.set(id, stripped);
-  return stripped;
+  let lastError: unknown;
+  for (let attempt = 0; attempt < retries; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    try {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error(`API returned ${res.status} for Pokemon ${id}`);
+      const raw = await res.json();
+      const stripped = stripPokemonData(raw);
+      pokemonCache.set(id, stripped);
+      return stripped;
+    } catch (err) {
+      clearTimeout(timeoutId);
+      lastError = err;
+      if (attempt < retries - 1) {
+        // Exponential backoff: 300ms, 600ms, 1200ms…
+        await new Promise((resolve) => setTimeout(resolve, 300 * Math.pow(2, attempt)));
+      }
+    }
+  }
+  throw lastError;
 }
 
 interface CompactFilterDropdownProps {
@@ -238,7 +256,7 @@ const CompactFilterDropdown = ({
     <div ref={dropdownRef} className={`relative ${className}`}>
       <button
         onClick={onToggle}
-        className="min-h-[48px] h-14 w-full px-4 md:px-5 bg-white hover:bg-gray-100 border-2 border-black font-mono text-sm md:text-base text-black whitespace-nowrap flex items-center gap-2 transition-all btn-hover-lift group"
+        className="min-h-[36px] h-9 md:h-11 w-full px-2 md:px-4 bg-white hover:bg-gray-100 border-2 border-black font-mono text-xs md:text-sm text-black whitespace-nowrap flex items-center gap-1.5 md:gap-2 transition-all btn-hover-lift group"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -287,21 +305,21 @@ const MultiSelectCheckboxes = ({
   return (
     <div className="space-y-2">
       {showSelectAll && (
-        <label className="flex items-center gap-3 cursor-pointer mb-2 pb-2 border-b border-charcoal min-h-[44px]">
+        <label className="flex items-center gap-2 cursor-pointer mb-1.5 pb-1.5 border-b border-charcoal min-h-[32px] md:min-h-[40px]">
           <input
             type="checkbox"
             checked={isAllSelected}
             onChange={handleSelectAll}
-            className="w-5 h-5 cursor-pointer flex-shrink-0"
+            className="w-4 h-4 cursor-pointer flex-shrink-0"
           />
-          <span className="font-mono text-sm md:text-base text-black font-semibold">
+          <span className="font-mono text-xs md:text-sm text-black font-semibold">
             {isAllSelected ? "Deselect All" : "Select All"}
           </span>
         </label>
       )}
       <div className="grid grid-cols-1 gap-1">
         {options.map((option) => (
-          <label key={option} className="flex items-center gap-3 cursor-pointer hover:bg-blue-50 p-2 rounded transition-all min-h-[44px]">
+          <label key={option} className="flex items-center gap-2 cursor-pointer hover:bg-blue-50 p-1.5 md:p-2 rounded transition-all min-h-[32px] md:min-h-[40px]">
             <input
               type="checkbox"
               checked={selected.includes(option)}
@@ -312,9 +330,9 @@ const MultiSelectCheckboxes = ({
                   onChange(selected.filter((s) => s !== option));
                 }
               }}
-              className="w-5 h-5 cursor-pointer flex-shrink-0"
+              className="w-4 h-4 cursor-pointer flex-shrink-0"
             />
-            <span className="font-mono text-sm md:text-base text-black">{option}</span>
+            <span className="font-mono text-xs md:text-sm text-black">{option}</span>
           </label>
         ))}
       </div>
@@ -398,11 +416,25 @@ const ActiveFilterChips = ({ filters, onRemoveFilter }: ActiveFilterChipsProps) 
 
 interface PokemonGeneratorClientProps {
   hideGenericContent?: boolean;
+  hideHero?: boolean;
   title?: string;
   badge?: string;
+  defaultRegion?: string;
+  defaultLegendary?: string[];
+  idRange?: [number, number];
+  defaultIds?: number[]; // explicit list of IDs to auto-generate from
 }
 
-export default function PokemonGeneratorClient({ hideGenericContent = false, title, badge }: PokemonGeneratorClientProps) {
+export default function PokemonGeneratorClient({
+  hideGenericContent = false,
+  hideHero = false,
+  title,
+  badge,
+  defaultRegion,
+  defaultLegendary,
+  idRange,
+  defaultIds,
+}: PokemonGeneratorClientProps) {
   const router = useRouter();
   const [team, setTeam] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(false);
@@ -415,23 +447,20 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
   const [filters, setFilters] = useState<FilterState>({
     teamSize: 6,
     types: [],
-    legendaryStatus: [],
+    legendaryStatus: defaultLegendary ?? [],
     evolutionStage: [],
     fullyEvolved: [],
     displayFormat: "both",
     genders: [],
     natures: [],
     forms: [],
-    regions: [],
+    regions: defaultRegion ? [defaultRegion] : [],
   });
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [typeCache, setTypeCache] = useState<Record<string, Set<number>>>({});
   const [natureSearch, setNatureSearch] = useState("");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [sharePokemon, setSharePokemon] = useState<Pokemon | null>(null);
-
-  // Track if initial team has been generated
-  const hasGeneratedInitialTeam = useRef(false);
 
   // Ref for scrolling to team grid
   const teamGridRef = useRef<HTMLDivElement>(null);
@@ -458,53 +487,73 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
     }
   }, [allPokemon.length]);
 
-  // Auto-generate team on initial page load for zero-click value
-  // Deferred to not block initial render/hydration
+  // Auto-generate on every mount using region/legendary defaults if provided
   useEffect(() => {
-    if (!hasGeneratedInitialTeam.current) {
-      hasGeneratedInitialTeam.current = true;
+    let mounted = true;
 
-      // Inline auto-generate to ensure it runs on page load/refresh
-      const autoGenerateTeam = async () => {
-        setLoading(true);
-        setTerminalStatus("FETCHING...");
+    setLoading(true);
+    setTerminalStatus("FETCHING...");
 
-        try {
-          // Generate 6 random Pokemon IDs (1-1025)
-          const uniqueIds = new Set<number>();
-          while (uniqueIds.size < 6) {
-            uniqueIds.add(Math.floor(Math.random() * 1025) + 1);
+    (async () => {
+      try {
+        // Determine the ID pool for the initial generate
+        let pool: number[];
+        if (defaultIds && defaultIds.length > 0) {
+          pool = defaultIds;
+        } else if (idRange) {
+          pool = Array.from({ length: idRange[1] - idRange[0] + 1 }, (_, i) => i + idRange[0]);
+        } else if (defaultRegion) {
+          // Use the region's ID range
+          const region = REGIONS.find(r => r.name === defaultRegion);
+          if (region) {
+            pool = Array.from({ length: region.range[1] - region.range[0] + 1 }, (_, i) => i + region.range[0]);
+          } else {
+            pool = Array.from({ length: 1025 }, (_, i) => i + 1);
           }
-
-          // Incremental: show each card as it arrives
-          const ids = Array.from(uniqueIds);
-          ids.forEach(id => {
-            fetchPokemonById(id).then(pokemon => {
-              setTeam(prev => {
-                if (prev.find(p => p.id === pokemon.id)) return prev;
-                return [...prev, pokemon];
-              });
-            }).catch(err => console.error(`Failed to fetch Pokemon ${id}:`, err));
-          });
-
-          // Wait for all to complete for status update
-          await Promise.all(ids.map(id => fetchPokemonById(id)));
-          setTerminalStatus("SUCCESS");
-        } catch (error) {
-          console.error("Error auto-generating team:", error);
-          setTerminalStatus("ERROR");
-        } finally {
-          setLoading(false);
+        } else if (defaultLegendary && defaultLegendary.length > 0) {
+          // Use the legendary ID sets
+          const matchingIds = new Set<number>();
+          if (defaultLegendary.includes("Sub-Legendary")) SUB_LEGENDARY_IDS.forEach(id => matchingIds.add(id));
+          if (defaultLegendary.includes("Legendary")) LEGENDARY_IDS.forEach(id => matchingIds.add(id));
+          if (defaultLegendary.includes("Mythical")) MYTHICAL_IDS.forEach(id => matchingIds.add(id));
+          if (defaultLegendary.includes("Paradox")) PARADOX_IDS.forEach(id => matchingIds.add(id));
+          if (defaultLegendary.includes("Ultra Beast")) ULTRA_BEAST_IDS.forEach(id => matchingIds.add(id));
+          pool = Array.from(matchingIds);
+        } else {
+          pool = Array.from({ length: 1025 }, (_, i) => i + 1);
         }
-      };
 
-      // Defer until after initial paint to not block hydration
-      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        (window as Window).requestIdleCallback(() => autoGenerateTeam(), { timeout: 2000 });
-      } else {
-        setTimeout(autoGenerateTeam, 100);
+        const uniqueIds = new Set<number>();
+        const teamSize = 6;
+        const maxAttempts = Math.min(pool.length, teamSize * 10);
+        let attempts = 0;
+        while (uniqueIds.size < teamSize && attempts < maxAttempts) {
+          uniqueIds.add(pool[Math.floor(Math.random() * pool.length)]);
+          attempts++;
+        }
+
+        const ids = Array.from(uniqueIds);
+        const results = await Promise.allSettled(ids.map(id => fetchPokemonById(id)));
+        if (!mounted) return;
+        const successful = results
+          .filter((r): r is PromiseFulfilledResult<Pokemon> => r.status === "fulfilled")
+          .map(r => r.value);
+        if (successful.length > 0) {
+          setTeam(successful);
+          setTerminalStatus("SUCCESS");
+        } else {
+          setTerminalStatus("ERROR");
+        }
+      } catch (err) {
+        console.error("Auto-generate failed:", err);
+        if (mounted) setTerminalStatus("ERROR");
+      } finally {
+        if (mounted) setLoading(false);
       }
-    }
+    })();
+
+    return () => { mounted = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Handle click outside to close suggestions
@@ -558,7 +607,6 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
     if (!openDropdown) return;
 
     const handleScroll = (e: Event) => {
-      // Don't close if scrolling inside a dropdown menu
       const target = e.target as Element;
       const dropdownElement = target.closest('.max-h-[60vh]');
       if (dropdownElement) return;
@@ -567,7 +615,6 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
     };
 
     const handleWheel = (e: Event) => {
-      // Don't close if scrolling inside a dropdown menu
       const target = e.target as Element;
       const dropdownElement = target.closest('.max-h-[60vh]');
       if (dropdownElement) return;
@@ -575,7 +622,6 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
       closeAllDropdowns();
     };
 
-    // Attach listeners with capture phase for early detection
     window.addEventListener('scroll', handleScroll, true);
     window.addEventListener('wheel', handleWheel, true);
 
@@ -617,7 +663,6 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
     }
 
     if (filters.legendaryStatus.length > 0) {
-      // Build a combined set of IDs matching any selected rarity category
       const matchingIds = new Set<number>();
 
       if (filters.legendaryStatus.includes("Sub-Legendary")) {
@@ -636,21 +681,17 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
         ULTRA_BEAST_IDS.forEach((id) => matchingIds.add(id));
       }
 
-      // Only keep Pokemon that match the selected rarity categories
       validIds = new Set([...validIds].filter((id) => matchingIds.has(id)));
     }
 
-    // Filter by evolution stage (uses static data - instant)
     if (filters.evolutionStage.length > 0) {
       validIds = new Set([...validIds].filter((id) => matchesEvolutionStage(id, filters.evolutionStage)));
     }
 
-    // Filter by fully evolved status (uses static data - instant)
     if (filters.fullyEvolved.length > 0) {
       validIds = new Set([...validIds].filter((id) => matchesFullyEvolved(id, filters.fullyEvolved)));
     }
 
-    // Filter by gender (uses static data - instant)
     if (filters.genders.length > 0) {
       validIds = new Set([...validIds].filter((id) => matchesGender(id, filters.genders)));
     }
@@ -714,7 +755,6 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
         attempts++;
       }
 
-      // Incremental: show each card as it arrives (cached ones are instant)
       const ids = Array.from(uniqueIds);
       let scrolled = false;
 
@@ -733,7 +773,6 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
         }).catch(err => console.error(`Failed to fetch Pokemon ${id}:`, err));
       });
 
-      // Wait for all to finish for status update
       await Promise.all(ids.map(id => fetchPokemonById(id)));
       setTerminalStatus("SUCCESS");
     } catch (error) {
@@ -889,7 +928,7 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
   };
 
   return (
-    <div className="min-h-screen bg-cream p-4 md:p-8 relative">
+    <div className={!hideHero ? "min-h-screen bg-cream p-4 md:p-8 relative" : "relative pb-8 md:pb-12"}>
       {/* Blur Overlay when search is active */}
       {showSuggestions && suggestions.length > 0 && (
         <div
@@ -898,27 +937,33 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
         />
       )}
 
-      <div className="max-w-7xl mx-auto relative">
-        {/* Hero Section */}
-        <div className="mb-8 md:mb-12 text-center relative z-[60]">
-          {badge && (
-            <div className={`inline-flex items-center gap-2 bg-marigold text-black border-2 md:border-4 border-black slasher px-4 py-1.5 md:py-2 mb-4 transition-all ${showSuggestions && suggestions.length > 0 ? 'opacity-30 blur-[2px]' : ''}`}>
-              <MapPin className="w-4 h-4 md:w-5 md:h-5 text-black" />
-              <span className="font-mono text-[10px] md:text-sm font-bold uppercase tracking-widest leading-none mt-0.5">{badge}</span>
-            </div>
-          )}
-          <h1 className={`font-grotesk font-bold text-4xl sm:text-5xl lg:text-7xl text-black mb-3 md:mb-4 uppercase tracking-tight transition-all px-2 ${showSuggestions && suggestions.length > 0 ? 'opacity-30 blur-[2px]' : ''}`}>
-            {title || "RANDOM POKEMON NUZLOCKE GENERATOR"}
-          </h1>
-          {/* Status Box - bg-black with white text for better visibility */}
-          <div className={`inline-block bg-black px-4 md:px-6 py-2 md:py-3 slasher mb-6 md:mb-8 transition-all ${showSuggestions && suggestions.length > 0 ? 'opacity-30 blur-[2px]' : ''}`}>
+      <div className="max-w-6xl mx-auto relative">
+        {/* Hero Section - hidden when parent page provides its own h1 */}
+        {!hideHero && (
+          <div className="mb-4 md:mb-6 text-center relative z-[60]">
+            {badge && (
+              <div className={`inline-flex items-center gap-2 bg-marigold text-black border-2 md:border-4 border-black slasher px-4 py-1.5 md:py-2 mb-4 transition-all ${showSuggestions && suggestions.length > 0 ? 'opacity-30 blur-[2px]' : ''}`}>
+                <MapPin className="w-4 h-4 md:w-5 md:h-5 text-black" />
+                <span className="font-mono text-[10px] md:text-sm font-bold uppercase tracking-widest leading-none mt-0.5">{badge}</span>
+              </div>
+            )}
+            <h1 className={`font-grotesk font-bold text-4xl sm:text-5xl lg:text-7xl text-black mb-3 md:mb-4 uppercase tracking-tight transition-all px-2 ${showSuggestions && suggestions.length > 0 ? 'opacity-30 blur-[2px]' : ''}`}>
+              {title || "RANDOM POKEMON NUZLOCKE GENERATOR"}
+            </h1>
+          </div>
+        )}
+
+        {/* Status Box + Search - always visible on all pages */}
+        <div className="text-center mb-4 md:mb-6 relative z-[60]">
+          {/* Status Box */}
+          <div className={`inline-block bg-black px-4 md:px-6 py-2 md:py-3 slasher mb-4 md:mb-6 transition-all ${showSuggestions && suggestions.length > 0 ? 'opacity-30 blur-[2px]' : ''}`}>
             <p className="font-mono text-xs md:text-sm font-semibold text-white">
               STATUS: {terminalStatus}
             </p>
           </div>
 
           {/* Direct Search Form with Autocomplete */}
-          <div ref={searchRef} className="w-full max-w-md mx-auto relative mb-6 md:mb-8 z-[70] px-2">
+          <div ref={searchRef} className="w-full max-w-md mx-auto relative mb-2 z-[70] px-2">
             <form onSubmit={handleSearch} className="flex w-full">
               <div className="relative w-full">
                 <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-black/40 w-4 h-4 md:w-5 md:h-5 z-10" />
@@ -1065,7 +1110,7 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
                 <button
                   type="button"
                   onClick={() => setShowAdvanced(!showAdvanced)}
-                  className="col-span-2 md:hidden min-h-[48px] h-14 border-2 border-black bg-marigold text-black font-mono uppercase text-sm font-bold hover:brightness-110 transition-all flex items-center justify-center gap-2"
+                  className="col-span-2 md:hidden h-8 border-2 border-black bg-marigold text-black font-mono uppercase text-xs font-bold hover:brightness-110 transition-all flex items-center justify-center gap-1.5"
                 >
                   <span>{showAdvanced ? '[-] CLOSE FILTERS' : '[+] ADVANCED FILTERS'}</span>
                 </button>
@@ -1215,7 +1260,7 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
               {hasActiveFilters && (
                 <button
                   onClick={resetFilters}
-                  className="md:hidden w-full mt-2 h-12 bg-marigold text-black hover:bg-marigold-hover font-mono text-xs font-semibold border-2 border-black transition-smooth btn-hover-lift flex items-center justify-center min-h-[48px]"
+                  className="md:hidden w-full mt-1.5 h-8 bg-marigold text-black hover:bg-marigold-hover font-mono text-xs font-semibold border-2 border-black transition-smooth btn-hover-lift flex items-center justify-center"
                   aria-label="Reset all filters"
                 >
                   RESET FILTERS
@@ -1229,7 +1274,7 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
             <button
               onClick={generateTeam}
               disabled={loading}
-              className="w-full md:w-auto min-h-[44px] px-10 py-5 font-grotesk font-bold text-xl uppercase tracking-wider bg-[#4ADE80] hover:bg-[#22c55e] text-black border-2 border-black slasher shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] active:translate-y-1 active:shadow-none transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0px_0px_#000] btn-hover-lift"
+              className="w-full md:w-auto px-4 py-2 md:px-6 md:py-3 font-grotesk font-bold text-sm md:text-lg uppercase tracking-wider bg-[#4ADE80] hover:bg-[#22c55e] text-black border-2 border-black slasher shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] active:translate-y-1 active:shadow-none transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0px_0px_#000] btn-hover-lift"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-3">
@@ -1385,16 +1430,7 @@ export default function PokemonGeneratorClient({ hideGenericContent = false, tit
             </div>
           )}
 
-          {/* Empty State - only show after client hydration if still no team */}
-          {!loading && team.length === 0 && (
-            <div className="text-center py-20">
-              <div className="inline-block border-4 border-charcoal p-8 slasher">
-                <p className="font-mono text-charcoal text-lg">
-                  Loading your team...
-                </p>
-              </div>
-            </div>
-          )}
+          {/* If team is empty and not loading, show nothing — auto-generate handles the initial load */}
         </div>
 
         {/* Card Showcase Section - only on main generator */}

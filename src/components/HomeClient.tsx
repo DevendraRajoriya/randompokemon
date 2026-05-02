@@ -2,13 +2,15 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Zap, ChevronDown, X, Search } from "lucide-react";
+import { Loader2, Zap, ChevronDown, X, Search, Share2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { TeamGridSkeleton } from "@/components/SkeletonLoader";
-import SavedTeams from "@/components/SavedTeams";
+
 import InstallPWA from "@/components/InstallPWA";
 import { matchesEvolutionStage, matchesFullyEvolved, matchesGender } from "@/data/evolutionData";
+const ShareModal = dynamic(() => import("@/components/ShareModal"));
 
 interface PokemonType {
     type: {
@@ -150,7 +152,7 @@ const CompactFilterDropdown = ({
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
+        const handleClickOutside = (event: MouseEvent | TouchEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 if (isOpen) onToggle();
             }
@@ -158,7 +160,11 @@ const CompactFilterDropdown = ({
 
         if (isOpen) {
             document.addEventListener("mousedown", handleClickOutside);
-            return () => document.removeEventListener("mousedown", handleClickOutside);
+            document.addEventListener("touchstart", handleClickOutside, { passive: true });
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+                document.removeEventListener("touchstart", handleClickOutside);
+            };
         }
     }, [isOpen, onToggle]);
 
@@ -166,7 +172,7 @@ const CompactFilterDropdown = ({
         <div ref={dropdownRef} className={`relative ${className}`}>
             <button
                 onClick={onToggle}
-                className="min-h-[48px] h-14 w-full px-4 md:px-5 bg-white hover:bg-gray-100 border-2 border-black font-mono text-sm md:text-base text-black whitespace-nowrap flex items-center gap-2 transition-all btn-hover-lift group"
+                className="min-h-[36px] h-9 md:h-11 w-full px-2 md:px-4 bg-white hover:bg-gray-100 border-2 border-black font-mono text-xs md:text-sm text-black whitespace-nowrap flex items-center gap-1.5 md:gap-2 transition-all btn-hover-lift group"
                 aria-expanded={isOpen}
                 aria-haspopup="true"
             >
@@ -215,21 +221,21 @@ const MultiSelectCheckboxes = ({
     return (
         <div className="space-y-2">
             {showSelectAll && (
-                <label className="flex items-center gap-3 cursor-pointer mb-2 pb-2 border-b border-charcoal min-h-[44px]">
+                <label className="flex items-center gap-2 cursor-pointer mb-1.5 pb-1.5 border-b border-charcoal min-h-[32px] md:min-h-[40px]">
                     <input
                         type="checkbox"
                         checked={isAllSelected}
                         onChange={handleSelectAll}
-                        className="w-5 h-5 cursor-pointer flex-shrink-0"
+                        className="w-4 h-4 cursor-pointer flex-shrink-0"
                     />
-                    <span className="font-mono text-sm md:text-base text-black font-semibold">
+                    <span className="font-mono text-xs md:text-sm text-black font-semibold">
                         {isAllSelected ? "Deselect All" : "Select All"}
                     </span>
                 </label>
             )}
             <div className="grid grid-cols-1 gap-1">
                 {options.map((option) => (
-                    <label key={option} className="flex items-center gap-3 cursor-pointer hover:bg-blue-50 p-2 rounded transition-all min-h-[44px]">
+                    <label key={option} className="flex items-center gap-2 cursor-pointer hover:bg-blue-50 p-1.5 md:p-2 rounded transition-all min-h-[32px] md:min-h-[40px]">
                         <input
                             type="checkbox"
                             checked={selected.includes(option)}
@@ -240,9 +246,9 @@ const MultiSelectCheckboxes = ({
                                     onChange(selected.filter((s) => s !== option));
                                 }
                             }}
-                            className="w-5 h-5 cursor-pointer flex-shrink-0"
+                            className="w-4 h-4 cursor-pointer flex-shrink-0"
                         />
-                        <span className="font-mono text-sm md:text-base text-black">{option}</span>
+                        <span className="font-mono text-xs md:text-sm text-black">{option}</span>
                     </label>
                 ))}
             </div>
@@ -339,24 +345,46 @@ function stripPokemonData(raw: Record<string, unknown>): Pokemon {
     };
 }
 
-async function fetchPokemonById(id: number): Promise<Pokemon> {
+async function fetchPokemonById(id: number, retries = 3): Promise<Pokemon> {
     const cached = pokemonCache.get(id);
     if (cached) return cached;
 
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    if (!res.ok) throw new Error(`API returned ${res.status} for Pokemon ${id}`);
-    const raw = await res.json();
-    const stripped = stripPokemonData(raw);
-    pokemonCache.set(id, stripped);
-    return stripped;
+    let lastError: unknown;
+    for (let attempt = 0; attempt < retries; attempt++) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        try {
+            // Cache-busting param prevents mobile network layers from serving
+            // a stale API response from their own HTTP cache
+            const bust = `?_cb=${Date.now()}`;
+            const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}${bust}`, {
+                signal: controller.signal,
+                cache: "no-store",           // tell the browser fetch cache to skip too
+            });
+            clearTimeout(timeoutId);
+            if (!res.ok) throw new Error(`API returned ${res.status} for Pokemon ${id}`);
+            const raw = await res.json();
+            const stripped = stripPokemonData(raw);
+            pokemonCache.set(id, stripped);
+            return stripped;
+        } catch (err) {
+            clearTimeout(timeoutId);
+            lastError = err;
+            if (attempt < retries - 1) {
+                await new Promise((resolve) => setTimeout(resolve, 300 * Math.pow(2, attempt)));
+            }
+        }
+    }
+    throw lastError;
 }
 
-export default function HomeClient() {
+export default function HomeClient({ initialIds }: { initialIds?: number[] } = {}) {
     const router = useRouter();
     const [team, setTeam] = useState<Pokemon[]>([]);
     const [loading, setLoading] = useState(false);
     const [terminalStatus, setTerminalStatus] = useState("IDLE");
     const [searchQuery, setSearchQuery] = useState("");
+    const [sharePokemon, setSharePokemon] = useState<Pokemon | null>(null);
     const [allPokemon, setAllPokemon] = useState<{ name: string; id: number }[]>([]);
     const [suggestions, setSuggestions] = useState<{ name: string; id: number }[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -378,9 +406,7 @@ export default function HomeClient() {
     const [natureSearch, setNatureSearch] = useState("");
     const [showAdvanced, setShowAdvanced] = useState(false);
 
-    const hasGeneratedInitialTeam = useRef(false);
     const teamGridRef = useRef<HTMLDivElement>(null);
-
     const hasFetchedPokemonList = useRef(false);
 
     // Fetch all Pokemon names for autocomplete - deferred until search is focused
@@ -403,62 +429,103 @@ export default function HomeClient() {
         }
     }, [allPokemon.length]);
 
-    // Auto-generate team on initial page load (incremental loading)
-    // Deferred to not block initial render/hydration
-    useEffect(() => {
-        if (!hasGeneratedInitialTeam.current) {
-            hasGeneratedInitialTeam.current = true;
-
-            const autoGenerateTeam = async () => {
-                setLoading(true);
-                setTerminalStatus("FETCHING...");
-
-                try {
-                    const uniqueIds = new Set<number>();
-                    while (uniqueIds.size < 6) {
-                        uniqueIds.add(Math.floor(Math.random() * 1025) + 1);
-                    }
-
-                    // Incremental: show each card as it arrives
-                    const ids = Array.from(uniqueIds);
-                    ids.forEach(id => {
-                        fetchPokemonById(id).then(pokemon => {
-                            setTeam(prev => {
-                                if (prev.find(p => p.id === pokemon.id)) return prev;
-                                return [...prev, pokemon];
-                            });
-                        }).catch(err => console.error(`Failed to fetch Pokemon ${id}:`, err));
-                    });
-
-                    // Wait for all to complete for status update
-                    await Promise.all(ids.map(id => fetchPokemonById(id)));
-                    setTerminalStatus("SUCCESS");
-                } catch (error) {
-                    console.error("Error auto-generating team:", error);
-                    setTerminalStatus("ERROR");
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            // Defer until after initial paint to not block hydration
-            if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-                (window as Window).requestIdleCallback(() => autoGenerateTeam(), { timeout: 2000 });
+    // Shared generate function — used by auto-generate on mount AND pageshow handler
+    const runGenerate = useCallback(async (ids?: number[]) => {
+        setLoading(true);
+        setTerminalStatus("FETCHING...");
+        try {
+            let resolvedIds: number[];
+            if (ids && ids.length > 0) {
+                resolvedIds = ids;
+            } else if (initialIds && initialIds.length > 0) {
+                resolvedIds = initialIds;
             } else {
-                setTimeout(autoGenerateTeam, 100);
+                const uniqueIds = new Set<number>();
+                while (uniqueIds.size < 6) uniqueIds.add(Math.floor(Math.random() * 1025) + 1);
+                resolvedIds = Array.from(uniqueIds);
             }
+            const results = await Promise.allSettled(resolvedIds.map(id => fetchPokemonById(id)));
+            const successful = results
+                .filter((r): r is PromiseFulfilledResult<Pokemon> => r.status === "fulfilled")
+                .map(r => r.value);
+            if (successful.length > 0) {
+                setTeam(successful);
+                setTerminalStatus("SUCCESS");
+            } else {
+                setTerminalStatus("ERROR");
+            }
+        } catch (err) {
+            console.error("Generate failed:", err);
+            setTerminalStatus("ERROR");
+        } finally {
+            setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Handle click outside to close suggestions
+    // Auto-generate on every mount (page load / hard refresh)
     useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
+        let mounted = true;
+        setLoading(true);
+        setTerminalStatus("FETCHING...");
+        (async () => {
+            try {
+                let ids: number[];
+                if (initialIds && initialIds.length > 0) {
+                    ids = initialIds;
+                } else {
+                    const uniqueIds = new Set<number>();
+                    while (uniqueIds.size < 6) uniqueIds.add(Math.floor(Math.random() * 1025) + 1);
+                    ids = Array.from(uniqueIds);
+                }
+                const results = await Promise.allSettled(ids.map(id => fetchPokemonById(id)));
+                if (!mounted) return;
+                const successful = results
+                    .filter((r): r is PromiseFulfilledResult<Pokemon> => r.status === "fulfilled")
+                    .map(r => r.value);
+                if (successful.length > 0) { setTeam(successful); setTerminalStatus("SUCCESS"); }
+                else { setTerminalStatus("ERROR"); }
+            } catch (err) {
+                console.error("Auto-generate failed:", err);
+                if (mounted) setTerminalStatus("ERROR");
+            } finally {
+                if (mounted) setLoading(false);
+            }
+        })();
+        return () => { mounted = false; };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // bfcache fix — mobile browsers (Safari/Chrome Android) freeze and restore pages
+    // from the back-forward cache without re-running useEffect. When the page is
+    // un-frozen (e.persisted === true), React state is stale — re-generate the team.
+    useEffect(() => {
+        const handlePageShow = (e: PageTransitionEvent) => {
+            if (e.persisted) {
+                // Page was restored from bfcache — trigger a fresh generate
+                const uniqueIds = new Set<number>();
+                while (uniqueIds.size < 6) uniqueIds.add(Math.floor(Math.random() * 1025) + 1);
+                runGenerate(Array.from(uniqueIds));
+            }
+        };
+        // passive: true is required on mobile to not block scrolling
+        window.addEventListener("pageshow", handlePageShow, { passive: true });
+        return () => window.removeEventListener("pageshow", handlePageShow);
+    }, [runGenerate]);
+
+    // Handle click/tap outside to close suggestions
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent | TouchEvent) => {
             if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
                 setShowSuggestions(false);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        document.addEventListener("touchstart", handleClickOutside, { passive: true });
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("touchstart", handleClickOutside);
+        };
     }, []);
 
     const handleSearchInput = (value: string) => {
@@ -516,10 +583,12 @@ export default function HomeClient() {
 
         window.addEventListener('scroll', handleScroll, true);
         window.addEventListener('wheel', handleWheel, true);
+        window.addEventListener('touchmove', handleScroll, { passive: true, capture: true });
 
         return () => {
             window.removeEventListener('scroll', handleScroll, true);
             window.removeEventListener('wheel', handleWheel, true);
+            window.removeEventListener('touchmove', handleScroll, true);
         };
     }, [openDropdown, closeAllDropdowns]);
 
@@ -619,28 +688,14 @@ export default function HomeClient() {
                 attempts++;
             }
 
-            // Incremental: show each card as it arrives (cached ones are instant)
+            // Use allSettled so one failed request doesn't wipe the whole team
             const ids = Array.from(uniqueIds);
-            let scrolled = false;
-
-            ids.forEach(id => {
-                fetchPokemonById(id).then(pokemon => {
-                    setTeam(prev => {
-                        if (prev.find(p => p.id === pokemon.id)) return prev;
-                        return [...prev, pokemon];
-                    });
-                    if (!scrolled) {
-                        scrolled = true;
-                        setTimeout(() => {
-                            teamGridRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, 100);
-                    }
-                }).catch(err => console.error(`Failed to fetch Pokemon ${id}:`, err));
-            });
-
-            // Wait for all to finish for status update
-            await Promise.all(ids.map(id => fetchPokemonById(id)));
-            setTerminalStatus("SUCCESS");
+            const results = await Promise.allSettled(ids.map(id => fetchPokemonById(id)));
+            const fetched = results
+                .filter((r): r is PromiseFulfilledResult<Pokemon> => r.status === "fulfilled")
+                .map(r => r.value);
+            setTeam(fetched);
+            setTerminalStatus(fetched.length > 0 ? "SUCCESS" : "NO MATCHES");
         } catch (error) {
             console.error("Error fetching Pokemon:", error);
             setTerminalStatus("ERROR");
@@ -739,32 +794,32 @@ export default function HomeClient() {
             )}
 
             {/* Status Box */}
-            <div className="text-center mb-4">
-                <div className={`inline-block bg-black px-4 md:px-6 py-2 md:py-3 slasher transition-all ${showSuggestions && suggestions.length > 0 ? 'opacity-30 blur-[2px]' : ''}`}>
-                    <p className="font-mono text-xs md:text-sm font-semibold text-white">
+            <div className="text-center mb-2 md:mb-4">
+                <div className={`inline-block bg-black px-3 md:px-6 py-1.5 md:py-3 slasher transition-all ${showSuggestions && suggestions.length > 0 ? 'opacity-30 blur-[2px]' : ''}`}>
+                    <p className="font-mono text-[10px] md:text-sm font-semibold text-white">
                         STATUS: {terminalStatus}
                     </p>
                 </div>
             </div>
 
             {/* Direct Search Form with Autocomplete */}
-            <div ref={searchRef} className="w-full max-w-md mx-auto relative mb-6 md:mb-8 z-[70] px-2">
+            <div ref={searchRef} className="w-full max-w-md mx-auto relative mb-3 md:mb-8 z-[70] px-2">
                 <form onSubmit={handleSearch} className="flex w-full">
                     <div className="relative w-full">
-                        <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-black/40 w-4 h-4 md:w-5 md:h-5 z-10" />
+                        <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-black/40 w-3.5 h-3.5 md:w-5 md:h-5 z-10" />
                         <input
                             type="text"
                             placeholder="SEARCH_DATABASE..."
                             value={searchQuery}
                             onChange={(e) => handleSearchInput(e.target.value)}
                             onFocus={() => { fetchAllPokemonIfNeeded(); suggestions.length > 0 && setShowSuggestions(true); }}
-                            className="w-full bg-white border-2 border-black py-4 md:py-5 pl-12 md:pl-14 pr-4 md:pr-5 font-mono text-sm md:text-base text-black placeholder:text-gray-500 focus:outline-none focus:bg-blue-50 transition-all rounded-none min-h-[48px]"
+                            className="w-full bg-white border-2 border-black py-2.5 md:py-5 pl-9 md:pl-14 pr-3 md:pr-5 font-mono text-xs md:text-base text-black placeholder:text-gray-500 focus:outline-none focus:bg-blue-50 transition-all rounded-none"
                             aria-label="Search Pokemon database"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="bg-black text-white px-6 md:px-8 font-mono text-sm md:text-base font-bold hover:bg-charcoal transition-all btn-hover-lift border-2 border-black border-l-0 min-h-[48px]"
+                        className="bg-black text-white px-4 md:px-8 font-mono text-xs md:text-base font-bold hover:bg-charcoal transition-all btn-hover-lift border-2 border-black border-l-0"
                     >
                         GO
                     </button>
@@ -835,7 +890,7 @@ export default function HomeClient() {
 
                             {/* MOBILE TOGGLE BUTTON */}
                             <button type="button" onClick={() => setShowAdvanced(!showAdvanced)}
-                                className="col-span-2 md:hidden min-h-[48px] h-14 border-2 border-black bg-marigold text-black font-mono uppercase text-sm font-bold hover:brightness-110 transition-all flex items-center justify-center gap-2">
+                                className="col-span-2 md:hidden h-9 border-2 border-black bg-marigold text-black font-mono uppercase text-xs font-bold hover:brightness-110 transition-all flex items-center justify-center gap-1.5">
                                 <span>{showAdvanced ? '[-] CLOSE FILTERS' : '[+] ADVANCED FILTERS'}</span>
                             </button>
 
@@ -906,7 +961,7 @@ export default function HomeClient() {
                         {/* RESET BUTTON - Mobile */}
                         {hasActiveFilters && (
                             <button onClick={resetFilters}
-                                className="md:hidden w-full mt-2 h-12 bg-marigold text-black hover:bg-marigold-hover font-mono text-xs font-semibold border-2 border-black transition-smooth btn-hover-lift flex items-center justify-center min-h-[48px]"
+                                className="md:hidden w-full mt-1.5 h-9 bg-marigold text-black hover:bg-marigold-hover font-mono text-xs font-semibold border-2 border-black transition-smooth btn-hover-lift flex items-center justify-center"
                                 aria-label="Reset all filters">
                                 RESET FILTERS
                             </button>
@@ -914,19 +969,14 @@ export default function HomeClient() {
                     </div>
                 </div>
 
-                {/* Active filter chips */}
-                {hasActiveFilters && (
-                    <div className="mb-4">
-                        <ActiveFilterChips filters={filters} onRemoveFilter={removeFilter} />
-                    </div>
-                )}
 
-                {/* Generate Button and Save/Load Buttons */}
-                <div className="flex flex-col md:flex-row justify-center items-center gap-3 md:gap-4 mb-8 md:mb-12">
+
+                {/* Generate Button */}
+                <div className="flex justify-center mb-6 md:mb-12">
                     <button
                         onClick={generateTeam}
                         disabled={loading}
-                        className="w-full md:w-auto px-10 py-5 font-grotesk font-bold text-xl uppercase tracking-wider bg-[#4ADE80] hover:bg-[#22c55e] text-black border-2 border-black slasher shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] active:translate-y-1 active:shadow-none transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0px_0px_#000] btn-hover-lift min-h-[56px]"
+                        className="w-full md:w-auto px-4 py-2 md:px-8 md:py-4 font-grotesk font-bold text-sm md:text-xl uppercase tracking-wider bg-[#4ADE80] hover:bg-[#22c55e] text-black border-2 border-black slasher shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] active:translate-y-1 active:shadow-none transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-[4px_4px_0px_0px_#000] btn-hover-lift"
                     >
                         {loading ? (
                             <span className="flex items-center justify-center gap-3">
@@ -940,7 +990,6 @@ export default function HomeClient() {
                             </span>
                         )}
                     </button>
-                    <SavedTeams currentTeam={team} onLoadTeam={(loadedTeam) => { setTeam(loadedTeam); setTerminalStatus("LOADED"); }} />
                 </div>
 
                 {/* Loading State */}
@@ -978,16 +1027,25 @@ export default function HomeClient() {
                                     <div className="h-1.5 sm:h-2" style={{ background: pokemon.types.length > 1 ? `linear-gradient(90deg, ${typeColor} 50%, ${getTypeColor(pokemon.types[1].type.name)} 50%)` : typeColor }} />
 
                                     <div className="p-2.5 sm:p-4 md:p-5">
-                                        {/* Top Row: ID + BST */}
-                                        <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                                            <span className="font-mono text-[10px] sm:text-xs text-charcoal/60 font-semibold">
-                                                #{String(pokemon.id).padStart(4, "0")}
-                                            </span>
-                                            {pokemon.stats && (
-                                                <span className="font-mono text-[9px] sm:text-[10px] bg-black/5 text-charcoal/70 px-1.5 py-0.5 font-bold">
-                                                    BST {bst}
+                                        {/* Top Row: ID + BST + Share */}
+                                        <div className="flex items-center justify-between mb-1.5 sm:mb-2 text-[10px] sm:text-xs">
+                                            <div className="flex items-center gap-2">
+                                                <span className="font-mono text-charcoal/60 font-semibold">
+                                                    #{String(pokemon.id).padStart(4, "0")}
                                                 </span>
-                                            )}
+                                                {pokemon.stats && (
+                                                    <span className="font-mono text-[9px] sm:text-[10px] bg-black/5 text-charcoal/70 px-1.5 py-0.5 font-bold">
+                                                        BST {bst}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <button
+                                                onClick={(e) => { e.preventDefault(); setSharePokemon(pokemon); }}
+                                                className="p-1 text-black/40 hover:text-marigold transition-colors cursor-pointer z-10"
+                                                aria-label={`Share ${pokemon.name} flash card`}
+                                            >
+                                                <Share2 size={14} className="md:w-4 md:h-4" />
+                                            </button>
                                         </div>
 
                                         {/* Pokemon Image */}
@@ -1075,20 +1133,18 @@ export default function HomeClient() {
                     </div>
                 )}
 
-                {/* Empty State */}
-                {!loading && team.length === 0 && (
-                    <div className="text-center py-20">
-                        <div className="inline-block border-4 border-charcoal p-8 slasher">
-                            <p className="font-mono text-charcoal text-lg">
-                                Loading your team...
-                            </p>
-                        </div>
-                    </div>
-                )}
             </div>
 
             {/* PWA Install Prompt */}
             <InstallPWA />
+
+            {/* Share Modal */}
+            {sharePokemon && (
+                <ShareModal
+                    pokemon={sharePokemon}
+                    onClose={() => setSharePokemon(null)}
+                />
+            )}
         </>
     );
 }
