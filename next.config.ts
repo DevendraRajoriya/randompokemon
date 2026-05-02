@@ -40,13 +40,6 @@ const nextConfig: NextConfig = {
         { key: "Vary",                        value: "Accept" },
       ],
     },
-    // ── Next.js content-hashed static chunks: immutable (URL changes on rebuild)
-    {
-      source: "/_next/static/:path*",
-      headers: [
-        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-      ],
-    },
     // ── Other static assets
     {
       source: "/:all*(svg|jpg|png|webp|avif|ico)",
