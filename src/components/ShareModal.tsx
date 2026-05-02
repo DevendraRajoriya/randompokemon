@@ -507,14 +507,15 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
         // Lazy-load html2canvas only when actually needed
         const { default: html2canvas } = await import("html2canvas");
         const canvas = await html2canvas(element, {
-            scale: 2,
+            scale: 1,
             useCORS: true,
             allowTaint: false,
             backgroundColor: "#0f0f0f",
             logging: false,
-            width: CARD_WIDTH,
-            height: CARD_HEIGHT,
-            windowWidth: 1920,
+            width: CARD_WIDTH + 12,
+            height: CARD_HEIGHT + 12,
+            windowWidth: CARD_WIDTH + 12,
+            windowHeight: CARD_HEIGHT + 12,
         });
 
         return canvas;
@@ -625,7 +626,9 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
     const scaledHeight = CARD_HEIGHT * previewScale;
 
     const primaryType = pokemon.types[0]?.type.name || "normal";
+    const secondaryType = pokemon.types[1]?.type.name;
     const typeColor = getTypeColor(primaryType);
+    const typeColor2 = secondaryType ? getTypeColor(secondaryType) : typeColor;
 
     return (
         <div
@@ -661,6 +664,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                             overflow: "hidden",
                             borderRadius: "4px",
                             boxShadow: `0 8px 40px ${typeColor}25, 0 0 0 1px rgba(255,255,255,0.05)`,
+                            position: "relative",
                         }}
                     >
                         <div
@@ -671,6 +675,10 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                         >
                             <PokemonCardUI pokemon={pokemon} stats={finalStats} bst={bst} />
                         </div>
+                        {/* Shimmer overlay while base64 image loads */}
+                        {!imageDataUrl && (
+                            <div className="absolute inset-0 animate-pulse" style={{ background: "rgba(255,255,255,0.04)" }} />
+                        )}
                     </div>
                 </div>
 
@@ -791,7 +799,18 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                 }}
                 aria-hidden="true"
             >
-                <div id="download-card-target">
+                {/* Gradient border wrapper — html2canvas renders this; border-image is ignored by html2canvas */}
+                <div
+                    id="download-card-target"
+                    style={{
+                        padding: "6px",
+                        background: `linear-gradient(135deg, ${typeColor}, #F5BC22, ${typeColor2}, #F5BC22, ${typeColor})`,
+                        width: `${CARD_WIDTH + 12}px`,
+                        height: `${CARD_HEIGHT + 12}px`,
+                        boxSizing: "border-box",
+                        overflow: "hidden",
+                    }}
+                >
                     <PokemonCardUI pokemon={pokemon} stats={finalStats} bst={bst} imageDataUrl={imageDataUrl} />
                 </div>
             </div>
