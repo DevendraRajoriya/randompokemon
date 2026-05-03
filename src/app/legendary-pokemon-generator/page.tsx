@@ -58,10 +58,10 @@ export default function LegendaryPokemonGeneratorPage() {
         </nav>
 
         <div className="max-w-6xl mx-auto mb-5 text-center">
-          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">LEGENDARY POKEMON GENERATOR</h1>
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">RANDOM LEGENDARY POKEMON GENERATOR</h1>
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>Legendary and Mythical Pokemon</strong> from all generations. Box legendaries, Sub-Legendaries, Ultra Beasts, Paradox forms, and Mythicals.
-          </p>
+           Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
         </div>
 
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultLegendary={["Legendary", "Sub-Legendary", "Mythical"]} />

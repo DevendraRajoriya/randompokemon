@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import PokemonDetailClient from "./PokemonDetailClient";
 import { PokemonCardButton } from "./PokemonDetailClient";
+import LearnsetTabs, { type GenLearnset } from "./LearnsetTabs";
+import { getTier, generateCompetitiveBlurb, TIER_COLORS, TIER_DESCRIPTIONS } from "./tierData";
 
 // ============ TYPES ============
 interface PokemonType {
@@ -27,12 +29,23 @@ interface PokemonAbility {
   is_hidden: boolean;
 }
 
-interface Pokemon {
+interface RawMoveEntry {
+  move: { name: string };
+  version_group_details: {
+    level_learned_at: number;
+    move_learn_method: { name: string };
+    version_group: { name: string };
+  }[];
+}
+
+// Raw shape returned by the PokéAPI /pokemon endpoint (before enrichment)
+interface RawPokemon {
   id: number;
   name: string;
   height: number;
   weight: number;
   base_experience: number;
+  species: { url: string }; // URL pointing to the canonical species endpoint
   sprites: {
     front_default?: string;
     other?: {
@@ -47,6 +60,7 @@ interface Pokemon {
   types: PokemonType[];
   stats: PokemonStat[];
   abilities: PokemonAbility[];
+  moves: RawMoveEntry[];
 }
 
 interface FlavorTextEntry {
@@ -107,7 +121,12 @@ interface PokemonSpecies {
   is_mythical: boolean;
 }
 
-export interface PokemonWithSpecies extends Pokemon {
+export interface MoveEntry {
+  name: string;
+  level: number;
+}
+
+export interface PokemonWithSpecies extends Omit<RawPokemon, 'species'> {
   species: {
     flavorText: string;
     genus: string;
@@ -123,6 +142,11 @@ export interface PokemonWithSpecies extends Pokemon {
     isLegendary: boolean;
     isMythical: boolean;
   };
+  learnset: {
+    byGen: Record<number, GenLearnset>;
+    availableGens: number[];
+    latestGen: number;
+  };
 }
 
 // ============ CONSTANTS ============
@@ -137,6 +161,29 @@ const TYPE_COLORS: Record<string, string> = {
 };
 
 const TYPE_LIGHT_TEXT = new Set(["electric", "normal", "ground", "fairy", "ice", "steel"]);
+
+// Gen 6+ (Scarlet/Violet) defensive type chart
+// Each entry: what attacking types deal 2x, 0.5x, or 0x to this defending type.
+const TYPE_CHART: Record<string, { weak: string[]; resist: string[]; immune: string[] }> = {
+  normal:   { weak: ["fighting"],                                                             resist: [],                                                                               immune: ["ghost"] },
+  fire:     { weak: ["water","ground","rock"],                                               resist: ["fire","grass","ice","bug","steel","fairy"],                                     immune: [] },
+  water:    { weak: ["electric","grass"],                                                    resist: ["fire","water","ice","steel"],                                                   immune: [] },
+  electric: { weak: ["ground"],                                                              resist: ["electric","flying","steel"],                                                    immune: [] },
+  grass:    { weak: ["fire","ice","poison","flying","bug"],                                 resist: ["water","electric","grass","ground"],                                             immune: [] },
+  ice:      { weak: ["fire","fighting","rock","steel"],                                     resist: ["ice"],                                                                           immune: [] },
+  fighting: { weak: ["flying","psychic","fairy"],                                           resist: ["bug","rock","dark"],                                                             immune: [] },
+  poison:   { weak: ["ground","psychic"],                                                   resist: ["grass","fighting","poison","bug","fairy"],                                       immune: [] },
+  ground:   { weak: ["water","grass","ice"],                                                resist: ["poison","rock"],                                                                 immune: ["electric"] },
+  flying:   { weak: ["electric","ice","rock"],                                              resist: ["grass","fighting","bug"],                                                        immune: ["ground"] },
+  psychic:  { weak: ["bug","ghost","dark"],                                                 resist: ["fighting","psychic"],                                                            immune: [] },
+  bug:      { weak: ["fire","flying","rock"],                                               resist: ["grass","fighting","ground"],                                                     immune: [] },
+  rock:     { weak: ["water","grass","fighting","ground","steel"],                         resist: ["normal","fire","poison","flying"],                                               immune: [] },
+  ghost:    { weak: ["ghost","dark"],                                                       resist: ["poison","bug"],                                                                  immune: ["normal","fighting"] },
+  dragon:   { weak: ["ice","dragon","fairy"],                                               resist: ["fire","water","electric","grass"],                                               immune: [] },
+  dark:     { weak: ["fighting","bug","fairy"],                                             resist: ["ghost","dark"],                                                                  immune: ["psychic"] },
+  steel:    { weak: ["fire","fighting","ground"],                                           resist: ["normal","grass","ice","flying","psychic","bug","rock","dragon","steel","fairy"], immune: ["poison"] },
+  fairy:    { weak: ["poison","steel"],                                                     resist: ["fighting","bug","dark"],                                                         immune: ["dragon"] },
+};
 
 // ============ HELPERS ============
 function extractEvolutionChain(chain: EvolutionChainLink): { name: string; id: number; method: string }[] {
@@ -189,22 +236,48 @@ function capitalize(str: string): string {
   return str.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
+// Compute final type multipliers for a Pokémon's type combination.
+// Returns a map of attacking-type → final damage multiplier (0, 0.25, 0.5, 1, 2, 4).
+function computeTypeEffectiveness(defTypes: string[]): Record<string, number> {
+  const ALL_TYPES = ["normal","fire","water","electric","grass","ice","fighting","poison",
+    "ground","flying","psychic","bug","rock","ghost","dragon","dark","steel","fairy"];
+  const mul: Record<string, number> = {};
+  ALL_TYPES.forEach(t => (mul[t] = 1));
+
+  for (const defType of defTypes) {
+    const chart = TYPE_CHART[defType];
+    if (!chart) continue;
+    chart.weak.forEach(atk => { mul[atk] *= 2; });
+    chart.resist.forEach(atk => { mul[atk] *= 0.5; });
+    // Immunity overrides — set to 0 regardless of other type
+    chart.immune.forEach(atk => { mul[atk] = 0; });
+  }
+  return mul;
+}
+
 // ============ DATA FETCHING ============
 async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
   try {
-    const [pokemonRes, speciesRes] = await Promise.all([
-      fetch(`https://pokeapi.co/api/v2/pokemon/${name}`, { next: { revalidate: 86400 } }),
-      fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`, { next: { revalidate: 86400 } }),
-    ]);
+    // Step 1: fetch the Pokémon data first so we can read its canonical species URL.
+    // Fetching species by name directly fails for alternate forms (e.g. pyroar-male → 404),
+    // because PokéAPI only has species entries for the base form. The species.url field
+    // in the Pokémon response always points to the correct base-species endpoint.
+    const pokemonRes = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/${name}`,
+      { next: { revalidate: 86400 } }
+    );
 
     if (!pokemonRes.ok) return null;
 
-    const pokemon: Pokemon = await pokemonRes.json();
+    const pokemon: RawPokemon = await pokemonRes.json();
+
+    // Step 2: use the species URL from the Pokémon data (handles all alternate forms).
+    const speciesRes = await fetch(pokemon.species.url, { next: { revalidate: 86400 } });
 
     let speciesData: PokemonWithSpecies["species"] = {
       flavorText: "", genus: "Pokémon", generation: "Generation 1",
       generationNumber: 1, habitat: null, evolutionChain: [],
-      captureRate: 0, baseHappiness: 0, growthRate: "medium",
+      captureRate: 45, baseHappiness: 50, growthRate: "medium",
       eggGroups: [], genderRate: -1, isLegendary: false, isMythical: false,
     };
 
@@ -254,7 +327,89 @@ async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
       };
     }
 
-    return { ...pokemon, species: speciesData };
+    // ── LEARNSET: parse all generations from the existing /pokemon response ──
+    // Maps every PokéAPI version-group name to its canonical generation number.
+    const VG_TO_GEN: Record<string, number> = {
+      "red-blue": 1, "yellow": 1,
+      "gold-silver": 2, "crystal": 2,
+      "ruby-sapphire": 3, "emerald": 3, "firered-leafgreen": 3, "colosseum": 3, "xd": 3,
+      "diamond-pearl": 4, "platinum": 4, "heartgold-soulsilver": 4,
+      "black-white": 5, "black-2-white-2": 5,
+      "x-y": 6, "omega-ruby-alpha-sapphire": 6,
+      "sun-moon": 7, "ultra-sun-ultra-moon": 7, "lets-go-pikachu-lets-go-eevee": 7,
+      "sword-shield": 8, "brilliant-diamond-shining-pearl": 8, "legends-arceus": 8,
+      "scarlet-violet": 9,
+    };
+
+    // Intermediate accumulator: gen → method → Set of move names (to deduplicate),
+    // with a separate map for level-up levels.
+    const genData: Record<number, {
+      levelUp: Map<string, number>; // name → level
+      machine: Set<string>;
+      egg: Set<string>;
+      tutor: Set<string>;
+    }> = {};
+
+    for (const entry of (pokemon.moves ?? [])) {
+      const moveName = capitalize(entry.move.name.replace(/-/g, " "));
+
+      for (const vgd of entry.version_group_details) {
+        const gen = VG_TO_GEN[vgd.version_group.name];
+        if (!gen) continue; // unknown/future version groups
+
+        if (!genData[gen]) {
+          genData[gen] = {
+            levelUp: new Map(),
+            machine: new Set(),
+            egg: new Set(),
+            tutor: new Set(),
+          };
+        }
+
+        const method = vgd.move_learn_method.name;
+        if (method === "level-up") {
+          // Keep the highest level seen (favours non-evolution-carry-over entries)
+          const existing = genData[gen].levelUp.get(moveName) ?? -1;
+          if (vgd.level_learned_at > existing) {
+            genData[gen].levelUp.set(moveName, vgd.level_learned_at);
+          }
+        } else if (method === "machine") {
+          genData[gen].machine.add(moveName);
+        } else if (method === "egg") {
+          genData[gen].egg.add(moveName);
+        } else if (method === "tutor") {
+          genData[gen].tutor.add(moveName);
+        }
+      }
+    }
+
+    // Convert to final sorted arrays
+    const byGen: Record<number, GenLearnset> = {};
+    for (const [genStr, data] of Object.entries(genData)) {
+      const gen = Number(genStr);
+      const levelUp: MoveEntry[] = Array.from(data.levelUp.entries())
+        .map(([name, level]) => ({ name, level }))
+        .sort((a, b) => a.level - b.level || a.name.localeCompare(b.name));
+      const machine: MoveEntry[] = Array.from(data.machine)
+        .sort()
+        .map(name => ({ name, level: 0 }));
+      const egg: MoveEntry[] = Array.from(data.egg)
+        .sort()
+        .map(name => ({ name, level: 0 }));
+      const tutor: MoveEntry[] = Array.from(data.tutor)
+        .sort()
+        .map(name => ({ name, level: 0 }));
+      byGen[gen] = { levelUp, machine, egg, tutor };
+    }
+
+    const availableGens = Object.keys(byGen).map(Number).sort((a, b) => a - b);
+    const latestGen = availableGens.length > 0 ? availableGens[availableGens.length - 1] : 9;
+
+    return {
+      ...pokemon,
+      species: speciesData,
+      learnset: { byGen, availableGens, latestGen },
+    };
   } catch (error) {
     console.error("Error fetching Pokemon:", error);
     return null;
@@ -286,10 +441,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? ` Part of the ${capitalize(pokemon.species.evolutionChain[0].name)} evolution line.`
     : "";
 
-  const uniqueDescription = `${formattedName} (#${pokemon.id}) is a ${typesDisplay}-type ${pokemon.species.genus} from ${pokemon.species.generation}. Base stats total: ${totalStats}. Height: ${(pokemon.height / 10).toFixed(1)}m, Weight: ${(pokemon.weight / 10).toFixed(1)}kg.${evolutionInfo}`;
+  const paddedId = String(pokemon.id).padStart(4, "0");
+  const genShort = pokemon.species.generation.replace("Generation ", "Gen ");
+  const weaknessTypes = (() => {
+    const mul: Record<string, number> = {};
+    ["normal","fire","water","electric","grass","ice","fighting","poison","ground","flying","psychic","bug","rock","ghost","dragon","dark","steel","fairy"].forEach(t => (mul[t] = 1));
+    // inline simple multiplier for description only (no import needed — tiny)
+    const chart: Record<string, [string[], string[], string[]]> = {
+      normal:[["fighting"],[],["ghost"]], fire:[["water","ground","rock"],["fire","grass","ice","bug","steel","fairy"],[]], water:[["electric","grass"],["fire","water","ice","steel"],[]], electric:[["ground"],["electric","flying","steel"],[]], grass:[["fire","ice","poison","flying","bug"],["water","electric","grass","ground"],[]], ice:[["fire","fighting","rock","steel"],["ice"],[]], fighting:[["flying","psychic","fairy"],["bug","rock","dark"],[]], poison:[["ground","psychic"],["grass","fighting","poison","bug","fairy"],[]], ground:[["water","grass","ice"],["poison","rock"],["electric"]], flying:[["electric","ice","rock"],["grass","fighting","bug"],["ground"]], psychic:[["bug","ghost","dark"],["fighting","psychic"],[]], bug:[["fire","flying","rock"],["grass","fighting","ground"],[]], rock:[["water","grass","fighting","ground","steel"],["normal","fire","poison","flying"],[]], ghost:[["ghost","dark"],["poison","bug"],["normal","fighting"]], dragon:[["ice","dragon","fairy"],["fire","water","electric","grass"],[]], dark:[["fighting","bug","fairy"],["ghost","dark"],["psychic"]], steel:[["fire","fighting","ground"],["normal","grass","ice","flying","psychic","bug","rock","dragon","steel","fairy"],["poison"]], fairy:[["poison","steel"],["fighting","bug","dark"],["dragon"]],
+    };
+    for (const t of pokemon.types.map(x => x.type.name)) {
+      const [w, r, i] = chart[t] ?? [[],[],[]];
+      w.forEach(a => { mul[a] = (mul[a] ?? 1) * 2; });
+      r.forEach(a => { mul[a] = (mul[a] ?? 1) * 0.5; });
+      i.forEach(a => { mul[a] = 0; });
+    }
+    return Object.entries(mul).filter(([,v]) => v >= 2).map(([k]) => capitalize(k)).slice(0, 3).join(", ");
+  })();
+  const uniqueDescription = `${formattedName} — ${typesDisplay}-type Pokémon from ${genShort}. Full stats (BST ${totalStats}), moves, weaknesses${weaknessTypes ? ` (${weaknessTypes})` : ""}, and evolution chain.`;
 
   return {
-    title: `${formattedName} (#${pokemon.id}) - Stats, Evolution & Type | Pokemon Database`,
+    title: `${formattedName} (#${paddedId}) - Stats, Evolution & Type | Pokemon Database`,
     description: uniqueDescription,
     keywords: [
       formattedName.toLowerCase(),
@@ -304,7 +476,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: `/pokemon/${pokemon.name.toLowerCase()}`,
     },
     openGraph: {
-      title: `${formattedName} (#${pokemon.id}) - ${typesDisplay} Type | Pokemon Database`,
+      title: `${formattedName} (#${paddedId}) - ${typesDisplay} Type | Pokemon Database`,
       description: uniqueDescription,
       url: `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}`,
       images: [{
@@ -315,7 +487,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${formattedName} (#${pokemon.id}) | Pokemon Database`,
+      title: `${formattedName} (#${paddedId}) | Pokemon Database`,
       description: uniqueDescription,
       images: [pokemon.sprites.other?.["official-artwork"]?.front_default || pokemon.sprites.other?.home?.front_default || pokemon.sprites.front_default || ""],
     },
@@ -332,6 +504,7 @@ export default async function PokemonDetailPage({ params }: Props) {
   }
 
   const capitalizedName = capitalize(pokemon.name);
+  const paddedId = String(pokemon.id).padStart(4, "0");
   const typesDisplay = pokemon.types.map(t => capitalize(t.type.name)).join("/");
   const totalStats = pokemon.stats.reduce((sum, stat) => sum + stat.base_stat, 0);
   const highestStat = pokemon.stats.reduce((max, stat) =>
@@ -341,7 +514,28 @@ export default async function PokemonDetailPage({ params }: Props) {
   const currentEvoIndex = evolutionChain.findIndex(e => e.name.toLowerCase() === pokemon.name.toLowerCase());
   const otherEvolutions = evolutionChain.filter(e => e.name.toLowerCase() !== pokemon.name.toLowerCase());
 
-  // Gender ratio
+  // ── TYPE EFFECTIVENESS ──
+  const typeMultipliers = computeTypeEffectiveness(pokemon.types.map(t => t.type.name));
+  const typeGroups = {
+    x4:    Object.entries(typeMultipliers).filter(([, v]) => v === 4).map(([k]) => k),
+    x2:    Object.entries(typeMultipliers).filter(([, v]) => v === 2).map(([k]) => k),
+    x0_5:  Object.entries(typeMultipliers).filter(([, v]) => v === 0.5).map(([k]) => k),
+    x0_25: Object.entries(typeMultipliers).filter(([, v]) => v === 0.25).map(([k]) => k),
+    x0:    Object.entries(typeMultipliers).filter(([, v]) => v === 0).map(([k]) => k),
+  };
+
+  // ── COMPETITIVE TIER ──
+  const tierInfo = getTier(pokemon.name);
+  const competitiveBlurb = generateCompetitiveBlurb(
+    capitalizedName,
+    tierInfo?.tier ?? null,
+    totalStats,
+    pokemon.types.map(t => t.type.name),
+    highestStat.stat.name,
+    highestStat.base_stat,
+    pokemon.species.isLegendary,
+    pokemon.species.isMythical,
+  );
   let genderText = "Genderless";
   if (pokemon.species.genderRate >= 0) {
     const femalePercent = (pokemon.species.genderRate / 8) * 100;
@@ -382,7 +576,7 @@ export default async function PokemonDetailPage({ params }: Props) {
     },
     {
       question: `How tall and heavy is ${capitalizedName}?`,
-      answer: `${capitalizedName} stands at ${(pokemon.height / 10).toFixed(1)} meters (${(pokemon.height * 3.937 / 10).toFixed(1)} inches) tall and weighs ${(pokemon.weight / 10).toFixed(1)} kg (${(pokemon.weight * 0.2205).toFixed(1)} lbs). This makes it a ${sizeCategory} Pokémon. Its weight can affect certain moves like Low Kick and Heavy Slam in battle.`,
+      answer: `${capitalizedName} stands at ${(pokemon.height / 10).toFixed(1)} meters (${((pokemon.height / 10) * 39.3701).toFixed(1)} inches) tall and weighs ${(pokemon.weight / 10).toFixed(1)} kg (${((pokemon.weight / 10) * 2.20462).toFixed(1)} lbs). This makes it a ${sizeCategory} Pokémon. Its weight can affect certain moves like Low Kick and Heavy Slam in battle.`,
     },
     {
       question: `How hard is it to catch ${capitalizedName}?`,
@@ -427,66 +621,82 @@ export default async function PokemonDetailPage({ params }: Props) {
     });
   }
 
-  // ============ JSON-LD STRUCTURED DATA ============
-  const pokemonJsonLd = [
-    {
-      "@context": "https://schema.org",
+  // ── Schema: ItemPage (primary entity) ──
+  const itemPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemPage",
+    "@id": `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}#webpage`,
+    url: `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}`,
+    name: `${capitalizedName} (#${paddedId}) - Stats, Evolution & Type`,
+    description: `${capitalizedName} is a ${typesDisplay}-type ${pokemon.species.genus} from ${pokemon.species.generation}. ${pokemon.species.flavorText}`,
+    inLanguage: "en",
+    isPartOf: { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: siteUrl, name: "Random Pokémon Generator" },
+    about: {
       "@type": "Thing",
-      "@id": `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}`,
+      "@id": `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}#pokemon`,
       name: capitalizedName,
-      alternateName: `Pokemon #${pokemon.id}`,
-      description: `${capitalizedName} is a ${typesDisplay}-type ${pokemon.species.genus} from ${pokemon.species.generation}. ${pokemon.species.flavorText}`,
+      alternateName: `Pokémon #${paddedId}`,
+      description: `${capitalizedName} is a ${typesDisplay}-type Pokémon, classified as the ${pokemon.species.genus}, introduced in ${pokemon.species.generation}.`,
       image: {
         "@type": "ImageObject",
-        url: pokemon.sprites.other?.["official-artwork"]?.front_default || pokemon.sprites.other?.home?.front_default || pokemon.sprites.front_default || "",
-        caption: `${capitalizedName} official artwork`,
+        url: pokemon.sprites.other?.["official-artwork"]?.front_default || pokemon.sprites.front_default || "",
+        name: `${capitalizedName} official artwork`,
+        caption: `Official artwork of ${capitalizedName}, a ${typesDisplay}-type Pokémon`,
       },
       identifier: pokemon.id.toString(),
       additionalProperty: [
-        { "@type": "PropertyValue", name: "National Dex Number", value: pokemon.id.toString() },
+        { "@type": "PropertyValue", name: "National Pokédex Number", value: pokemon.id.toString() },
         { "@type": "PropertyValue", name: "Type", value: typesDisplay },
         { "@type": "PropertyValue", name: "Generation", value: pokemon.species.generation },
         { "@type": "PropertyValue", name: "Classification", value: pokemon.species.genus },
         { "@type": "PropertyValue", name: "Height", value: `${(pokemon.height / 10).toFixed(1)} m` },
         { "@type": "PropertyValue", name: "Weight", value: `${(pokemon.weight / 10).toFixed(1)} kg` },
-        { "@type": "PropertyValue", name: "Total Base Stats", value: totalStats.toString() },
-        ...pokemon.stats.map(stat => ({
-          "@type": "PropertyValue",
-          name: formatStatName(stat.stat.name),
-          value: stat.base_stat.toString(),
-        })),
+        { "@type": "PropertyValue", name: "Base Stat Total", value: totalStats.toString() },
+        { "@type": "PropertyValue", name: "HP", value: pokemon.stats.find(s => s.stat.name === "hp")?.base_stat.toString() ?? "" },
+        { "@type": "PropertyValue", name: "Attack", value: pokemon.stats.find(s => s.stat.name === "attack")?.base_stat.toString() ?? "" },
+        { "@type": "PropertyValue", name: "Defense", value: pokemon.stats.find(s => s.stat.name === "defense")?.base_stat.toString() ?? "" },
+        { "@type": "PropertyValue", name: "Special Attack", value: pokemon.stats.find(s => s.stat.name === "special-attack")?.base_stat.toString() ?? "" },
+        { "@type": "PropertyValue", name: "Special Defense", value: pokemon.stats.find(s => s.stat.name === "special-defense")?.base_stat.toString() ?? "" },
+        { "@type": "PropertyValue", name: "Speed", value: pokemon.stats.find(s => s.stat.name === "speed")?.base_stat.toString() ?? "" },
+        { "@type": "PropertyValue", name: "Capture Rate", value: pokemon.species.captureRate.toString() },
+        { "@type": "PropertyValue", name: "Is Legendary", value: pokemon.species.isLegendary ? "Yes" : "No" },
+        { "@type": "PropertyValue", name: "Is Mythical", value: pokemon.species.isMythical ? "Yes" : "No" },
       ],
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: faqItems.map(faq => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: faq.answer,
-        },
-      })),
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
-        { "@type": "ListItem", position: 2, name: "Pokédex", item: `${siteUrl}/pokedex` },
-        { "@type": "ListItem", position: 3, name: capitalizedName, item: `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}` },
-      ],
-    },
-  ];
+    breadcrumb: { "@id": `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}#breadcrumb` },
+  };
+
+  // ── Schema: BreadcrumbList ──
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Pokédex", item: `${siteUrl}/pokedex` },
+      { "@type": "ListItem", position: 3, name: capitalizedName, item: `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}` },
+    ],
+  };
+
+  // ── Schema: FAQPage ──
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}#faq`,
+    mainEntity: faqItems.map(faq => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
 
   return (
     <>
-      {/* JSON-LD — Server-rendered for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pokemonJsonLd) }}
-      />
+      {/* JSON-LD — Three separate script tags; each schema type must be independent for Google rich results */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemPageSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+
 
       <main className="min-h-screen bg-cream">
         <div className="max-w-6xl mx-auto px-4 md:px-8 py-6 md:py-10">
@@ -608,8 +818,8 @@ export default async function PokemonDetailPage({ params }: Props) {
                 <div className="divide-y-2 divide-black/10">
                   {[
                     ["Classification", pokemon.species.genus],
-                    ["Height", `${(pokemon.height / 10).toFixed(1)} m (${(pokemon.height * 3.937 / 10).toFixed(1)}″)`],
-                    ["Weight", `${(pokemon.weight / 10).toFixed(1)} kg (${(pokemon.weight * 0.2205).toFixed(1)} lbs)`],
+                    ["Height", `${(pokemon.height / 10).toFixed(1)} m (${((pokemon.height / 10) * 39.3701).toFixed(1)}″)`],
+                    ["Weight", `${(pokemon.weight / 10).toFixed(1)} kg (${((pokemon.weight / 10) * 2.20462).toFixed(1)} lbs)`],
                     ...(pokemon.species.habitat ? [["Habitat", capitalize(pokemon.species.habitat)]] : []),
                     ["Gender", genderText],
                     ["Growth Rate", capitalize(pokemon.species.growthRate)],
@@ -834,6 +1044,269 @@ export default async function PokemonDetailPage({ params }: Props) {
               </div>
             </div>
           </div>
+
+          {/* ══ COMPETITIVE PROFILE ─ server-rendered ══ */}
+          <section
+            className="mt-8 md:mt-12 bg-white border-2 border-black slasher p-5 sm:p-6 md:p-8"
+            id="competitive"
+            aria-label={`${capitalizedName} competitive tier and analysis`}
+          >
+            <div className="inline-block bg-black px-3 py-1 mb-6">
+              <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+                COMPETITIVE
+              </span>
+            </div>
+            <h2 className="font-grotesk font-bold text-xl sm:text-2xl md:text-3xl mb-1 text-black uppercase">
+              Is {capitalizedName} Good Competitively?
+            </h2>
+            <p className="font-mono text-xs sm:text-sm text-charcoal mb-6">
+              Smogon Gen 9 tier placement and competitive analysis for {capitalizedName}.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6">
+
+              {/* Tier badge + label */}
+              <div className="flex-shrink-0">
+                {tierInfo ? (
+                  <div className="flex flex-col items-start gap-2">
+                    <span
+                      className="font-mono text-2xl sm:text-3xl font-black px-4 py-2 border-2 border-black inline-block"
+                      style={{
+                        backgroundColor: TIER_COLORS[tierInfo.tier].bg,
+                        color: TIER_COLORS[tierInfo.tier].text,
+                      }}
+                      title={TIER_DESCRIPTIONS[tierInfo.tier]}
+                    >
+                      {tierInfo.tier}
+                    </span>
+                    <span className="font-mono text-[10px] text-charcoal uppercase tracking-widest">
+                      Smogon Gen 9
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-start gap-2">
+                    <span className="font-mono text-2xl sm:text-3xl font-black px-4 py-2 border-2 border-black bg-black/5 text-charcoal">
+                      —
+                    </span>
+                    <span className="font-mono text-[10px] text-charcoal uppercase tracking-widest">
+                      Untiered / Regional
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Blurb + stat callouts */}
+              <div className="flex-1 space-y-4">
+                <p className="font-mono text-sm sm:text-base text-black leading-relaxed">
+                  {competitiveBlurb}
+                </p>
+
+                {/* Stat snapshot relevant to competitive play */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {([
+                    { label: "BST",   value: totalStats },
+                    { label: highestStat.stat.name === "special-attack" ? "Sp. Atk" : highestStat.stat.name === "special-defense" ? "Sp. Def" : highestStat.stat.name.toUpperCase(), value: highestStat.base_stat },
+                    { label: "SPEED", value: pokemon.stats.find(s => s.stat.name === "speed")?.base_stat ?? 0 },
+                  ] as const).map(item => (
+                    <div key={item.label} className="bg-cream/50 border-2 border-black/10 px-3 py-2">
+                      <p className="font-mono text-[9px] uppercase tracking-widest text-charcoal">{item.label}</p>
+                      <p className="font-grotesk font-bold text-lg sm:text-xl text-black">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {tierInfo && (
+                  <p className="font-mono text-[11px] text-charcoal/70 italic">
+                    {TIER_DESCRIPTIONS[tierInfo.tier]}
+                  </p>
+                )}
+              </div>
+            </div>
+          </section>
+
+          {/* ══ TYPE EFFECTIVENESS CHART ─ server-rendered, zero extra API calls ══ */}
+          <section
+            className="mt-8 md:mt-12 bg-white border-2 border-black slasher p-5 sm:p-6 md:p-8"
+            id="weaknesses"
+            aria-label={`${capitalizedName} type weaknesses and resistances`}
+          >
+            <div className="inline-block bg-black px-3 py-1 mb-6">
+              <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+                TYPE CHART
+              </span>
+            </div>
+            <h2 className="font-grotesk font-bold text-xl sm:text-2xl md:text-3xl mb-1 text-black uppercase">
+              {capitalizedName} Weaknesses &amp; Resistances
+            </h2>
+            <p className="font-mono text-xs sm:text-sm text-charcoal mb-6">
+              Type effectiveness for {typesDisplay}-type {capitalizedName} (Generation 9 / Scarlet &amp; Violet).
+            </p>
+
+            <div className="space-y-2">
+              {([
+                { key: "x4",    label: "4×",  note: "Quadruple Weakness",  bg: "#dc2626", rows: typeGroups.x4 },
+                { key: "x2",    label: "2×",  note: "Super Effective",      bg: "#f97316", rows: typeGroups.x2 },
+                { key: "x0_5",  label: "½×",   note: "Resistant",            bg: "#16a34a", rows: typeGroups.x0_5 },
+                { key: "x0_25", label: "¼×",   note: "Doubly Resistant",    bg: "#15803d", rows: typeGroups.x0_25 },
+                { key: "x0",    label: "0×",  note: "Immune",              bg: "#4b5563", rows: typeGroups.x0 },
+              ] as const).map(row => (
+                <div key={row.key} className="flex items-start gap-3">
+                  {/* Multiplier badge */}
+                  <div
+                    className="flex-shrink-0 w-[4.5rem] sm:w-20 text-right pt-1"
+                    title={row.note}
+                  >
+                    <span
+                      className="font-mono text-xs sm:text-sm font-black leading-none"
+                      style={{ color: row.bg }}
+                    >
+                      {row.label}
+                    </span>
+                  </div>
+
+                  {/* Type badges or dash */}
+                  <div className="flex flex-wrap gap-1.5 flex-1 pt-0.5">
+                    {row.rows.length === 0 ? (
+                      <span className="font-mono text-xs text-charcoal/40">—</span>
+                    ) : (
+                      row.rows.map(type => (
+                        <span
+                          key={type}
+                          className="inline-block font-mono text-[10px] sm:text-xs font-bold px-2 py-1 uppercase border border-black/10"
+                          style={{
+                            backgroundColor: TYPE_COLORS[type] || "#888",
+                            color: TYPE_LIGHT_TEXT.has(type) ? "#1a1a1a" : "#fff",
+                          }}
+                        >
+                          {type}
+                        </span>
+                      ))
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Legend */}
+            <p className="font-mono text-[10px] text-charcoal/50 mt-5">
+              * Immunities override all other multipliers. Chart based on Gen 6+ rules (Fairy type included).
+            </p>
+          </section>
+
+          {/* ══ EVOLUTION CHAIN ─ server-rendered, SEO-rich ══ */}
+          {evolutionChain.length > 1 && (
+            <section
+              className="mt-8 md:mt-12 bg-white border-2 border-black slasher p-5 sm:p-6 md:p-8"
+              id="evolution"
+              aria-label={`${capitalizedName} evolution chain`}
+            >
+              <div className="inline-block bg-black px-3 py-1 mb-6">
+                <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+                  EVOLUTION CHAIN
+                </span>
+              </div>
+              <h2 className="font-grotesk font-bold text-xl sm:text-2xl md:text-3xl mb-1 text-black uppercase">
+                {capitalizedName} Evolution
+              </h2>
+              <p className="font-mono text-xs sm:text-sm text-charcoal mb-8">
+                How {capitalizedName} evolves — complete {evolutionChain.length}-stage evolution line.
+              </p>
+
+              {/* Chain — wraps on mobile, horizontal on sm+ */}
+              <div className="flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 sm:gap-0">
+                {evolutionChain.map((evo, index) => {
+                  const isCurrent = evo.name.toLowerCase() === pokemon.name.toLowerCase();
+                  const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evo.id}.png`;
+                  const evoName = capitalize(evo.name);
+
+                  return (
+                    <div key={evo.id} className="flex items-center sm:flex-nowrap gap-2 sm:gap-0">
+                      {/* Arrow + Method (not shown before the first stage) */}
+                      {index > 0 && (
+                        <div className="flex flex-col items-center mx-2 sm:mx-3 flex-shrink-0 w-16 sm:w-20">
+                          <div className="font-mono text-[9px] sm:text-[10px] text-center text-charcoal leading-tight mb-1 min-h-[2.5rem] flex items-center justify-center">
+                            {evo.method ? (
+                              <span className="bg-black/5 border border-black/10 px-1.5 py-0.5 text-center">
+                                {capitalize(evo.method)}
+                              </span>
+                            ) : (
+                              <span className="text-charcoal/40">Evolve</span>
+                            )}
+                          </div>
+                          <div className="text-black text-lg leading-none select-none">→</div>
+                        </div>
+                      )}
+
+                      {/* Pokémon card */}
+                      <Link
+                        href={`/pokemon/${evo.name.toLowerCase()}`}
+                        className={`flex flex-col items-center gap-2 p-3 sm:p-4 border-2 transition-all group hover:scale-105 ${
+                          isCurrent
+                            ? "border-black bg-black text-white"
+                            : "border-black/20 bg-cream/50 hover:border-black hover:bg-white"
+                        }`}
+                        aria-label={`View ${evoName} details${isCurrent ? " (current)" : ""}`}
+                      >
+                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={spriteUrl}
+                            alt={`${evoName} sprite`}
+                            width={96}
+                            height={96}
+                            className={`w-full h-full object-contain ${isCurrent ? "" : "mix-blend-multiply"}`}
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="text-center">
+                          <p className={`font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider ${isCurrent ? "text-white" : "text-charcoal"}`}>
+                            #{String(evo.id).padStart(4, "0")}
+                          </p>
+                          <p className={`font-grotesk font-bold text-sm sm:text-base mt-0.5 ${isCurrent ? "text-white" : "text-black"}`}>
+                            {evoName}
+                          </p>
+                        </div>
+                        {isCurrent && (
+                          <span className="font-mono text-[9px] bg-white text-black px-2 py-0.5 font-bold uppercase tracking-widest">
+                            CURRENT
+                          </span>
+                        )}
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Fallback text for SEO / screen readers */}
+              <p className="sr-only">
+                {capitalizedName} evolution chain: {evolutionChain.map((evo, i) => {
+                  if (i === 0) return capitalize(evo.name);
+                  return `evolves into ${capitalize(evo.name)}${evo.method ? ` via ${evo.method}` : ""}`;
+                }).join(", ")}.
+              </p>
+            </section>
+          )}
+
+          {/* ══ LEARNSET SECTION ─ all generations ══ */}
+          {pokemon.learnset.availableGens.length > 0 && (
+            <section className="mt-8 md:mt-12 bg-white border-2 border-black slasher p-5 sm:p-6 md:p-8" id="moves">
+              <div className="inline-block bg-black px-3 py-1 mb-6">
+                <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">LEARNSET</span>
+              </div>
+              <h2 className="font-grotesk font-bold text-xl sm:text-2xl md:text-3xl mb-1 text-black uppercase">
+                {capitalizedName} Moves &amp; Learnset
+              </h2>
+              <p className="font-mono text-xs sm:text-sm text-charcoal mb-6">
+                Complete {capitalizedName} moveset for all generations — level-up, TM/HM, tutor, and egg moves.
+              </p>
+              <LearnsetTabs
+                pokemonName={capitalizedName}
+                byGen={pokemon.learnset.byGen}
+                availableGens={pokemon.learnset.availableGens}
+                latestGen={pokemon.learnset.latestGen}
+              />
+            </section>
+          )}
 
           {/* SEO Content Section — Server-rendered */}
           <article className="mt-8 md:mt-12 bg-white border-2 border-black slasher p-5 sm:p-6 md:p-8">

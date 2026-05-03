@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Kalos Pokemon Generator",
-  description: "Generate random Pokemon teams from the Kalos region (Gen 6). Pokemon #650-721.",
+  description: "Random Kalos Pokemon generator — 72 species from X & Y. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/kalos-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
@@ -61,7 +61,7 @@ export default function KalosPokemonGeneratorPage() {
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">KALOS POKEMON GENERATOR</h1>
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>Kalos Pokemon teams</strong> from Generation 6 (#650-721). Pokemon X &amp; Y — the first 3D games — featuring Mega Evolutions, the Fairy type, and the AZ legendary trio.
-          </p>
+           Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
         </div>
 
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Kalos" />
@@ -136,3 +136,4 @@ export default function KalosPokemonGeneratorPage() {
     </>
   );
 }
+

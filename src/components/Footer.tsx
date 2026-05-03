@@ -138,6 +138,12 @@ export default function Footer() {
             </h4>
             <nav className="space-y-1">
               <Link
+                href="/blog"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth font-bold"
+              >
+                Blog &amp; Guides
+              </Link>
+              <Link
                 href="/pokedex"
                 className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
               >

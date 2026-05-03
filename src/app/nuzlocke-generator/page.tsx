@@ -5,7 +5,7 @@ import { Zap, Shield, Target, TrendingUp, ArrowLeft } from "lucide-react";
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Pokemon Nuzlocke Generator | Free Challenge Tool All 9 Generations",
+  title: "Random Pokemon Nuzlocke Generator | Free Challenge Tool All 9 Generations",
   description: "The ultimate Pokemon Nuzlocke generator with advanced filters for all 9 generations. Generate starter trios, simulate encounters, and build challenge teams. Free forever!",
   keywords: ["pokemon nuzlocke generator", "nuzlocke team generator", "pokemon nuzlocke tool", "nuzlocke challenge generator", "pokemon nuzlocke randomizer", "best nuzlocke generator"],
   alternates: { canonical: `${siteUrl}/nuzlocke-generator` },
@@ -47,11 +47,11 @@ export default function NuzlockeGeneratorPage() {
           {/* Hero */}
           <div className="text-center mb-12">
             <h1 className="font-grotesk font-bold text-4xl md:text-6xl lg:text-7xl text-black mb-4 uppercase tracking-tight">
-              POKEMON NUZLOCKE<br />GENERATOR
+              RANDOM POKEMON NUZLOCKE<br />GENERATOR
             </h1>
             <p className="font-mono text-sm text-charcoal max-w-2xl mx-auto leading-relaxed mb-6">
               Built specifically for Nuzlocke challenge runs. Generate starter trios, simulate route encounters, and create backup teams for fallen Pokemon across all 9 generations.
-            </p>
+             Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
             <Link href="/" className="inline-block btn-hover-lift">
               <div className="bg-black hover:bg-charcoal text-white font-grotesk font-bold text-base px-10 py-4 border-4 border-black slasher transition-smooth flex items-center gap-3">
                 <Zap size={20} />

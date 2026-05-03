@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Kanto Pokemon Generator",
-  description: "Generate random Pokemon teams from the Kanto region (Gen 1). Pokemon #1-151.",
+  description: "Random Kanto Pokemon generator — 151 species from Red, Blue & FireRed/LeafGreen. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/kanto-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
@@ -61,7 +61,7 @@ export default function KantoPokemonGeneratorPage() {
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">KANTO POKEMON GENERATOR</h1>
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>Kanto Pokemon teams</strong> from Generation 1 (#1-151). The original 151 from Red, Blue, Yellow, FireRed &amp; LeafGreen. Use filters for type, rarity, and evolution stage.
-          </p>
+           Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
         </div>
 
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Kanto" />
@@ -147,3 +147,4 @@ export default function KantoPokemonGeneratorPage() {
     </>
   );
 }
+

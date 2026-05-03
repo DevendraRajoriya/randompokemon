@@ -1,0 +1,149 @@
+import { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "How to Build a Draft League Pokémon Team (Complete Strategy Guide) | randompokemon.co",
+  description: "Draft order strategy, tier valuation, role coverage, win conditions, and counter-drafting — a full system for dominating your Pokémon Draft League season.",
+  keywords: ["how to build draft league pokemon team", "pokemon draft league strategy", "pokemon draft league tips", "draft league tier list", "how to win draft league pokemon"],
+  openGraph: { title: "How to Build a Draft League Pokémon Team", description: "Complete draft order strategy, tier valuation, and team building system for Pokémon Draft Leagues.", type: "article" },
+  alternates: { canonical: "https://www.randompokemon.co/blog/how-to-build-draft-league-pokemon-team" },
+};
+
+const ROLES = [
+  { role: "Physical Sweeper", desc: "High Attack + Speed. Aims to set up (Swords Dance, Dragon Dance) and sweep through weakened teams. Examples: Garchomp, Weavile, Dragonite.", value: "Pick 1–2. Over-drafting sweepers creates a team with no defensive backbone." },
+  { role: "Special Sweeper", desc: "High Sp. Atk. Often paired with Choice Specs or Nasty Plot. Examples: Gholdengo, Volcarona, Iron Moth.", value: "Pick 1. One per team is standard. Two special sweepers means your offense is too concentrated." },
+  { role: "Hazard Setter", desc: "Sets Stealth Rock, Spikes. This is the highest-value non-attacking role in draft leagues. Examples: Glimmora, Great Tusk, Hippowdon.", value: "Draft early if no one takes it. Hazard control dictates pace of entire series." },
+  { role: "Speed Control", desc: "Tailwind setters, Trick Room setters, and paralysis spreaders. Controls which team gets priority in late-game cleaning.", value: "Pick 1. Often overlooked in early drafts — you can steal strong value in mid-rounds." },
+  { role: "Cleric / Hazard Control", desc: "Aromatherapy or Heal Bell user + Rapid Spin or Defog. Removes status and entry hazards. Examples: Blissey, Corviknight, Mandibuzz.", value: "Need at least 1 Defog/Spin user. Hazard control is as important as hazard setting." },
+  { role: "Physical Wall", desc: "High Defense + HP. Stops opposing physical sweepers cold. Examples: Garganacl, Corviknight, Hippowdon.", value: "Draft 1 solid physical wall. Two is redundant unless your meta is heavily physical." },
+  { role: "Special Wall", desc: "High Sp. Def. Handles opposing special attackers. Examples: Blissey, Clodsire, Goodra-Hisui.", value: "Draft 1. Blissey is often available mid-draft and anchors many passive team styles." },
+];
+
+const MISTAKES = [
+  ["Drafting 6 attackers", "Without a wall, cleric, or hazard setter, you'll get chipped to death by priority moves and entry hazards in every series."],
+  ["Not counter-drafting", "If your opponent picks a weather setter in round 2, draft the weather immunity answer in round 3. Reactive drafting beats predictive drafting in small leagues."],
+  ["Ignoring speed tiers", "If your fastest Pokémon is 95 Speed and the meta has multiple 100+ Speed threats, you lose the speed war every game. Know the Speed tiers in your draft pool."],
+  ["Over-valuing BST", "A 650 BST Pokémon with 4 weaknesses and no recovery is often worse than a 500 BST mon with recovery, hazard control, and one weakness. BST doesn't win draft leagues."],
+  ["Forgetting win conditions", "Every team needs a way to actually win the game — not just survive. A team with 6 walls and 1 attacker has no win condition against stall."],
+];
+
+export default function DraftLeagueGuide() {
+  return (
+    <main className="min-h-screen bg-cream">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        <nav className="mb-6" aria-label="Breadcrumb">
+          <ol className="flex items-center gap-2 font-mono text-xs text-charcoal flex-wrap">
+            <li><Link href="/" className="hover:text-black">Home</Link></li>
+            <li className="text-black/30">/</li>
+            <li><Link href="/blog" className="hover:text-black">Blog</Link></li>
+            <li className="text-black/30">/</li>
+            <li className="text-black font-bold">Draft League Guide</li>
+          </ol>
+        </nav>
+
+        <header className="mb-10">
+          <div className="inline-block bg-blue-600 px-3 py-1 mb-4">
+            <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">DRAFT LEAGUE</span>
+          </div>
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl text-black uppercase tracking-tight leading-tight mb-4">
+            How to Build a Draft League Pokémon Team
+          </h1>
+          <p className="font-mono text-xs text-charcoal mb-6">14 min read · Updated May 2025</p>
+          <p className="font-mono text-sm text-charcoal leading-relaxed border-l-4 border-black pl-4">
+            Pokémon Draft League is half team-building, half psychology. You&apos;re not just picking the strongest Pokémon — you&apos;re building a coherent system, reading your opponents&apos; needs, and making value decisions under pressure. This guide covers role prioritisation, draft order strategy, counter-drafting, and how to identify your team&apos;s win condition before the first game.
+          </p>
+        </header>
+
+        <section className="mb-10">
+          <h2 className="font-grotesk font-bold text-2xl text-black uppercase mb-4">What Is a Pokémon Draft League?</h2>
+          <p className="font-mono text-sm text-charcoal leading-relaxed mb-4">
+            In a Draft League, each player selects a roster of Pokémon from a shared pool using a snake draft format. Once the draft is complete, players compete in a regular season using only their drafted team — typically picking 6 from their full roster for each match.
+          </p>
+          <p className="font-mono text-sm text-charcoal leading-relaxed mb-4">
+            The format varies by league (point-based, Swiss, round-robin), but the drafting principles are consistent. Unlike standard singles or VGC, you can&apos;t just run the current meta team — you need to build a functional, internally consistent system from whatever you draft.
+          </p>
+          <p className="font-mono text-sm text-charcoal leading-relaxed">
+            Use our <Link href="/draft-league-generator" className="underline text-black font-bold hover:text-charcoal">Draft League Generator</Link> to randomise picks and simulate draft scenarios before your real draft day.
+          </p>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="font-grotesk font-bold text-2xl text-black uppercase mb-4">The 7 Team Roles You Need to Cover</h2>
+          <p className="font-mono text-sm text-charcoal leading-relaxed mb-6">Before you draft a single Pokémon, internalise these roles. A complete team covers at least 5 of these 7 functions — the other 2 can be handled by overlap.</p>
+          <div className="space-y-4">
+            {ROLES.map((r) => (
+              <div key={r.role} className="bg-white border-2 border-black slasher p-5">
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">{r.role}</h3>
+                <p className="font-mono text-xs text-charcoal leading-relaxed mb-2">{r.desc}</p>
+                <div className="bg-blue-50 border-l-4 border-blue-400 px-3 py-1.5">
+                  <p className="font-mono text-xs text-blue-800"><strong>Draft value:</strong> {r.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="font-grotesk font-bold text-2xl text-black uppercase mb-4">Draft Order Strategy</h2>
+          <div className="space-y-3">
+            {[
+              ["Rounds 1–2: Anchor picks", "Draft your highest-value wallbreaker or sweeper first, then immediately draft your hazard setter or physical wall. These two picks define your team's identity for the whole season."],
+              ["Rounds 3–4: Coverage and depth", "Now fill the roles your first two picks don't cover. If you went offensive in rounds 1–2, round 3 is your physical wall or cleric. If defensive, round 3 is your wallbreaker."],
+              ["Rounds 5–6: Speed and glue", "Speed control, a Rapid Spinner, a Pivot (U-turn/Volt Switch), or a revenge killer. These picks make the difference between a team that functions and one that just has 6 strong Pokémon."],
+              ["Rounds 7+: Niche counters", "Now you know your opponents' rosters are taking shape. Pick specifically to punish what they've drafted. An answer to their primary win condition is worth more than your 7th attacker."],
+            ].map(([stage, body]) => (
+              <div key={stage as string} className="flex gap-4 border-2 border-black p-4">
+                <div className="w-1.5 bg-blue-600 flex-shrink-0 self-stretch" />
+                <div>
+                  <p className="font-mono font-bold text-xs text-black uppercase mb-1">{stage}</p>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed">{body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="font-grotesk font-bold text-2xl text-black uppercase mb-4">5 Common Draft League Mistakes</h2>
+          <div className="space-y-3">
+            {MISTAKES.map(([title, body]) => (
+              <div key={title as string} className="bg-red-50 border-2 border-red-200 p-4">
+                <p className="font-mono font-bold text-xs text-red-800 uppercase mb-1">✗ {title}</p>
+                <p className="font-mono text-xs text-red-700 leading-relaxed">{body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="font-grotesk font-bold text-2xl text-black uppercase mb-4">Win Conditions: What&apos;s Your Plan to Actually Win?</h2>
+          <p className="font-mono text-sm text-charcoal leading-relaxed mb-4">
+            The most important question in draft league is: how does my team win? Not &quot;how does it not lose&quot; — but how does it actively close out a series? Every strong draft league team has one primary win condition and one secondary:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              ["Setup Sweep", "One Pokémon sets up (Dragon Dance, Swords Dance), cleans up weakened threats. Needs hazards and chip damage support."],
+              ["Hazard Stack + Wallbreaker", "Rapidly stack hazards, then send in a wallbreaker that forces switches every turn, wearing the opponent down."],
+              ["Weather Win", "Set sun, rain, sand, or snow. Your whole team synergises with one weather condition. Works if you draft well around the setter."],
+              ["Trick Room", "Slow, high-power Pokémon attack first under Trick Room. Counters many speed-based strategies when executed cleanly."],
+            ].map(([title, body]) => (
+              <div key={title as string} className="bg-white border-2 border-black p-4">
+                <p className="font-mono font-bold text-xs text-black uppercase mb-2">{title}</p>
+                <p className="font-mono text-xs text-charcoal leading-relaxed">{body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-black slasher p-8 text-center">
+          <h2 className="font-grotesk font-bold text-2xl text-white uppercase mb-3">Simulate Your Draft</h2>
+          <p className="font-mono text-sm text-white/70 mb-6">Use the Draft League Generator to randomise picks and test team composition before your real draft day.</p>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <Link href="/draft-league-generator" className="bg-marigold text-black font-mono font-bold text-xs px-6 py-3 border-2 border-marigold hover:bg-yellow-400 transition-colors slasher">DRAFT LEAGUE GENERATOR →</Link>
+            <Link href="/blog" className="bg-transparent text-white font-mono font-bold text-xs px-6 py-3 border-2 border-white hover:bg-white hover:text-black transition-colors slasher">MORE GUIDES</Link>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}

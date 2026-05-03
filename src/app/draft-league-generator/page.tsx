@@ -5,7 +5,7 @@ import { Users, Trophy, Shuffle, Settings, ArrowLeft } from "lucide-react";
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Pokemon Draft League Generator | Random Draft Pool Tool 2026",
+  title: "Pokémon Draft League Generator | Random Draft Pool Tool 2026",
   description: "Create balanced Pokemon draft pools for leagues and tournaments. Generate random draft picks with type restrictions, tier lists, and fairness settings. Free draft tool!",
   keywords: ["pokemon draft league", "draft league generator", "pokemon draft tool", "random pokemon draft", "pokemon tournament draft", "draft league randomizer"],
   alternates: { canonical: `${siteUrl}/draft-league-generator` },
@@ -51,7 +51,7 @@ export default function DraftLeagueGeneratorPage() {
             </h1>
             <p className="font-mono text-sm text-charcoal max-w-2xl mx-auto leading-relaxed mb-6">
               The ultimate tool for creating fair, balanced draft pools for Pokemon competitive leagues and tournaments. Generate randomized draft picks with advanced filters.
-            </p>
+             Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
             <Link href="/" className="inline-block btn-hover-lift">
               <div className="bg-black hover:bg-charcoal text-white font-grotesk font-bold text-base px-10 py-4 border-4 border-black slasher transition-smooth flex items-center gap-3">
                 <Shuffle size={20} />

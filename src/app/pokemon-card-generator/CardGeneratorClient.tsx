@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Search, Download, Share2, Loader2, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { getTypeColor } from "@/utils/typeColors";
 
@@ -449,9 +450,22 @@ export default function CardGeneratorClient() {
                             </div>
                           )}
 
-                          {/* CTA */}
-                          <div className="w-full text-center font-mono font-bold text-[10px] sm:text-xs py-1.5 sm:py-2 border border-black/10 bg-black/[0.02] group-hover:bg-black group-hover:text-white group-hover:border-black transition-all duration-200 flex items-center justify-center gap-1">
-                            <Download size={10} /> GENERATE CARD
+                          {/* CTA row: Generate Card + Learn More */}
+                          <div className="flex gap-1.5">
+                            <button
+                              onClick={() => setSharePokemon(pokemon)}
+                              className="flex-1 text-center font-mono font-bold text-[10px] sm:text-xs py-1.5 sm:py-2 border border-black/10 bg-black/[0.02] hover:bg-black hover:text-white hover:border-black transition-all duration-200 flex items-center justify-center gap-1"
+                            >
+                              <Download size={10} /> CARD
+                            </button>
+                            <Link
+                              href={`/pokemon/${pokemon.name.toLowerCase()}`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex-1 text-center font-mono font-bold text-[10px] sm:text-xs py-1.5 sm:py-2 border border-black/10 bg-black/[0.02] hover:bg-indigo hover:text-white hover:border-indigo transition-all duration-200 flex items-center justify-center gap-1"
+                              aria-label={`View ${pokemon.name} Pokédex page`}
+                            >
+                              INFO →
+                            </Link>
                           </div>
                         </div>
                       </div>

@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -51,7 +51,7 @@ const hoennJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "Hoenn Pokemon Generator",
-  description: "Generate random Pokemon teams from the Hoenn region (Gen 3). Pokemon #252-386.",
+  description: "Random Hoenn Pokemon generator — 135 species from Ruby, Sapphire & Emerald. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/hoenn-pokemon-generator`,
   applicationCategory: "GameApplication",
   operatingSystem: "Any",
@@ -100,7 +100,7 @@ export default function HoennPokemonGeneratorPage() {
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>Hoenn Pokemon teams</strong> from Generation 3 (#252-386).
             Ruby, Sapphire, Emerald &amp; ORAS. 135 species including the legendary Weather Trio and pseudo-legendaries Salamence &amp; Metagross.
-          </p>
+           Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
         </div>
 
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Hoenn" />
@@ -275,3 +275,4 @@ export default function HoennPokemonGeneratorPage() {
     </>
   );
 }
+

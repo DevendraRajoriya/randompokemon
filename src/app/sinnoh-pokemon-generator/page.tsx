@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Sinnoh Pokemon Generator",
-  description: "Generate random Pokemon teams from the Sinnoh region (Gen 4). Pokemon #387-493.",
+  description: "Random Sinnoh Pokemon generator — 107 species from Diamond, Pearl & Platinum. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/sinnoh-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
@@ -61,7 +61,7 @@ export default function SinnohPokemonGeneratorPage() {
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">SINNOH POKEMON GENERATOR</h1>
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>Sinnoh Pokemon teams</strong> from Generation 4 (#387-493). Diamond, Pearl &amp; Platinum — home of Arceus, the Creation Trio, and the landmark Physical/Special split.
-          </p>
+           Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
         </div>
 
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Sinnoh" />
@@ -148,3 +148,4 @@ export default function SinnohPokemonGeneratorPage() {
     </>
   );
 }
+

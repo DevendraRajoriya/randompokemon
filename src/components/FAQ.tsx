@@ -25,6 +25,11 @@ const faqData: FAQItem[] = [
       "Click the 'GENERATE TEAM' button on the homepage. You can customize your team by adjusting filters for team size (1-6 Pokemon), region (Kanto-Paldea), type (18 types), rarity (Legendary/Mythical), evolution stage, gender, nature, and more before generating.",
   },
   {
+    question: "How do I generate a random Pokemon?",
+    answer:
+      "To generate a random Pokemon, simply set the team size to 1 and click the 'GENERATE TEAM' button. You can also use our random generator pokemon filters to specify exactly what type or region you want your single random pull to be.",
+  },
+  {
     question: "What is a Nuzlocke challenge?",
     answer:
       "A Nuzlocke is a self-imposed set of hardcore Pokemon rules: (1) If a Pokemon faints, it's considered 'dead' and must be released or permanently boxed, (2) You can only catch the first Pokemon encountered on each route, (3) You must nickname all Pokemon. Our generator helps you prepare randomized teams for these challenge runs.",

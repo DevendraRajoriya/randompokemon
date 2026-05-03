@@ -15,7 +15,7 @@ const CardGeneratorClient = dynamic(
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Pokemon Card Generator | Create & Download Free Pokemon Cards (2026)",
+  title: "Pokémon Card Generator — All 1025 Pokémon | Create & Download Free Cards",
   description:
     "Create stunning Pokemon trading cards for all 1025 Pokemon! Search any Pokemon, preview premium card designs with stats, and download high-resolution PNG cards. Free forever.",
   keywords: [
@@ -132,10 +132,10 @@ export default function PokemonCardGeneratorPage() {
               CARD MAKER
             </span>
           </div>
-          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2">
-            POKEMON CARD{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">
-              GENERATOR
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">
+            POKÉMON CARD GENERATOR<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+              ALL 1025 POKÉMON
             </span>
           </h1>
           <p className="font-mono text-sm md:text-base text-charcoal max-w-2xl mx-auto mb-6 leading-relaxed">
@@ -144,7 +144,7 @@ export default function PokemonCardGeneratorPage() {
             <strong>download high-resolution PNG cards</strong> for free.
             Perfect for social media, Nuzlocke documentation, and collection
             showcasing.
-          </p>
+           Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
         </div>
 
         {/* Card Generator Client Component */}

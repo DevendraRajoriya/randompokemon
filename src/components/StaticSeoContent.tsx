@@ -29,7 +29,7 @@ export default function StaticSeoContent() {
         </h2>
         <div className="space-y-3 font-mono text-sm md:text-base text-charcoal leading-relaxed">
           <p>
-            Generate random Pokemon teams instantly with our free online tool. Access all <strong className="text-black">1,025 Pokemon</strong> from Generations 1-9, including Scarlet & Violet. Perfect for <Link href="/nuzlocke-generator" className="text-black underline font-bold hover:text-charcoal">Nuzlocke challenges</Link>, <Link href="/draft-league-generator" className="text-black underline font-bold hover:text-charcoal">Draft Leagues</Link>, Soul Link runs, and randomizer playthroughs.
+            Easily <strong>generate a random Pokemon</strong> or full teams instantly with our free online tool. If you are looking for the best <strong>Pokemon random generator, Pokemon</strong> fans love our tool. Access all <strong className="text-black">1,025 Pokemon</strong> from Generations 1-9, including Scarlet & Violet. Perfect for <Link href="/nuzlocke-generator" className="text-black underline font-bold hover:text-charcoal">Nuzlocke challenges</Link>, <Link href="/draft-league-generator" className="text-black underline font-bold hover:text-charcoal">Draft Leagues</Link>, Soul Link runs, and randomizer playthroughs.
           </p>
           <p>
             Our advanced Pokemon team builder features smart filtering by type, region, rarity, evolution stage, and more. Filter out Legendaries, select specific generations (Kanto, Johto, Hoenn, Sinnoh, Unova, Kalos, Alola, Galar, Paldea), or generate completely random teams. No registration required—start building your dream team now.

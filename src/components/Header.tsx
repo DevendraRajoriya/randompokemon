@@ -23,6 +23,7 @@ const REGION_LINKS = [
 ];
 
 const MORE_LINKS = [
+    { href: "/blog", label: "Blog & Guides" },
     { href: "/pokemon-card-generator", label: "Card Generator" },
     { href: "/shiny-pokemon-generator", label: "Shiny Generator" },
     { href: "/legendary-pokemon-generator", label: "Legendary Generator" },

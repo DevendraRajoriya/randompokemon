@@ -61,7 +61,7 @@ export default function ShinyPokemonGeneratorPage() {
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">SHINY POKEMON GENERATOR</h1>
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>shiny Pokemon</strong> with ultra-rare alternate color schemes from all 1,025 Pokemon. Perfect for shiny hunters, collectors, unique team challenges, and discovering rare color variants.
-          </p>
+           Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
         </div>
 
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} />

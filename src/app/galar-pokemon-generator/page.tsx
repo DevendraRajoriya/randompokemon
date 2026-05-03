@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Galar Pokemon Generator",
-  description: "Generate random Pokemon teams from the Galar region (Gen 8). Pokemon #810-905.",
+  description: "Random Galar Pokemon generator — 96 species from Sword & Shield. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/galar-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 };
@@ -61,7 +61,7 @@ export default function GalarGeneratorPage() {
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">GALAR POKEMON GENERATOR</h1>
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>Galar Pokemon teams</strong> from Generation 8 (#810-905). Sword &amp; Shield with Dynamax, Gigantamax forms, the Wild Area, and two DLC expansions.
-          </p>
+           Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>
         </div>
 
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Galar" />
@@ -148,3 +148,4 @@ export default function GalarGeneratorPage() {
     </>
   );
 }
+

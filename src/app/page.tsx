@@ -26,12 +26,16 @@ const SeoContent = dynamic(() => import("@/components/SeoContent"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Random Pokemon Generator | Team Builder for Nuzlocke & Draft League (Gen 1-9)",
+  title: "Random Pokemon Generator",
   description:
-    "Generate random Pokemon teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon from Gen 1-9. Free tool!",
+    "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon from Gen 1-9. Free tool!",
   keywords: [
-    "random pokemon",
     "random pokemon generator",
+    "random pokemon",
+    "random generator pokemon",
+    "pokemon random generator",
+    "pokemon random pokemon generator",
+    "generate a random pokemon",
     "pokemon nuzlocke generator",
     "nuzlocke team generator",
     "pokemon team builder",
@@ -59,9 +63,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "Random Pokemon Generator",
-    title: "Random Pokemon Generator | Team Builder for Nuzlocke & Draft League",
+    title: "Random Pokemon Generator",
     description:
-      "Generate random Pokemon teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon. Free tool!",
+      "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon. Free tool!",
     images: [
       {
         url: "/og-image.png",
@@ -73,9 +77,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Random Pokemon Generator | Team Builder for Nuzlocke & Draft League",
+    title: "Random Pokemon Generator",
     description:
-      "Generate random Pokemon teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. All 1025 Pokemon. Free tool!",
+      "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. All 1025 Pokemon. Free tool!",
     images: ["/og-image.png"],
   },
   robots: {
@@ -98,7 +102,7 @@ const homepageJsonLd = [
     "@type": "WebApplication",
     name: "Random Pokemon Generator",
     description:
-      "Generate random Pokemon teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon. Free tool.",
+      "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon. Free tool.",
     url: siteUrl,
     applicationCategory: "GameApplication",
     operatingSystem: "Any",
@@ -169,6 +173,14 @@ const homepageJsonLd = [
       },
       {
         "@type": "Question",
+        name: "How do I generate a random Pokemon?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "To generate a random Pokemon, simply set the team size to 1 and click the GENERATE TEAM button. You can also use our random generator pokemon filters to specify exactly what type or region you want your single random pull to be.",
+        },
+      },
+      {
+        "@type": "Question",
         name: "What is a Nuzlocke challenge?",
         acceptedAnswer: {
           "@type": "Answer",
@@ -231,9 +243,8 @@ export default function Home() {
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">
             RANDOM POKEMON GENERATOR
           </h1>
-          <p className="font-mono text-sm md:text-base text-charcoal max-w-2xl mx-auto mb-6 leading-relaxed">
-            Generate random Pokemon teams instantly for <strong>Nuzlocke runs</strong>, <strong>Draft Leagues</strong> & challenge modes.
-            Filter by type, region & rarity. All <strong>1,025 Pokemon</strong> from Gen 1-9. 100% free.
+          <p className="font-mono text-sm md:text-base text-charcoal max-w-xl mx-auto mb-6 leading-relaxed">
+            The #1 <strong>Pokemon random generator</strong> to <strong>generate a random Pokemon</strong> or full team instantly. Filter all <strong>1,025 Pokemon</strong> (Gen 1-9) for Nuzlocke & Draft Leagues. Fast, LLM-optimized & 100% free.
           </p>
         </div>
 

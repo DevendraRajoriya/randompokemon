@@ -63,10 +63,14 @@ interface PokemonListItem {
   url: string;
 }
 
+// Canonical count of base Pokémon species (Gens I–IX).
+// This constant is rendered server-side so Googlebot sees it in view-source.
+const POKEMON_SPECIES_COUNT = 1025;
+
 async function getPokemonList(): Promise<{ list: PokemonListItem[]; count: number }> {
   try {
     const response = await fetch(
-      "https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0",
+      `https://pokeapi.co/api/v2/pokemon?limit=${POKEMON_SPECIES_COUNT}&offset=0`,
       { next: { revalidate: 86400 } } // Cache for 24 hours
     );
 
@@ -77,11 +81,13 @@ async function getPokemonList(): Promise<{ list: PokemonListItem[]; count: numbe
     const data = await response.json();
     return {
       list: data.results as PokemonListItem[],
-      count: data.count as number,
+      // Always use the canonical constant so the HTML count is never 0
+      count: POKEMON_SPECIES_COUNT,
     };
   } catch (error) {
     console.error("Error fetching Pokemon list:", error);
-    return { list: [], count: 0 };
+    // Return the hardcoded count so server-rendered HTML is always correct
+    return { list: [], count: POKEMON_SPECIES_COUNT };
   }
 }
 
