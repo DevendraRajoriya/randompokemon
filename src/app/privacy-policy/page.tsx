@@ -225,7 +225,7 @@ export default function PrivacyPolicyPage() {
         <section className="mb-8 bg-cream border-2 border-black p-4 slasher">
           <h2 className="font-grotesk font-bold text-xl text-black mb-2 uppercase">CHANGES TO THIS POLICY</h2>
           <p className="font-mono text-xs text-charcoal leading-relaxed">This privacy policy may be updated periodically. Continued use after changes constitutes acceptance of the updated policy.</p>
-          <p className="font-mono text-xs text-black mt-3"><strong>Last Updated:</strong> December 14, 2025</p>
+          <p className="font-mono text-xs text-black mt-3"><strong>Last Updated:</strong> May 4, 2026</p>
         </section>
 
         {/* CTA */}

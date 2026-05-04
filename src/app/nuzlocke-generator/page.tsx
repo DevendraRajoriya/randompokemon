@@ -29,10 +29,26 @@ export const metadata: Metadata = {
 };
 
 const jsonLd = {
-  "@context": "https://schema.org", "@type": "WebApplication", name: "Pokemon Nuzlocke Generator",
-  description: "Generate Nuzlocke challenge teams for all 9 Pokemon generations.",
-  url: `${siteUrl}/nuzlocke-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Pokemon Nuzlocke Generator",
+  description: "The ultimate free Pokemon Nuzlocke generator — generate random starter trios, simulate route encounters, and build challenge teams across all 9 generations. Includes advanced filters: exclude legendaries, restrict by type, filter by evolution stage, and set team size 1-6. Built specifically for Nuzlocke, Hardcore Nuzlocke, Randomizer, Soul Link, and Wedlocke challenge runs.",
+  url: `${siteUrl}/nuzlocke-generator`,
+  applicationCategory: "GameApplication",
+  operatingSystem: "Any",
+  inLanguage: "en",
+  dateModified: "2026-05-04",
+  featureList: [
+    "Generate random starter trios for Nuzlocke runs (set size to 3, filter unevolved)",
+    "Simulate route encounters by region (Kanto through Paldea)",
+    "Exclude all Legendary, Mythical, and Paradox Pokemon for hardcore runs",
+    "Filter by all 18 types for monotype Nuzlocke challenges",
+    "All 1,025 Pokemon through Generation 9 including Scarlet/Violet DLC",
+    "Lock Pokemon and regenerate the rest for replacement planning",
+    "Free with no account or login required",
+  ],
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
+  isPartOf: { "@type": "WebApplication", name: "Random Pokemon Generator", url: siteUrl },
 };
 
 const faqJsonLd = {

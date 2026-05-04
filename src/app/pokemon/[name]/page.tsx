@@ -644,24 +644,6 @@ export default async function PokemonDetailPage({ params }: Props) {
         caption: `Official artwork of ${capitalizedName}, a ${typesDisplay}-type Pokémon`,
       },
       identifier: pokemon.id.toString(),
-      additionalProperty: [
-        { "@type": "PropertyValue", name: "National Pokédex Number", value: pokemon.id.toString() },
-        { "@type": "PropertyValue", name: "Type", value: typesDisplay },
-        { "@type": "PropertyValue", name: "Generation", value: pokemon.species.generation },
-        { "@type": "PropertyValue", name: "Classification", value: pokemon.species.genus },
-        { "@type": "PropertyValue", name: "Height", value: `${(pokemon.height / 10).toFixed(1)} m` },
-        { "@type": "PropertyValue", name: "Weight", value: `${(pokemon.weight / 10).toFixed(1)} kg` },
-        { "@type": "PropertyValue", name: "Base Stat Total", value: totalStats.toString() },
-        { "@type": "PropertyValue", name: "HP", value: pokemon.stats.find(s => s.stat.name === "hp")?.base_stat.toString() ?? "" },
-        { "@type": "PropertyValue", name: "Attack", value: pokemon.stats.find(s => s.stat.name === "attack")?.base_stat.toString() ?? "" },
-        { "@type": "PropertyValue", name: "Defense", value: pokemon.stats.find(s => s.stat.name === "defense")?.base_stat.toString() ?? "" },
-        { "@type": "PropertyValue", name: "Special Attack", value: pokemon.stats.find(s => s.stat.name === "special-attack")?.base_stat.toString() ?? "" },
-        { "@type": "PropertyValue", name: "Special Defense", value: pokemon.stats.find(s => s.stat.name === "special-defense")?.base_stat.toString() ?? "" },
-        { "@type": "PropertyValue", name: "Speed", value: pokemon.stats.find(s => s.stat.name === "speed")?.base_stat.toString() ?? "" },
-        { "@type": "PropertyValue", name: "Capture Rate", value: pokemon.species.captureRate.toString() },
-        { "@type": "PropertyValue", name: "Is Legendary", value: pokemon.species.isLegendary ? "Yes" : "No" },
-        { "@type": "PropertyValue", name: "Is Mythical", value: pokemon.species.isMythical ? "Yes" : "No" },
-      ],
     },
     breadcrumb: { "@id": `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}#breadcrumb` },
   };
@@ -1319,15 +1301,56 @@ export default async function PokemonDetailPage({ params }: Props) {
             </h2>
 
             <div className="space-y-4">
+              {/* Paragraph 1 — Identity & Pokédex intro */}
               <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
-                Looking for details on <strong className="text-black">{capitalizedName}</strong>?
-                This <strong className="text-black">{typesDisplay}</strong>-type Pokémon was first introduced in{" "}
-                <strong className="text-black">{pokemon.species.generation}</strong>.
+                <strong className="text-black">{capitalizedName}</strong> (Pokédex #{paddedId}) is a <strong className="text-black">{typesDisplay}</strong>-type Pokémon first introduced in <strong className="text-black">{pokemon.species.generation}</strong>.
                 {pokemon.species.genus && (
-                  <> It is known as the <strong className="text-black">{pokemon.species.genus}</strong>.</>
+                  <> It is officially classified as the <strong className="text-black">{pokemon.species.genus}</strong>.</>  
+                )}
+                {pokemon.species.flavorText && (
+                  <> {pokemon.species.flavorText}</>
                 )}
               </p>
 
+              {/* Paragraph 2 — Type effectiveness summary */}
+              <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
+                As a <strong className="text-black">{typesDisplay}</strong>-type Pokémon, {capitalizedName} has a specific set of type matchups that trainers must account for.
+                {typeGroups.x4.length > 0 && (
+                  <> It has a <strong className="text-black">4× weakness</strong> to {typeGroups.x4.map(t => capitalize(t)).join(" and ")} — these moves deal quadruple damage and should always be avoided in battle.</>
+                )}
+                {typeGroups.x2.length > 0 && (
+                  <> It takes <strong className="text-black">double damage</strong> from {typeGroups.x2.map(t => capitalize(t)).join(", ")} moves.</>
+                )}
+                {typeGroups.x0.length > 0 && (
+                  <> Conversely, {capitalizedName} is <strong className="text-black">completely immune</strong> to {typeGroups.x0.map(t => capitalize(t)).join(" and ")} — these moves deal zero damage regardless of power.</>
+                )}
+                {typeGroups.x0_5.length > 0 && (
+                  <> It resists {typeGroups.x0_5.map(t => capitalize(t)).join(", ")} moves, taking only half damage from them.</>
+                )}
+              </p>
+
+              {/* Paragraph 3 — Stat profile & battle role */}
+              <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
+                <strong className="text-black">{capitalizedName}&apos;s battle stats</strong>: Base Stat Total of <strong className="text-black">{totalStats}</strong> ({totalStats >= 600 ? "exceptional — pseudo-legendary tier" : totalStats >= 500 ? "very strong" : totalStats >= 400 ? "solid" : "moderate"}).
+                {" "}Full distribution: <strong className="text-black">{pokemon.stats.map(s => `${formatStatName(s.stat.name)} ${s.base_stat}`).join(" · ")}</strong>.
+                {" "}Its standout stat is <strong className="text-black">{formatStatName(highestStat.stat.name)} ({highestStat.base_stat})</strong>, which makes it best suited for <strong className="text-black">{getBattleRole(highestStat.stat.name)}</strong> roles.
+                {" "}Its abilities are <strong className="text-black">{abilitiesList}</strong>{hiddenAbility ? `, with ${capitalize(hiddenAbility.ability.name.replace(/-/g, " "))} as its hidden ability` : ""}.
+              </p>
+
+              {/* Paragraph 4 — Physical profile & catch info */}
+              <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
+                {capitalizedName} stands <strong className="text-black">{(pokemon.height / 10).toFixed(1)} m ({((pokemon.height / 10) * 39.3701).toFixed(0)}&quot;)</strong> tall and weighs <strong className="text-black">{(pokemon.weight / 10).toFixed(1)} kg ({((pokemon.weight / 10) * 2.20462).toFixed(1)} lbs)</strong>.
+                {pokemon.species.habitat && (
+                  <> It is typically found in <strong className="text-black">{capitalize(pokemon.species.habitat)}</strong> environments.</>
+                )}
+                {" "}Capture rate: <strong className="text-black">{pokemon.species.captureRate}/255</strong> ({catchDifficulty} to catch).
+                {pokemon.species.captureRate < 60 && " Use Ultra Balls with a status condition (Sleep or Paralysis) for the best results."}
+                {" "}Growth rate: <strong className="text-black">{capitalize(pokemon.species.growthRate)}</strong>. Egg groups: <strong className="text-black">{pokemon.species.eggGroups.map(g => capitalize(g)).join(", ") || "None"}</strong>.
+                {pokemon.species.isLegendary && <> <strong className="text-black">{capitalizedName} is a Legendary Pokémon.</strong></>}
+                {pokemon.species.isMythical && <> <strong className="text-black">{capitalizedName} is a Mythical Pokémon</strong> — typically only available through special event distributions.</>}
+              </p>
+
+              {/* Paragraph 5 — Evolution (conditional) */}
               {evolutionChain.length > 1 && (
                 <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
                   <strong className="text-black">{capitalizedName}</strong> is part of the{" "}
@@ -1347,56 +1370,23 @@ export default async function PokemonDetailPage({ params }: Props) {
                       </span>
                     );
                   })}{" "}
-                  evolution line.
-                  {currentEvoIndex === 0 && " As the base form, it can evolve into stronger forms."}
-                  {currentEvoIndex === evolutionChain.length - 1 && evolutionChain.length > 1 && " This is the final evolved form."}
+                  evolution line ({evolutionChain.length}-stage).
+                  {currentEvoIndex === 0 && ` ${capitalizedName} is the base form and can evolve into ${capitalize(evolutionChain[1].name)}${evolutionChain[1].method ? ` via ${evolutionChain[1].method}` : ""}.`}
+                  {currentEvoIndex === evolutionChain.length - 1 && evolutionChain.length > 1 && ` ${capitalizedName} is the final evolved form — the strongest stage of this line.`}
+                  {currentEvoIndex > 0 && currentEvoIndex < evolutionChain.length - 1 && ` ${capitalizedName} is a middle-stage evolution.`}
                 </p>
               )}
 
-              <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
-                In terms of <strong className="text-black">battle strategy</strong>,{" "}
-                {capitalizedName} has a total base stat of{" "}
-                <strong className="text-black">{totalStats}</strong>. Its highest attribute is{" "}
-                <strong className="text-black">
-                  {formatStatName(highestStat.stat.name)} ({highestStat.base_stat})
-                </strong>, making it a strong choice for trainers looking for{" "}
-                <strong className="text-black">{getBattleRole(highestStat.stat.name)}</strong>.
-                <strong className="text-black"> Competitive viability:</strong> With a BST of <strong className="text-black">{totalStats}</strong>,
-                {" "}{capitalizedName} is considered <strong className="text-black">{totalStats >= 600 ? "exceptional — pseudo-legendary tier" : totalStats >= 500 ? "very strong" : totalStats >= 400 ? "solid" : "moderate BST"}</strong>.
-                {" "}Trainers should build movesets that capitalise on this strength while covering type weaknesses.
-              </p>
-
-              <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
-                Standing at <strong className="text-black">{(pokemon.height / 10).toFixed(1)} meters</strong> tall
-                and weighing <strong className="text-black">{(pokemon.weight / 10).toFixed(1)} kg</strong>,{" "}
-                {capitalizedName} is a{" "}
-                {pokemon.height < 10 ? "compact" : pokemon.height < 20 ? "medium-sized" : "large"} Pokémon
-                {pokemon.species.habitat && (
-                  <> typically found in <strong className="text-black">{pokemon.species.habitat}</strong> environments</>
-                )}.
-                {" "}Whether you&apos;re building a competitive team or completing your Pokédex,{" "}
-                {capitalizedName} offers unique strengths worth considering.
-              </p>
-
-              <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
-                <strong className="text-black">Capture difficulty:</strong> {capitalizedName} has a capture rate of{" "}
-                <strong className="text-black">{pokemon.species.captureRate}/255</strong> —{" "}
-                {pokemon.species.captureRate >= 200 ? "very easy to catch with standard Poké Balls" :
-                  pokemon.species.captureRate >= 120 ? "moderate difficulty; Great Balls recommended" :
-                    pokemon.species.captureRate >= 60 ? "difficult; use Ultra Balls with a status condition" :
-                      "extremely difficult — use Ultra Balls and apply Sleep or Paralysis first"}.
-                {" "}Growth rate: <strong className="text-black">{capitalize(pokemon.species.growthRate)}</strong>.
-              </p>
-
+              {/* Paragraph 6 — Related evolutions cross-links */}
               {otherEvolutions.length > 0 && (
                 <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
-                  Want to learn about related Pokémon? Check out{" "}
+                  Related Pokémon in the same evolution line:{" "}
                   {otherEvolutions.map((evo, index) => {
                     const formatted = capitalize(evo.name);
                     const isLast = index === otherEvolutions.length - 1;
                     const separator = otherEvolutions.length > 2
-                      ? (isLast ? ", or " : ", ")
-                      : (isLast ? " or " : "");
+                      ? (isLast ? ", and " : ", ")
+                      : (isLast ? " and " : "");
                     return (
                       <span key={evo.name}>
                         {index > 0 && separator}
@@ -1405,7 +1395,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                         </Link>
                       </span>
                     );
-                  })}.
+                  })}. Click any name to view their full stats, moves, and type matchup chart.
                 </p>
               )}
 

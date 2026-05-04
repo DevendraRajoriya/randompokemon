@@ -54,7 +54,7 @@ export default function DisclaimerPage() {
           <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COPYRIGHT</span></div>
           <div className="flex items-center gap-2 mb-6"><Scale size={18} className="text-black" /><h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] uppercase">COPYRIGHT NOTICE</h2></div>
           <div className="space-y-3 font-mono text-xs md:text-sm text-charcoal leading-relaxed">
-            <p><strong className="text-black">Pokémon™</strong> and all related content including character names, designs, images, sprites, artwork, logos, and trademarks are © 1995-2025 <strong className="text-black">Nintendo / Creatures Inc. / GAME FREAK inc.</strong></p>
+            <p><strong className="text-black">Pokémon™</strong> and all related content including character names, designs, images, sprites, artwork, logos, and trademarks are © 1995-2026 <strong className="text-black">Nintendo / Creatures Inc. / GAME FREAK inc.</strong></p>
             <p>The following are registered trademarks of Nintendo and The Pokémon Company:</p>
             <ul className="border-l-4 border-black pl-6 space-y-1">
               <li>• Pokémon® (ポケモン)</li>
@@ -167,7 +167,7 @@ export default function DisclaimerPage() {
         <section className="mb-8 bg-cream border-2 border-black p-4 slasher">
           <h2 className="font-grotesk font-bold text-xl text-black mb-2 uppercase">CHANGES TO THIS DISCLAIMER</h2>
           <p className="font-mono text-xs text-charcoal leading-relaxed">This disclaimer may be updated periodically. Continued use after changes constitutes acceptance of the updated disclaimer.</p>
-          <p className="font-mono text-xs text-black mt-3"><strong>Last Updated:</strong> December 14, 2025</p>
+          <p className="font-mono text-xs text-black mt-3"><strong>Last Updated:</strong> May 4, 2026</p>
         </section>
 
         {/* CTA */}

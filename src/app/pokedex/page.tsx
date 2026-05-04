@@ -45,9 +45,32 @@ const pokedexJsonLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: "Pokédex — Complete Pokemon Database",
-  description: "Browse the complete Pokédex with all 1025 Pokemon species. Search and filter by type.",
+  description: "Browse the complete Pokédex with all 1,025 Pokemon species. Search and filter by type, region, and generation.",
   url: `${siteUrl}/pokedex`,
+  inLanguage: "en",
   isPartOf: { "@type": "WebSite", name: "Random Pokemon Generator", url: siteUrl },
+};
+
+const pokedexAppJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Pokemon Pokédex — Complete National Database",
+  description: "Interactive Pokédex covering all 1,025 Pokemon from Generation 1 (Kanto) through Generation 9 (Paldea). Search by name, filter by type, and click any entry to view full stats, moves, evolution chain, and type matchups. Free with no account required.",
+  url: `${siteUrl}/pokedex`,
+  applicationCategory: "GameApplication",
+  operatingSystem: "Any",
+  inLanguage: "en",
+  dateModified: "2026-05-04",
+  featureList: [
+    "Search all 1,025 Pokemon by name or Pokédex number",
+    "Filter by all 18 types (Fire, Water, Grass, Electric, etc.)",
+    "Filter by generation (Kanto through Paldea)",
+    "Direct links to full detail pages with stats, moves, and type charts",
+    "Includes regional forms, Paradox Pokemon, Ultra Beasts, and all DLC",
+    "Free with no account or login required",
+  ],
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
+  isPartOf: { "@type": "WebApplication", name: "Random Pokemon Generator", url: siteUrl },
 };
 
 // ── TYPES ─────────────────────────────────────────────────────────
@@ -113,6 +136,7 @@ export default async function PokedexPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pokedexJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pokedexAppJsonLd) }} />
 
       {/* ── SERVER-RENDERED CONTENT ──────────────────────────────
           Everything below this comment is in the static HTML that
@@ -149,26 +173,29 @@ export default async function PokedexPage() {
 
           {/* Generation jump links */}
           <nav aria-label="Jump to generation" className="mb-6 flex flex-wrap gap-2">
-            {[
-              { label: "Gen 1 — Kanto",  href: "/kanto-pokemon-generator"  },
-              { label: "Gen 2 — Johto",  href: "/johto-pokemon-generator"  },
-              { label: "Gen 3 — Hoenn",  href: "/hoenn-pokemon-generator"  },
-              { label: "Gen 4 — Sinnoh", href: "/sinnoh-pokemon-generator" },
-              { label: "Gen 5 — Unova",  href: "/unova-pokemon-generator"  },
-              { label: "Gen 6 — Kalos",  href: "/kalos-pokemon-generator"  },
-              { label: "Gen 7 — Alola",  href: "/alola-pokemon-generator"  },
-              { label: "Gen 8 — Galar",  href: "/galar-pokemon-generator"  },
-              { label: "Gen 9 — Paldea", href: "/paldea-pokemon-generator" },
-            ].map((g) => (
-              <Link
-                key={g.href}
-                href={g.href}
-                className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors"
-              >
-                {g.label}
-              </Link>
-            ))}
+            <Link href="/kanto-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 1 — Kanto</Link>
+            <Link href="/johto-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 2 — Johto</Link>
+            <Link href="/hoenn-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 3 — Hoenn</Link>
+            <Link href="/sinnoh-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 4 — Sinnoh</Link>
+            <Link href="/unova-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 5 — Unova</Link>
+            <Link href="/kalos-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 6 — Kalos</Link>
+            <Link href="/alola-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 7 — Alola</Link>
+            <Link href="/galar-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 8 — Galar</Link>
+            <Link href="/paldea-pokemon-generator" className="font-mono text-xs font-bold border-2 border-black px-3 py-1.5 hover:bg-black hover:text-cream transition-colors">Gen 9 — Paldea</Link>
           </nav>
+
+          <div className="bg-white border-2 border-black p-5 mb-4">
+            <h2 className="font-grotesk font-bold text-lg text-black uppercase mb-3">About This Pokédex</h2>
+            <p className="font-mono text-xs text-charcoal leading-relaxed mb-3">
+              This is the complete National Pokédex — every species from Generation 1 through Generation 9, including all regional forms, Paradox Pokémon, Ultra Beasts, and the Scarlet &amp; Violet DLC additions. Each Pokémon entry links to a full detail page with base stats, type matchup charts, evolution chains, learnset data, competitive tier placement, and Pokédex flavor text from every game the species has appeared in.
+            </p>
+            <p className="font-mono text-xs text-charcoal leading-relaxed mb-3">
+              The Pokédex started with 151 species in Red and Blue (1996) and has grown to 1,025 as of the Indigo Disk DLC for Scarlet and Violet (2023). Pokémon #1 is Bulbasaur, the Grass/Poison Seed Pokémon from Kanto. Pokémon #1025 is Pecharunt, the Mythical Poison/Ghost Pokémon introduced in the Indigo Disk epilogue. Use the search and type filters above to navigate the full list interactively, or browse the complete static index below.
+            </p>
+            <p className="font-mono text-xs text-charcoal leading-relaxed">
+              Each Pokémon&apos;s detail page includes its complete base stat total (BST), competitive tier rating (Ubers/OU/UU/RU/NU), full type effectiveness chart showing all weaknesses, resistances, and immunities, and the complete learnset across all generations. Click any Pokémon name in the index below to view its full profile.
+            </p>
+          </div>
         </section>
 
         {/* ── INTERACTIVE CLIENT LAYER (search, filter, grid) ── */}
@@ -219,21 +246,22 @@ export default async function PokedexPage() {
             <div className="mt-12 pt-8 border-t-2 border-black">
               <h2 className="font-grotesk font-bold text-lg text-black uppercase mb-4">Related Tools</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {[
-                  { href: "/",                         label: "Random Generator",  desc: "All 1025 Pokémon"        },
-                  { href: "/shiny-pokemon-generator",  label: "Shiny Generator",   desc: "Rare color variants"     },
-                  { href: "/pokemon-card-generator",   label: "Card Generator",    desc: "Create & download cards" },
-                  { href: "/nuzlocke-generator",       label: "Nuzlocke Generator",desc: "Challenge run tool"      },
-                ].map((t) => (
-                  <Link
-                    key={t.href}
-                    href={t.href}
-                    className="border-2 border-black p-3 hover:bg-black hover:text-cream transition-colors group"
-                  >
-                    <p className="font-mono font-bold text-xs text-black group-hover:text-cream uppercase mb-0.5">{t.label}</p>
-                    <p className="font-mono text-[10px] text-charcoal group-hover:text-cream/70">{t.desc}</p>
-                  </Link>
-                ))}
+                <Link href="/" className="border-2 border-black p-3 hover:bg-black hover:text-cream transition-colors group">
+                  <p className="font-mono font-bold text-xs text-black group-hover:text-cream uppercase mb-0.5">Random Generator</p>
+                  <p className="font-mono text-[10px] text-charcoal group-hover:text-cream/70">All 1025 Pokémon</p>
+                </Link>
+                <Link href="/shiny-pokemon-generator" className="border-2 border-black p-3 hover:bg-black hover:text-cream transition-colors group">
+                  <p className="font-mono font-bold text-xs text-black group-hover:text-cream uppercase mb-0.5">Shiny Generator</p>
+                  <p className="font-mono text-[10px] text-charcoal group-hover:text-cream/70">Rare color variants</p>
+                </Link>
+                <Link href="/pokemon-card-generator" className="border-2 border-black p-3 hover:bg-black hover:text-cream transition-colors group">
+                  <p className="font-mono font-bold text-xs text-black group-hover:text-cream uppercase mb-0.5">Card Generator</p>
+                  <p className="font-mono text-[10px] text-charcoal group-hover:text-cream/70">Create &amp; download cards</p>
+                </Link>
+                <Link href="/nuzlocke-generator" className="border-2 border-black p-3 hover:bg-black hover:text-cream transition-colors group">
+                  <p className="font-mono font-bold text-xs text-black group-hover:text-cream uppercase mb-0.5">Nuzlocke Generator</p>
+                  <p className="font-mono text-[10px] text-charcoal group-hover:text-cream/70">Challenge run tool</p>
+                </Link>
               </div>
             </div>
           </section>

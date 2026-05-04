@@ -355,64 +355,55 @@ export default function PokemonCardGeneratorPage() {
                 FAQS
               </span>
             </h2>
-            <div className="space-y-0">
-              {[
-                {
-                  q: "Is the Pokemon Card Generator free?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Yes, <strong>100% free</strong> — no signup, no watermarks, no ads, and no download limits. Generate and download as many cards as you like. Free forever.</p>
-                },
-                {
-                  q: "What resolution are the downloaded cards?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Cards are rendered at <strong>1080×1350 pixels</strong> at 2x scale (2160×2700 actual), giving you ultra-sharp, print-quality PNG images perfect for Instagram posts, Twitter shares, and printing.</p>
-                },
-                {
-                  q: "How do I search for a Pokemon?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Type any Pokemon name in the search bar — autocomplete suggestions appear as you type. Works for all <strong>1,025 Pokemon</strong> in English. You can also search by Pokedex number.</p>
-                },
-                {
-                  q: "How do I download a Pokemon card?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">After generating a card, click the <strong>share/download button</strong> on the card preview. Choose Download PNG to save to your device, copy to clipboard, or share directly to Twitter, Facebook, Reddit, or Instagram.</p>
-                },
-                {
-                  q: "What stats are shown on each card?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Every card shows <strong>HP, Attack, Defense, Sp. Attack, Sp. Defense, Speed</strong>, and Base Stat Total (BST). Additional info includes height, weight, abilities, and primary/secondary type badges.</p>
-                },
-                {
-                  q: "What file format are the cards downloaded in?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Cards are saved as <strong>PNG files</strong> — a lossless, high-quality format that preserves all gradients, transparency, and fine details. PNG is ideal for social media and print use.</p>
-                },
-                {
-                  q: "Can I make cards for Shiny Pokemon?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Yes! The card generator supports <strong>shiny variants</strong> for Pokemon that have alternate shiny sprites. Use the shiny toggle to switch between standard and shiny artwork on any card.</p>
-                },
-                {
-                  q: "What is the card design style?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Cards feature a <strong>premium dark gradient background</strong> with holographic accent borders, type-colored glows (orange for Fire, blue for Water, etc.), clean bold typography, and official Pokemon artwork.</p>
-                },
-                {
-                  q: "Can I use the cards commercially?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Cards use official artwork from PokeAPI (sourced from The Pokemon Company). They&apos;re perfect for <strong>personal use, fan content, social media, and educational purposes</strong>. Pokemon is a trademark of Nintendo/Game Freak/The Pokemon Company.</p>
-                },
-                {
-                  q: "Which Pokemon are available?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">All <strong>1,025 Pokemon</strong> from Generation 1 (Kanto) through Generation 9 (Paldea), including Scarlet/Violet DLC Pokemon, Paradox Pokemon, Ultra Beasts, all legendaries, and mythical Pokemon.</p>
-                },
-                {
-                  q: "Where does the Pokemon data come from?",
-                  a: <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">All data is pulled live from <strong>PokeAPI (pokeapi.co)</strong>, the most comprehensive open Pokemon database — accurate base stats, abilities, type data, height, weight, and official artwork for all 1,025 Pokemon.</p>
-                },
-              ].map((faq) => (
-                <div key={faq.q} className="mt-4">
-                  <div className="bg-black text-white p-4 slasher">
-                    <h3 className="font-sans font-bold text-lg md:text-xl">{faq.q}</h3>
-                  </div>
-                  <div className="border-4 border-black border-t-0 p-4 md:p-6 bg-white shadow-[6px_6px_0px_#000]">
-                    {faq.a}
-                  </div>
-                </div>
-              ))}
+            <div className="space-y-2">
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">Is the Pokemon Card Generator free?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Yes, <strong>100% free</strong> — no signup, no watermarks, no ads, and no download limits. Generate and download as many Pokemon cards as you like. The tool is and will always be completely free to use for everyone in the Pokemon community.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">What resolution are the downloaded cards?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Cards are rendered at <strong>1080×1350 pixels</strong> at 2x scale (2160×2700 actual), giving you ultra-sharp, print-quality PNG images perfect for Instagram posts, Twitter shares, and physical printing.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">How do I search for a Pokemon?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Type any Pokemon name in the search bar — autocomplete suggestions appear as you type. Works for all <strong>1,025 Pokemon</strong> in English. You can also search by Pokedex number (e.g. type &quot;6&quot; for Charizard or &quot;25&quot; for Pikachu).</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">How do I download a Pokemon card?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">After generating a card, click the <strong>share/download button</strong> on the card preview. Choose Download PNG to save to your device, copy to clipboard, or share directly to Twitter, Facebook, Reddit, or Instagram.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">What stats are shown on each card?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Every card shows <strong>HP, Attack, Defense, Sp. Attack, Sp. Defense, Speed</strong>, and Base Stat Total (BST). Additional info includes height, weight, abilities, and primary/secondary type badges with type-matched colour coding.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">What file format are the cards downloaded in?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Cards are saved as <strong>PNG files</strong> — a lossless, high-quality format that preserves all gradients, transparency, and fine details. PNG is ideal for social media sharing and print use without quality loss.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">Can I make cards for Shiny Pokemon?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Yes! The card generator supports <strong>shiny variants</strong> for Pokemon that have alternate shiny sprites. Use the shiny toggle to switch between standard and shiny artwork on any card before downloading.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">What is the card design style?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Cards feature a <strong>premium dark gradient background</strong> with holographic accent borders, type-colored glows (orange for Fire, blue for Water, purple for Psychic, etc.), clean bold typography, and official Pokemon artwork sourced from PokeAPI.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">Can I use the cards commercially?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">Cards use official artwork from PokeAPI (sourced from The Pokemon Company). They&apos;re perfect for <strong>personal use, fan content, social media, and educational purposes</strong>. Pokemon is a trademark of Nintendo/Game Freak/The Pokemon Company — commercial resale is not permitted.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">Which Pokemon are available?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">All <strong>1,025 Pokemon</strong> from Generation 1 (Kanto) through Generation 9 (Paldea), including Scarlet/Violet DLC Pokemon, Paradox Pokemon, Ultra Beasts, all legendaries, and mythical Pokemon. The complete National Pokedex.</p></div>
+              </details>
+              <details className="bg-white border-2 border-black slasher">
+                <summary className="bg-black text-white p-4 cursor-pointer"><h3 className="font-sans font-bold text-lg md:text-xl">Where does the Pokemon data come from?</h3></summary>
+                <div className="border-t-0 p-4 md:p-6"><p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">All data is pulled live from <strong>PokeAPI (pokeapi.co)</strong>, the most comprehensive open Pokemon database — accurate base stats, abilities, type data, height, weight, and official artwork for all 1,025 Pokemon updated in real time.</p></div>
+              </details>
+
             </div>
           </section>
+
 
           {/* Related Generators */}
           <section className="mt-8 mb-8 bg-cream border-2 border-black p-6 md:p-12 slasher max-w-4xl mx-auto">

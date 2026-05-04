@@ -49,6 +49,27 @@ const jsonLd = {
   author: { "@type": "Organization", name: "Random Pokemon Generator", url: siteUrl },
 };
 
+const appJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "What Pokemon Are You? Pokemon Personality Quiz",
+  description: "A free 10-question personality quiz that reveals which Pokemon matches your character. Results include Charizard, Vaporeon, Umbreon, Sylveon, Lucario, Gengar, Eevee, and more. Instant results, no account required.",
+  url: `${siteUrl}/pokemon-quiz`,
+  applicationCategory: "GameApplication",
+  operatingSystem: "Any",
+  inLanguage: "en",
+  dateModified: "2026-05-04",
+  featureList: [
+    "10 personality questions with weighted scoring",
+    "11 possible Pokemon results across different personality types",
+    "Instant result reveal with full personality description",
+    "Retake quiz functionality",
+    "Free with no account or login required",
+  ],
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
+  isPartOf: { "@type": "WebApplication", name: "Random Pokemon Generator", url: siteUrl },
+};
+
 const faqJsonLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -117,6 +138,7 @@ export default function PokemonQuizPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd) }} />
 
       <main className="min-h-screen bg-cream py-6 md:py-10">
         <div className="max-w-3xl mx-auto px-4 md:px-8">
@@ -178,27 +200,50 @@ export default function PokemonQuizPage() {
                 Which Pokémon Could You Be?
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {[
-                  { name: 'Charizard', emoji: '🔥', desc: 'Bold, passionate, free-spirited leader' },
-                  { name: 'Vaporeon', emoji: '💧', desc: 'Calm, adaptable, emotionally intelligent' },
-                  { name: 'Jolteon', emoji: '⚡', desc: 'Quick, sharp, spontaneous, energetic' },
-                  { name: 'Leafeon', emoji: '🌿', desc: 'Peaceful, nurturing, deeply grounded' },
-                  { name: 'Espeon', emoji: '🔮', desc: 'Brilliant, perceptive, always ahead' },
-                  { name: 'Umbreon', emoji: '🌙', desc: 'Mysterious, fiercely loyal, resilient' },
-                  { name: 'Sylveon', emoji: '💕', desc: 'Empathetic, charming, brings harmony' },
-                  { name: 'Lucario', emoji: '🥋', desc: 'Disciplined, honorable, stands for justice' },
-                  { name: 'Gengar', emoji: '👻', desc: 'Playful, unpredictable, magnetic' },
-                  { name: 'Dragonite', emoji: '🐉', desc: 'Powerful yet kind, adventurous, reliable' },
-                  { name: 'Eevee', emoji: '⭐', desc: 'Adaptable, full of limitless potential' },
-                ].map(r => (
-                  <div key={r.name} className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
-                    <span className="text-lg">{r.emoji}</span>
-                    <div>
-                      <div className="font-mono text-xs font-black text-black uppercase">{r.name}</div>
-                      <div className="font-mono text-[10px] text-charcoal">{r.desc}</div>
-                    </div>
-                  </div>
-                ))}
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">🔥</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Charizard</div><div className="font-mono text-[10px] text-charcoal">Bold, passionate, free-spirited leader. You chase challenges head-on and never back down from a fight worth having.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">💧</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Vaporeon</div><div className="font-mono text-[10px] text-charcoal">Calm, adaptable, emotionally intelligent. You read the room effortlessly and flow around obstacles rather than through them.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">⚡</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Jolteon</div><div className="font-mono text-[10px] text-charcoal">Quick, sharp, spontaneous, energetic. You make decisions in an instant and thrive on fast-paced environments.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">🌿</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Leafeon</div><div className="font-mono text-[10px] text-charcoal">Peaceful, nurturing, deeply grounded. You find strength in stillness and draw people toward you with quiet warmth.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">🔮</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Espeon</div><div className="font-mono text-[10px] text-charcoal">Brilliant, perceptive, always ahead. You see patterns others miss and often know what happens next before it does.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">🌙</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Umbreon</div><div className="font-mono text-[10px] text-charcoal">Mysterious, fiercely loyal, resilient. You protect those you care about completely and reveal yourself slowly to those who earn it.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">💕</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Sylveon</div><div className="font-mono text-[10px] text-charcoal">Empathetic, charming, brings harmony. You defuse tension naturally and have an ability to make everyone feel included.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">🥋</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Lucario</div><div className="font-mono text-[10px] text-charcoal">Disciplined, honorable, stands for justice. You hold yourself to an exceptionally high standard and never compromise your principles.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">👻</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Gengar</div><div className="font-mono text-[10px] text-charcoal">Playful, unpredictable, magnetic. You love to surprise people and have a charisma that&apos;s impossible to ignore.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">🐉</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Dragonite</div><div className="font-mono text-[10px] text-charcoal">Powerful yet kind, adventurous, reliable. You combine great strength with genuine warmth — rare and deeply respected.</div></div>
+                </div>
+                <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
+                  <span className="text-lg">⭐</span>
+                  <div><div className="font-mono text-xs font-black text-black uppercase">Eevee</div><div className="font-mono text-[10px] text-charcoal">Adaptable, full of limitless potential. You refuse to be boxed in — your path is entirely your own to define.</div></div>
+                </div>
               </div>
             </section>
 
@@ -211,21 +256,30 @@ export default function PokemonQuizPage() {
                 Pokémon Quiz FAQ
               </h2>
               <div className="space-y-2">
-                {[
-                  { q: 'What Pokémon are you quiz — how does it work?', a: 'Answer 10 personality questions about your habits, preferences, and values. Each answer adds weighted points to different Pokémon types. Your dominant type at the end reveals your Pokémon match.' },
-                  { q: 'What Pokémon am I based on my personality?', a: 'Passionate, driven people tend to get Charizard. Calm, adaptive people get Vaporeon. Quick thinkers get Jolteon. Mysterious, loyal people get Umbreon. Empathetic types get Sylveon. Take the quiz to find your exact match.' },
-                  { q: 'Can I retake the Pokémon quiz?', a: "Yes! Click 'Retake Quiz' after your result to start fresh. Try answering as your ideal self vs. your actual self — you may get different results." },
-                  { q: 'What is the rarest Pokémon quiz result?', a: 'Eevee is the rarest result — it represents someone who is genuinely adaptable with truly limitless potential. Dragonite is the second rarest.' },
-                  { q: 'How accurate is this Pokémon personality quiz?', a: 'We use a cumulative type-scoring system across 10 questions. For the most accurate result, answer honestly instead of trying to get a specific Pokémon.' },
-                  { q: 'What Pokémon am I if I love adventure?', a: "Adventure lovers usually get Charizard (bold, free-spirited) or Dragonite (powerful adventurer). Curious, open-minded explorers often get Eevee." },
-                ].map(faq => (
-                  <details key={faq.q} className="bg-cream border-2 border-black p-4 slasher group">
-                    <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">
-                      {faq.q}
-                    </summary>
-                    <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">{faq.a}</p>
-                  </details>
-                ))}
+                <details className="bg-cream border-2 border-black p-4 slasher group">
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What Pokémon are you quiz — how does it work?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Answer 10 personality questions about your habits, preferences, and values. Each answer adds weighted points to different Pokémon types. Your dominant type at the end reveals your Pokémon match. The scoring system uses cumulative weighting, so every answer genuinely shifts the result.</p>
+                </details>
+                <details className="bg-cream border-2 border-black p-4 slasher group">
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What Pokémon am I based on my personality?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Passionate, driven people tend to get Charizard. Calm, adaptive people get Vaporeon. Quick thinkers get Jolteon. Mysterious, loyal people get Umbreon. Empathetic, harmonious types get Sylveon. Disciplined, principled people get Lucario. Curious adventurers often get Eevee or Dragonite. Take the quiz to find your exact match based on your specific answers.</p>
+                </details>
+                <details className="bg-cream border-2 border-black p-4 slasher group">
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">Can I retake the Pokémon quiz?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Yes! Click &apos;Retake Quiz&apos; after your result to start fresh with no saved state. Many people enjoy retaking it with different mindsets — answering as their ideal self versus their actual self often gives meaningfully different results that are both revealing in their own way.</p>
+                </details>
+                <details className="bg-cream border-2 border-black p-4 slasher group">
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What is the rarest Pokémon quiz result?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Eevee is the rarest result — it represents someone who is genuinely adaptable with truly limitless potential, which is a rare personality profile. Dragonite is the second rarest, representing those who combine great power with genuine, unconditional kindness. Both results require a very specific and uncommon combination of answers to unlock.</p>
+                </details>
+                <details className="bg-cream border-2 border-black p-4 slasher group">
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">How accurate is this Pokémon personality quiz?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">We use a cumulative type-scoring system across 10 questions — each answer shifts point totals for multiple Pokémon simultaneously. For the most accurate result, answer honestly instead of trying to engineer a specific Pokémon. The system is designed so that genuine answers produce meaningful results, while strategic answers often produce generic ones.</p>
+                </details>
+                <details className="bg-cream border-2 border-black p-4 slasher group">
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What Pokémon am I if I love adventure?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Adventure lovers usually get Charizard (bold, free-spirited leader who chases challenges) or Dragonite (powerful adventurer with a kind heart). Curious, open-minded explorers who embrace the unknown often get Eevee — the Pokémon of limitless potential that refuses to be defined by a single path.</p>
+                </details>
               </div>
             </section>
 
@@ -238,20 +292,30 @@ export default function PokemonQuizPage() {
                 More Pokémon Tools
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {[
-                  { href: '/', label: '⚡ Random Generator', desc: 'Build a random team' },
-                  { href: '/pokedex', label: '📖 Pokédex', desc: 'All 1,025 Pokémon' },
-                  { href: '/legendary-pokemon-generator', label: '✨ Legendaries', desc: 'Legendary Pokémon' },
-                  { href: '/shiny-pokemon-generator', label: '💎 Shiny Pokémon', desc: 'Rare color variants' },
-                  { href: '/starter-pokemon-generator', label: '🌱 Starters', desc: 'All starter picks' },
-                  { href: '/nuzlocke-generator', label: '💀 Nuzlocke', desc: 'Challenge runs' },
-                ].map(link => (
-                  <Link key={link.href} href={link.href}
-                    className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
-                    <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">{link.label}</div>
-                    <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">{link.desc}</div>
-                  </Link>
-                ))}
+                <Link href="/" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
+                  <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">⚡ Random Generator</div>
+                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">Build a random team</div>
+                </Link>
+                <Link href="/pokedex" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
+                  <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">📖 Pokédex</div>
+                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">All 1,025 Pokémon</div>
+                </Link>
+                <Link href="/legendary-pokemon-generator" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
+                  <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">✨ Legendaries</div>
+                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">Legendary Pokémon</div>
+                </Link>
+                <Link href="/shiny-pokemon-generator" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
+                  <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">💎 Shiny Pokémon</div>
+                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">Rare color variants</div>
+                </Link>
+                <Link href="/starter-pokemon-generator" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
+                  <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">🌱 Starters</div>
+                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">All starter picks</div>
+                </Link>
+                <Link href="/nuzlocke-generator" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
+                  <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">💀 Nuzlocke</div>
+                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">Challenge runs</div>
+                </Link>
               </div>
             </section>
           </article>

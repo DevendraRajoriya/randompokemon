@@ -5,7 +5,7 @@ import { Dice1, Sparkles, Gamepad2, Zap, ArrowLeft } from "lucide-react";
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Pokemon Randomizer Guide | Challenge Runs & Team Planning (2025)",
+  title: "Pokemon Randomizer Guide | Challenge Runs & Team Planning (2026)",
   description: "Complete guide to Pokemon randomizers and challenge runs. Generate teams for ROM hack randomizers, plan challenge modes, and discover the best randomizer settings.",
   keywords: ["pokemon randomizer", "randomizer guide", "pokemon rom hack", "challenge runs", "randomizer settings", "pokemon randomizer tool"],
   alternates: { canonical: "/randomizer-guide" },
@@ -92,7 +92,7 @@ export default function RandomizerGuidePage() {
         {/* Best settings */}
         <section className="mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">
           <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">SETTINGS</span></div>
-          <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST RANDOMIZER SETTINGS (2025)</h2>
+          <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST RANDOMIZER SETTINGS (2026)</h2>
           <div className="space-y-3">
             {[
               { label: "BEGINNER SETTINGS", items: ["Wild Pokemon: Type-Themed Areas (keeps some logic)", "Starters: Random from any Pokemon", "Trainers: Random, similar strength", "Evolution: Unchanged", "Move Sets: Unchanged (least chaos)"] },

@@ -148,18 +148,32 @@ const webAppJsonLd = {
   "@type": "WebApplication",
   name: "Random Pokemon Generator",
   description:
-    "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon. Free tool.",
+    "The #1 free Random Pokemon Generator — instantly generate random Pokemon or full teams of 1-6 from all 1,025 species across Generations 1-9. Filter by type, region, rarity, evolution stage, and gender. Built for Nuzlocke runs, Draft Leagues, and challenge modes. No account required.",
   url: siteUrl,
   applicationCategory: "GameApplication",
   operatingSystem: "Any",
+  inLanguage: "en",
   datePublished: "2024-11-15",
-  dateModified: "2026-02-18",
+  dateModified: "2026-05-04",
+  featureList: [
+    "Generate random Pokemon teams of 1-6 Pokemon instantly",
+    "Filter by all 18 Pokemon types (Fire, Water, Grass, Electric, etc.)",
+    "Filter by region: Kanto, Johto, Hoenn, Sinnoh, Unova, Kalos, Alola, Galar, Paldea",
+    "Exclude Legendary, Mythical, Paradox, and Ultra Beast Pokemon",
+    "Filter by evolution stage (unevolved, middle, final)",
+    "Lock favorite Pokemon and regenerate the rest",
+    "Shiny variant toggle for alternate color schemes",
+    "All 1,025 Pokemon through Generation 9 including Scarlet and Violet DLC",
+    "Free with no account, login, or download required",
+    "Nuzlocke challenge mode with advanced rarity filters",
+  ],
   offers: {
     "@type": "Offer",
     price: "0",
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
   },
+  isPartOf: { "@type": "WebSite", name: "Random Pokemon Generator", url: siteUrl },
 };
 
 const howToJsonLd = {
@@ -274,14 +288,27 @@ export default function Home() {
       <div className="max-w-6xl mx-auto relative">
         {/* Server-Rendered H1 for SEO */}
         <div className="mb-8 md:mb-12 text-center">
-
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">
             RANDOM POKEMON GENERATOR
           </h1>
           <p className="font-mono text-sm md:text-base text-charcoal max-w-xl mx-auto mb-6 leading-relaxed">
-            The #1 <strong>Pokemon random generator</strong> to <strong>generate a random Pokemon</strong> or full team instantly. Filter all <strong>1,025 Pokemon</strong> (Gen 1-9) for Nuzlocke & Draft Leagues. Fast, LLM-optimized & 100% free.
+            The #1 <strong>Pokemon random generator</strong> to <strong>generate a random Pokemon</strong> or full team instantly. Filter all <strong>1,025 Pokemon</strong> (Gen 1-9) for Nuzlocke &amp; Draft Leagues. Fast, LLM-optimized &amp; 100% free.
           </p>
         </div>
+
+        {/* Static prose — server-rendered, boosts text-to-HTML ratio */}
+        <section className="mb-8 border-2 border-black slasher p-5 bg-white">
+          <h2 className="font-grotesk font-bold text-xl text-black uppercase mb-3">Generate a Random Pokémon — All 1,025 Species</h2>
+          <p className="font-mono text-xs text-charcoal leading-relaxed mb-3">
+            This free Random Pokémon Generator lets you instantly pick one or a full team of six from the complete National Pokédex — all 1,025 species across Generations 1 through 9. Whether you need a random starter for your next Nuzlocke, a draft pool for your Pokémon Draft League, or just want to discover a Pokémon you&apos;ve never used before, the generator has you covered in under a second.
+          </p>
+          <p className="font-mono text-xs text-charcoal leading-relaxed mb-3">
+            Use the <strong>Type filter</strong> to restrict results to any of the 18 Pokémon types — Fire, Water, Grass, Electric, Psychic, Dragon, Fairy, Ghost, Dark, Steel, Fighting, Rock, Ground, Ice, Flying, Bug, Poison, or Normal. Use the <strong>Region filter</strong> to pull from a specific generation: Kanto (Gen 1), Johto (Gen 2), Hoenn (Gen 3), Sinnoh (Gen 4), Unova (Gen 5), Kalos (Gen 6), Alola (Gen 7), Galar (Gen 8), or Paldea (Gen 9). The <strong>Rarity filter</strong> lets you include or exclude Legendary, Mythical, Paradox, Ultra Beast, and Sub-Legendary Pokémon.
+          </p>
+          <p className="font-mono text-xs text-charcoal leading-relaxed">
+            All generation data is sourced from <strong>PokeAPI</strong> and includes regional forms (Alolan, Galarian, Hisuian, Paldean), Mega Evolutions, Gigantamax forms, and all Scarlet &amp; Violet DLC additions. The generator runs entirely in your browser — no data is sent to our servers, there are no ads, and no login is required. Free forever.
+          </p>
+        </section>
 
         {/* Interactive Client Generator */}
         <HomeClient />
