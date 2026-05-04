@@ -5,9 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Share2, Loader2, ChevronDown, ArrowLeft, SlidersHorizontal, X, ChevronUp } from 'lucide-react';
+import { Search, Share2, Loader2, ChevronDown, SlidersHorizontal, X } from 'lucide-react';
 import ShareModal from '@/components/ShareModal';
-import Breadcrumbs from '@/components/Breadcrumbs';
 
 // ─── TYPES ──────────────────────────────────────────────────────
 interface PokemonListItem { name: string; url: string; id: number; }
@@ -279,30 +278,8 @@ export default function PokedexClient({ initialPokemonList, totalCount, initialC
 
   // ─── RENDER ───────────────────────────────────────────────────
   return (
-    <main className="min-h-screen bg-cream">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 py-6 md:py-12">
-
-        {/* Back + Breadcrumbs */}
-        <Link href="/" className="inline-flex items-center gap-2 bg-black text-white font-mono text-xs sm:text-sm font-bold px-3 sm:px-4 py-2 border-2 border-black hover:bg-charcoal transition-colors mb-4 sm:mb-6">
-          <ArrowLeft size={14} /> GENERATOR
-        </Link>
-        <Breadcrumbs items={[{ label: 'Pokédex' }]} />
-
-        {/* Header */}
-        <div className="mb-6 md:mb-10">
-          <div className="inline-block bg-black px-4 py-1 border border-black mb-3">
-            <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">INDEX: ONLINE</span>
-          </div>
-          <h1 className="font-grotesk font-bold text-4xl sm:text-5xl md:text-7xl text-black leading-none uppercase mb-1">
-            POKÉDEX
-          </h1>
-          <p className="font-grotesk font-semibold text-lg sm:text-xl text-charcoal uppercase tracking-wide mb-2">
-            Complete Pokémon Database
-          </p>
-          <p className="font-mono text-charcoal text-xs sm:text-sm max-w-xl">
-            Complete index of <strong>{totalCount.toLocaleString()}</strong> registered Pokémon species. Search and filter by type, generation, and more.
-          </p>
-        </div>
+    <div>
+      <div className="py-4 md:py-6">
 
         {/* ── SEARCH + FILTER BAR ── */}
         <div className="mb-6">
@@ -629,6 +606,6 @@ export default function PokedexClient({ initialPokemonList, totalCount, initialC
           <ShareModal pokemon={sharePokemon} onClose={() => setSharePokemon(null)} />
         </ModalPortal>
       )}
-    </main>
+    </div>
   );
 }
