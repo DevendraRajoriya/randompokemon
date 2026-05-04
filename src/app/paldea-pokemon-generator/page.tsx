@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Paldea Pokemon Generator",
   description: "Random Paldea Pokemon generator — 120 species from Scarlet & Violet. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/paldea-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {
@@ -90,16 +90,16 @@ export default function PaldeaGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">PALDEA LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">🏍️ RIDE LEGENDS</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">??? RIDE LEGENDS</h3>
                 <div className="font-mono text-xs text-charcoal space-y-1">
                   <p><strong>Koraidon</strong> (#1007) — Fighting/Dragon, 670 BST. Mascot of Pokemon Scarlet. Ancient era.</p>
                   <p><strong>Miraidon</strong> (#1008) — Electric/Dragon, 670 BST. Mascot of Pokemon Violet. Future era.</p>
                 </div>
               </div>
               {[
-                { title: "🏺 RUINOUS QUARTET", content: "Wo-Chien (Dark/Grass), Chien-Pao (Dark/Ice), Ting-Lu (Dark/Ground), Chi-Yu (Dark/Fire). Found by collecting Stakes at Shrines. Chi-Yu and Chien-Pao were banned from competitive play." },
-                { title: "⚡ PARADOX POKEMON", content: "Ancient forms in Scarlet (Great Tusk, Scream Tail, Brute Bonnet, Flutter Mane, Slither Wing, Sandy Shocks, Roaring Moon) and Future forms in Violet (Iron Treads, Iron Bundle, Iron Hands, Iron Jugulis, Iron Moth, Iron Thorns, Iron Valiant)." },
-                { title: "✨ MYTHICAL", content: "Pecharunt (#1025, Poison/Ghost) — introduced in The Indigo Disk DLC. Controls others with its mochi chains. Terapagos (Normal → Terastal form) is the true legendary of the Area Zero story arc." },
+                { title: "RUINOUS QUARTET", content: "Wo-Chien (Dark/Grass), Chien-Pao (Dark/Ice), Ting-Lu (Dark/Ground), Chi-Yu (Dark/Fire). Found by collecting Stakes at Shrines. Chi-Yu and Chien-Pao were banned from competitive play." },
+                { title: "PARADOX POKEMON", content: "Ancient forms in Scarlet (Great Tusk, Scream Tail, Brute Bonnet, Flutter Mane, Slither Wing, Sandy Shocks, Roaring Moon) and Future forms in Violet (Iron Treads, Iron Bundle, Iron Hands, Iron Jugulis, Iron Moth, Iron Thorns, Iron Valiant)." },
+                { title: "MYTHICAL", content: "Pecharunt (#1025, Poison/Ghost) — introduced in The Indigo Disk DLC. Controls others with its mochi chains. Terapagos (Normal ? Terastal form) is the true legendary of the Area Zero story arc." },
               ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
           </section>
@@ -108,9 +108,9 @@ export default function PaldeaGeneratorPage() {
             <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST PALDEA POKEMON (TIER LIST)</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Koraidon, Miraidon, Iron Bundle (banned), Palafin-Hero, Chi-Yu (banned)</p></div>
-              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Gholdengo, Great Tusk, Roaring Moon, Iron Moth, Skeledirge, Meowscarada, Flutter Mane</p></div>
-              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Kilowattrel, Armarouge, Ceruledge, Glimmora, Bombirdier, Tinkaton</p></div>
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">S-TIER / UBERS</h3><p className="font-mono text-xs text-charcoal">Koraidon, Miraidon, Iron Bundle (banned), Palafin-Hero, Chi-Yu (banned)</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">A-TIER / OU</h3><p className="font-mono text-xs text-charcoal">Gholdengo, Great Tusk, Roaring Moon, Iron Moth, Skeledirge, Meowscarada, Flutter Mane</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">B-TIER / UU/RU</h3><p className="font-mono text-xs text-charcoal">Kilowattrel, Armarouge, Ceruledge, Glimmora, Bombirdier, Tinkaton</p></div>
             </div>
           </section>
 

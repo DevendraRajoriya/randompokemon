@@ -1,5 +1,3 @@
-"use client";
-
 import { Book, Zap, Shield, Trophy, Target, ArrowRight } from "lucide-react";
 import Link from "next/link";
 

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { Users, Trophy, Shuffle, Settings, ArrowLeft } from "lucide-react";
 
@@ -17,7 +17,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Pokemon Draft League Generator",
   description: "Create balanced Pokemon draft pools for leagues and tournaments.",
   url: `${siteUrl}/draft-league-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {

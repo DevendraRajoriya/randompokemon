@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Kanto Pokemon Generator",
   description: "Random Kanto Pokemon generator — 151 species from Red, Blue & FireRed/LeafGreen. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/kanto-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {
@@ -90,15 +90,15 @@ export default function KantoPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">KANTO LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">🐦 LEGENDARY BIRDS</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">LEGENDARY BIRDS</h3>
                 <div className="font-mono text-xs text-charcoal space-y-1">
                   <p><strong>Articuno</strong> (#144) — Ice/Flying. Found in Seafoam Islands. Shiny available in Let&apos;s Go.</p>
                   <p><strong>Zapdos</strong> (#145) — Electric/Flying. Found in Power Plant. High Special Attack.</p>
                   <p><strong>Moltres</strong> (#146) — Fire/Flying. Found in Victory Road. Strong Fire STAB.</p>
                 </div>
               </div>
-              {[{ title: "🧬 MEWTWO", content: "Mewtwo (#150) — Psychic, 680 BST. The strongest Gen 1 Pokemon. Found in Cerulean Cave post-game. Has two Mega Evolutions: Mega Mewtwo X (Psychic/Fighting, 780 BST) and Mega Mewtwo Y (Psychic, 780 BST, highest Sp. Atk in the game at 194)." },
-              { title: "✨ MEW", content: "Mew (#151) — Psychic, 600 BST. The mythical ancestor of all Pokemon. Can learn every TM/HM. Originally event-only, catchable via the Trainer-Fly glitch in Red/Blue. Available through Pokemon HOME in modern games." }
+              {[{ title: "MEWTWO", content: "Mewtwo (#150) — Psychic, 680 BST. The strongest Gen 1 Pokemon. Found in Cerulean Cave post-game. Has two Mega Evolutions: Mega Mewtwo X (Psychic/Fighting, 780 BST) and Mega Mewtwo Y (Psychic, 780 BST, highest Sp. Atk in the game at 194)." },
+              { title: "MEW", content: "Mew (#151) — Psychic, 600 BST. The mythical ancestor of all Pokemon. Can learn every TM/HM. Originally event-only, catchable via the Trainer-Fly glitch in Red/Blue. Available through Pokemon HOME in modern games." }
               ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
           </section>
@@ -107,9 +107,9 @@ export default function KantoPokemonGeneratorPage() {
             <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST KANTO POKEMON (TIER LIST)</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Mewtwo (Mega X &amp; Y), Mega Gengar, Mega Kangaskhan, Mega Blaziken (Torchic from Kanto events)</p></div>
-              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Mega Charizard X/Y, Alakazam, Starmie, Gengar, Dragonite, Snorlax, Tauros</p></div>
-              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Blastoise, Venusaur, Jolteon, Machamp, Nidoking, Clefable, Lapras, Gyarados</p></div>
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">S-TIER / UBERS</h3><p className="font-mono text-xs text-charcoal">Mewtwo (Mega X &amp; Y), Mega Gengar, Mega Kangaskhan, Mega Blaziken (Torchic from Kanto events)</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">A-TIER / OU</h3><p className="font-mono text-xs text-charcoal">Mega Charizard X/Y, Alakazam, Starmie, Gengar, Dragonite, Snorlax, Tauros</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">B-TIER / UU/RU</h3><p className="font-mono text-xs text-charcoal">Blastoise, Venusaur, Jolteon, Machamp, Nidoking, Clefable, Lapras, Gyarados</p></div>
             </div>
           </section>
 

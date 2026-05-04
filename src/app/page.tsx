@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   creator: "Random Pokemon Generator",
   publisher: "Random Pokemon Generator",
   alternates: {
-    canonical: "/",
+    canonical: siteUrl,
   },
   openGraph: {
     type: "website",
@@ -95,146 +95,134 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD Structured Data for the homepage
-const homepageJsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: "Random Pokemon Generator",
-    description:
-      "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon. Free tool.",
-    url: siteUrl,
-    applicationCategory: "GameApplication",
-    operatingSystem: "Any",
-    datePublished: "2024-11-15",
-    dateModified: "2026-02-18",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
+// JSON-LD Structured Data for the homepage — one object per script tag
+const webAppJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Random Pokemon Generator",
+  description:
+    "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon. Free tool.",
+  url: siteUrl,
+  applicationCategory: "GameApplication",
+  operatingSystem: "Any",
+  datePublished: "2024-11-15",
+  dateModified: "2026-02-18",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock",
+  },
+};
+
+const howToJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Generate a Random Pokemon Team",
+  description:
+    "Generate random Pokemon teams for Nuzlocke runs, Draft Leagues, and challenge modes using our free online tool.",
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Choose Team Size",
+      text: "Select how many Pokemon you want in your team (1-6 Pokemon).",
     },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: "How to Generate a Random Pokemon Team",
-    description:
-      "Generate random Pokemon teams for Nuzlocke runs, Draft Leagues, and challenge modes using our free online tool.",
-    step: [
-      {
-        "@type": "HowToStep",
-        name: "Choose Team Size",
-        text: "Select how many Pokemon you want in your team (1-6 Pokemon).",
+    {
+      "@type": "HowToStep",
+      name: "Apply Filters",
+      text: "Optionally filter by type (18 types), region (Kanto-Paldea), rarity, evolution stage, and more.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Generate Team",
+      text: "Click the GENERATE TEAM button to instantly create your random Pokemon team.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Export & Share",
+      text: "Save your team locally, share it with friends, or regenerate as needed.",
+    },
+  ],
+};
+
+const homeFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Does this include Gen 9 Pokemon?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Our generator includes all 1025 Pokemon through Generation 9, including Pokemon Scarlet and Violet base game, The Teal Mask DLC, and The Indigo Disk DLC.",
       },
-      {
-        "@type": "HowToStep",
-        name: "Apply Filters",
-        text: "Optionally filter by type (18 types), region (Kanto-Paldea), rarity, evolution stage, and more.",
+    },
+    {
+      "@type": "Question",
+      name: "How many Pokemon are in the database?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "1025 Pokemon from all 9 generations (Kanto through Paldea). This includes all regional forms, Mega Evolutions, Gigantamax forms, Paradox Pokemon, and Ultra Beasts.",
       },
-      {
-        "@type": "HowToStep",
-        name: "Generate Team",
-        text: "Click the GENERATE TEAM button to instantly create your random Pokemon team.",
+    },
+    {
+      "@type": "Question",
+      name: "How do I generate a random Pokemon team?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Click the GENERATE TEAM button on the homepage. You can customize your team by adjusting filters for team size, region, type, rarity, evolution stage, gender, nature, and more.",
       },
-      {
-        "@type": "HowToStep",
-        name: "Export & Share",
-        text: "Save your team locally, share it with friends, or regenerate as needed.",
+    },
+    {
+      "@type": "Question",
+      name: "How do I generate a random Pokemon?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "To generate a random Pokemon, simply set the team size to 1 and click the GENERATE TEAM button. You can also use filters to specify exactly what type or region you want.",
       },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "Does this include Gen 9 Pokemon?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. Our generator includes all 1025 Pokemon through Generation 9, including Pokemon Scarlet and Violet base game, The Teal Mask DLC, and The Indigo Disk DLC.",
-        },
+    },
+    {
+      "@type": "Question",
+      name: "What is a Nuzlocke challenge?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A Nuzlocke is a set of self-imposed hardcore Pokemon rules: If a Pokemon faints it must be released, you can only catch the first Pokemon on each route, and you must nickname all Pokemon.",
       },
-      {
-        "@type": "Question",
-        name: "How many Pokemon are in the database?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "1025 Pokemon from all 9 generations (Kanto through Paldea). This includes all regional forms, Mega Evolutions, Gigantamax forms, Paradox Pokemon, and Ultra Beasts.",
-        },
+    },
+    {
+      "@type": "Question",
+      name: "Can I exclude Legendary Pokemon?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. Use the Rarity filter to exclude Legendary, Mythical, Ultra Beast, Paradox, and Sub-Legendary Pokemon for balanced Nuzlocke and challenge runs.",
       },
-      {
-        "@type": "Question",
-        name: "How do I generate a random Pokemon team?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Click the GENERATE TEAM button on the homepage. You can customize your team by adjusting filters for team size, region, type, rarity, evolution stage, gender, nature, and more.",
-        },
+    },
+    {
+      "@type": "Question",
+      name: "Is this tool free?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, 100% free with no signup required and no hidden costs. This tool will always remain free.",
       },
-      {
-        "@type": "Question",
-        name: "How do I generate a random Pokemon?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "To generate a random Pokemon, simply set the team size to 1 and click the GENERATE TEAM button. You can also use our random generator pokemon filters to specify exactly what type or region you want your single random pull to be.",
-        },
+    },
+    {
+      "@type": "Question",
+      name: "Does it work on mobile devices?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. The Random Pokemon Generator is fully responsive and optimized for phones, tablets, and desktop computers with mobile-optimized touch targets.",
       },
-      {
-        "@type": "Question",
-        name: "What is a Nuzlocke challenge?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "A Nuzlocke is a set of self-imposed hardcore Pokemon rules: If a Pokemon faints it must be released, you can only catch the first Pokemon on each route, and you must nickname all Pokemon.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Can I exclude Legendary Pokemon?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. Use the Rarity filter to exclude Legendary, Mythical, Ultra Beast, Paradox, and Sub-Legendary Pokemon for balanced Nuzlocke and challenge runs.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Is this tool free?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes, 100% free with no ads, no signup required, and no hidden costs. This tool will always remain free.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Does it work on mobile devices?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Yes. The Random Pokemon Generator is fully responsive and optimized for phones, tablets, and desktop computers with mobile-optimized touch targets.",
-        },
-      },
-    ],
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-    ],
-  },
-];
+    },
+  ],
+};
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-cream p-4 md:p-8 relative">
-      {/* Structured Data - server-rendered in HTML */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd) }}
-      />
+      {/* Structured Data — one script tag per schema type (Google requirement) */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
 
       <div className="max-w-6xl mx-auto relative">
         {/* Server-Rendered H1 for SEO */}

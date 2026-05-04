@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="border-t-4 border-black bg-cream mt-12 animate-fade-in" suppressHydrationWarning>
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
 
           {/* Column 1: Brand */}
           <div className="col-span-2 md:col-span-1 space-y-4">
@@ -63,6 +63,24 @@ export default function Footer() {
                 className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
               >
                 Starter Pokemon
+              </Link>
+              <Link
+                href="/pokemon-quiz"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Pokémon Quiz
+              </Link>
+              <Link
+                href="/draft-league-generator"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Draft League
+              </Link>
+              <Link
+                href="/nuzlocke-generator"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Nuzlocke Generator
               </Link>
             </nav>
           </div>
@@ -127,6 +145,57 @@ export default function Footer() {
                 className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
               >
                 Paldea (Gen 9)
+              </Link>
+            </nav>
+          </div>
+
+          {/* Column 3b: Blog Posts */}
+          <div className="space-y-4">
+            <h4 className="font-sans font-bold text-sm text-black uppercase tracking-wider border-b-2 border-black pb-2">
+              BLOG
+            </h4>
+            <nav className="space-y-1">
+              <Link
+                href="/blog"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth font-bold"
+              >
+                All Articles
+              </Link>
+              <Link
+                href="/blog/nuzlocke-rules-complete-guide"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Nuzlocke Rules Guide
+              </Link>
+              <Link
+                href="/blog/how-to-build-draft-league-pokemon-team"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Draft League Team Guide
+              </Link>
+              <Link
+                href="/blog/monotype-challenge-guide"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Monotype Challenge Guide
+              </Link>
+              <Link
+                href="/blog/best-nuzlocke-starters-every-generation"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Best Nuzlocke Starters
+              </Link>
+              <Link
+                href="/blog/hardest-nuzlocke-challenges-ranked"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Hardest Nuzlocke Challenges
+              </Link>
+              <Link
+                href="/blog/pokemon-randomizer-tips-beginners"
+                className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
+              >
+                Pokemon Randomizer Tips
               </Link>
             </nav>
           </div>

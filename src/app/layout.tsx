@@ -61,9 +61,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Random Pokemon Generator" }],
   creator: "Random Pokemon Generator",
   publisher: "Random Pokemon Generator",
-  alternates: {
-    canonical: "/",
-  },
+
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -114,32 +112,27 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD Structured Data - Site-wide schemas only
-// Homepage-specific schemas (WebApplication, HowTo, FAQ) are in page.tsx
-const siteJsonLd = [
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Random Pokemon Nuzlocke Generator",
-    url: siteUrl,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${siteUrl}/pokemon/{search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
+// JSON-LD Structured Data - Site-wide schemas only (one object per script tag)
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Random Pokemon Generator",
+  url: siteUrl,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${siteUrl}/pokemon/{search_term_string}`,
+    "query-input": "required name=search_term_string",
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Random Pokemon Nuzlocke Generator",
-    url: siteUrl,
-    logo: `${siteUrl}/logo.png`,
-    sameAs: ["https://x.com/MisterLezend", "https://github.com/DevendraRajoriya"],
-  },
-];
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Random Pokemon Generator",
+  url: siteUrl,
+  logo: `${siteUrl}/logo.png`,
+  sameAs: ["https://x.com/MisterLezend", "https://github.com/DevendraRajoriya"],
+};
 
 export default function RootLayout({
   children,
@@ -149,11 +142,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
-        />
+        {/* Structured Data — one script tag per schema type */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         {/* PWA Service Worker Registration */}
         <Script
           id="sw-registration"
@@ -195,9 +186,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://pokeapi.co" />
         <link rel="preconnect" href="https://raw.githubusercontent.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://raw.githubusercontent.com" />
-        {/* Language targeting for SEO */}
-        <link rel="alternate" hrefLang="en" href={siteUrl} />
-        <link rel="alternate" hrefLang="x-default" href={siteUrl} />
         {/* LLM discovery */}
         <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Summary" />
         <link rel="alternate" type="text/plain" href="/llms-full.txt" title="LLM Full Documentation" />

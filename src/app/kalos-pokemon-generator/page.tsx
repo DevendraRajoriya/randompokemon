@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Kalos Pokemon Generator",
   description: "Random Kalos Pokemon generator — 72 species from X & Y. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/kalos-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {
@@ -90,14 +90,14 @@ export default function KalosPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">KALOS LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">🌸 AZ&apos;S TRIO</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">?? AZ&apos;S TRIO</h3>
                 <div className="font-mono text-xs text-charcoal space-y-1">
                   <p><strong>Xerneas</strong> (#716) — Fairy, Fairy Aura. Mascot of Pokemon X. Learns Geomancy (raises Sp. Atk/Sp. Def/Speed by 2 stages).</p>
                   <p><strong>Yveltal</strong> (#717) — Dark/Flying, Dark Aura. Mascot of Pokemon Y. Learns Oblivion Wing (heals 75% HP dealt).</p>
                   <p><strong>Zygarde</strong> (#718) — Dragon/Ground. Has 10% Cell, 50% Forme, and Complete Forme with 708 BST in Sun/Moon.</p>
                 </div>
               </div>
-              {[{ title: "✨ MYTHICALS", content: "Diancie (#719, Rock/Fairy, Mega available), Hoopa (#720, Psychic/Ghost, Confined & Unbound forms, 670 BST Unbound), Volcanion (#721, Fire/Water, unique type combo)." }
+              {[{ title: "MYTHICALS", content: "Diancie (#719, Rock/Fairy, Mega available), Hoopa (#720, Psychic/Ghost, Confined & Unbound forms, 670 BST Unbound), Volcanion (#721, Fire/Water, unique type combo)." }
               ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
           </section>

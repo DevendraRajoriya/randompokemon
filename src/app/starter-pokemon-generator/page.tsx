@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Zap, ArrowLeft } from "lucide-react";
@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Starter Pokemon Generator",
   description: "Generate random Starter Pokemon from all 9 generations. All 27 starter lines.",
   url: `${siteUrl}/starter-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {

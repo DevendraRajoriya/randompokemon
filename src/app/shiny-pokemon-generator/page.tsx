@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Sparkles, ArrowLeft } from "lucide-react";
@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Shiny Pokemon Generator",
   description: "Generate random shiny Pokemon from all 1,025 species. Perfect for shiny hunting and collectors.",
   url: `${siteUrl}/shiny-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {

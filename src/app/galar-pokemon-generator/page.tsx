@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Galar Pokemon Generator",
   description: "Random Galar Pokemon generator — 96 species from Sword & Shield. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/galar-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {
@@ -90,16 +90,16 @@ export default function GalarGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">GALAR LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">⚔️🛡️ HERO DUO</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">HERO DUO (ZACIAN/ZAMAZENTA)</h3>
                 <div className="font-mono text-xs text-charcoal space-y-1">
                   <p><strong>Zacian</strong> (#888) — Fairy/Steel (Crowned Sword), 720 BST. Mascot of Pokemon Sword.</p>
                   <p><strong>Zamazenta</strong> (#889) — Fighting/Steel (Crowned Shield), 720 BST. Mascot of Pokemon Shield.</p>
                 </div>
               </div>
               {[
-                { title: "🌑 ETERNATUS", content: "Eternatus (#890, Poison/Dragon, 690 BST) is the true villain of Galar. Its Eternamax form has 1125 BST — the highest of any Pokemon — but is unobtainable by players." },
-                { title: "🐻🦊 KUBFU LINE", content: "Kubfu & Urshifu (Fighting/Dark or Fighting/Water) from the Isle of Armor DLC. Rapid Strike Style is especially competitive, and Single Strike Style is more offensive." },
-                { title: "👑 CROWN TUNDRA", content: "Calyrex (Psychic/Grass) can fuse with Glastrier (Ice) or Spectrier (Ghost) for 680 BST forms. The DLC also adds Galarian Legendary Birds and returns Regi legendaries with Regieleki & Regidrago." },
+                { title: "ETERNATUS", content: "Eternatus (#890, Poison/Dragon, 690 BST) is the true villain of Galar. Its Eternamax form has 1125 BST — the highest of any Pokemon — but is unobtainable by players." },
+                { title: "KUBFU LINE (ISLE OF ARMOR)", content: "Kubfu & Urshifu (Fighting/Dark or Fighting/Water) from the Isle of Armor DLC. Rapid Strike Style is especially competitive, and Single Strike Style is more offensive." },
+                { title: "CROWN TUNDRA DLC", content: "Calyrex (Psychic/Grass) can fuse with Glastrier (Ice) or Spectrier (Ghost) for 680 BST forms. The DLC also adds Galarian Legendary Birds and returns Regi legendaries with Regieleki & Regidrago." },
               ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
           </section>
@@ -108,9 +108,9 @@ export default function GalarGeneratorPage() {
             <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST GALAR POKEMON (TIER LIST)</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Zacian-Crowned, Calyrex-Ice/Shadow, Eternamax Eternatus, Urshifu-SS</p></div>
-              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Dragapult, Corviknight, Rillaboom, Cinderace, Barraskewda, Urshifu-RS</p></div>
-              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Obstagoon, Polteageist, Toxtricity, Falinks, Alcremie, Sirfetch&apos;d</p></div>
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">S-TIER / UBERS</h3><p className="font-mono text-xs text-charcoal">Zacian-Crowned, Calyrex-Ice/Shadow, Eternamax Eternatus, Urshifu-SS</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">A-TIER / OU</h3><p className="font-mono text-xs text-charcoal">Dragapult, Corviknight, Rillaboom, Cinderace, Barraskewda, Urshifu-RS</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">B-TIER / UU/RU</h3><p className="font-mono text-xs text-charcoal">Obstagoon, Polteageist, Toxtricity, Falinks, Alcremie, Sirfetch&apos;d</p></div>
             </div>
           </section>
 

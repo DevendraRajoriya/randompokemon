@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+﻿﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Sinnoh Pokemon Generator",
   description: "Random Sinnoh Pokemon generator — 107 species from Diamond, Pearl & Platinum. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/sinnoh-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {

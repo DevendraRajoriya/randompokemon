@@ -1,8 +1,8 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "How to Build a Draft League Pokémon Team (Complete Strategy Guide) | randompokemon.co",
+  title: "How to Build a Draft League Pokémon Team | Strategy Guide",
   description: "Draft order strategy, tier valuation, role coverage, win conditions, and counter-drafting — a full system for dominating your Pokémon Draft League season.",
   keywords: ["how to build draft league pokemon team", "pokemon draft league strategy", "pokemon draft league tips", "draft league tier list", "how to win draft league pokemon"],
   openGraph: { title: "How to Build a Draft League Pokémon Team", description: "Complete draft order strategy, tier valuation, and team building system for Pokémon Draft Leagues.", type: "article" },
@@ -135,6 +135,36 @@ export default function DraftLeagueGuide() {
           </div>
         </section>
 
+        
+        <section className="mb-10 border-2 border-black p-6 slasher bg-white">
+          <h2 className="font-grotesk font-bold text-xl text-black uppercase mb-4">Related Articles</h2>
+          <div className="grid sm:grid-cols-2 gap-3">
+            <Link href="/blog/nuzlocke-rules-complete-guide" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
+              <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Nuzlocke</span>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Nuzlocke Rules: Complete Beginner Guide</p>
+            </Link>
+            <Link href="/blog/hardest-nuzlocke-challenges-ranked" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
+              <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Nuzlocke</span>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Hardest Nuzlocke Challenges Ranked</p>
+            </Link>
+            <Link href="/blog/best-nuzlocke-starters-every-generation" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
+              <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Nuzlocke</span>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Best Nuzlocke Starters Every Generation</p>
+            </Link>
+            <Link href="/blog/monotype-challenge-guide" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
+              <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Challenge Runs</span>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Monotype Challenge Guide — Every Type Ranked</p>
+            </Link>
+            <Link href="/blog/how-to-build-draft-league-pokemon-team" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
+              <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Competitive</span>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League Pokémon Team</p>
+            </Link>
+            <Link href="/blog/pokemon-randomizer-tips-beginners" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
+              <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Randomizer</span>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Randomizer Tips &amp; Tricks for Beginners</p>
+            </Link>
+          </div>
+        </section>
         <section className="bg-black slasher p-8 text-center">
           <h2 className="font-grotesk font-bold text-2xl text-white uppercase mb-3">Simulate Your Draft</h2>
           <p className="font-mono text-sm text-white/70 mb-6">Use the Draft League Generator to randomise picks and test team composition before your real draft day.</p>

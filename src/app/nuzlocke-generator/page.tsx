@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { Zap, Shield, Target, TrendingUp, ArrowLeft } from "lucide-react";
 
@@ -17,7 +17,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Pokemon Nuzlocke Generator",
   description: "Generate Nuzlocke challenge teams for all 9 Pokemon generations.",
   url: `${siteUrl}/nuzlocke-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {

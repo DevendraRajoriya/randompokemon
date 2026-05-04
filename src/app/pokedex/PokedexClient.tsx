@@ -16,6 +16,8 @@ interface Pokemon {
   sprites: { other: { 'official-artwork': { front_default: string } } };
   types: Array<{ type: { name: string } }>;
   stats: Array<{ base_stat: number; stat: { name: string } }>;
+  // hydrated = false means we only have name+id so far (skeleton)
+  hydrated?: boolean;
 }
 interface PokedexClientProps { initialPokemonList: { name: string; url: string }[]; totalCount: number; }
 
@@ -110,6 +112,23 @@ function ModalPortal({ children }: { children: React.ReactNode }) {
 }
 
 // ─── MAIN COMPONENT ──────────────────────────────────────────────
+
+/**
+ * Build a lightweight skeleton Pokemon object from list data alone.
+ * No API call required — only name + id are populated.
+ * This gives Googlebot real card links/names in the SSR HTML.
+ */
+function makeSkeleton(name: string, id: number): Pokemon {
+  return {
+    id,
+    name,
+    hydrated: false,
+    sprites: { other: { 'official-artwork': { front_default: '' } } },
+    types: [],
+    stats: [],
+  };
+}
+
 export default function PokedexClient({ initialPokemonList, totalCount }: PokedexClientProps) {
   // Enrich list with IDs once
   const allPokemon = useMemo<PokemonListItem[]>(() =>
@@ -247,11 +266,14 @@ export default function PokedexClient({ initialPokemonList, totalCount }: Pokede
           <div className="inline-block bg-black px-4 py-1 border border-black mb-3">
             <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">INDEX: ONLINE</span>
           </div>
-          <h1 className="font-grotesk font-bold text-4xl sm:text-5xl md:text-7xl text-black leading-none uppercase mb-2">
-            GLOBAL<br />DATABASE
+          <h1 className="font-grotesk font-bold text-4xl sm:text-5xl md:text-7xl text-black leading-none uppercase mb-1">
+            POKÉDEX
           </h1>
+          <p className="font-grotesk font-semibold text-lg sm:text-xl text-charcoal uppercase tracking-wide mb-2">
+            Complete Pokémon Database
+          </p>
           <p className="font-mono text-charcoal text-xs sm:text-sm max-w-xl">
-            Complete index of <strong>{totalCount.toLocaleString()}</strong> registered Pokémon species.
+            Complete index of <strong>{totalCount.toLocaleString()}</strong> registered Pokémon species. Search and filter by type, generation, and more.
           </p>
         </div>
 

@@ -58,7 +58,7 @@ const hoennJsonLd = {
   datePublished: "2024-11-15",
   dateModified: "2026-01-13",
   isPartOf: { "@type": "WebApplication", name: "Random Pokemon Generator", url: siteUrl },
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const hoennFaqJsonLd = {
@@ -141,7 +141,7 @@ export default function HoennPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">HOENN LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">🌊 WEATHER TRIO (BOX LEGENDARIES)</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">?? WEATHER TRIO (BOX LEGENDARIES)</h3>
                 <div className="space-y-1 font-mono text-xs text-charcoal">
                   <p><strong>Kyogre</strong> (#382) — Water, Drizzle. Primal form in ORAS (770 BST, Primordial Sea).</p>
                   <p><strong>Groudon</strong> (#383) — Ground, Drought. Primal form: Ground/Fire (770 BST, Desolate Land).</p>
@@ -149,9 +149,9 @@ export default function HoennPokemonGeneratorPage() {
                 </div>
               </div>
               {[
-                { title: "🗿 REGI TRIO", content: "Regirock (#377), Regice (#378), Registeel (#379). Catchable via Braille puzzle. Regieleki & Regidrago added in Crown Tundra DLC." },
-                { title: "🐉 EON DUO", content: "Latias (#380) & Latios (#381) — Dragon/Psychic. Both get Mega Evolutions in ORAS. One roams Hoenn post-game." },
-                { title: "✨ MYTHICALS", content: "Jirachi (#385) — Steel/Psychic, 600 BST. Deoxys (#386) — Psychic, has 4 forms (Normal/Attack/Defense/Speed). Attack Forme has 150 Atk and 150 Sp. Atk." },
+                { title: "REGI TRIO", content: "Regirock (#377), Regice (#378), Registeel (#379). Catchable via Braille puzzle. Regieleki & Regidrago added in Crown Tundra DLC." },
+                { title: "EON DUO (LATIAS/LATIOS)", content: "Latias (#380) & Latios (#381) — Dragon/Psychic. Both get Mega Evolutions in ORAS. One roams Hoenn post-game." },
+                { title: "MYTHICALS", content: "Jirachi (#385) — Steel/Psychic, 600 BST. Deoxys (#386) — Psychic, has 4 forms (Normal/Attack/Defense/Speed). Attack Forme has 150 Atk and 150 Sp. Atk." },
               ].map(item => (
                 <div key={item.title} className="bg-white border-2 border-black p-4 slasher">
                   <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3>
@@ -168,10 +168,10 @@ export default function HoennPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">POPULAR HOENN POKEMON</h2>
             <div className="grid md:grid-cols-2 gap-3">
               {[
-                { title: "🌱 HOENN STARTERS", desc: "Treecko→Sceptile (Grass, Mega: Grass/Dragon), Torchic→Blaziken (Fire/Fighting, Speed Boost — banned Ubers), Mudkip→Swampert (Water/Ground, only 1 weakness)." },
-                { title: "💪 PSEUDO-LEGENDARIES", desc: "Salamence (Dragon/Flying, 600 BST, Mega in ORAS) and Metagross (Steel/Psychic, 600 BST, Mega in ORAS). Both are top competitive picks." },
-                { title: "🌊 WATER TYPES", desc: "Wailord (largest Pokemon by size), Sharpedo (Mega in ORAS), Milotic (hardest to evolve in Gen 3 from Feebas via max Beauty stat), Gyarados (Water/Flying)." },
-                { title: "👻 GHOST & DARK", desc: "Sableye (no weaknesses before Fairy type), Absol (Mega in ORAS, 130 Atk), Banette (Mega in ORAS, 165 Atk — highest Mega Attack stat at release)." },
+                { title: "HOENN STARTERS", desc: "Treecko?Sceptile (Grass, Mega: Grass/Dragon), Torchic?Blaziken (Fire/Fighting, Speed Boost — banned Ubers), Mudkip?Swampert (Water/Ground, only 1 weakness)." },
+                { title: "PSEUDO-LEGENDARIES", desc: "Salamence (Dragon/Flying, 600 BST, Mega in ORAS) and Metagross (Steel/Psychic, 600 BST, Mega in ORAS). Both are top competitive picks." },
+                { title: "WATER TYPES", desc: "Wailord (largest Pokemon by size), Sharpedo (Mega in ORAS), Milotic (hardest to evolve in Gen 3 from Feebas via max Beauty stat), Gyarados (Water/Flying)." },
+                { title: "GHOST & DARK", desc: "Sableye (no weaknesses before Fairy type), Absol (Mega in ORAS, 130 Atk), Banette (Mega in ORAS, 165 Atk — highest Mega Attack stat at release)." },
               ].map(item => (
                 <div key={item.title} className="bg-white border-2 border-black p-4 slasher">
                   <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">{item.title}</h3>
@@ -188,15 +188,15 @@ export default function HoennPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST HOENN POKEMON (TIER LIST)</h2>
             <div className="space-y-3">
               <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS (TOO STRONG)</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">S-TIER / UBERS (TOO STRONG)</h3>
                 <p className="font-mono text-xs text-charcoal">Mega Rayquaza (780 BST), Kyogre, Groudon (especially Primal forms), Deoxys-Attack, Blaziken (Speed Boost)</p>
               </div>
               <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU (OVERUSED)</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">A-TIER / OU (OVERUSED)</h3>
                 <p className="font-mono text-xs text-charcoal">Salamence, Metagross, Latios, Latias, Breloom (Spore + Mach Punch), Skarmory</p>
               </div>
               <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU (UNDERUSED)</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">B-TIER / UU/RU (UNDERUSED)</h3>
                 <p className="font-mono text-xs text-charcoal">Swampert, Gardevoir, Flygon, Aggron, Absol, Milotic, Claydol</p>
               </div>
             </div>
@@ -209,10 +209,10 @@ export default function HoennPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">HOENN REGION FUN FACTS</h2>
             <div className="grid md:grid-cols-2 gap-3">
               {[
-                { title: "🎮 GAME FEATURES", desc: "Introduced Abilities, Double Battles, Natures, Weather Effects, Pokemon Contests, and the EV/IV system in a visible form for the first time." },
-                { title: "💎 MEGA EVOLUTIONS", desc: "ORAS introduced 20+ Megas including all 3 starters. Mega Rayquaza doesn't need a Mega Stone — it Mega Evolves by knowing Dragon Ascent." },
-                { title: "🌊 TOO MUCH WATER?", desc: "IGN's infamous 7.8/10 review of ORAS criticized it for 'too much water', becoming a lasting community meme and inside joke among Pokemon fans." },
-                { title: "🎺 LEGENDARY TRUMPETS", desc: "The Hoenn soundtrack's liberal use of trumpets became iconic. 'Too many trumpets' is a fan-favorite joke alongside 'too much water'." },
+                { title: "GAME FEATURES", desc: "Introduced Abilities, Double Battles, Natures, Weather Effects, Pokemon Contests, and the EV/IV system in a visible form for the first time." },
+                { title: "MEGA EVOLUTIONS", desc: "ORAS introduced 20+ Megas including all 3 starters. Mega Rayquaza doesn't need a Mega Stone — it Mega Evolves by knowing Dragon Ascent." },
+                { title: "TOO MUCH WATER?", desc: "IGN's infamous 7.8/10 review of ORAS criticized it for 'too much water', becoming a lasting community meme and inside joke among Pokemon fans." },
+                { title: "LEGENDARY TRUMPETS", desc: "The Hoenn soundtrack's liberal use of trumpets became iconic. 'Too many trumpets' is a fan-favorite joke alongside 'too much water'." },
               ].map(item => (
                 <div key={item.title} className="bg-white border-2 border-black p-4 slasher">
                   <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">{item.title}</h3>

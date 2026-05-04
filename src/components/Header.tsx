@@ -28,7 +28,10 @@ const MORE_LINKS = [
     { href: "/shiny-pokemon-generator", label: "Shiny Generator" },
     { href: "/legendary-pokemon-generator", label: "Legendary Generator" },
     { href: "/starter-pokemon-generator", label: "Starter Generator" },
-    { href: "/nuzlocke-generator", label: "Nuzlocke Guide" },
+    { href: "/nuzlocke-generator", label: "Nuzlocke Generator" },
+    { href: "/draft-league-generator", label: "Draft League Generator" },
+    { href: "/pokemon-quiz", label: "Pokémon Quiz" },
+    { href: "/randomizer-guide", label: "Randomizer Guide" },
     { href: "/guide", label: "How to Use" },
     { href: "/about", label: "About" },
 ];

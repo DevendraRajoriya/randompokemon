@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Johto Pokemon Generator",
   description: "Random Johto Pokemon generator — 100 species from Gold, Silver & HeartGold/SoulSilver. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/johto-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {
@@ -90,14 +90,14 @@ export default function JohtoPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">JOHTO LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">🗼 TOWER DUO</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">?? TOWER DUO</h3>
                 <div className="font-mono text-xs text-charcoal space-y-1">
                   <p><strong>Lugia</strong> (#249) — Psychic/Flying, 680 BST. Mascot of Pokemon Silver. Found in Whirl Islands.</p>
                   <p><strong>Ho-Oh</strong> (#250) — Fire/Flying, 680 BST. Mascot of Pokemon Gold. Found at Bell Tower.</p>
                 </div>
               </div>
-              {[{ title: "🐃 LEGENDARY BEASTS", content: "Raikou (Electric), Entei (Fire), Suicune (Water). Roaming legendaries created by Ho-Oh to resurrect the Pokemon that perished in the Burned Tower disaster. Suicune has a fixed encounter in Crystal/HGSS." },
-              { title: "✨ CELEBI", content: "Celebi (#251) — Psychic/Grass, 600 BST. The mythical time-traveler. Originally event-exclusive; in HGSS a special Celebi unlocks a Giovanni flashback event. Now available via Pokemon HOME." }
+              {[{ title: "LEGENDARY BEASTS", content: "Raikou (Electric), Entei (Fire), Suicune (Water). Roaming legendaries created by Ho-Oh to resurrect the Pokemon that perished in the Burned Tower disaster. Suicune has a fixed encounter in Crystal/HGSS." },
+              { title: "CELEBI", content: "Celebi (#251) — Psychic/Grass, 600 BST. The mythical time-traveler. Originally event-exclusive; in HGSS a special Celebi unlocks a Giovanni flashback event. Now available via Pokemon HOME." }
               ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
           </section>
@@ -106,9 +106,9 @@ export default function JohtoPokemonGeneratorPage() {
             <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST JOHTO POKEMON (TIER LIST)</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Lugia, Ho-Oh, Mega Heracross, Mega Scizor</p></div>
-              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Scizor, Heracross, Umbreon, Espeon, Steelix, Feraligatr, Tyranitar</p></div>
-              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Ampharos, Houndoom, Misdreavus, Quagsire, Lanturn, Skarmory</p></div>
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">S-TIER / UBERS</h3><p className="font-mono text-xs text-charcoal">Lugia, Ho-Oh, Mega Heracross, Mega Scizor</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">A-TIER / OU</h3><p className="font-mono text-xs text-charcoal">Scizor, Heracross, Umbreon, Espeon, Steelix, Feraligatr, Tyranitar</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">B-TIER / UU/RU</h3><p className="font-mono text-xs text-charcoal">Ampharos, Houndoom, Misdreavus, Quagsire, Lanturn, Skarmory</p></div>
             </div>
           </section>
 

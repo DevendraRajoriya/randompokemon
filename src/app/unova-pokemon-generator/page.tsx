@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Unova Pokemon Generator",
   description: "Random Unova Pokemon generator — 156 species from Black, White, B2W2. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/unova-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {
@@ -90,15 +90,15 @@ export default function UnovaPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">UNOVA LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">☯ TAO TRIO</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">? TAO TRIO</h3>
                 <div className="font-mono text-xs text-charcoal space-y-1">
                   <p><strong>Reshiram</strong> (#643) — Fire/Dragon, Turboblaze, 680 BST. Mascot of Pokemon Black.</p>
                   <p><strong>Zekrom</strong> (#644) — Electric/Dragon, Teravolt, 680 BST. Mascot of Pokemon White.</p>
                   <p><strong>Kyurem</strong> (#646) — Ice/Dragon, 660 BST. Fuses to form Black (700) or White Kyurem (700) in B2W2.</p>
                 </div>
               </div>
-              {[{ title: "⚔️ SWORDS OF JUSTICE", content: "Cobalion (Steel/Fighting), Terrakion (Rock/Fighting), Virizion (Grass/Fighting), Keldeo (Water/Fighting). Based on the Three Musketeers + d'Artagnan." },
-                { title: "🌪️ FORCES OF NATURE", content: "Tornadus (Flying), Thundurus (Electric/Flying), Landorus (Ground/Flying). Have Therian Formes in B2W2. Landorus-T is top OU competitively." }
+              {[{ title: "SWORDS OF JUSTICE", content: "Cobalion (Steel/Fighting), Terrakion (Rock/Fighting), Virizion (Grass/Fighting), Keldeo (Water/Fighting). Based on the Three Musketeers + d'Artagnan." },
+                { title: "FORCES OF NATURE", content: "Tornadus (Flying), Thundurus (Electric/Flying), Landorus (Ground/Flying). Have Therian Formes in B2W2. Landorus-T is top OU competitively." }
               ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
           </section>
@@ -107,9 +107,9 @@ export default function UnovaPokemonGeneratorPage() {
             <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST UNOVA POKEMON (TIER LIST)</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Reshiram, Zekrom, Kyurem-Black/White, Genesect (banned), Landorus-I</p></div>
-              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Volcarona, Ferrothorn, Conkeldurr, Excadrill, Haxorus, Reuniclus, Landorus-T</p></div>
-              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Lilligant, Chandelure, Krookodile, Mienshao, Galvantula, Braviary</p></div>
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">S-TIER / UBERS</h3><p className="font-mono text-xs text-charcoal">Reshiram, Zekrom, Kyurem-Black/White, Genesect (banned), Landorus-I</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">A-TIER / OU</h3><p className="font-mono text-xs text-charcoal">Volcarona, Ferrothorn, Conkeldurr, Excadrill, Haxorus, Reuniclus, Landorus-T</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">B-TIER / UU/RU</h3><p className="font-mono text-xs text-charcoal">Lilligant, Chandelure, Krookodile, Mienshao, Galvantula, Braviary</p></div>
             </div>
           </section>
 

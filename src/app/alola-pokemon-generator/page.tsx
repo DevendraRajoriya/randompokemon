@@ -23,7 +23,7 @@ const jsonLd = {
   "@context": "https://schema.org", "@type": "WebApplication", name: "Alola Pokemon Generator",
   description: "Random Alola Pokemon generator — 88 species from Sun, Moon & Ultra variants. Instant team builder for Nuzlocke, Draft League, and challenge runs.",
   url: `${siteUrl}/alola-pokemon-generator`, applicationCategory: "GameApplication", operatingSystem: "Any",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD", availability: "https://schema.org/InStock" },
 };
 
 const faqJsonLd = {
@@ -90,7 +90,7 @@ export default function AlolaGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">ALOLA LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">☀️🌙 LIGHT TRIO</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">☀️ LIGHT TRIO</h3>
                 <div className="font-mono text-xs text-charcoal space-y-1">
                   <p><strong>Solgaleo</strong> (#791) — Psychic/Steel, 680 BST. Mascot of Pokemon Sun.</p>
                   <p><strong>Lunala</strong> (#792) — Psychic/Ghost, 680 BST. Mascot of Pokemon Moon.</p>
@@ -98,9 +98,9 @@ export default function AlolaGeneratorPage() {
                 </div>
               </div>
               {[
-                { title: "🌺 GUARDIAN DEITIES (TAPUS)", content: "Tapu Koko (Electric/Fairy, Electric Terrain), Tapu Lele (Psychic/Fairy, Psychic Terrain), Tapu Bulu (Grass/Fairy, Grassy Terrain), Tapu Fini (Water/Fairy, Misty Terrain). Each guards one island." },
-                { title: "👾 ULTRA BEASTS", content: "Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, Guzzlord (base game). USUM adds Poipole/Naganadel, Stakataka, Blacephalon. All have extremely high stats in one or two areas." },
-                { title: "✨ MYTHICALS", content: "Magearna (Steel/Fairy), Marshadow (Fighting/Ghost, Spectral Thief), Zeraora (Electric, 600 BST), Meltan & Melmetal (Steel, obtained through Pokemon GO)." },
+                { title: "GUARDIAN DEITIES (TAPUS)", content: "Tapu Koko (Electric/Fairy, Electric Terrain), Tapu Lele (Psychic/Fairy, Psychic Terrain), Tapu Bulu (Grass/Fairy, Grassy Terrain), Tapu Fini (Water/Fairy, Misty Terrain). Each guards one island." },
+                { title: "ULTRA BEASTS", content: "Nihilego, Buzzwole, Pheromosa, Xurkitree, Celesteela, Kartana, Guzzlord (base game). USUM adds Poipole/Naganadel, Stakataka, Blacephalon. All have extremely high stats in one or two areas." },
+                { title: "MYTHICALS", content: "Magearna (Steel/Fairy), Marshadow (Fighting/Ghost, Spectral Thief), Zeraora (Electric, 600 BST), Meltan & Melmetal (Steel, obtained through Pokemon GO)." },
               ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
           </section>
@@ -109,9 +109,9 @@ export default function AlolaGeneratorPage() {
             <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COMPETITIVE</span></div>
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST ALOLA POKEMON (TIER LIST)</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🔴 UBERS</h3><p className="font-mono text-xs text-charcoal">Necrozma-DM/DW, Solgaleo, Lunala, Marshadow, Pheromosa (banned)</p></div>
-              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟡 OU</h3><p className="font-mono text-xs text-charcoal">Toxapex, Tapu Koko, Tapu Lele, Mimikyu, Incineroar, Primarina, Kartana</p></div>
-              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🟢 UU/RU</h3><p className="font-mono text-xs text-charcoal">Decidueye, Ribombee, Kommo-o, Alolan Ninetales, Mudsdale, Salazzle</p></div>
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🏆 UBERS</h3><p className="font-mono text-xs text-charcoal">Necrozma-DM/DW, Solgaleo, Lunala, Marshadow, Pheromosa (banned)</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">⚔️ OU</h3><p className="font-mono text-xs text-charcoal">Toxapex, Tapu Koko, Tapu Lele, Mimikyu, Incineroar, Primarina, Kartana</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">🛡️ UU/RU</h3><p className="font-mono text-xs text-charcoal">Decidueye, Ribombee, Kommo-o, Alolan Ninetales, Mudsdale, Salazzle</p></div>
             </div>
           </section>
 
