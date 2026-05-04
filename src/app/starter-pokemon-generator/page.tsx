@@ -1,7 +1,21 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Zap, ArrowLeft } from "lucide-react";
+import PokemonSpotlight from "@/components/PokemonSpotlight";
+
+const STARTER_SPOTLIGHT = [
+  { slug: "charizard",   id: 6,   name: "Charizard",   types: ["fire", "flying"]   as const },
+  { slug: "blastoise",   id: 9,   name: "Blastoise",   types: ["water"]            as const },
+  { slug: "venusaur",    id: 3,   name: "Venusaur",    types: ["grass", "poison"]  as const },
+  { slug: "greninja",    id: 658, name: "Greninja",    types: ["water", "dark"]    as const },
+  { slug: "incineroar",  id: 727, name: "Incineroar",  types: ["fire", "dark"]     as const },
+  { slug: "cinderace",   id: 815, name: "Cinderace",   types: ["fire"]             as const },
+  { slug: "meowscarada", id: 908, name: "Meowscarada", types: ["grass", "dark"]    as const },
+  { slug: "skeledirge",  id: 910, name: "Skeledirge",  types: ["fire", "ghost"]    as const },
+  { slug: "blaziken",    id: 257, name: "Blaziken",    types: ["fire", "fighting"] as const },
+  { slug: "empoleon",    id: 395, name: "Empoleon",    types: ["water", "steel"]   as const },
+] as const;
 
 const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
 const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
@@ -91,6 +105,11 @@ export default function StarterPokemonGeneratorPage() {
             810, 813, 816, // Gen 8: Grookey, Scorbunny, Sobble
             906, 909, 912, // Gen 9: Sprigatito, Fuecoco, Quaxly
           ]}
+        />
+        <PokemonSpotlight
+          pokemon={STARTER_SPOTLIGHT}
+          heading="Top Starter Final Evolutions"
+          badge="STARTERS"
         />
 
         <div className="max-w-6xl mx-auto mt-10 space-y-6">

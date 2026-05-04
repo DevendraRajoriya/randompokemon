@@ -1,6 +1,21 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Users, Trophy, Shuffle, Settings, ArrowLeft } from "lucide-react";
+import PokemonSpotlight from "@/components/PokemonSpotlight";
+
+const DRAFT_SPOTLIGHT = [
+  { slug: "landorus-therian", id: 645, name: "Landorus",    types: ["ground", "flying"]   as const },
+  { slug: "heatran",          id: 485, name: "Heatran",     types: ["fire", "steel"]      as const },
+  { slug: "corviknight",      id: 823, name: "Corviknight", types: ["flying", "steel"]    as const },
+  { slug: "garchomp",         id: 445, name: "Garchomp",    types: ["dragon", "ground"]   as const },
+  { slug: "togekiss",         id: 468, name: "Togekiss",    types: ["fairy", "flying"]    as const },
+  { slug: "ferrothorn",       id: 598, name: "Ferrothorn",  types: ["grass", "steel"]     as const },
+  { slug: "dragapult",        id: 887, name: "Dragapult",   types: ["dragon", "ghost"]    as const },
+  { slug: "tapu-koko",        id: 785, name: "Tapu Koko",   types: ["electric", "fairy"]  as const },
+  { slug: "hydreigon",        id: 635, name: "Hydreigon",   types: ["dark", "dragon"]     as const },
+  { slug: "cinderace",        id: 815, name: "Cinderace",   types: ["fire"]               as const },
+] as const;
 
 const siteUrl = "https://www.randompokemon.co";
 
@@ -59,6 +74,12 @@ export default function DraftLeagueGeneratorPage() {
               </div>
             </Link>
           </div>
+
+          <PokemonSpotlight
+            pokemon={DRAFT_SPOTLIGHT}
+            heading="Top Draft League Picks"
+            badge="META PICKS"
+          />
 
           {/* What is Draft League */}
           <section className="mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">

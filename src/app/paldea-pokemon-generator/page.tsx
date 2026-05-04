@@ -1,7 +1,21 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
+import PokemonSpotlight from "@/components/PokemonSpotlight";
+
+const PALDEA_SPOTLIGHT = [
+  { slug: "miraidon",     id: 1008, name: "Miraidon",     types: ["electric", "dragon"] as const },
+  { slug: "koraidon",     id: 1007, name: "Koraidon",     types: ["fighting", "dragon"] as const },
+  { slug: "meowscarada",  id: 908,  name: "Meowscarada",  types: ["grass", "dark"]      as const },
+  { slug: "skeledirge",   id: 910,  name: "Skeledirge",   types: ["fire", "ghost"]      as const },
+  { slug: "quaquaval",    id: 912,  name: "Quaquaval",    types: ["water", "fighting"]  as const },
+  { slug: "iron-valiant", id: 1006, name: "Iron Valiant", types: ["fairy", "fighting"]  as const },
+  { slug: "flutter-mane", id: 987,  name: "Flutter Mane", types: ["ghost", "fairy"]     as const },
+  { slug: "roaring-moon", id: 1005, name: "Roaring Moon", types: ["dragon", "dark"]     as const },
+  { slug: "gholdengo",    id: 1000, name: "Gholdengo",    types: ["steel", "ghost"]     as const },
+  { slug: "annihilape",   id: 979,  name: "Annihilape",   types: ["fighting", "ghost"]  as const },
+] as const;
 
 const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
 const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
@@ -67,6 +81,13 @@ export default function PaldeaGeneratorPage() {
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Paldea" />
 
         <CardShowcase />
+
+        <PokemonSpotlight
+          pokemon={PALDEA_SPOTLIGHT}
+          heading="Iconic Paldea Pokémon"
+          badge="GEN IX"
+        />
+
 
         <div className="max-w-6xl mx-auto mt-10 space-y-6">
           <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">

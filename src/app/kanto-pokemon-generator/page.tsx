@@ -1,7 +1,21 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
+import PokemonSpotlight from "@/components/PokemonSpotlight";
+
+const KANTO_SPOTLIGHT = [
+  { slug: "charizard",  id: 6,   name: "Charizard",  types: ["fire", "flying"]  as const },
+  { slug: "pikachu",   id: 25,  name: "Pikachu",    types: ["electric"]         as const },
+  { slug: "mewtwo",    id: 150, name: "Mewtwo",     types: ["psychic"]          as const },
+  { slug: "gengar",    id: 94,  name: "Gengar",     types: ["ghost", "poison"]  as const },
+  { slug: "eevee",     id: 133, name: "Eevee",      types: ["normal"]           as const },
+  { slug: "snorlax",   id: 143, name: "Snorlax",    types: ["normal"]           as const },
+  { slug: "dragonite", id: 149, name: "Dragonite",  types: ["dragon", "flying"] as const },
+  { slug: "blastoise", id: 9,   name: "Blastoise",  types: ["water"]            as const },
+  { slug: "venusaur",  id: 3,   name: "Venusaur",   types: ["grass", "poison"]  as const },
+  { slug: "alakazam",  id: 65,  name: "Alakazam",   types: ["psychic"]          as const },
+] as const;
 
 const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
 const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
@@ -67,6 +81,12 @@ export default function KantoPokemonGeneratorPage() {
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Kanto" />
 
         <CardShowcase />
+
+        <PokemonSpotlight
+          pokemon={KANTO_SPOTLIGHT}
+          heading="Iconic Kanto Pokémon"
+          badge="GEN I"
+        />
 
         <div className="max-w-6xl mx-auto mt-10 space-y-6">
           <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">

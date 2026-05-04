@@ -1,11 +1,12 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Pokémon Monotype Challenge Guide — All 18 Types Ranked",
   description: "Running a monotype Pokémon challenge? This guide ranks all 18 types by difficulty, lists the best picks for each, and explains how to handle rough gym matchups.",
   keywords: ["pokemon monotype challenge", "monotype run guide", "hardest monotype run pokemon", "monotype challenge type ranking", "monotype nuzlocke guide"],
-  openGraph: { title: "Pokémon Monotype Challenge Guide — Every Type Ranked", description: "All 18 monotype challenges ranked by difficulty with best picks for each type.", type: "article" },
+  openGraph: { title: "Pokémon Monotype Challenge Guide - Every Type Ranked", description: "All 18 monotype challenges ranked by difficulty with best picks for each type.", type: "article", url: "https://www.randompokemon.co/blog/monotype-challenge-guide", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Monotype Challenge Guide" }] },
+  twitter: { card: "summary_large_image", title: "Pokémon Monotype Challenge Guide - Every Type Ranked", description: "All 18 monotype challenges ranked by difficulty with best picks for each type.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog/monotype-challenge-guide" },
 };
 

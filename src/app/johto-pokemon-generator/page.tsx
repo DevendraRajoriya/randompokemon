@@ -1,7 +1,21 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
+import PokemonSpotlight from "@/components/PokemonSpotlight";
+
+const JOHTO_SPOTLIGHT = [
+  { slug: "lugia",       id: 249, name: "Lugia",       types: ["psychic", "flying"] as const },
+  { slug: "ho-oh",       id: 250, name: "Ho-Oh",       types: ["fire", "flying"]    as const },
+  { slug: "tyranitar",   id: 248, name: "Tyranitar",   types: ["rock", "dark"]      as const },
+  { slug: "espeon",      id: 196, name: "Espeon",      types: ["psychic"]           as const },
+  { slug: "umbreon",     id: 197, name: "Umbreon",     types: ["dark"]              as const },
+  { slug: "scizor",      id: 212, name: "Scizor",      types: ["bug", "steel"]      as const },
+  { slug: "heracross",   id: 214, name: "Heracross",   types: ["bug", "fighting"]   as const },
+  { slug: "ampharos",    id: 181, name: "Ampharos",    types: ["electric"]          as const },
+  { slug: "feraligatr",  id: 160, name: "Feraligatr",  types: ["water"]             as const },
+  { slug: "togekiss",    id: 468, name: "Togekiss",    types: ["fairy", "flying"]   as const },
+] as const;
 
 const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
 const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
@@ -67,6 +81,13 @@ export default function JohtoPokemonGeneratorPage() {
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultRegion="Johto" />
 
         <CardShowcase />
+
+        <PokemonSpotlight
+          pokemon={JOHTO_SPOTLIGHT}
+          heading="Iconic Johto Pokémon"
+          badge="GEN II"
+        />
+
 
         <div className="max-w-6xl mx-auto mt-10 space-y-6">
           <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">

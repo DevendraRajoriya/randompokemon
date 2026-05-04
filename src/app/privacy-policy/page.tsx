@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "Privacy policy for Random Pokemon Generator. We don't collect personal data, use tracking cookies, or store user information. GDPR compliant, privacy-first approach.",
   keywords: ["privacy policy", "gdpr compliant", "no data collection", "privacy first", "cookie free"],
   alternates: { canonical: "/privacy-policy" },
-  openGraph: { title: "Privacy Policy - Random Pokemon Generator", description: "We don't collect your data. No tracking cookies. No user accounts. Your privacy is protected.", url: `${siteUrl}/privacy-policy`, type: "website" },
+  openGraph: { title: "Privacy Policy - Random Pokemon Generator", description: "We don't collect your data. No tracking cookies. No user accounts. Your privacy is protected.", url: `${siteUrl}/privacy-policy`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Random Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Privacy Policy - Random Pokemon Generator", description: "We don't collect your data. No tracking cookies. No user accounts. Your privacy is protected.", images: ["/og-image.png"] },
 };
 
 export default function PrivacyPolicyPage() {

@@ -3,6 +3,9 @@ import Link from "next/link";
 import PokedexClient from "./PokedexClient";
 import { Suspense } from "react";
 
+// Number of Pokémon cards to fully SSR (sprites + types + stats in initial HTML)
+const SSR_CARD_COUNT = 24;
+
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
@@ -65,6 +68,14 @@ interface PokemonListItem {
   url: string;
 }
 
+interface PokemonCard {
+  id: number;
+  name: string;
+  sprites: { other: { "official-artwork": { front_default: string } } };
+  types: Array<{ type: { name: string } }>;
+  stats: Array<{ base_stat: number; stat: { name: string } }>;
+}
+
 const POKEMON_SPECIES_COUNT = 1025;
 
 async function getPokemonList(): Promise<{ list: PokemonListItem[]; count: number }> {
@@ -81,6 +92,35 @@ async function getPokemonList(): Promise<{ list: PokemonListItem[]; count: numbe
   }
 }
 
+/**
+ * Fetch full detail data for the first SSR_CARD_COUNT Pokémon in parallel.
+ * This data is embedded in the server-rendered HTML so Googlebot sees real
+ * card content (name, sprite URL, types, stats) without executing JS.
+ */
+async function getInitialCards(list: PokemonListItem[]): Promise<PokemonCard[]> {
+  const slice = list.slice(0, SSR_CARD_COUNT);
+  const results = await Promise.allSettled(
+    slice.map(async (p) => {
+      const id = getPokemonId(p.url);
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+        next: { revalidate: 86400 },
+      });
+      if (!res.ok) throw new Error(`Failed to fetch #${id}`);
+      const raw = await res.json();
+      return {
+        id: raw.id,
+        name: raw.name,
+        sprites: raw.sprites,
+        types: raw.types,
+        stats: raw.stats,
+      } as PokemonCard;
+    })
+  );
+  return results
+    .filter((r): r is PromiseFulfilledResult<PokemonCard> => r.status === "fulfilled")
+    .map((r) => r.value);
+}
+
 function capitalize(name: string) {
   return name.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
@@ -92,6 +132,8 @@ function getPokemonId(url: string): number {
 
 export default async function PokedexPage() {
   const { list, count } = await getPokemonList();
+  // Fetch first 24 cards server-side so the initial grid is in the HTML
+  const initialCards = await getInitialCards(list);
 
   return (
     <>
@@ -101,8 +143,13 @@ export default async function PokedexPage() {
       />
 
       {/* Interactive client component — search, filter, card grid */}
+      {/* initialCards pre-populates the first page so SSR HTML has real content */}
       <Suspense fallback={null}>
-        <PokedexClient initialPokemonList={list} totalCount={count} />
+        <PokedexClient
+          initialPokemonList={list}
+          totalCount={count}
+          initialCards={initialCards}
+        />
       </Suspense>
 
       {/* ── SERVER-RENDERED POKEMON INDEX ── */}

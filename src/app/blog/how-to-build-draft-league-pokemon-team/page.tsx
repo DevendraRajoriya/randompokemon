@@ -1,11 +1,12 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "How to Build a Draft League Pokémon Team | Strategy Guide",
   description: "Draft order strategy, tier valuation, role coverage, win conditions, and counter-drafting — a full system for dominating your Pokémon Draft League season.",
   keywords: ["how to build draft league pokemon team", "pokemon draft league strategy", "pokemon draft league tips", "draft league tier list", "how to win draft league pokemon"],
-  openGraph: { title: "How to Build a Draft League Pokémon Team", description: "Complete draft order strategy, tier valuation, and team building system for Pokémon Draft Leagues.", type: "article" },
+  openGraph: { title: "How to Build a Draft League Pokémon Team", description: "Complete draft order strategy, tier valuation, and team building system for Pokémon Draft Leagues.", type: "article", url: "https://www.randompokemon.co/blog/how-to-build-draft-league-pokemon-team", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "How to Build a Draft League Pokemon Team" }] },
+  twitter: { card: "summary_large_image", title: "How to Build a Draft League Pokémon Team", description: "Complete draft order strategy, tier valuation, and team building system for Pokémon Draft Leagues.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog/how-to-build-draft-league-pokemon-team" },
 };
 

@@ -1,11 +1,12 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Hardest Nuzlocke Challenges Ranked (2025) | randompokemon.co",
   description: "Every major Nuzlocke game difficulty ranked — from easiest to Emerald Kaizo and Black 2 Challenge Mode. Includes what makes each one brutal and which to attempt first.",
   keywords: ["hardest nuzlocke", "hardest pokemon game nuzlocke", "hardest nuzlocke challenge", "emerald kaizo nuzlocke", "pokemon nuzlocke difficulty ranking"],
-  openGraph: { title: "Hardest Nuzlocke Challenges Ranked", description: "Every major Nuzlocke difficulty ranked from Platinum to Emerald Kaizo.", type: "article" },
+  openGraph: { title: "Hardest Nuzlocke Challenges Ranked", description: "Every major Nuzlocke difficulty ranked from Platinum to Emerald Kaizo.", type: "article", url: "https://www.randompokemon.co/blog/hardest-nuzlocke-challenges-ranked", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Hardest Nuzlocke Challenges Ranked" }] },
+  twitter: { card: "summary_large_image", title: "Hardest Nuzlocke Challenges Ranked", description: "Every major Nuzlocke difficulty ranked from Platinum to Emerald Kaizo.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog/hardest-nuzlocke-challenges-ranked" },
 };
 

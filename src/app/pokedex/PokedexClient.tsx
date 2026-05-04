@@ -19,7 +19,12 @@ interface Pokemon {
   // hydrated = false means we only have name+id so far (skeleton)
   hydrated?: boolean;
 }
-interface PokedexClientProps { initialPokemonList: { name: string; url: string }[]; totalCount: number; }
+interface PokedexClientProps {
+  initialPokemonList: { name: string; url: string }[];
+  totalCount: number;
+  /** Full card data for the first page, fetched server-side so SSR HTML has real content */
+  initialCards?: Pokemon[];
+}
 
 // ─── CONSTANTS ───────────────────────────────────────────────────
 const TYPE_COLORS: Record<string, string> = {
@@ -129,16 +134,28 @@ function makeSkeleton(name: string, id: number): Pokemon {
   };
 }
 
-export default function PokedexClient({ initialPokemonList, totalCount }: PokedexClientProps) {
+export default function PokedexClient({ initialPokemonList, totalCount, initialCards = [] }: PokedexClientProps) {
   // Enrich list with IDs once
   const allPokemon = useMemo<PokemonListItem[]>(() =>
     initialPokemonList.map(p => ({ ...p, id: getIdFromUrl(p.url) })),
     [initialPokemonList]
   );
 
-  const [visiblePokemon, setVisiblePokemon] = useState<Pokemon[]>([]);
+  // Pre-populate cache with server-fetched data so first page renders instantly
+  // and doesn't need a client-side fetch round-trip
+  const initialCardsRef = useRef(initialCards);
+  useMemo(() => {
+    for (const card of initialCardsRef.current) {
+      if (!detailCache.has(card.id)) detailCache.set(card.id, card);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Start with server-fetched cards already visible (no loading spinner on first paint)
+  const [visiblePokemon, setVisiblePokemon] = useState<Pokemon[]>(initialCards);
   const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
-  const [loading, setLoading] = useState(true);
+  // If we received server cards, we don't need to show a loading state initially
+  const [loading, setLoading] = useState(initialCards.length === 0);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sharePokemon, setSharePokemon] = useState<Pokemon | null>(null);
@@ -208,6 +225,15 @@ export default function PokedexClient({ initialPokemonList, totalCount }: Pokede
   useEffect(() => {
     if (selectedType && !typeIds) return; // wait for type data
     let cancelled = false;
+
+    // If no filters are active and we still have the server-fetched initial page,
+    // skip the fetch — the cards are already rendered from SSR.
+    const noFilters = !searchQuery.trim() && selectedGen === null && !selectedType;
+    if (noFilters && visiblePokemon.length >= ITEMS_PER_PAGE && displayCount === ITEMS_PER_PAGE) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setDisplayCount(ITEMS_PER_PAGE);
@@ -215,6 +241,7 @@ export default function PokedexClient({ initialPokemonList, totalCount }: Pokede
       .then(results => { if (!cancelled) { setVisiblePokemon(results); setLoading(false); } })
       .catch(() => { if (!cancelled) { setError('Failed to load Pokémon. Please try again.'); setLoading(false); } });
     return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredList, loadPage, selectedType, typeIds]);
 
   // ─── TYPE FILTER FETCH ────────────────────────────────────────

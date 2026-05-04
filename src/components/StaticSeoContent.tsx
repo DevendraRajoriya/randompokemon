@@ -115,41 +115,6 @@ export default function StaticSeoContent() {
         </div>
       </section>
 
-      {/* How It Works - Step-by-step guide */}
-      <section className="mb-8 border-2 border-black p-4 sm:p-6 md:p-10 slasher">
-        <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4">
-          <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">USER GUIDE</span>
-        </div>
-        <h2 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl text-black leading-[0.9] mb-6 uppercase">
-          HOW TO <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-charcoal">USE IT</span>
-        </h2>
-        <p className="font-mono text-xs md:text-sm text-charcoal leading-relaxed mb-6">
-          Follow these simple steps to generate your perfect Pokemon team. Customize filters for specific challenges or leave them blank for completely random results.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-          <div className="bg-white border-2 border-black p-4 slasher text-center">
-            <div className="font-grotesk font-bold text-4xl text-black mb-2">01</div>
-            <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">Choose Team Size</h3>
-            <p className="font-mono text-xs text-charcoal">Select 1-12 Pokemon for your team</p>
-          </div>
-          <div className="bg-white border-2 border-black p-4 slasher text-center">
-            <div className="font-grotesk font-bold text-4xl text-black mb-2">02</div>
-            <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">Apply Filters</h3>
-            <p className="font-mono text-xs text-charcoal">Filter by type, region, or rarity</p>
-          </div>
-          <div className="bg-white border-2 border-black p-4 slasher text-center">
-            <div className="font-grotesk font-bold text-4xl text-black mb-2">03</div>
-            <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">Generate Team</h3>
-            <p className="font-mono text-xs text-charcoal">Click to create your random team</p>
-          </div>
-          <div className="bg-white border-2 border-black p-4 slasher text-center">
-            <div className="font-grotesk font-bold text-4xl text-black mb-2">04</div>
-            <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">Export & Share</h3>
-            <p className="font-mono text-xs text-charcoal">Download or share your team</p>
-          </div>
-        </div>
-      </section>
-
       {/* Internal Navigation - Important for SEO */}
       <section className="mb-8 border-2 border-black p-4 sm:p-6 md:p-10 slasher bg-black text-white">
         <div className="inline-block bg-marigold text-black px-4 py-1 slasher border border-black mb-4">

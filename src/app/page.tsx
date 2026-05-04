@@ -1,8 +1,45 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import StaticSeoContent from "@/components/StaticSeoContent";
 import FAQ from "@/components/FAQ";
+
+// ── POPULAR POKÉMON — hardcoded, zero-fetch, fully SSR'd ──────────────────────
+// These 20 entries appear in static HTML on every homepage response so Googlebot
+// always has a crawl path to /pokemon/* detail pages without running JavaScript.
+const POPULAR_POKEMON = [
+  { slug: "charizard",   id: 6,    name: "Charizard",   types: ["fire", "flying"],   gen: "Gen I"   },
+  { slug: "pikachu",     id: 25,   name: "Pikachu",     types: ["electric"],          gen: "Gen I"   },
+  { slug: "mewtwo",      id: 150,  name: "Mewtwo",      types: ["psychic"],           gen: "Gen I"   },
+  { slug: "gengar",      id: 94,   name: "Gengar",      types: ["ghost", "poison"],   gen: "Gen I"   },
+  { slug: "eevee",       id: 133,  name: "Eevee",       types: ["normal"],            gen: "Gen I"   },
+  { slug: "snorlax",     id: 143,  name: "Snorlax",     types: ["normal"],            gen: "Gen I"   },
+  { slug: "dragonite",   id: 149,  name: "Dragonite",   types: ["dragon", "flying"],  gen: "Gen I"   },
+  { slug: "lugia",       id: 249,  name: "Lugia",       types: ["psychic", "flying"], gen: "Gen II"  },
+  { slug: "tyranitar",   id: 248,  name: "Tyranitar",   types: ["rock", "dark"],      gen: "Gen II"  },
+  { slug: "blaziken",    id: 257,  name: "Blaziken",    types: ["fire", "fighting"],  gen: "Gen III" },
+  { slug: "gardevoir",   id: 282,  name: "Gardevoir",   types: ["psychic", "fairy"],  gen: "Gen III" },
+  { slug: "lucario",     id: 448,  name: "Lucario",     types: ["fighting", "steel"], gen: "Gen IV"  },
+  { slug: "garchomp",    id: 445,  name: "Garchomp",    types: ["dragon", "ground"],  gen: "Gen IV"  },
+  { slug: "zoroark",     id: 571,  name: "Zoroark",     types: ["dark"],              gen: "Gen V"   },
+  { slug: "sylveon",     id: 700,  name: "Sylveon",     types: ["fairy"],             gen: "Gen VI"  },
+  { slug: "greninja",    id: 658,  name: "Greninja",    types: ["water", "dark"],     gen: "Gen VI"  },
+  { slug: "mimikyu",     id: 778,  name: "Mimikyu",     types: ["ghost", "fairy"],    gen: "Gen VII" },
+  { slug: "toxtricity",  id: 849,  name: "Toxtricity",  types: ["electric", "poison"],gen: "Gen VIII"},
+  { slug: "dragapult",   id: 887,  name: "Dragapult",   types: ["dragon", "ghost"],   gen: "Gen VIII"},
+  { slug: "iron-valiant",id: 1006, name: "Iron Valiant", types: ["fairy", "fighting"],gen: "Gen IX"  },
+] as const;
+
+const TYPE_BADGE_COLORS: Record<string, string> = {
+  normal: "#A8A878", fire: "#F08030", water: "#6890F0", electric: "#F8D030",
+  grass: "#78C850", ice: "#98D8D8", fighting: "#C03028", poison: "#A040A0",
+  ground: "#E0C068", flying: "#A890F0", psychic: "#F85888", bug: "#A8B820",
+  rock: "#B8A038", ghost: "#705898", dragon: "#7038F8", dark: "#705848",
+  steel: "#B8B8D0", fairy: "#EE99AC",
+};
+// Light-text types use dark text for readability
+const DARK_TEXT_TYPES = new Set(["electric", "normal", "ground", "fairy", "ice", "steel"]);
 
 // Client-side interactive generator (lazy loaded)
 const HomeClient = dynamic(() => import("@/components/HomeClient"), {
@@ -238,6 +275,119 @@ export default function Home() {
 
         {/* Interactive Client Generator */}
         <HomeClient />
+
+        {/* ── POPULAR POKÉMON — server-rendered, zero-JS, crawlable ── */}
+        {/* 20 hardcoded entries give Googlebot a direct crawl path to   */}
+        {/* /pokemon/* detail pages on every homepage visit.             */}
+        <section className="mt-10 md:mt-14 mb-2" aria-label="Popular Pokémon">
+          <div className="flex items-end justify-between mb-5">
+            <div>
+              <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-2">
+                <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">POPULAR</span>
+              </div>
+              <h2 className="font-grotesk font-bold text-2xl sm:text-3xl md:text-4xl text-black uppercase leading-none">
+                Fan-Favourite Pokémon
+              </h2>
+            </div>
+            <Link
+              href="/pokedex"
+              className="hidden sm:inline-flex items-center gap-1.5 font-mono text-xs font-bold border-2 border-black px-4 py-2 hover:bg-black hover:text-cream transition-colors flex-shrink-0 slasher"
+            >
+              Full Pokédex →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3">
+            {POPULAR_POKEMON.map((p) => {
+              const primaryType = p.types[0];
+              const secondaryType = p.types[1] as string | undefined;
+              const primaryColor = TYPE_BADGE_COLORS[primaryType] ?? "#68A090";
+              const secondaryColor = secondaryType ? (TYPE_BADGE_COLORS[secondaryType] ?? "#68A090") : null;
+              const accentBar = secondaryColor
+                ? `linear-gradient(90deg, ${primaryColor} 50%, ${secondaryColor} 50%)`
+                : primaryColor;
+              const spriteUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${p.id}.png`;
+
+              return (
+                <Link
+                  key={p.slug}
+                  href={`/pokemon/${p.slug}`}
+                  className="group relative bg-white border-2 border-black slasher overflow-hidden hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-200 flex flex-col"
+                >
+                  {/* Type accent bar */}
+                  <div className="h-1.5" style={{ background: accentBar }} />
+
+                  <div className="p-3 flex flex-col flex-1">
+                    {/* Gen badge + ID */}
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-mono text-[9px] text-charcoal/50 font-bold uppercase tracking-wide">
+                        {p.gen}
+                      </span>
+                      <span className="font-mono text-[9px] text-charcoal/40 font-semibold">
+                        #{String(p.id).padStart(4, "0")}
+                      </span>
+                    </div>
+
+                    {/* Sprite */}
+                    <div className="relative w-full mb-2.5" style={{ paddingBottom: "80%" }}>
+                      <div
+                        className="absolute inset-0 opacity-[0.06] rounded-full"
+                        style={{ background: `radial-gradient(circle, ${primaryColor} 0%, transparent 70%)` }}
+                      />
+                      <Image
+                        src={spriteUrl}
+                        alt={`${p.name} — ${p.types.join("/")} type Pokémon`}
+                        fill
+                        sizes="(max-width: 640px) 44vw, (max-width: 1024px) 22vw, 18vw"
+                        className="object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300 p-1"
+                        loading="lazy"
+                        unoptimized
+                      />
+                    </div>
+
+                    {/* Name */}
+                    <h3 className="font-grotesk font-bold text-xs sm:text-sm text-black uppercase truncate mb-1.5 group-hover:text-indigo transition-colors">
+                      {p.name}
+                    </h3>
+
+                    {/* Type badges */}
+                    <div className="flex gap-1 flex-wrap mt-auto">
+                      {p.types.map((t) => (
+                        <span
+                          key={t}
+                          className="font-mono text-[9px] px-1.5 py-0.5 uppercase font-bold border border-black/10"
+                          style={{
+                            backgroundColor: TYPE_BADGE_COLORS[t] ?? "#68A090",
+                            color: DARK_TEXT_TYPES.has(t) ? "#000" : "#fff",
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA bar */}
+                  <div className="border-t border-black/10 bg-black/[0.02] group-hover:bg-indigo transition-colors duration-200 px-3 py-1.5">
+                    <span className="font-mono text-[9px] sm:text-[10px] font-bold text-charcoal group-hover:text-white transition-colors uppercase tracking-wide">
+                      View details →
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Mobile "See all" link */}
+          <div className="mt-4 sm:hidden text-center">
+            <Link
+              href="/pokedex"
+              className="inline-flex items-center gap-1.5 font-mono text-xs font-bold border-2 border-black px-5 py-2.5 hover:bg-black hover:text-cream transition-colors slasher"
+            >
+              Browse Full Pokédex →
+            </Link>
+          </div>
+        </section>
 
         {/* Card Showcase Section - shown right after generated team */}
         <CardShowcase />

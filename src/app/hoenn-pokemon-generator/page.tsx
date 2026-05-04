@@ -1,7 +1,21 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
+import PokemonSpotlight from "@/components/PokemonSpotlight";
+
+const HOENN_SPOTLIGHT = [
+  { slug: "blaziken",   id: 257, name: "Blaziken",   types: ["fire", "fighting"]  as const },
+  { slug: "gardevoir",  id: 282, name: "Gardevoir",  types: ["psychic", "fairy"]  as const },
+  { slug: "salamence",  id: 373, name: "Salamence",  types: ["dragon", "flying"]  as const },
+  { slug: "metagross",  id: 376, name: "Metagross",  types: ["steel", "psychic"]  as const },
+  { slug: "kyogre",     id: 382, name: "Kyogre",     types: ["water"]             as const },
+  { slug: "groudon",    id: 383, name: "Groudon",    types: ["ground"]            as const },
+  { slug: "rayquaza",   id: 384, name: "Rayquaza",   types: ["dragon", "flying"]  as const },
+  { slug: "flygon",     id: 330, name: "Flygon",     types: ["ground", "dragon"]  as const },
+  { slug: "aggron",     id: 306, name: "Aggron",     types: ["steel", "rock"]     as const },
+  { slug: "milotic",    id: 350, name: "Milotic",    types: ["water"]             as const },
+] as const;
 
 const PokemonGeneratorClient = dynamic(
   () => import("../PokemonGeneratorClient")
@@ -107,6 +121,12 @@ export default function HoennPokemonGeneratorPage() {
 
         <CardShowcase />
 
+        <PokemonSpotlight
+          pokemon={HOENN_SPOTLIGHT}
+          heading="Iconic Hoenn Pokémon"
+          badge="GEN III"
+        />
+
         <div className="max-w-6xl mx-auto mt-10 space-y-6">
 
           <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">
@@ -126,10 +146,7 @@ export default function HoennPokemonGeneratorPage() {
                 { label: "ABILITIES SYSTEM", desc: "First gen to introduce abilities" },
                 { label: "DOUBLE BATTLES", desc: "Introduced as a standard format" },
               ].map(item => (
-                <div key={item.label} className="bg-white border-2 border-black p-4 slasher">
-                  <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.label}</h3>
-                  <p className="font-mono text-xs text-charcoal">{item.desc}</p>
-                </div>
+                <div key={item.label} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.label}</h3><p className="font-mono text-xs text-charcoal">{item.desc}</p></div>
               ))}
             </div>
           </section>
@@ -141,7 +158,7 @@ export default function HoennPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">HOENN LEGENDARY POKEMON</h2>
             <div className="space-y-3">
               <div className="bg-white border-2 border-black p-4 slasher border-l-4 border-l-marigold">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">?? WEATHER TRIO (BOX LEGENDARIES)</h3>
+                <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">🌦️ WEATHER TRIO (BOX LEGENDARIES)</h3>
                 <div className="space-y-1 font-mono text-xs text-charcoal">
                   <p><strong>Kyogre</strong> (#382) — Water, Drizzle. Primal form in ORAS (770 BST, Primordial Sea).</p>
                   <p><strong>Groudon</strong> (#383) — Ground, Drought. Primal form: Ground/Fire (770 BST, Desolate Land).</p>
@@ -152,12 +169,7 @@ export default function HoennPokemonGeneratorPage() {
                 { title: "REGI TRIO", content: "Regirock (#377), Regice (#378), Registeel (#379). Catchable via Braille puzzle. Regieleki & Regidrago added in Crown Tundra DLC." },
                 { title: "EON DUO (LATIAS/LATIOS)", content: "Latias (#380) & Latios (#381) — Dragon/Psychic. Both get Mega Evolutions in ORAS. One roams Hoenn post-game." },
                 { title: "MYTHICALS", content: "Jirachi (#385) — Steel/Psychic, 600 BST. Deoxys (#386) — Psychic, has 4 forms (Normal/Attack/Defense/Speed). Attack Forme has 150 Atk and 150 Sp. Atk." },
-              ].map(item => (
-                <div key={item.title} className="bg-white border-2 border-black p-4 slasher">
-                  <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3>
-                  <p className="font-mono text-xs text-charcoal">{item.content}</p>
-                </div>
-              ))}
+              ].map(item => (<div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">{item.title}</h3><p className="font-mono text-xs text-charcoal">{item.content}</p></div>))}
             </div>
           </section>
 
@@ -168,15 +180,12 @@ export default function HoennPokemonGeneratorPage() {
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">POPULAR HOENN POKEMON</h2>
             <div className="grid md:grid-cols-2 gap-3">
               {[
-                { title: "HOENN STARTERS", desc: "Treecko?Sceptile (Grass, Mega: Grass/Dragon), Torchic?Blaziken (Fire/Fighting, Speed Boost — banned Ubers), Mudkip?Swampert (Water/Ground, only 1 weakness)." },
+                { title: "HOENN STARTERS", desc: "Treecko→Sceptile (Grass, Mega: Grass/Dragon), Torchic→Blaziken (Fire/Fighting, Speed Boost — banned Ubers), Mudkip→Swampert (Water/Ground, only 1 weakness)." },
                 { title: "PSEUDO-LEGENDARIES", desc: "Salamence (Dragon/Flying, 600 BST, Mega in ORAS) and Metagross (Steel/Psychic, 600 BST, Mega in ORAS). Both are top competitive picks." },
                 { title: "WATER TYPES", desc: "Wailord (largest Pokemon by size), Sharpedo (Mega in ORAS), Milotic (hardest to evolve in Gen 3 from Feebas via max Beauty stat), Gyarados (Water/Flying)." },
                 { title: "GHOST & DARK", desc: "Sableye (no weaknesses before Fairy type), Absol (Mega in ORAS, 130 Atk), Banette (Mega in ORAS, 165 Atk — highest Mega Attack stat at release)." },
               ].map(item => (
-                <div key={item.title} className="bg-white border-2 border-black p-4 slasher">
-                  <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">{item.title}</h3>
-                  <p className="font-mono text-xs text-charcoal leading-relaxed">{item.desc}</p>
-                </div>
+                <div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-2">{item.title}</h3><p className="font-mono text-xs text-charcoal leading-relaxed">{item.desc}</p></div>
               ))}
             </div>
           </section>
@@ -187,18 +196,9 @@ export default function HoennPokemonGeneratorPage() {
             </div>
             <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">BEST HOENN POKEMON (TIER LIST)</h2>
             <div className="space-y-3">
-              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">S-TIER / UBERS (TOO STRONG)</h3>
-                <p className="font-mono text-xs text-charcoal">Mega Rayquaza (780 BST), Kyogre, Groudon (especially Primal forms), Deoxys-Attack, Blaziken (Speed Boost)</p>
-              </div>
-              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">A-TIER / OU (OVERUSED)</h3>
-                <p className="font-mono text-xs text-charcoal">Salamence, Metagross, Latios, Latias, Breloom (Spore + Mach Punch), Skarmory</p>
-              </div>
-              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher">
-                <h3 className="font-mono font-bold text-sm text-black uppercase mb-1">B-TIER / UU/RU (UNDERUSED)</h3>
-                <p className="font-mono text-xs text-charcoal">Swampert, Gardevoir, Flygon, Aggron, Absol, Milotic, Claydol</p>
-              </div>
+              <div className="border-l-4 border-black pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">S-TIER / UBERS (TOO STRONG)</h3><p className="font-mono text-xs text-charcoal">Mega Rayquaza (780 BST), Kyogre, Groudon (especially Primal forms), Deoxys-Attack, Blaziken (Speed Boost)</p></div>
+              <div className="border-l-4 border-marigold pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">A-TIER / OU (OVERUSED)</h3><p className="font-mono text-xs text-charcoal">Salamence, Metagross, Latios, Latias, Breloom (Spore + Mach Punch), Skarmory</p></div>
+              <div className="border-l-4 border-charcoal pl-4 bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-1">B-TIER / UU/RU (UNDERUSED)</h3><p className="font-mono text-xs text-charcoal">Swampert, Gardevoir, Flygon, Aggron, Absol, Milotic, Claydol</p></div>
             </div>
           </section>
 
@@ -214,10 +214,7 @@ export default function HoennPokemonGeneratorPage() {
                 { title: "TOO MUCH WATER?", desc: "IGN's infamous 7.8/10 review of ORAS criticized it for 'too much water', becoming a lasting community meme and inside joke among Pokemon fans." },
                 { title: "LEGENDARY TRUMPETS", desc: "The Hoenn soundtrack's liberal use of trumpets became iconic. 'Too many trumpets' is a fan-favorite joke alongside 'too much water'." },
               ].map(item => (
-                <div key={item.title} className="bg-white border-2 border-black p-4 slasher">
-                  <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">{item.title}</h3>
-                  <p className="font-mono text-xs text-charcoal leading-relaxed">{item.desc}</p>
-                </div>
+                <div key={item.title} className="bg-white border-2 border-black p-4 slasher"><h3 className="font-mono font-bold text-sm text-black uppercase mb-2">{item.title}</h3><p className="font-mono text-xs text-charcoal leading-relaxed">{item.desc}</p></div>
               ))}
             </div>
           </section>
@@ -236,10 +233,7 @@ export default function HoennPokemonGeneratorPage() {
                 { href: "/sinnoh-pokemon-generator", label: "SINNOH (GEN 4)", desc: "Diamond & Pearl" },
                 { href: "/paldea-pokemon-generator", label: "PALDEA (GEN 9)", desc: "Scarlet & Violet" },
               ].map(link => (
-                <Link key={link.href} href={link.href} className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-marigold hover:text-black hover:border-black transition-all group">
-                  <h3 className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">{link.label}</h3>
-                  <p className="font-mono text-[10px] text-white/60 group-hover:text-black/60">{link.desc}</p>
-                </Link>
+                <Link key={link.href} href={link.href} className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-marigold hover:text-black hover:border-black transition-all group"><h3 className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">{link.label}</h3><p className="font-mono text-[10px] text-white/60 group-hover:text-black/60">{link.desc}</p></Link>
               ))}
             </div>
           </section>
@@ -262,12 +256,7 @@ export default function HoennPokemonGeneratorPage() {
                 { q: "Who is the Hoenn Champion?", a: "Steven Stone is the Champion in Ruby/Sapphire and uses a Mega Metagross in ORAS. In Pokemon Emerald, Wallace (formerly Sootopolis Gym Leader) becomes Champion, and Steven is an optional post-game battle at Meteor Falls." },
                 { q: "What is the Hoenn Pokemon Generator best used for?", a: "This free online tool generates random Hoenn Pokemon (#252-386) for team building, Nuzlocke challenge planning, randomizer ROM preparation, draft league pool creation, and competitive team discovery. Filter by type, exclude legendaries, or set evolution stage restrictions." },
                 { q: "What is Feebas and why is it hard to find?", a: "Feebas (#349) is a Water-type Pokemon that only appears on a handful of specific tiles on Route 119 in RSE. It evolves into Milotic (one of the most beautiful Pokemon) by maximizing its Beauty condition via Pokeblocks in Gen 3, or by leveling up with a Prism Scale in modern games." },
-              ].map(faq => (
-                <details key={faq.q} className="bg-white border-2 border-black p-4 slasher group">
-                  <summary className="font-mono font-bold text-sm text-black uppercase cursor-pointer group-open:mb-2">{faq.q}</summary>
-                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">{faq.a}</p>
-                </details>
-              ))}
+              ].map(faq => (<details key={faq.q} className="bg-white border-2 border-black p-4 slasher group"><summary className="font-mono font-bold text-sm text-black uppercase cursor-pointer group-open:mb-2">{faq.q}</summary><p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">{faq.a}</p></details>))}
             </div>
           </section>
         </div>
@@ -275,4 +264,3 @@ export default function HoennPokemonGeneratorPage() {
     </>
   );
 }
-

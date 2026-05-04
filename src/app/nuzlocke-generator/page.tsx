@@ -1,6 +1,21 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Zap, Shield, Target, TrendingUp, ArrowLeft } from "lucide-react";
+import PokemonSpotlight from "@/components/PokemonSpotlight";
+
+const NUZLOCKE_SPOTLIGHT = [
+  { slug: "snorlax",    id: 143, name: "Snorlax",    types: ["normal"]            as const },
+  { slug: "gengar",     id: 94,  name: "Gengar",     types: ["ghost", "poison"]   as const },
+  { slug: "gyarados",   id: 130, name: "Gyarados",   types: ["water", "flying"]   as const },
+  { slug: "crobat",     id: 169, name: "Crobat",     types: ["poison", "flying"]  as const },
+  { slug: "metagross",  id: 376, name: "Metagross",  types: ["steel", "psychic"]  as const },
+  { slug: "garchomp",   id: 445, name: "Garchomp",   types: ["dragon", "ground"]  as const },
+  { slug: "lucario",    id: 448, name: "Lucario",    types: ["fighting", "steel"]  as const },
+  { slug: "togekiss",   id: 468, name: "Togekiss",   types: ["fairy", "flying"]   as const },
+  { slug: "magnezone",  id: 462, name: "Magnezone",  types: ["electric", "steel"] as const },
+  { slug: "swampert",   id: 260, name: "Swampert",   types: ["water", "ground"]   as const },
+] as const;
 
 const siteUrl = "https://www.randompokemon.co";
 
@@ -59,6 +74,12 @@ export default function NuzlockeGeneratorPage() {
               </div>
             </Link>
           </div>
+
+          <PokemonSpotlight
+            pokemon={NUZLOCKE_SPOTLIGHT}
+            heading="Best Pokémon for Nuzlocke"
+            badge="NUZLOCKE PICKS"
+          />
 
           {/* What is Nuzlocke */}
           <section className="mb-8 bg-cream border-2 border-black p-4 sm:p-6 md:p-10 slasher">

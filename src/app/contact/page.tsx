@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "Contact Random Pokemon Generator for support, feedback, bug reports, or partnership inquiries. Reach out via email or social media. We respond within 48 hours.",
   keywords: ["contact random pokemon generator", "support", "feedback", "bug report", "pokemon generator help"],
   alternates: { canonical: "/contact" },
-  openGraph: { title: "Contact Us - Random Pokemon Generator", description: "Get in touch with the Random Pokemon Generator team. We're here to help!", url: `${siteUrl}/contact`, type: "website" },
+  openGraph: { title: "Contact Us - Random Pokemon Generator", description: "Get in touch with the Random Pokemon Generator team. We're here to help!", url: `${siteUrl}/contact`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Random Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Contact Us - Random Pokemon Generator", description: "Get in touch with the Random Pokemon Generator team. We're here to help!", images: ["/og-image.png"] },
 };
 
 export default function ContactPage() {

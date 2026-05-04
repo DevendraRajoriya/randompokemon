@@ -26,13 +26,13 @@ export default function SeoContent() {
         </h2>
         <div className="space-y-4">
           <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
-            Welcome to the most comprehensive <strong>random generator pokemon</strong> tool available on the internet. Our advanced <strong>pokemon random pokemon generator</strong> protocol supports every generation of Pokemon games—from the original Red and Blue (Generation 1) through the latest entries including Pokemon Scarlet and Violet (Generation 9), and we&apos;re ready for the upcoming Pokemon Legends: Z-A.
+            Whether you&apos;re planning a Nuzlocke, building a Draft League roster, or just want to discover Pokémon you&apos;ve never used before — this tool generates random teams instantly, with no ads, no sign-up, and no friction. It covers every mainline game from Red &amp; Blue through Scarlet &amp; Violet, and will support Legends: Z-A on day one.
           </p>
           <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
-            With access to over 1,025 unique Pokemon species, our generator provides trainers with an unparalleled tool for team building, challenge runs, and competitive preparation. The cypherpunk-inspired interface ensures a sleek, no-nonsense experience focused entirely on functionality and speed.
+            All 1,025 species are included: base forms, regional variants (Alolan, Galarian, Hisuian, Paldean), Paradox Pokémon, Mega Evolutions, and Gigantamax forms. Use the filters to narrow by type, generation, or rarity — or leave everything open and embrace the chaos.
           </p>
           <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
-            Our database is continuously updated to include new Pokemon forms, regional variants (Alolan, Galarian, Hisuian, and Paldean forms), Paradox Pokemon, and special event distributions.
+            The database syncs with new releases within 48 hours of launch. If Game Freak ships a new form or a DLC Pokémon, it shows up here without you having to do anything.
           </p>
         </div>
       </section>

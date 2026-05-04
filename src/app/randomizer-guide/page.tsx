@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "Complete guide to Pokemon randomizers and challenge runs. Generate teams for ROM hack randomizers, plan challenge modes, and discover the best randomizer settings.",
   keywords: ["pokemon randomizer", "randomizer guide", "pokemon rom hack", "challenge runs", "randomizer settings", "pokemon randomizer tool"],
   alternates: { canonical: "/randomizer-guide" },
-  openGraph: { title: "Pokemon Randomizer Guide | Challenge Runs & Team Planning", description: "Complete guide to Pokemon randomizers and challenge runs.", url: `${siteUrl}/randomizer-guide`, type: "website" },
+  openGraph: { title: "Pokemon Randomizer Guide | Challenge Runs & Team Planning", description: "Complete guide to Pokemon randomizers and challenge runs.", url: `${siteUrl}/randomizer-guide`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Randomizer Guide" }] },
+  twitter: { card: "summary_large_image", title: "Pokemon Randomizer Guide | Challenge Runs & Team Planning", description: "Complete guide to Pokemon randomizers and challenge runs.", images: ["/og-image.png"] },
 };
 
 export default function RandomizerGuidePage() {

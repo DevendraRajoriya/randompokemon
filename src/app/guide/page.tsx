@@ -19,7 +19,10 @@ export const metadata: Metadata = {
     title: "How to Use Pokemon Generator - Expert Guide",
     description: "Master Pokemon team building with expert strategies for Nuzlocke, competitive play, and themed challenges.",
     type: "article",
+    url: "https://www.randompokemon.co/guide",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "How to Use Pokemon Generator" }],
   },
+  twitter: { card: "summary_large_image", title: "How to Use Pokemon Generator - Expert Guide", description: "Master Pokemon team building with expert strategies for Nuzlocke, competitive play, and themed challenges.", images: ["/og-image.png"] },
 };
 
 export default function GuidePage() {

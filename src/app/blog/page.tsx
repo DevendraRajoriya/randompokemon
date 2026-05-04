@@ -10,10 +10,12 @@ export const metadata: Metadata = {
     "best nuzlocke starters", "hardest nuzlocke challenges",
   ],
   openGraph: {
-    title: "Pokémon Guides & Strategy Blog",
-    description: "Expert Pokémon guides for Nuzlocke runs, draft leagues, randomizers, and competitive play.",
+    title: "Pokemon Guides & Strategy Blog",
+    description: "Expert Pokemon guides for Nuzlocke runs, draft leagues, randomizers, and competitive play.",
     type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Guides & Strategy Blog" }],
   },
+  twitter: { card: "summary_large_image", title: "Pokemon Guides & Strategy Blog", description: "Expert Pokemon guides for Nuzlocke runs, draft leagues, randomizers, and competitive play.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog" },
 };
 

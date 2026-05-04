@@ -1,11 +1,12 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Nuzlocke Rules Explained: Complete Beginner's Guide | randompokemon.co",
   description: "Everything you need to know about Nuzlocke rules — the core ruleset, popular amendments like Dupes Clause and Species Clause, and how to run your first Nuzlocke.",
   keywords: ["nuzlocke rules", "how to nuzlocke", "nuzlocke for beginners", "nuzlocke explained", "nuzlocke dupes clause", "species clause nuzlocke"],
-  openGraph: { title: "Nuzlocke Rules: Complete Beginner Guide", description: "Core rules, popular amendments, and setup tips for your first Nuzlocke run.", type: "article" },
+  openGraph: { title: "Nuzlocke Rules: Complete Beginner Guide", description: "Core rules, popular amendments, and setup tips for your first Nuzlocke run.", type: "article", url: "https://www.randompokemon.co/blog/nuzlocke-rules-complete-guide", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Nuzlocke Rules Complete Guide" }] },
+  twitter: { card: "summary_large_image", title: "Nuzlocke Rules: Complete Beginner Guide", description: "Core rules, popular amendments, and setup tips for your first Nuzlocke run.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog/nuzlocke-rules-complete-guide" },
 };
 const CORE_RULES = [

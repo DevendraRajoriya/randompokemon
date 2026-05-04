@@ -1,7 +1,21 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Crown, ArrowLeft } from "lucide-react";
+import PokemonSpotlight from "@/components/PokemonSpotlight";
+
+const LEGENDARY_SPOTLIGHT = [
+  { slug: "mewtwo",      id: 150,  name: "Mewtwo",      types: ["psychic"]           as const },
+  { slug: "lugia",       id: 249,  name: "Lugia",       types: ["psychic", "flying"] as const },
+  { slug: "rayquaza",    id: 384,  name: "Rayquaza",    types: ["dragon", "flying"]  as const },
+  { slug: "arceus",      id: 493,  name: "Arceus",      types: ["normal"]            as const },
+  { slug: "kyogre",      id: 382,  name: "Kyogre",      types: ["water"]             as const },
+  { slug: "groudon",     id: 383,  name: "Groudon",     types: ["ground"]            as const },
+  { slug: "zacian",      id: 888,  name: "Zacian",      types: ["fairy"]             as const },
+  { slug: "calyrex",     id: 898,  name: "Calyrex",     types: ["psychic", "grass"]  as const },
+  { slug: "necrozma",    id: 800,  name: "Necrozma",    types: ["psychic"]           as const },
+  { slug: "eternatus",   id: 890,  name: "Eternatus",   types: ["poison", "dragon"]  as const },
+] as const;
 
 const PokemonGeneratorClient = dynamic(() => import("../PokemonGeneratorClient"));
 const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
@@ -67,6 +81,12 @@ export default function LegendaryPokemonGeneratorPage() {
         <PokemonGeneratorClient hideHero={true} hideGenericContent={true} defaultLegendary={["Legendary", "Sub-Legendary", "Mythical"]} />
 
         <CardShowcase />
+
+        <PokemonSpotlight
+          pokemon={LEGENDARY_SPOTLIGHT}
+          heading="Iconic Legendary Pokémon"
+          badge="LEGENDARIES"
+        />
 
         <div className="max-w-6xl mx-auto mt-10 space-y-6">
           <section className="bg-cream border-2 border-black p-3 sm:p-4 md:p-6 slasher">

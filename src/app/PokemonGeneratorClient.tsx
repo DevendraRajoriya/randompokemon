@@ -1299,9 +1299,13 @@ export default function PokemonGeneratorClient({
               {team.map((pokemon) => {
                 const primaryType = pokemon.types[0]?.type.name || 'normal';
                 const typeColor = getTypeColor(primaryType);
-                const pokemonName = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+                // Properly capitalize hyphenated names: "mr-mime" → "Mr Mime", "ho-oh" → "Ho Oh"
+                const pokemonName = pokemon.name
+                  .split('-')
+                  .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+                  .join(' ');
                 const typeText = pokemon.types.map((t) => t.type.name.charAt(0).toUpperCase() + t.type.name.slice(1)).join('/');
-                const altText = `${pokemonName} official artwork - ${typeText} type`;
+                const altText = `${pokemonName} official artwork - ${typeText} type Pokemon`;
 
                 // Extract key stats if available
                 const getStat = (name: string) => pokemon.stats?.find(s => s.stat.name === name)?.base_stat || 0;
@@ -1312,8 +1316,9 @@ export default function PokemonGeneratorClient({
                 const bst = pokemon.stats?.reduce((sum, s) => sum + s.base_stat, 0) || 0;
 
                 return (
-                  <div
+                  <Link
                     key={pokemon.id}
+                    href={`/pokemon/${pokemon.name}`}
                     className="group relative bg-white border-2 md:border-4 border-black slasher overflow-hidden hover:shadow-2xl transition-all duration-300 pokemon-card flex flex-col"
                   >
                     {/* Type-colored accent bar at top */}
@@ -1333,9 +1338,9 @@ export default function PokemonGeneratorClient({
                           )}
                         </div>
                         <button
-                          onClick={() => setSharePokemon(pokemon)}
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSharePokemon(pokemon); }}
                           className="p-1 text-black/40 hover:text-marigold transition-smooth cursor-pointer z-10"
-                          aria-label={`Share ${pokemon.name} flash card`}
+                          aria-label={`Share ${pokemonName} flash card`}
                         >
                           <Share2 size={14} className="md:w-4 md:h-4" />
                         </button>
@@ -1347,7 +1352,7 @@ export default function PokemonGeneratorClient({
                           || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`;
                         const isFirstFour = team.indexOf(pokemon) < 4;
                         return (
-                          <Link href={`/pokemon/${pokemon.name}`} className="relative w-full mb-2 sm:mb-3 block" style={{ paddingBottom: '75%' }}>
+                          <div className="relative w-full mb-2 sm:mb-3" style={{ paddingBottom: '75%' }}>
                             <div className="absolute inset-0 opacity-[0.07]" style={{ background: `radial-gradient(circle, ${typeColor} 0%, transparent 70%)` }} />
                             <Image
                               src={imgSrc}
@@ -1359,17 +1364,15 @@ export default function PokemonGeneratorClient({
                               loading={isFirstFour ? undefined : "lazy"}
                               unoptimized
                             />
-                          </Link>
+                          </div>
                         );
                       })()}
 
                       {/* Name */}
                       {(filters.displayFormat === "both" || filters.displayFormat === "name-only") && (
-                        <Link href={`/pokemon/${pokemon.name}`} className="block">
-                          <h2 className="font-grotesk font-bold text-sm sm:text-base md:text-xl text-black mb-1.5 sm:mb-2 uppercase truncate group-hover:text-indigo transition-colors flex-1">
-                            {pokemon.name}
-                          </h2>
-                        </Link>
+                        <h2 className="font-grotesk font-bold text-sm sm:text-base md:text-xl text-black mb-1.5 sm:mb-2 uppercase truncate group-hover:text-indigo transition-colors flex-1">
+                          {pokemonName}
+                        </h2>
                       )}
 
                       {/* Type Badges */}
@@ -1416,15 +1419,14 @@ export default function PokemonGeneratorClient({
                       )}
 
                       <div className="mt-auto pt-2">
-                        <Link
-                          href={`/pokemon/${pokemon.name}`}
-                          className="block w-full text-center font-mono font-bold text-[10px] sm:text-xs py-1.5 sm:py-2 border border-black/10 bg-black/[0.02] hover:bg-indigo hover:text-white hover:border-indigo transition-all duration-200"
+                        <span
+                          className="block w-full text-center font-mono font-bold text-[10px] sm:text-xs py-1.5 sm:py-2 border border-black/10 bg-black/[0.02] group-hover:bg-indigo group-hover:text-white group-hover:border-indigo transition-all duration-200"
                         >
                           VIEW DETAILS →
-                        </Link>
+                        </span>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

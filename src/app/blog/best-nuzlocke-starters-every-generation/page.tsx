@@ -1,11 +1,12 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Best Nuzlocke Starters Every Generation (Gen 1–9) | randompokemon.co",
   description: "Ranked Nuzlocke starter picks for Gen 1 through Gen 9 — gym matchup analysis, which starters keep you alive, and what to avoid.",
   keywords: ["best nuzlocke starter", "nuzlocke starter gen 4", "safest nuzlocke starter", "nuzlocke starter tier list"],
-  openGraph: { title: "Best Nuzlocke Starters Every Generation", description: "Ranked starter picks across Gen 1–9 with gym matchup analysis.", type: "article" },
+  openGraph: { title: "Best Nuzlocke Starters Every Generation", description: "Ranked starter picks across Gen 1-9 with gym matchup analysis.", type: "article", url: "https://www.randompokemon.co/blog/best-nuzlocke-starters-every-generation", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Best Nuzlocke Starters Every Generation" }] },
+  twitter: { card: "summary_large_image", title: "Best Nuzlocke Starters Every Generation", description: "Ranked starter picks across Gen 1-9 with gym matchup analysis.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog/best-nuzlocke-starters-every-generation" },
 };
 
