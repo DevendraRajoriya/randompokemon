@@ -28,9 +28,8 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Hoenn Pokemon Generator | Gen 3 Random Team Builder (Ruby/Sapphire/Emerald)",
-  description:
-    "Generate random Hoenn Pokemon teams from Generation 3 (#252-386). Ruby, Sapphire, Emerald & ORAS. 135 species including the Weather Trio, Mega Evolutions and the Regi trio. Updated 2026.",
+  title: "Hoenn Pokemon Generator | Gen 3 Random Team Builder",
+  description: "Generate random Hoenn Pokemon teams from Gen 3 (#252-386). Ruby, Sapphire & Emerald — 135 species with the Weather Trio, Regi Trio & Mega Evolutions. Free team builder.",
   keywords: [
     "hoenn pokemon generator",
     "gen 3 random team generator",
@@ -109,7 +108,7 @@ export default function HoennPokemonGeneratorPage() {
 
         <div className="max-w-6xl mx-auto mb-5 text-center">
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">
-            HOENN RANDOM TEAM GENERATOR
+            HOENN TEAM GENERATOR
           </h1>
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>Hoenn Pokemon teams</strong> from Generation 3 (#252-386).
@@ -123,7 +122,7 @@ export default function HoennPokemonGeneratorPage() {
 
         <PokemonSpotlight
           pokemon={HOENN_SPOTLIGHT}
-          heading="Iconic Hoenn Pokémon"
+          heading="Iconic Hoenn POKEMON"
           badge="GEN III"
         />
 

@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -84,7 +84,7 @@ export default function PaldeaGeneratorPage() {
 
         <PokemonSpotlight
           pokemon={PALDEA_SPOTLIGHT}
-          heading="Iconic Paldea Pokémon"
+          heading="Iconic Paldea POKEMON"
           badge="GEN IX"
         />
 

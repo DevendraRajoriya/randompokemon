@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { Mail, MessageSquare, Github, Twitter, Send, ArrowLeft } from "lucide-react";
 
@@ -174,7 +174,7 @@ export default function ContactPage() {
           <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">WHAT WE CAN&apos;T HELP WITH</h2>
           <div className="bg-white border-2 border-black p-4 slasher space-y-2">
             {[
-              "Questions about official Pokemon games (contact Nintendo/The Pokémon Company)",
+              "Questions about official Pokemon games (contact Nintendo/The POKEMON Company)",
               "ROM distribution or piracy requests (we do not support pirated content)",
               "Trading Pokemon or providing Pokemon game codes",
               "Custom development or white-label versions of our tool",

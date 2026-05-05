@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -238,7 +238,7 @@ export default function PokedexClient({ initialPokemonList, totalCount, initialC
     setDisplayCount(ITEMS_PER_PAGE);
     loadPage(filteredList, ITEMS_PER_PAGE)
       .then(results => { if (!cancelled) { setVisiblePokemon(results); setLoading(false); } })
-      .catch(() => { if (!cancelled) { setError('Failed to load Pokémon. Please try again.'); setLoading(false); } });
+      .catch(() => { if (!cancelled) { setError('Failed to load POKEMON. Please try again.'); setLoading(false); } });
     return () => { cancelled = true; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredList, loadPage, selectedType, typeIds]);
@@ -295,7 +295,7 @@ export default function PokedexClient({ initialPokemonList, totalCount, initialC
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search by name or #..."
                 className="flex-1 px-3 py-3 font-mono text-sm text-black bg-white outline-none placeholder:text-charcoal/40 min-w-0"
-                aria-label="Search Pokémon"
+                aria-label="Search POKEMON"
               />
               {searchQuery && (
                 <button onClick={() => setSearchQuery('')} className="px-3 text-charcoal hover:text-black">
@@ -425,7 +425,7 @@ export default function PokedexClient({ initialPokemonList, totalCount, initialC
         {/* Results count */}
         <div className="flex items-center justify-between mb-4">
           <p className="font-mono text-xs text-charcoal">
-            {typeLoading ? 'Loading type data…' : `${filteredList.length.toLocaleString()} Pokémon`}
+            {typeLoading ? 'Loading type data…' : `${filteredList.length.toLocaleString()} POKEMON`}
             {activeFilters > 0 && <span className="text-black font-bold"> (filtered)</span>}
           </p>
         </div>
@@ -444,14 +444,14 @@ export default function PokedexClient({ initialPokemonList, totalCount, initialC
         {(loading || typeLoading) && !error && (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="animate-spin text-black" size={36} />
-            <p className="font-mono text-xs text-charcoal">{typeLoading ? 'Fetching type data…' : 'Loading Pokémon…'}</p>
+            <p className="font-mono text-xs text-charcoal">{typeLoading ? 'Fetching type data…' : 'Loading POKEMON…'}</p>
           </div>
         )}
 
         {/* Empty */}
         {!loading && !typeLoading && !error && filteredList.length === 0 && (
           <div className="text-center py-20 border-4 border-black bg-white">
-            <p className="font-grotesk font-bold text-2xl text-black mb-2">NO POKÉMON FOUND</p>
+            <p className="font-grotesk font-bold text-2xl text-black mb-2">NO POKEMON FOUND</p>
             <p className="font-mono text-xs text-charcoal mb-4">Try adjusting your filters</p>
             <button onClick={clearAllFilters} className="bg-black text-white font-mono text-xs font-bold px-6 py-2 border-2 border-black hover:bg-charcoal">
               CLEAR FILTERS
@@ -593,7 +593,7 @@ export default function PokedexClient({ initialPokemonList, totalCount, initialC
             {/* End of results */}
             {displayCount >= filteredList.length && filteredList.length > 0 && (
               <div className="mt-6 text-center">
-                <p className="font-mono text-xs text-charcoal">All {filteredList.length} Pokémon displayed</p>
+                <p className="font-mono text-xs text-charcoal">All {filteredList.length} POKEMON displayed</p>
               </div>
             )}
           </>

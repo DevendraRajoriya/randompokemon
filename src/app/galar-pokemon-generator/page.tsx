@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -84,7 +84,7 @@ export default function GalarGeneratorPage() {
 
         <PokemonSpotlight
           pokemon={GALAR_SPOTLIGHT}
-          heading="Iconic Galar Pokémon"
+          heading="Iconic Galar POKEMON"
           badge="GEN VIII"
         />
 

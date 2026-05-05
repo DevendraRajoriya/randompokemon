@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { X, Download, Copy, Check, Twitter, Facebook, Link } from "lucide-react";
@@ -393,7 +393,7 @@ function PokemonCardUI({ pokemon, stats, bst, imageDataUrl }: PokemonCardUIProps
                         letterSpacing: "1px",
                     }}
                 >
-                    RANDOM POKÉMON GENERATOR
+                    RANDOM POKEMON GENERATOR
                 </span>
             </div>
         </div>
@@ -581,7 +581,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
             badgeX += badgeW + 16;
         }
 
-        // ── POKÉMON ARTWORK ──────────────────────────────────────
+        // ── POKEMON ARTWORK ──────────────────────────────────────
         if (imageDataUrl) {
             await new Promise<void>((resolve) => {
                 const img = new Image();
@@ -687,7 +687,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
         ctx.font = "600 24px system-ui";
         ctx.fillStyle = "rgba(255,255,255,0.25)";
         ctx.textAlign = "right";
-        ctx.fillText("RANDOM POKÉMON GENERATOR", CARD_WIDTH - 56, footerY + 20);
+        ctx.fillText("RANDOM POKEMON GENERATOR", CARD_WIDTH - 56, footerY + 20);
         ctx.textAlign = "left";
 
         return canvas;
@@ -741,7 +741,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
 
     // Social Share Functions
     const shareToTwitter = () => {
-        const text = `Check out this ${capitalizedName} Pokémon card! 🎴`;
+        const text = `Check out this ${capitalizedName} POKEMON card! 🎴`;
         const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(currentUrl)}`;
         window.open(url, "_blank", "noopener,noreferrer");
     };
@@ -752,7 +752,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
     };
 
     const shareToReddit = () => {
-        const title = `Look at this ${capitalizedName} Pokémon card!`;
+        const title = `Look at this ${capitalizedName} POKEMON card!`;
         const url = `https://www.reddit.com/submit?url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(title)}`;
         window.open(url, "_blank", "noopener,noreferrer");
     };
@@ -767,7 +767,7 @@ export default function ShareModal({ pokemon, onClose }: ShareModalProps) {
                     if (blob) {
                         const file = new File([blob], `${pokemon.name}-card.png`, { type: "image/png" });
                         if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                            await navigator.share({ files: [file], title: `${capitalize(pokemon.name)} Pokémon Card` });
+                            await navigator.share({ files: [file], title: `${capitalize(pokemon.name)} POKEMON Card` });
                             return;
                         }
                     }

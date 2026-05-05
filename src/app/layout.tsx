@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Space_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Random Pokemon Generator | Team Builder for Nuzlocke & Draft League (Gen 1-9)",
   description:
-    "The #1 random Pokémon generator — all 1025 Pokémon, every region Gen 1–9. Build Nuzlocke teams, Draft League rosters, and randomizer picks instantly. Free forever.",
+    "The #1 random POKEMON generator — all 1025 POKEMON, every region Gen 1–9. Build Nuzlocke teams, Draft League rosters, and randomizer picks instantly. Free forever.",
   keywords: [
     "random pokemon",
     "random pokemon generator",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     siteName: "Random Pokemon Nuzlocke Generator",
     title: "Random Pokemon Nuzlocke Generator | Team Builder Gen 1-9",
     description:
-      "The #1 random Pokémon generator. All 1025 Pokémon, every region Gen 1–9. Instant team builder for Nuzlocke, Draft League & challenge runs. Free forever.",
+      "The #1 random POKEMON generator. All 1025 POKEMON, every region Gen 1–9. Instant team builder for Nuzlocke, Draft League & challenge runs. Free forever.",
     images: [
       {
         url: "/og-image.png",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Random Pokemon Nuzlocke Generator | Team Builder Gen 1-9",
     description:
-      "The #1 random Pokémon generator. All 1025 Pokémon, every region Gen 1–9. Instant team builder for Nuzlocke, Draft League & challenge runs. Free forever.",
+      "The #1 random POKEMON generator. All 1025 POKEMON, every region Gen 1–9. Instant team builder for Nuzlocke, Draft League & challenge runs. Free forever.",
     images: ["/og-image.png"],
   },
   robots: {

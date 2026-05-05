@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -236,7 +236,7 @@ function capitalize(str: string): string {
   return str.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
-// Compute final type multipliers for a Pokémon's type combination.
+// Compute final type multipliers for a POKEMON's type combination.
 // Returns a map of attacking-type → final damage multiplier (0, 0.25, 0.5, 1, 2, 4).
 function computeTypeEffectiveness(defTypes: string[]): Record<string, number> {
   const ALL_TYPES = ["normal","fire","water","electric","grass","ice","fighting","poison",
@@ -258,10 +258,10 @@ function computeTypeEffectiveness(defTypes: string[]): Record<string, number> {
 // ============ DATA FETCHING ============
 async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
   try {
-    // Step 1: fetch the Pokémon data first so we can read its canonical species URL.
+    // Step 1: fetch the POKEMON data first so we can read its canonical species URL.
     // Fetching species by name directly fails for alternate forms (e.g. pyroar-male → 404),
     // because PokéAPI only has species entries for the base form. The species.url field
-    // in the Pokémon response always points to the correct base-species endpoint.
+    // in the POKEMON response always points to the correct base-species endpoint.
     const pokemonRes = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${name}`,
       { next: { revalidate: 86400 } }
@@ -271,11 +271,11 @@ async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
 
     const pokemon: RawPokemon = await pokemonRes.json();
 
-    // Step 2: use the species URL from the Pokémon data (handles all alternate forms).
+    // Step 2: use the species URL from the POKEMON data (handles all alternate forms).
     const speciesRes = await fetch(pokemon.species.url, { next: { revalidate: 86400 } });
 
     let speciesData: PokemonWithSpecies["species"] = {
-      flavorText: "", genus: "Pokémon", generation: "Generation 1",
+      flavorText: "", genus: "POKEMON", generation: "Generation 1",
       generationNumber: 1, habitat: null, evolutionChain: [],
       captureRate: 45, baseHappiness: 50, growthRate: "medium",
       eggGroups: [], genderRate: -1, isLegendary: false, isMythical: false,
@@ -292,7 +292,7 @@ async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
         : "";
 
       const englishGenus = species.genera.find((g) => g.language.name === "en");
-      const genus = englishGenus ? englishGenus.genus : "Pokémon";
+      const genus = englishGenus ? englishGenus.genus : "POKEMON";
 
       const genMatch = species.generation.name.match(/generation-(\w+)/);
       const romanToNum: Record<string, number> = {
@@ -458,7 +458,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
     return Object.entries(mul).filter(([,v]) => v >= 2).map(([k]) => capitalize(k)).slice(0, 3).join(", ");
   })();
-  const uniqueDescription = `${formattedName} — ${typesDisplay}-type Pokémon from ${genShort}. Full stats (BST ${totalStats}), moves, weaknesses${weaknessTypes ? ` (${weaknessTypes})` : ""}, and evolution chain.`;
+  const uniqueDescription = `${formattedName} — ${typesDisplay}-type POKEMON from ${genShort}. Full stats (BST ${totalStats}), moves, weaknesses${weaknessTypes ? ` (${weaknessTypes})` : ""}, and evolution chain.`;
 
   return {
     title: `${formattedName} (#${paddedId}) - Stats, Evolution & Type | Pokemon Database`,
@@ -560,7 +560,7 @@ export default async function PokemonDetailPage({ params }: Props) {
   const faqItems: { question: string; answer: string }[] = [
     {
       question: `What type is ${capitalizedName}?`,
-      answer: `${capitalizedName} is a ${typesDisplay}-type Pokémon classified as the ${pokemon.species.genus}. It was first introduced in ${pokemon.species.generation} of the Pokémon series. As a ${typesDisplay} type, it has specific strengths and weaknesses in battle that trainers should consider when building their team.`,
+      answer: `${capitalizedName} is a ${typesDisplay}-type POKEMON classified as the ${pokemon.species.genus}. It was first introduced in ${pokemon.species.generation} of the POKEMON series. As a ${typesDisplay} type, it has specific strengths and weaknesses in battle that trainers should consider when building their team.`,
     },
     {
       question: `What are ${capitalizedName}'s base stats?`,
@@ -576,11 +576,11 @@ export default async function PokemonDetailPage({ params }: Props) {
     },
     {
       question: `How tall and heavy is ${capitalizedName}?`,
-      answer: `${capitalizedName} stands at ${(pokemon.height / 10).toFixed(1)} meters (${((pokemon.height / 10) * 39.3701).toFixed(1)} inches) tall and weighs ${(pokemon.weight / 10).toFixed(1)} kg (${((pokemon.weight / 10) * 2.20462).toFixed(1)} lbs). This makes it a ${sizeCategory} Pokémon. Its weight can affect certain moves like Low Kick and Heavy Slam in battle.`,
+      answer: `${capitalizedName} stands at ${(pokemon.height / 10).toFixed(1)} meters (${((pokemon.height / 10) * 39.3701).toFixed(1)} inches) tall and weighs ${(pokemon.weight / 10).toFixed(1)} kg (${((pokemon.weight / 10) * 2.20462).toFixed(1)} lbs). This makes it a ${sizeCategory} POKEMON. Its weight can affect certain moves like Low Kick and Heavy Slam in battle.`,
     },
     {
       question: `How hard is it to catch ${capitalizedName}?`,
-      answer: `${capitalizedName} has a capture rate of ${pokemon.species.captureRate} out of 255, making it ${catchDifficulty} to catch. ${pokemon.species.captureRate < 60 ? "Using Ultra Balls or specialized Poké Balls, along with status conditions like Sleep or Paralysis, will significantly improve your chances." : pokemon.species.captureRate < 120 ? "Standard Poké Balls should work, but Great Balls or Ultra Balls will help ensure success." : "It should be relatively easy to catch with standard Poké Balls."}${pokemon.species.isLegendary ? " As a Legendary Pokémon, you may want to save your Master Ball for this encounter." : ""}${pokemon.species.isMythical ? " As a Mythical Pokémon, it is typically only available through special events or distributions." : ""}`,
+      answer: `${capitalizedName} has a capture rate of ${pokemon.species.captureRate} out of 255, making it ${catchDifficulty} to catch. ${pokemon.species.captureRate < 60 ? "Using Ultra Balls or specialized Poké Balls, along with status conditions like Sleep or Paralysis, will significantly improve your chances." : pokemon.species.captureRate < 120 ? "Standard Poké Balls should work, but Great Balls or Ultra Balls will help ensure success." : "It should be relatively easy to catch with standard Poké Balls."}${pokemon.species.isLegendary ? " As a Legendary POKEMON, you may want to save your Master Ball for this encounter." : ""}${pokemon.species.isMythical ? " As a Mythical POKEMON, it is typically only available through special events or distributions." : ""}`,
     },
   ];
 
@@ -601,7 +601,7 @@ export default async function PokemonDetailPage({ params }: Props) {
   if (pokemon.species.habitat) {
     faqItems.push({
       question: `Where can I find ${capitalizedName}?`,
-      answer: `${capitalizedName} is typically found in ${pokemon.species.habitat} environments. The exact location varies by game version, but look for ${capitalize(pokemon.species.habitat).toLowerCase()}-type areas, routes, and habitats. You can also use the Random Pokémon Generator to discover ${capitalizedName} and plan your team.`,
+      answer: `${capitalizedName} is typically found in ${pokemon.species.habitat} environments. The exact location varies by game version, but look for ${capitalize(pokemon.species.habitat).toLowerCase()}-type areas, routes, and habitats. You can also use the Random POKEMON Generator to discover ${capitalizedName} and plan your team.`,
     });
   }
 
@@ -609,7 +609,7 @@ export default async function PokemonDetailPage({ params }: Props) {
   faqItems.push({
     question: `Can ${capitalizedName} be male or female?`,
     answer: pokemon.species.genderRate < 0
-      ? `${capitalizedName} is a genderless Pokémon and cannot be male or female. Genderless Pokémon can still breed with Ditto in most games.`
+      ? `${capitalizedName} is a genderless POKEMON and cannot be male or female. Genderless POKEMON can still breed with Ditto in most games.`
       : `${capitalizedName} has a gender ratio of ${genderText}. ${pokemon.species.genderRate === 0 ? "It is always male." : pokemon.species.genderRate === 8 ? "It is always female." : `There is a ${(100 - (pokemon.species.genderRate / 8) * 100).toFixed(0)}% chance of being male and a ${((pokemon.species.genderRate / 8) * 100).toFixed(0)}% chance of being female.`}`,
   });
 
@@ -617,7 +617,7 @@ export default async function PokemonDetailPage({ params }: Props) {
   if (pokemon.species.eggGroups.length > 0 && !pokemon.species.eggGroups.includes("no-eggs")) {
     faqItems.push({
       question: `What egg group is ${capitalizedName} in?`,
-      answer: `${capitalizedName} belongs to the ${pokemon.species.eggGroups.map(g => capitalize(g)).join(" and ")} egg group${pokemon.species.eggGroups.length > 1 ? "s" : ""}. This means it can breed with other Pokémon in ${pokemon.species.eggGroups.length > 1 ? "either of these groups" : "this group"} to produce eggs. Compatible breeding partners can pass down moves, natures, and IVs.`,
+      answer: `${capitalizedName} belongs to the ${pokemon.species.eggGroups.map(g => capitalize(g)).join(" and ")} egg group${pokemon.species.eggGroups.length > 1 ? "s" : ""}. This means it can breed with other POKEMON in ${pokemon.species.eggGroups.length > 1 ? "either of these groups" : "this group"} to produce eggs. Compatible breeding partners can pass down moves, natures, and IVs.`,
     });
   }
 
@@ -630,18 +630,18 @@ export default async function PokemonDetailPage({ params }: Props) {
     name: `${capitalizedName} (#${paddedId}) - Stats, Evolution & Type`,
     description: `${capitalizedName} is a ${typesDisplay}-type ${pokemon.species.genus} from ${pokemon.species.generation}. ${pokemon.species.flavorText}`,
     inLanguage: "en",
-    isPartOf: { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: siteUrl, name: "Random Pokémon Generator" },
+    isPartOf: { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: siteUrl, name: "Random POKEMON Generator" },
     about: {
       "@type": "Thing",
       "@id": `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}#pokemon`,
       name: capitalizedName,
-      alternateName: `Pokémon #${paddedId}`,
-      description: `${capitalizedName} is a ${typesDisplay}-type Pokémon, classified as the ${pokemon.species.genus}, introduced in ${pokemon.species.generation}.`,
+      alternateName: `POKEMON #${paddedId}`,
+      description: `${capitalizedName} is a ${typesDisplay}-type POKEMON, classified as the ${pokemon.species.genus}, introduced in ${pokemon.species.generation}.`,
       image: {
         "@type": "ImageObject",
         url: pokemon.sprites.other?.["official-artwork"]?.front_default || pokemon.sprites.front_default || "",
         name: `${capitalizedName} official artwork`,
-        caption: `Official artwork of ${capitalizedName}, a ${typesDisplay}-type Pokémon`,
+        caption: `Official artwork of ${capitalizedName}, a ${typesDisplay}-type POKEMON`,
       },
       identifier: pokemon.id.toString(),
     },
@@ -971,7 +971,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                   <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">EXPLORE BY TYPE</span>
                 </div>
                 <p className="font-mono text-xs text-charcoal mb-3">
-                  Find more {typesDisplay}-type Pokémon:
+                  Find more {typesDisplay}-type POKEMON:
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {pokemon.types.map((typeInfo) => (
@@ -1219,7 +1219,7 @@ export default async function PokemonDetailPage({ params }: Props) {
                         </div>
                       )}
 
-                      {/* Pokémon card */}
+                      {/* POKEMON card */}
                       <Link
                         href={`/pokemon/${evo.name.toLowerCase()}`}
                         className={`flex flex-col items-center gap-2 p-3 sm:p-4 border-2 transition-all group hover:scale-105 ${
@@ -1303,7 +1303,7 @@ export default async function PokemonDetailPage({ params }: Props) {
             <div className="space-y-4">
               {/* Paragraph 1 — Identity & Pokédex intro */}
               <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
-                <strong className="text-black">{capitalizedName}</strong> (Pokédex #{paddedId}) is a <strong className="text-black">{typesDisplay}</strong>-type Pokémon first introduced in <strong className="text-black">{pokemon.species.generation}</strong>.
+                <strong className="text-black">{capitalizedName}</strong> (Pokédex #{paddedId}) is a <strong className="text-black">{typesDisplay}</strong>-type POKEMON first introduced in <strong className="text-black">{pokemon.species.generation}</strong>.
                 {pokemon.species.genus && (
                   <> It is officially classified as the <strong className="text-black">{pokemon.species.genus}</strong>.</>  
                 )}
@@ -1314,7 +1314,7 @@ export default async function PokemonDetailPage({ params }: Props) {
 
               {/* Paragraph 2 — Type effectiveness summary */}
               <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
-                As a <strong className="text-black">{typesDisplay}</strong>-type Pokémon, {capitalizedName} has a specific set of type matchups that trainers must account for.
+                As a <strong className="text-black">{typesDisplay}</strong>-type POKEMON, {capitalizedName} has a specific set of type matchups that trainers must account for.
                 {typeGroups.x4.length > 0 && (
                   <> It has a <strong className="text-black">4× weakness</strong> to {typeGroups.x4.map(t => capitalize(t)).join(" and ")} — these moves deal quadruple damage and should always be avoided in battle.</>
                 )}
@@ -1346,8 +1346,8 @@ export default async function PokemonDetailPage({ params }: Props) {
                 {" "}Capture rate: <strong className="text-black">{pokemon.species.captureRate}/255</strong> ({catchDifficulty} to catch).
                 {pokemon.species.captureRate < 60 && " Use Ultra Balls with a status condition (Sleep or Paralysis) for the best results."}
                 {" "}Growth rate: <strong className="text-black">{capitalize(pokemon.species.growthRate)}</strong>. Egg groups: <strong className="text-black">{pokemon.species.eggGroups.map(g => capitalize(g)).join(", ") || "None"}</strong>.
-                {pokemon.species.isLegendary && <> <strong className="text-black">{capitalizedName} is a Legendary Pokémon.</strong></>}
-                {pokemon.species.isMythical && <> <strong className="text-black">{capitalizedName} is a Mythical Pokémon</strong> — typically only available through special event distributions.</>}
+                {pokemon.species.isLegendary && <> <strong className="text-black">{capitalizedName} is a Legendary POKEMON.</strong></>}
+                {pokemon.species.isMythical && <> <strong className="text-black">{capitalizedName} is a Mythical POKEMON</strong> — typically only available through special event distributions.</>}
               </p>
 
               {/* Paragraph 5 — Evolution (conditional) */}
@@ -1380,7 +1380,7 @@ export default async function PokemonDetailPage({ params }: Props) {
               {/* Paragraph 6 — Related evolutions cross-links */}
               {otherEvolutions.length > 0 && (
                 <p className="font-mono text-sm md:text-base text-charcoal leading-relaxed">
-                  Related Pokémon in the same evolution line:{" "}
+                  Related POKEMON in the same evolution line:{" "}
                   {otherEvolutions.map((evo, index) => {
                     const formatted = capitalize(evo.name);
                     const isLast = index === otherEvolutions.length - 1;

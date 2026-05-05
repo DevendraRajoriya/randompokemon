@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -30,7 +30,7 @@ const MORE_LINKS = [
     { href: "/starter-pokemon-generator", label: "Starter Generator" },
     { href: "/nuzlocke-generator", label: "Nuzlocke Generator" },
     { href: "/draft-league-generator", label: "Draft League Generator" },
-    { href: "/pokemon-quiz", label: "Pokémon Quiz" },
+    { href: "/pokemon-quiz", label: "POKEMON Quiz" },
     { href: "/randomizer-guide", label: "Randomizer Guide" },
     { href: "/guide", label: "How to Use" },
     { href: "/about", label: "About" },
@@ -107,7 +107,7 @@ export default function Header() {
                                 priority
                             />
                             <span className="font-grotesk font-bold text-sm md:text-base text-black uppercase tracking-tight leading-tight">
-                                Random <span className="hidden sm:inline">Pokemon</span><span className="sm:hidden">Pokémon</span>
+                                Random <span className="hidden sm:inline">Pokemon</span><span className="sm:hidden">POKEMON</span>
                             </span>
                         </Link>
 

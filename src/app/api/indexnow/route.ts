@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const INDEXNOW_API_KEY = "9e3d3f10ba6f48ed8833d1118262842d";
+const INDEXNOW_API_KEY = "fabd63cb7a4b4d3988f87e8cbdbc11f6";
 const SITE_HOST = "www.randompokemon.co";
 const SITE_URL = `https://${SITE_HOST}`;
 const KEY_LOCATION = `${SITE_URL}/${INDEXNOW_API_KEY}.txt`;

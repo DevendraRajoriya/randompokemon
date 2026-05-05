@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { AlertTriangle, Shield, Scale, FileText, ArrowLeft } from "lucide-react";
 
@@ -54,10 +54,10 @@ export default function DisclaimerPage() {
           <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">COPYRIGHT</span></div>
           <div className="flex items-center gap-2 mb-6"><Scale size={18} className="text-black" /><h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] uppercase">COPYRIGHT NOTICE</h2></div>
           <div className="space-y-3 font-mono text-xs md:text-sm text-charcoal leading-relaxed">
-            <p><strong className="text-black">Pokémon™</strong> and all related content including character names, designs, images, sprites, artwork, logos, and trademarks are © 1995-2026 <strong className="text-black">Nintendo / Creatures Inc. / GAME FREAK inc.</strong></p>
-            <p>The following are registered trademarks of Nintendo and The Pokémon Company:</p>
+            <p><strong className="text-black">POKEMON™</strong> and all related content including character names, designs, images, sprites, artwork, logos, and trademarks are © 1995-2026 <strong className="text-black">Nintendo / Creatures Inc. / GAME FREAK inc.</strong></p>
+            <p>The following are registered trademarks of Nintendo and The POKEMON Company:</p>
             <ul className="border-l-4 border-black pl-6 space-y-1">
-              <li>• Pokémon® (ポケモン)</li>
+              <li>• POKEMON® (ポケモン)</li>
               <li>• All Pokemon character names (Pikachu™, Charizard™, Mewtwo™, etc.)</li>
               <li>• Pokédex™</li>
               <li>• All official Pokemon game titles (Red through Scarlet/Violet)</li>
@@ -79,7 +79,7 @@ export default function DisclaimerPage() {
             <div className="bg-white border-2 border-black p-4 slasher">
               <h3 className="font-mono font-bold text-sm text-black uppercase mb-3">WE ARE NOT:</h3>
               <div className="space-y-1">
-                {["Affiliated with Nintendo Co., Ltd.", "Endorsed by The Pokémon Company", "Sponsored by Creatures Inc.", "Approved by GAME FREAK inc.", "Representing any official Pokemon products or services", "Selling Pokemon-related products or services", "Making any profit from Pokemon intellectual property"].map(item => (
+                {["Affiliated with Nintendo Co., Ltd.", "Endorsed by The POKEMON Company", "Sponsored by Creatures Inc.", "Approved by GAME FREAK inc.", "Representing any official Pokemon products or services", "Selling Pokemon-related products or services", "Making any profit from Pokemon intellectual property"].map(item => (
                   <div key={item} className="flex items-start gap-2">
                     <span className="text-black font-bold">✗</span>
                     <span>{item}</span>
@@ -151,7 +151,7 @@ export default function DisclaimerPage() {
           <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-4"><span className="font-mono text-xs font-bold text-white uppercase tracking-widest">DMCA</span></div>
           <h2 className="font-grotesk font-bold text-3xl sm:text-4xl text-black leading-[0.9] mb-6 uppercase">COPYRIGHT COMPLIANCE</h2>
           <div className="space-y-3 font-mono text-xs md:text-sm text-charcoal leading-relaxed">
-            <p>We respect intellectual property rights. If you are a representative of Nintendo, The Pokémon Company, Creatures Inc., or GAME FREAK inc. and have concerns, please contact us immediately.</p>
+            <p>We respect intellectual property rights. If you are a representative of Nintendo, The POKEMON Company, Creatures Inc., or GAME FREAK inc. and have concerns, please contact us immediately.</p>
             <div className="bg-white border-2 border-black p-4 slasher">
               <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">TAKEDOWN REQUESTS</h3>
               <p className="mb-2">Send DMCA takedown notices to:</p>

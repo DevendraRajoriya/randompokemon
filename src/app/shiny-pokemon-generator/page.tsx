@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Sparkles, ArrowLeft } from "lucide-react";
@@ -84,7 +84,7 @@ export default function ShinyPokemonGeneratorPage() {
 
         <PokemonSpotlight
           pokemon={SHINY_SPOTLIGHT}
-          heading="Most-Hunted Shiny Pokémon"
+          heading="Most-Hunted Shiny POKEMON"
           badge="BEST SHINIES"
         />
 

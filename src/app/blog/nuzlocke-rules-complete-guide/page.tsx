@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -32,15 +32,15 @@ export default function NuzlockeRulesGuide() {
           </h1>
           <p className="font-mono text-xs text-charcoal mb-6">10 min read · Updated May 2026</p>
           <p className="font-mono text-sm text-charcoal leading-relaxed border-l-4 border-black pl-4">
-            The Nuzlocke challenge transforms any Pokémon game into a tense, emotionally charged experience. Two core rules create this shift — but the community has developed dozens of amendments that let you tune the difficulty precisely. This guide explains everything from the base rules to optional clauses, so you can set up your first run correctly.
+            The Nuzlocke challenge transforms any POKEMON game into a tense, emotionally charged experience. Two core rules create this shift — but the community has developed dozens of amendments that let you tune the difficulty precisely. This guide explains everything from the base rules to optional clauses, so you can set up your first run correctly.
           </p>
         </header>
 
         <section className="mb-10">
           <h2 className="font-grotesk font-bold text-2xl text-black uppercase mb-4">The Origin of Nuzlocke</h2>
-          <p className="font-mono text-sm text-charcoal leading-relaxed mb-4">The Nuzlocke challenge was created in 2010 by a webcomic artist who documented a brutally difficult FireRed playthrough under self-imposed rules. The name comes from the comic&apos;s protagonist — a Nuzleaf nicknamed &quot;Nuzlocke&quot; that became symbolic of the run&apos;s brutal early-game losses. The challenge went viral, spawned thousands of community runs, and is now one of the most popular ways to replay Pokémon games.</p>
+          <p className="font-mono text-sm text-charcoal leading-relaxed mb-4">The Nuzlocke challenge was created in 2010 by a webcomic artist who documented a brutally difficult FireRed playthrough under self-imposed rules. The name comes from the comic&apos;s protagonist — a Nuzleaf nicknamed &quot;Nuzlocke&quot; that became symbolic of the run&apos;s brutal early-game losses. The challenge went viral, spawned thousands of community runs, and is now one of the most popular ways to replay POKEMON games.</p>
           <p className="font-mono text-sm text-charcoal leading-relaxed mb-4">The original rules were simple — just permadeath and first-encounter. Everything else in this guide is optional, added by the community over 15 years of iteration. The beauty of the Nuzlocke is that you can tune the difficulty precisely to your skill level by choosing which amendments to include.</p>
-          <p className="font-mono text-sm text-charcoal leading-relaxed">Today, the Nuzlocke community is one of the largest in competitive gaming culture. Streamers, YouTubers, and casual players run thousands of Nuzlockes per month across every Pokémon game ever released. The format&apos;s emotional stakes make it one of the most entertaining formats to watch and play.</p>
+          <p className="font-mono text-sm text-charcoal leading-relaxed">Today, the Nuzlocke community is one of the largest in competitive gaming culture. Streamers, YouTubers, and casual players run thousands of Nuzlockes per month across every POKEMON game ever released. The format&apos;s emotional stakes make it one of the most entertaining formats to watch and play.</p>
         </section>
 
         <section className="mb-10">
@@ -49,21 +49,21 @@ export default function NuzlockeRulesGuide() {
           <div className="space-y-5">
             <div className="bg-white border-2 border-black slasher p-5 md:p-6">
               <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">Rule 1: Permadeath</h3>
-              <p className="font-mono text-sm text-charcoal leading-relaxed mb-3">If a Pokémon faints, it is considered dead. It must be released — or permanently boxed, depending on your preference. No revives, no second chances. A fainted Pokémon never participates in battle again for the rest of the run.</p>
+              <p className="font-mono text-sm text-charcoal leading-relaxed mb-3">If a POKEMON faints, it is considered dead. It must be released — or permanently boxed, depending on your preference. No revives, no second chances. A fainted POKEMON never participates in battle again for the rest of the run.</p>
               <div className="bg-black/5 border-l-4 border-black px-3 py-2">
                 <p className="font-mono text-xs text-charcoal"><strong>Why it works:</strong> This is the defining rule. It turns every wild battle and trainer fight into a risk calculation. Losing a team member you&apos;ve trained for 10 hours is genuinely painful — and that emotional weight is what makes the Nuzlocke format so compelling.</p>
               </div>
             </div>
             <div className="bg-white border-2 border-black slasher p-5 md:p-6">
               <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">Rule 2: First Encounter Only</h3>
-              <p className="font-mono text-sm text-charcoal leading-relaxed mb-3">On each route or area, you may only catch the first wild Pokémon you encounter. If it faints or flees before you can catch it, you get nothing from that route. This applies to every area — caves, water routes, buildings with wild encounters, and all outdoor routes.</p>
+              <p className="font-mono text-sm text-charcoal leading-relaxed mb-3">On each route or area, you may only catch the first wild POKEMON you encounter. If it faints or flees before you can catch it, you get nothing from that route. This applies to every area — caves, water routes, buildings with wild encounters, and all outdoor routes.</p>
               <div className="bg-black/5 border-l-4 border-black px-3 py-2">
-                <p className="font-mono text-xs text-charcoal"><strong>Why it works:</strong> Forces variety. You can&apos;t grind a specific Pokémon — you get what you get. This creates attachment to unexpected Pokémon and makes every catch meaningful. It also prevents the common cheating behaviour of soft-resetting for better first encounters.</p>
+                <p className="font-mono text-xs text-charcoal"><strong>Why it works:</strong> Forces variety. You can&apos;t grind a specific POKEMON — you get what you get. This creates attachment to unexpected POKEMON and makes every catch meaningful. It also prevents the common cheating behaviour of soft-resetting for better first encounters.</p>
               </div>
             </div>
             <div className="bg-white border-2 border-black slasher p-5 md:p-6">
               <h3 className="font-mono font-bold text-sm text-black uppercase mb-2">Rule 3: Nicknames (Strongly Recommended)</h3>
-              <p className="font-mono text-sm text-charcoal leading-relaxed mb-3">Give every Pokémon a nickname immediately upon catching it. This is technically optional in the original rules but is universally recommended by the community and used by virtually every Nuzlocke player. Nickname before the first battle, not after several.</p>
+              <p className="font-mono text-sm text-charcoal leading-relaxed mb-3">Give every POKEMON a nickname immediately upon catching it. This is technically optional in the original rules but is universally recommended by the community and used by virtually every Nuzlocke player. Nickname before the first battle, not after several.</p>
               <div className="bg-black/5 border-l-4 border-black px-3 py-2">
                 <p className="font-mono text-xs text-charcoal"><strong>Why it works:</strong> Nicknames create emotional investment. Losing &quot;Percy the Geodude&quot; hits differently than losing &quot;Geodude #4&quot;. The psychological impact of permadeath is dramatically amplified by nicknames — which is the whole point.</p>
               </div>
@@ -94,14 +94,14 @@ export default function NuzlockeRulesGuide() {
                 <h3 className="font-mono font-bold text-sm text-black uppercase">Shiny Clause</h3>
                 <span className="font-mono text-[9px] bg-green-600 text-white px-2 py-0.5 uppercase tracking-widest">Recommended</span>
               </div>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">If you encounter a shiny Pokémon, you may catch it regardless of whether it&apos;s your first encounter on that route. Almost universally adopted by the community — turning down a shiny in a Nuzlocke because of the first-encounter rule feels unfair to most players.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">If you encounter a shiny POKEMON, you may catch it regardless of whether it&apos;s your first encounter on that route. Almost universally adopted by the community — turning down a shiny in a Nuzlocke because of the first-encounter rule feels unfair to most players.</p>
             </div>
             <div className="border-2 border-black p-4">
               <div className="flex items-center gap-3 mb-2">
                 <h3 className="font-mono font-bold text-sm text-black uppercase">Set Mode</h3>
                 <span className="font-mono text-[9px] bg-green-600 text-white px-2 py-0.5 uppercase tracking-widest">Recommended</span>
               </div>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">Set the battle mode to &quot;Set&quot; instead of &quot;Switch&quot; in the Options menu. This means the AI does not give you a warning before sending out the next Pokémon — removing a free switch between kills. Standard Nuzlocke etiquette requires this setting to prevent exploiting the free switch for type advantage on every knock-out.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">Set the battle mode to &quot;Set&quot; instead of &quot;Switch&quot; in the Options menu. This means the AI does not give you a warning before sending out the next POKEMON — removing a free switch between kills. Standard Nuzlocke etiquette requires this setting to prevent exploiting the free switch for type advantage on every knock-out.</p>
             </div>
             <div className="border-2 border-black p-4">
               <div className="flex items-center gap-3 mb-2">
@@ -115,7 +115,7 @@ export default function NuzlockeRulesGuide() {
                 <h3 className="font-mono font-bold text-sm text-black uppercase">Level Cap</h3>
                 <span className="font-mono text-[9px] bg-black/20 text-black px-2 py-0.5 uppercase tracking-widest">Optional</span>
               </div>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">Your Pokémon cannot exceed the level of the next gym leader&apos;s ace Pokémon. Prevents over-levelling your way past challenges by grinding endlessly on wild Pokémon. This amendment is popular in the competitive community but adds significant micromanagement to each route.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">Your POKEMON cannot exceed the level of the next gym leader&apos;s ace POKEMON. Prevents over-levelling your way past challenges by grinding endlessly on wild POKEMON. This amendment is popular in the competitive community but adds significant micromanagement to each route.</p>
             </div>
           </div>
         </section>
@@ -149,13 +149,13 @@ export default function NuzlockeRulesGuide() {
               <span className="font-grotesk font-bold text-xl text-black/20 flex-shrink-0 w-6">4</span>
               <div>
                 <p className="font-mono font-bold text-xs text-black uppercase mb-1">Nickname everything immediately</p>
-                <p className="font-mono text-xs text-charcoal leading-relaxed">Don&apos;t wait. Nickname your first Pokémon before the first random encounter. It builds attachment before the losses start. The emotional weight of permadeath is what makes the format work — nicknames are the key mechanism that creates that weight.</p>
+                <p className="font-mono text-xs text-charcoal leading-relaxed">Don&apos;t wait. Nickname your first POKEMON before the first random encounter. It builds attachment before the losses start. The emotional weight of permadeath is what makes the format work — nicknames are the key mechanism that creates that weight.</p>
               </div>
             </li>
             <li className="flex gap-4 border-2 border-black/10 bg-white p-4">
               <span className="font-grotesk font-bold text-xl text-black/20 flex-shrink-0 w-6">5</span>
               <div>
-                <p className="font-mono font-bold text-xs text-black uppercase mb-1">Use the Pokémon Generator to plan coverage</p>
+                <p className="font-mono font-bold text-xs text-black uppercase mb-1">Use the POKEMON Generator to plan coverage</p>
                 <p className="font-mono text-xs text-charcoal leading-relaxed">Before each gym, use our generator to see what type coverage you might be missing and plan your next route catch accordingly. Knowing which type you need before entering a route dramatically reduces the chance of getting a useless first encounter.</p>
               </div>
             </li>
@@ -166,8 +166,8 @@ export default function NuzlockeRulesGuide() {
           <h2 className="font-grotesk font-bold text-2xl text-black uppercase mb-4">FAQ</h2>
           <div className="space-y-4">
             <div className="border-2 border-black p-4">
-              <h3 className="font-mono font-bold text-sm text-black mb-2">Do you have to release fainted Pokémon?</h3>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">Releasing is traditional, but &quot;permadeath&quot; can mean permanently boxed and never used again. Both are valid — the community uses both interpretations. The key is that fainted Pokémon never return to battle. Many players prefer boxing to releasing because it preserves the memory of fallen teammates.</p>
+              <h3 className="font-mono font-bold text-sm text-black mb-2">Do you have to release fainted POKEMON?</h3>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">Releasing is traditional, but &quot;permadeath&quot; can mean permanently boxed and never used again. Both are valid — the community uses both interpretations. The key is that fainted POKEMON never return to battle. Many players prefer boxing to releasing because it preserves the memory of fallen teammates.</p>
             </div>
             <div className="border-2 border-black p-4">
               <h3 className="font-mono font-bold text-sm text-black mb-2">What happens if your whole team faints?</h3>
@@ -175,15 +175,15 @@ export default function NuzlockeRulesGuide() {
             </div>
             <div className="border-2 border-black p-4">
               <h3 className="font-mono font-bold text-sm text-black mb-2">Can you use the PC box?</h3>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">Yes, but Pokémon in the box are still &quot;alive.&quot; You can rotate team members freely between battles — just not mid-battle. Many players use the box strategically to rest injured Pokémon before gym fights and bring in fresh team members for difficult encounters.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">Yes, but POKEMON in the box are still &quot;alive.&quot; You can rotate team members freely between battles — just not mid-battle. Many players use the box strategically to rest injured POKEMON before gym fights and bring in fresh team members for difficult encounters.</p>
             </div>
             <div className="border-2 border-black p-4">
               <h3 className="font-mono font-bold text-sm text-black mb-2">Is there an official Nuzlocke mode in any game?</h3>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">No. The Nuzlocke is a community challenge enforced by the player. Some ROM hacks (like Nuzlocke Plus) build it into the game itself with automatic handling of the rules. Mainline Pokémon games have never officially acknowledged the Nuzlocke format despite its enormous popularity.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">No. The Nuzlocke is a community challenge enforced by the player. Some ROM hacks (like Nuzlocke Plus) build it into the game itself with automatic handling of the rules. Mainline POKEMON games have never officially acknowledged the Nuzlocke format despite its enormous popularity.</p>
             </div>
             <div className="border-2 border-black p-4">
               <h3 className="font-mono font-bold text-sm text-black mb-2">What is the easiest Nuzlocke to complete as a beginner?</h3>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">Pokémon Sun or Moon with standard rules (permadeath, first encounter, nicknames) and no optional clauses. The EXP Share makes early grinding less punishing, the level curve is gentle, and the totem Pokémon fights give warning before major spikes. Avoid Platinum and HGSS for your first attempt.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">POKEMON Sun or Moon with standard rules (permadeath, first encounter, nicknames) and no optional clauses. The EXP Share makes early grinding less punishing, the level curve is gentle, and the totem POKEMON fights give warning before major spikes. Avoid Platinum and HGSS for your first attempt.</p>
             </div>
           </div>
         </section>
@@ -201,15 +201,15 @@ export default function NuzlockeRulesGuide() {
             </Link>
             <Link href="/blog/monotype-challenge-guide" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Challenge Runs</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Monotype Challenge Guide — Every Type Ranked</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">POKEMON Monotype Challenge Guide — Every Type Ranked</p>
             </Link>
             <Link href="/blog/how-to-build-draft-league-pokemon-team" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Competitive</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League Pokémon Team</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League POKEMON Team</p>
             </Link>
             <Link href="/blog/pokemon-randomizer-tips-beginners" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Randomizer</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Randomizer Tips &amp; Tricks for Beginners</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">POKEMON Randomizer Tips &amp; Tricks for Beginners</p>
             </Link>
           </div>
         </section>

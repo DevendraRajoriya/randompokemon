@@ -1,4 +1,4 @@
-export default function Loading() {
+﻿export default function Loading() {
     return (
         <div className="min-h-screen bg-cream flex items-center justify-center p-4">
             <div className="text-center animate-fade-in">
@@ -13,7 +13,7 @@ export default function Loading() {
                     </p>
                 </div>
                 <p className="font-mono text-xs text-charcoal/60">
-                    Fetching Pokémon data
+                    Fetching POKEMON data
                 </p>
             </div>
         </div>

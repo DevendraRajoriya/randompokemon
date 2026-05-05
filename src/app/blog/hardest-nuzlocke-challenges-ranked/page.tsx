@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -33,7 +33,7 @@ export default function HardestNuzlockeGuide() {
           </h1>
           <p className="font-mono text-xs text-charcoal mb-6">15 min read · Updated May 2026</p>
           <p className="font-mono text-sm text-charcoal leading-relaxed border-l-4 border-black pl-4">
-            Not all Nuzlockes are created equal. Pokémon Emerald Kaizo and Black 2 Challenge Mode can kill a perfect run in a single turn. Meanwhile, Sun &amp; Moon is genuinely beatable on your first attempt. This guide ranks every major Nuzlocke difficulty — standard games and ROM hacks — so you know what you&apos;re walking into.
+            Not all Nuzlockes are created equal. POKEMON Emerald Kaizo and Black 2 Challenge Mode can kill a perfect run in a single turn. Meanwhile, Sun &amp; Moon is genuinely beatable on your first attempt. This guide ranks every major Nuzlocke difficulty — standard games and ROM hacks — so you know what you&apos;re walking into.
           </p>
         </header>
 
@@ -58,9 +58,9 @@ export default function HardestNuzlockeGuide() {
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">S — Unfair</span>
               </div>
               <div className="flex flex-wrap gap-2 mb-3">
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Emerald Kaizo</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Emerald Kaizo</span>
                 <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Radical Red (Hardcore Mode)</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Unbound (Insane Mode)</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Unbound (Insane Mode)</span>
               </div>
               <p className="font-mono text-sm text-charcoal leading-relaxed">These are ROM hacks designed to kill you. Gym leaders carry full EV-trained, IV-perfect teams with held items, set mode, and species-perfect movesets. Emerald Kaizo&apos;s Brawly alone has caused thousands of run-ending wipes with his Bulk Up Fighting team. Not recommended for anyone without 10+ completed standard Nuzlockes. These runs take weeks to complete and many players never finish them at all.</p>
             </div>
@@ -69,20 +69,20 @@ export default function HardestNuzlockeGuide() {
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">A — Very Hard</span>
               </div>
               <div className="flex flex-wrap gap-2 mb-3">
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Black 2 / White 2 (Challenge Mode)</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Platinum</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon HeartGold / SoulSilver</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Black 2 / White 2 (Challenge Mode)</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Platinum</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON HeartGold / SoulSilver</span>
               </div>
-              <p className="font-mono text-sm text-charcoal leading-relaxed">Black 2 Challenge Mode raises all trainer Pokémon 5 levels above normal, adds held items to all gym leaders, and the post-game Unova Champion has a team that would be respectable in competitive play. HGSS has Whitney&apos;s Miltank — the single most infamous Nuzlocke death dealer in history — and a severe level curve gap before Morty. Platinum has Cynthia&apos;s Garchomp at level 62, which has ended more Championship runs than any other single fight.</p>
+              <p className="font-mono text-sm text-charcoal leading-relaxed">Black 2 Challenge Mode raises all trainer POKEMON 5 levels above normal, adds held items to all gym leaders, and the post-game Unova Champion has a team that would be respectable in competitive play. HGSS has Whitney&apos;s Miltank — the single most infamous Nuzlocke death dealer in history — and a severe level curve gap before Morty. Platinum has Cynthia&apos;s Garchomp at level 62, which has ended more Championship runs than any other single fight.</p>
             </div>
             <div className="bg-white border-2 border-black slasher p-5 md:p-6">
               <div className="inline-block px-3 py-1 mb-3" style={{ backgroundColor: "#d97706" }}>
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">B — Hard</span>
               </div>
               <div className="flex flex-wrap gap-2 mb-3">
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon FireRed / LeafGreen</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Diamond / Pearl</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Black / White</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON FireRed / LeafGreen</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Diamond / Pearl</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Black / White</span>
               </div>
               <p className="font-mono text-sm text-charcoal leading-relaxed">FireRed has Misty&apos;s Starmie (boosted Sp. Atk in FRLG), Lt. Surge&apos;s Raichu, and the mandatory Rock Tunnel darkness. Black/White&apos;s level curve is steep between gym 5 and 8, and N&apos;s Reshiram/Zekrom fight allows no preparation time whatsoever. Diamond/Pearl&apos;s grinding spots are limited and the late-game Elite Four has significant stat boosts over standard games.</p>
             </div>
@@ -91,9 +91,9 @@ export default function HardestNuzlockeGuide() {
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">C — Moderate</span>
               </div>
               <div className="flex flex-wrap gap-2 mb-3">
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon X / Y</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Sword / Shield (No Dynamax)</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Scarlet / Violet</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON X / Y</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Sword / Shield (No Dynamax)</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Scarlet / Violet</span>
               </div>
               <p className="font-mono text-sm text-charcoal leading-relaxed">Gen 6–9 games have generally forgiving EXP curves, widely available TMs, and lower overall AI quality. The level curve is smooth enough that careful play almost always gets you through without wipes — unless you&apos;re playing Set mode with no items. XY&apos;s mega evolutions can create unexpected difficulty spikes in the late game if you haven&apos;t prepared coverage.</p>
             </div>
@@ -102,11 +102,11 @@ export default function HardestNuzlockeGuide() {
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">D — Beginner Friendly</span>
               </div>
               <div className="flex flex-wrap gap-2 mb-3">
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Emerald (Standard)</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Sun / Moon</span>
-                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">Pokémon Brilliant Diamond / Shining Pearl</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Emerald (Standard)</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Sun / Moon</span>
+                <span className="font-mono text-xs border-2 border-black px-2 py-0.5 bg-cream font-bold">POKEMON Brilliant Diamond / Shining Pearl</span>
               </div>
-              <p className="font-mono text-sm text-charcoal leading-relaxed">Emerald standard has wide move variety and accessible grinding spots. Sun/Moon&apos;s linear pacing makes it easy to track threats, and the EXP Share prevents early team deaths from grinding gaps. BDSP is widely regarded as the easiest main-series game to complete without losing a single Pokémon, even in Nuzlocke, due to the overall low difficulty of trainer teams.</p>
+              <p className="font-mono text-sm text-charcoal leading-relaxed">Emerald standard has wide move variety and accessible grinding spots. Sun/Moon&apos;s linear pacing makes it easy to track threats, and the EXP Share prevents early team deaths from grinding gaps. BDSP is widely regarded as the easiest main-series game to complete without losing a single POKEMON, even in Nuzlocke, due to the overall low difficulty of trainer teams.</p>
             </div>
           </div>
         </section>
@@ -133,14 +133,14 @@ export default function HardestNuzlockeGuide() {
               <div className="font-grotesk font-bold text-3xl text-black/10 flex-shrink-0 w-8">3</div>
               <div>
                 <h3 className="font-mono font-bold text-sm text-black mb-1">The Rock Tunnel (FireRed)</h3>
-                <p className="font-mono text-xs text-charcoal leading-relaxed">No Flash move and mandatory darkness forces you through a long cave with no reliable escape. Running out of PP mid-tunnel has caused countless resets in classic runs. The Rock Tunnel is particularly dangerous because it comes right after Misty, when many players are still building their team, and the wild Pokémon inside are significantly stronger than anything seen before.</p>
+                <p className="font-mono text-xs text-charcoal leading-relaxed">No Flash move and mandatory darkness forces you through a long cave with no reliable escape. Running out of PP mid-tunnel has caused countless resets in classic runs. The Rock Tunnel is particularly dangerous because it comes right after Misty, when many players are still building their team, and the wild POKEMON inside are significantly stronger than anything seen before.</p>
               </div>
             </div>
             <div className="flex gap-4 border-2 border-black p-4">
               <div className="font-grotesk font-bold text-3xl text-black/10 flex-shrink-0 w-8">4</div>
               <div>
                 <h3 className="font-mono font-bold text-sm text-black mb-1">Ghetsis&apos; Hydreigon (Black/White)</h3>
-                <p className="font-mono text-xs text-charcoal leading-relaxed">Arrives at level 52 when your team is ~48-50. Dragon Rage hits flat 40 HP regardless of level. Many players lose their entire team here with no warning or preparation window. The fight with Ghetsis comes immediately after N&apos;s legendary fight with no chance to heal between, making it the most punishing forced double battle in mainline Pokémon.</p>
+                <p className="font-mono text-xs text-charcoal leading-relaxed">Arrives at level 52 when your team is ~48-50. Dragon Rage hits flat 40 HP regardless of level. Many players lose their entire team here with no warning or preparation window. The fight with Ghetsis comes immediately after N&apos;s legendary fight with no chance to heal between, making it the most punishing forced double battle in mainline POKEMON.</p>
               </div>
             </div>
             <div className="flex gap-4 border-2 border-black p-4">
@@ -161,14 +161,14 @@ export default function HardestNuzlockeGuide() {
               <span className="font-grotesk font-bold text-xl text-black/20 flex-shrink-0">1</span>
               <div>
                 <span className="font-mono font-bold text-xs text-black uppercase block mb-1">First Nuzlocke</span>
-                <span className="font-mono text-xs text-charcoal">Pokémon Emerald or Sun/Moon — forgiving curves, good move availability, wide route variety. Use Dupes Clause and Shiny Clause. Skip level cap. Complete the run without optional amendments first.</span>
+                <span className="font-mono text-xs text-charcoal">POKEMON Emerald or Sun/Moon — forgiving curves, good move availability, wide route variety. Use Dupes Clause and Shiny Clause. Skip level cap. Complete the run without optional amendments first.</span>
               </div>
             </li>
             <li className="flex gap-4 bg-white border-2 border-black/10 p-4">
               <span className="font-grotesk font-bold text-xl text-black/20 flex-shrink-0">2</span>
               <div>
                 <span className="font-mono font-bold text-xs text-black uppercase block mb-1">Second run</span>
-                <span className="font-mono text-xs text-charcoal">Pokémon Platinum — introduces the real difficulty ceiling of mainline games without being unfair. The Cynthia fight is your first genuine test of careful team management under pressure.</span>
+                <span className="font-mono text-xs text-charcoal">POKEMON Platinum — introduces the real difficulty ceiling of mainline games without being unfair. The Cynthia fight is your first genuine test of careful team management under pressure.</span>
               </div>
             </li>
             <li className="flex gap-4 bg-white border-2 border-black/10 p-4">
@@ -208,15 +208,15 @@ export default function HardestNuzlockeGuide() {
             </Link>
             <Link href="/blog/monotype-challenge-guide" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Challenge Runs</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Monotype Challenge Guide — Every Type Ranked</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">POKEMON Monotype Challenge Guide — Every Type Ranked</p>
             </Link>
             <Link href="/blog/how-to-build-draft-league-pokemon-team" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Competitive</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League Pokémon Team</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League POKEMON Team</p>
             </Link>
             <Link href="/blog/pokemon-randomizer-tips-beginners" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Randomizer</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Randomizer Tips &amp; Tricks for Beginners</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">POKEMON Randomizer Tips &amp; Tricks for Beginners</p>
             </Link>
           </div>
         </section>

@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,8 +25,8 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Johto Pokemon Generator | Gen 2 Random Team Builder (Gold/Silver/Crystal)",
-  description: "Generate random Johto Pokemon teams from Generation 2 (#152-251). Gold, Silver & Crystal including Lugia, Ho-Oh and the Legendary Beasts. Free online team builder. Updated 2026.",
+  title: "Johto Pokemon Generator | Gen 2 Random Team Builder",
+  description: "Generate random Johto Pokemon teams from Gen 2 (#152-251). Gold, Silver & Crystal — featuring Lugia, Ho-Oh, the Legendary Beasts & 100 new species. Free team builder.",
   keywords: ["johto pokemon generator", "gen 2 random team generator", "johto pokemon team builder", "gold silver team generator", "johto randomizer", "gen 2 nuzlocke generator", "heartgold soulsilver team builder", "johto pokemon picker"],
   alternates: { canonical: `${siteUrl}/johto-pokemon-generator` },
   openGraph: { title: "Johto Pokemon Generator | Gen 2 Random Team Builder", description: "Generate random Johto Pokemon from Gen 2! Gold, Silver & Crystal.", url: `${siteUrl}/johto-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Johto Pokemon Generator" }] },
@@ -84,7 +84,7 @@ export default function JohtoPokemonGeneratorPage() {
 
         <PokemonSpotlight
           pokemon={JOHTO_SPOTLIGHT}
-          heading="Iconic Johto Pokémon"
+          heading="Iconic Johto POKEMON"
           badge="GEN II"
         />
 

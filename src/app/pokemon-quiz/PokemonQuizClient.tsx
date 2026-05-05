@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -274,7 +274,7 @@ export default function PokemonQuizClient() {
 
   const handleShare = async () => {
     if (!result) return;
-    const text = `I took the Pokémon Quiz and I'm ${result.name}! ${result.personality}\n\nFind out which Pokémon you are → https://www.randompokemon.co/pokemon-quiz`;
+    const text = `I took the POKEMON Quiz and I'm ${result.name}! ${result.personality}\n\nFind out which POKEMON you are → https://www.randompokemon.co/pokemon-quiz`;
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
@@ -296,10 +296,10 @@ export default function PokemonQuizClient() {
           <div className="p-6 sm:p-10 text-center">
             <div className="text-6xl sm:text-7xl mb-6">🎴</div>
             <h2 className="font-grotesk font-black text-2xl sm:text-3xl text-black uppercase mb-3">
-              Which Pokémon Are You?
+              Which POKEMON Are You?
             </h2>
             <p className="font-mono text-sm text-charcoal leading-relaxed mb-8 max-w-md mx-auto">
-              Answer 10 questions honestly and discover which of <strong className="text-black">11 iconic Pokémon</strong> matches your personality — from Charizard to Eevee.
+              Answer 10 questions honestly and discover which of <strong className="text-black">11 iconic POKEMON</strong> matches your personality — from Charizard to Eevee.
             </p>
             <div className="grid grid-cols-3 gap-3 mb-8">
               {[
@@ -492,7 +492,7 @@ export default function PokemonQuizClient() {
           <div className="grid grid-cols-2 gap-2">
             <Link href={`/pokedex?type=${result.typeSlug}`}
               className="font-mono text-xs font-bold px-4 py-3 border-2 border-black bg-white hover:bg-black hover:text-white transition-all text-center slasher">
-              All {result.typeSlug} Pokémon →
+              All {result.typeSlug} POKEMON →
             </Link>
             <Link href="/"
               className="font-mono text-xs font-bold px-4 py-3 border-2 border-black bg-black text-white hover:bg-charcoal transition-all text-center slasher">

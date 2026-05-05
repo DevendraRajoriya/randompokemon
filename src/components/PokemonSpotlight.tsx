@@ -1,7 +1,7 @@
-/**
+﻿/**
  * PokemonSpotlight — server component, zero JS, fully SSR'd
  *
- * Renders a static grid of Pokémon cards linking to /pokemon/[slug].
+ * Renders a static grid of POKEMON cards linking to /pokemon/[slug].
  * Each generator page passes its own curated spotlight list so Googlebot
  * sees contextually-relevant /pokemon/* links in the static HTML.
  */
@@ -33,7 +33,7 @@ const LIGHT_BG_TYPES = new Set(["electric", "normal", "ground", "fairy", "ice", 
 
 export default function PokemonSpotlight({
   pokemon,
-  heading = "Featured Pokémon",
+  heading = "Featured POKEMON",
   badge = "SPOTLIGHT",
 }: Props) {
   if (!pokemon.length) return null;
@@ -98,7 +98,7 @@ export default function PokemonSpotlight({
                   />
                   <Image
                     src={sprite}
-                    alt={`${p.name} — ${p.types.join("/")} type Pokémon`}
+                    alt={`${p.name} — ${p.types.join("/")} type POKEMON`}
                     fill
                     sizes="(max-width: 640px) 44vw, (max-width: 1024px) 22vw, 18vw"
                     className="object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300 p-1"

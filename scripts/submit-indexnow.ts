@@ -4,20 +4,19 @@
  * Run this script after deploying to submit all URLs to IndexNow.
  * Usage: npx tsx scripts/submit-indexnow.ts
  * 
- * Or target your deployed site directly:
- * npx tsx scripts/submit-indexnow.ts --production
+ * To test against localhost:
+ * npx tsx scripts/submit-indexnow.ts --local
  */
 
 const SITE_URL = "https://www.randompokemon.co";
-const LOCAL_URL = "http://localhost:3000";
 const SUBMIT_SECRET = process.env.INDEXNOW_SUBMIT_SECRET || "pokegen-indexnow-submit-2026";
 
 async function main() {
-  const isProduction = process.argv.includes("--production");
-  const baseUrl = isProduction ? SITE_URL : LOCAL_URL;
+  const isLocal = process.argv.includes("--local");
+  const baseUrl = isLocal ? "http://localhost:3000" : SITE_URL;
 
   console.log(`\n🔍 IndexNow URL Submission`);
-  console.log(`📍 Target: ${baseUrl}`);
+  console.log(`📍 Target: ${baseUrl}${isLocal ? " (LOCAL)" : " (PRODUCTION)"}`);
   console.log(`⏰ Time: ${new Date().toISOString()}\n`);
 
   try {

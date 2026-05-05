@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -84,7 +84,7 @@ export default function KantoPokemonGeneratorPage() {
 
         <PokemonSpotlight
           pokemon={KANTO_SPOTLIGHT}
-          heading="Iconic Kanto Pokémon"
+          heading="Iconic Kanto POKEMON"
           badge="GEN I"
         />
 

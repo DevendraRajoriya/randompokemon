@@ -1,4 +1,4 @@
-import { Share2, Download } from 'lucide-react';
+﻿import { Share2, Download } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -26,7 +26,7 @@ export default function CardShowcase() {
             </span>
           </h2>
           <p className="font-mono text-charcoal text-base md:text-lg leading-relaxed border-l-4 border-black pl-6 animate-fade-in">
-            Turn any generated Pokémon into a high-resolution collectible card. Perfect for
+            Turn any generated POKEMON into a high-resolution collectible card. Perfect for
             sharing your Nuzlocke encounters or dream team on social media.
           </p>
 

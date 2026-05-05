@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 
@@ -26,13 +26,13 @@ export default function SeoContent() {
         </h2>
         <div className="space-y-4">
           <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
-            Whether you&apos;re planning a Nuzlocke, building a Draft League roster, or just want to discover Pokémon you&apos;ve never used before — this tool generates random teams instantly, with no ads, no sign-up, and no friction. It covers every mainline game from Red &amp; Blue through Scarlet &amp; Violet, and will support Legends: Z-A on day one.
+            Whether you&apos;re planning a Nuzlocke, building a Draft League roster, or just want to discover POKEMON you&apos;ve never used before — this tool generates random teams instantly, with no ads, no sign-up, and no friction. It covers every mainline game from Red &amp; Blue through Scarlet &amp; Violet, and will support Legends: Z-A on day one.
           </p>
           <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
-            All 1,025 species are included: base forms, regional variants (Alolan, Galarian, Hisuian, Paldean), Paradox Pokémon, Mega Evolutions, and Gigantamax forms. Use the filters to narrow by type, generation, or rarity — or leave everything open and embrace the chaos.
+            All 1,025 species are included: base forms, regional variants (Alolan, Galarian, Hisuian, Paldean), Paradox POKEMON, Mega Evolutions, and Gigantamax forms. Use the filters to narrow by type, generation, or rarity — or leave everything open and embrace the chaos.
           </p>
           <p className="font-mono text-charcoal text-xs md:text-sm leading-relaxed border-l-4 border-black pl-6">
-            The database syncs with new releases within 48 hours of launch. If Game Freak ships a new form or a DLC Pokémon, it shows up here without you having to do anything.
+            The database syncs with new releases within 48 hours of launch. If Game Freak ships a new form or a DLC POKEMON, it shows up here without you having to do anything.
           </p>
         </div>
       </section>

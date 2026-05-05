@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import PokemonQuizClient from "./PokemonQuizClient";
@@ -148,7 +148,7 @@ export default function PokemonQuizPage() {
             <ol className="flex items-center gap-2 font-mono text-xs text-charcoal flex-wrap">
               <li><Link href="/" className="hover:text-black transition-colors flex items-center gap-1"><ArrowLeft className="w-3 h-3" /> Home</Link></li>
               <li className="text-black/30">/</li>
-              <li className="text-black font-bold">Pokémon Quiz</li>
+              <li className="text-black font-bold">POKEMON Quiz</li>
             </ol>
           </nav>
 
@@ -158,11 +158,11 @@ export default function PokemonQuizPage() {
               <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">PERSONALITY QUIZ</span>
             </div>
             <h1 className="font-grotesk font-black text-4xl sm:text-5xl md:text-6xl text-black uppercase tracking-tight leading-none mb-3">
-              WHAT POKÉMON<br className="hidden sm:block" /> ARE YOU?
+              WHAT POKEMON<br className="hidden sm:block" /> ARE YOU?
             </h1>
             <p className="font-mono text-xs sm:text-sm text-charcoal max-w-xl mx-auto leading-relaxed">
-              The original <strong className="text-black">Pokémon quiz</strong> — answer 10 personality questions
-              and discover which Pokémon you truly are. No right or wrong answers.
+              The original <strong className="text-black">POKEMON quiz</strong> — answer 10 personality questions
+              and discover which POKEMON you truly are. No right or wrong answers.
             </p>
           </div>
 
@@ -176,17 +176,17 @@ export default function PokemonQuizPage() {
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">ABOUT THIS QUIZ</span>
               </div>
               <h2 className="font-grotesk font-black text-2xl sm:text-3xl text-black uppercase mb-4">
-                What Pokémon Am I?
+                What POKEMON Am I?
               </h2>
               <div className="space-y-3 font-mono text-sm text-charcoal leading-relaxed">
                 <p>
-                  The <strong className="text-black">"What Pokémon are you?"</strong> question is one of the most popular personality
-                  questions among fans. Our Pokémon quiz uses a 10-question personality scoring system to match
-                  you with one of <strong className="text-black">11 iconic Pokémon</strong> — each representing a distinct personality archetype.
+                  The <strong className="text-black">"What POKEMON are you?"</strong> question is one of the most popular personality
+                  questions among fans. Our POKEMON quiz uses a 10-question personality scoring system to match
+                  you with one of <strong className="text-black">11 iconic POKEMON</strong> — each representing a distinct personality archetype.
                 </p>
                 <p>
-                  Unlike random quizzes, our <strong className="text-black">Pokémon personality quiz</strong> assigns weighted points
-                  to different Pokémon types based on your answers. At the end, your dominant type
+                  Unlike random quizzes, our <strong className="text-black">POKEMON personality quiz</strong> assigns weighted points
+                  to different POKEMON types based on your answers. At the end, your dominant type
                   determines your result — so every answer genuinely matters.
                 </p>
               </div>
@@ -197,7 +197,7 @@ export default function PokemonQuizPage() {
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">POSSIBLE RESULTS</span>
               </div>
               <h2 className="font-grotesk font-black text-2xl sm:text-3xl text-black uppercase mb-4">
-                Which Pokémon Could You Be?
+                Which POKEMON Could You Be?
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div className="flex items-start gap-3 p-3 border-2 border-black bg-cream">
@@ -253,32 +253,32 @@ export default function PokemonQuizPage() {
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">FAQ</span>
               </div>
               <h2 className="font-grotesk font-black text-2xl sm:text-3xl text-black uppercase mb-4">
-                Pokémon Quiz FAQ
+                POKEMON Quiz FAQ
               </h2>
               <div className="space-y-2">
                 <details className="bg-cream border-2 border-black p-4 slasher group">
-                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What Pokémon are you quiz — how does it work?</summary>
-                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Answer 10 personality questions about your habits, preferences, and values. Each answer adds weighted points to different Pokémon types. Your dominant type at the end reveals your Pokémon match. The scoring system uses cumulative weighting, so every answer genuinely shifts the result.</p>
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What POKEMON are you quiz — how does it work?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Answer 10 personality questions about your habits, preferences, and values. Each answer adds weighted points to different POKEMON types. Your dominant type at the end reveals your POKEMON match. The scoring system uses cumulative weighting, so every answer genuinely shifts the result.</p>
                 </details>
                 <details className="bg-cream border-2 border-black p-4 slasher group">
-                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What Pokémon am I based on my personality?</summary>
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What POKEMON am I based on my personality?</summary>
                   <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Passionate, driven people tend to get Charizard. Calm, adaptive people get Vaporeon. Quick thinkers get Jolteon. Mysterious, loyal people get Umbreon. Empathetic, harmonious types get Sylveon. Disciplined, principled people get Lucario. Curious adventurers often get Eevee or Dragonite. Take the quiz to find your exact match based on your specific answers.</p>
                 </details>
                 <details className="bg-cream border-2 border-black p-4 slasher group">
-                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">Can I retake the Pokémon quiz?</summary>
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">Can I retake the POKEMON quiz?</summary>
                   <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Yes! Click &apos;Retake Quiz&apos; after your result to start fresh with no saved state. Many people enjoy retaking it with different mindsets — answering as their ideal self versus their actual self often gives meaningfully different results that are both revealing in their own way.</p>
                 </details>
                 <details className="bg-cream border-2 border-black p-4 slasher group">
-                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What is the rarest Pokémon quiz result?</summary>
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What is the rarest POKEMON quiz result?</summary>
                   <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Eevee is the rarest result — it represents someone who is genuinely adaptable with truly limitless potential, which is a rare personality profile. Dragonite is the second rarest, representing those who combine great power with genuine, unconditional kindness. Both results require a very specific and uncommon combination of answers to unlock.</p>
                 </details>
                 <details className="bg-cream border-2 border-black p-4 slasher group">
-                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">How accurate is this Pokémon personality quiz?</summary>
-                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">We use a cumulative type-scoring system across 10 questions — each answer shifts point totals for multiple Pokémon simultaneously. For the most accurate result, answer honestly instead of trying to engineer a specific Pokémon. The system is designed so that genuine answers produce meaningful results, while strategic answers often produce generic ones.</p>
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">How accurate is this POKEMON personality quiz?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">We use a cumulative type-scoring system across 10 questions — each answer shifts point totals for multiple POKEMON simultaneously. For the most accurate result, answer honestly instead of trying to engineer a specific POKEMON. The system is designed so that genuine answers produce meaningful results, while strategic answers often produce generic ones.</p>
                 </details>
                 <details className="bg-cream border-2 border-black p-4 slasher group">
-                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What Pokémon am I if I love adventure?</summary>
-                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Adventure lovers usually get Charizard (bold, free-spirited leader who chases challenges) or Dragonite (powerful adventurer with a kind heart). Curious, open-minded explorers who embrace the unknown often get Eevee — the Pokémon of limitless potential that refuses to be defined by a single path.</p>
+                  <summary className="font-mono font-bold text-xs text-black uppercase cursor-pointer group-open:mb-3">What POKEMON am I if I love adventure?</summary>
+                  <p className="font-mono text-xs text-charcoal leading-relaxed border-l-4 border-black pl-4">Adventure lovers usually get Charizard (bold, free-spirited leader who chases challenges) or Dragonite (powerful adventurer with a kind heart). Curious, open-minded explorers who embrace the unknown often get Eevee — the POKEMON of limitless potential that refuses to be defined by a single path.</p>
                 </details>
               </div>
             </section>
@@ -289,7 +289,7 @@ export default function PokemonQuizPage() {
                 <span className="font-mono text-xs font-bold text-black uppercase tracking-widest">EXPLORE MORE</span>
               </div>
               <h2 className="font-grotesk font-black text-2xl sm:text-3xl text-white uppercase mb-4">
-                More Pokémon Tools
+                More POKEMON Tools
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <Link href="/" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
@@ -298,14 +298,14 @@ export default function PokemonQuizPage() {
                 </Link>
                 <Link href="/pokedex" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
                   <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">📖 Pokédex</div>
-                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">All 1,025 Pokémon</div>
+                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">All 1,025 POKEMON</div>
                 </Link>
                 <Link href="/legendary-pokemon-generator" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
                   <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">✨ Legendaries</div>
-                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">Legendary Pokémon</div>
+                  <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">Legendary POKEMON</div>
                 </Link>
                 <Link href="/shiny-pokemon-generator" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">
-                  <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">💎 Shiny Pokémon</div>
+                  <div className="font-mono font-bold text-xs text-white group-hover:text-black uppercase mb-1">💎 Shiny POKEMON</div>
                   <div className="font-mono text-[10px] text-white/50 group-hover:text-black/60">Rare color variants</div>
                 </Link>
                 <Link href="/starter-pokemon-generator" className="bg-charcoal border-2 border-white/20 p-4 slasher hover:bg-white hover:text-black hover:border-black transition-all group">

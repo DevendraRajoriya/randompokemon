@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Zap, Shield, Target, TrendingUp, ArrowLeft } from "lucide-react";
@@ -93,7 +93,7 @@ export default function NuzlockeGeneratorPage() {
 
           <PokemonSpotlight
             pokemon={NUZLOCKE_SPOTLIGHT}
-            heading="Best Pokémon for Nuzlocke"
+            heading="Best POKEMON for Nuzlocke"
             badge="NUZLOCKE PICKS"
           />
 

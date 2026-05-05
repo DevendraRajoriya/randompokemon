@@ -1,6 +1,6 @@
-/**
+﻿/**
  * Smogon Generation 9 (Scarlet/Violet) tier data.
- * Key = lowercase Pokémon name as returned by PokéAPI.
+ * Key = lowercase POKEMON name as returned by PokéAPI.
  * Tiers: AG > Uber > OU > UU > RU > NU > PU > NFE > LC
  * Source: Smogon Gen 9 tier lists (public usage data, ~2025).
  */
@@ -33,7 +33,7 @@ export const TIER_DESCRIPTIONS: Record<SmogonTier, string> = {
   NU:   "Never Used (NU) — niche options exist but faces stiff competition.",
   PU:   "PU — the lowest official tier; mainly used for fun or specialist builds.",
   NFE:  "Not Fully Evolved — LC/NFE play only; evolves into a higher-tier form.",
-  LC:   "Little Cup (LC) — level 5 battles; first-stage Pokémon only.",
+  LC:   "Little Cup (LC) — level 5 battles; first-stage POKEMON only.",
 };
 
 // ---------------------------------------------------------------------------
@@ -161,8 +161,8 @@ export const SMOGON_TIERS: Record<string, SmogonTier> = {
 };
 
 /**
- * Look up the Smogon Gen 9 tier for a Pokémon by name.
- * Returns null if the Pokémon isn't in our map (untiered / unknown).
+ * Look up the Smogon Gen 9 tier for a POKEMON by name.
+ * Returns null if the POKEMON isn't in our map (untiered / unknown).
  */
 export function getTier(pokemonName: string): TierEntry | null {
   const tier = SMOGON_TIERS[pokemonName.toLowerCase()];
@@ -217,7 +217,7 @@ export function generateCompetitiveBlurb(
     return `${displayName} is not fully evolved and is primarily used in NFE or LC formats. It evolves into a stronger form that may see higher-tier play.`;
   }
   if (tier === "LC") {
-    return `${displayName} is a Little Cup (LC) Pokémon — level 5 battles featuring first-stage species. In LC it can be a top threat thanks to its ${role} potential.`;
+    return `${displayName} is a Little Cup (LC) POKEMON — level 5 battles featuring first-stage species. In LC it can be a top threat thanks to its ${role} potential.`;
   }
   // No tier — BST-based fallback
   if (bst >= 600) {

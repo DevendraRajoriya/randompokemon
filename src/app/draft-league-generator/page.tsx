@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Users, Trophy, Shuffle, Settings, ArrowLeft } from "lucide-react";
@@ -20,7 +20,7 @@ const DRAFT_SPOTLIGHT = [
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Pokémon Draft League Generator | Random Draft Pool Tool 2026",
+  title: "POKEMON Draft League Generator | Random Draft Pool Tool 2026",
   description: "Create balanced Pokemon draft pools for leagues and tournaments. Generate random draft picks with type restrictions, tier lists, and fairness settings. Free draft tool!",
   keywords: ["pokemon draft league", "draft league generator", "pokemon draft tool", "random pokemon draft", "pokemon tournament draft", "draft league randomizer"],
   alternates: { canonical: `${siteUrl}/draft-league-generator` },

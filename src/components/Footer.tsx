@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react";
+﻿import { Mail } from "lucide-react";
 import Link from "next/link";
 
 /**
@@ -68,7 +68,7 @@ export default function Footer() {
                 href="/pokemon-quiz"
                 className="block font-mono text-sm text-charcoal px-2 py-1.5 -mx-2 hover:bg-blue-500 hover:text-white transition-smooth"
               >
-                Pokémon Quiz
+                POKEMON Quiz
               </Link>
               <Link
                 href="/draft-league-generator"
@@ -319,7 +319,7 @@ export default function Footer() {
                 NOTICE
               </div>
               <p className="font-mono text-sm leading-relaxed">
-                Pokémon is © 1995-2026 Nintendo / Creatures Inc. / GAME FREAK inc. TM, ® and character names are trademarks of Nintendo. This tool is not affiliated with, endorsed, or sponsored by Nintendo, The Pokémon Company, or any related entities.
+                POKEMON is © 1995-2026 Nintendo / Creatures Inc. / GAME FREAK inc. TM, ® and character names are trademarks of Nintendo. This tool is not affiliated with, endorsed, or sponsored by Nintendo, The POKEMON Company, or any related entities.
               </p>
             </div>
           </div>

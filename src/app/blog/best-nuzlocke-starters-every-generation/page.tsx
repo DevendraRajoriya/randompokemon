@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -33,7 +33,7 @@ export default function BestNuzlockeStartersGuide() {
           </h1>
           <p className="font-mono text-xs text-charcoal mb-6">12 min read · Updated May 2026</p>
           <p className="font-mono text-sm text-charcoal leading-relaxed border-l-4 border-black pl-4">
-            In a Nuzlocke, your starter is the only Pokémon you&apos;re guaranteed to have through the whole early game — before box depth, before coverage catches. Picking wrong costs lives. This guide ranks the safest starter for every generation with full gym matchup analysis.
+            In a Nuzlocke, your starter is the only POKEMON you&apos;re guaranteed to have through the whole early game — before box depth, before coverage catches. Picking wrong costs lives. This guide ranks the safest starter for every generation with full gym matchup analysis.
           </p>
         </header>
 
@@ -174,7 +174,7 @@ export default function BestNuzlockeStartersGuide() {
                 <span className="font-mono text-xs text-charcoal">Scarlet / Violet</span>
               </div>
               <h3 className="font-grotesk font-bold text-lg text-black mb-2">Best Pick: <span style={{ color: "#15803d" }}>Sprigatito</span></h3>
-              <p className="font-mono text-sm text-charcoal leading-relaxed mb-3">Meowscarada&apos;s 123 Speed makes it the fastest Gen 9 starter final-form. Flower Trick always crits, bypassing defensive stat changes from boss Pokémon. Covers early Water gyms cleanly. In Scarlet/Violet&apos;s open-world format, Meowscarada&apos;s speed lets you outpace encounters before they become threatening.</p>
+              <p className="font-mono text-sm text-charcoal leading-relaxed mb-3">Meowscarada&apos;s 123 Speed makes it the fastest Gen 9 starter final-form. Flower Trick always crits, bypassing defensive stat changes from boss POKEMON. Covers early Water gyms cleanly. In Scarlet/Violet&apos;s open-world format, Meowscarada&apos;s speed lets you outpace encounters before they become threatening.</p>
               <div className="bg-red-50 border-l-4 border-red-400 px-4 py-2">
                 <p className="font-mono text-xs text-red-800"><strong>Avoid:</strong> Fuecoco — Skeledirge is strong lategame but the Saguaro gym and early learnset drag the early run. The Ghost/Fire typing is excellent on paper but the slow base Speed means Skeledirge regularly takes hits before it can attack in the critical mid-game stretch.</p>
               </div>
@@ -204,7 +204,7 @@ export default function BestNuzlockeStartersGuide() {
               <div className="w-1.5 bg-black flex-shrink-0 self-stretch" />
               <div>
                 <p className="font-mono text-xs font-bold text-black mb-1 uppercase">Don&apos;t rely on one mon</p>
-                <p className="font-mono text-xs text-charcoal leading-relaxed">The starter&apos;s job is to survive long enough for you to build a team. Once you have 4+ viable Pokémon, the starter becomes an anchor, not the whole strategy. Over-reliance on your starter is the most common reason experienced players lose mid-run.</p>
+                <p className="font-mono text-xs text-charcoal leading-relaxed">The starter&apos;s job is to survive long enough for you to build a team. Once you have 4+ viable POKEMON, the starter becomes an anchor, not the whole strategy. Over-reliance on your starter is the most common reason experienced players lose mid-run.</p>
               </div>
             </div>
             <div className="flex gap-4 border-2 border-black/10 p-4 bg-cream/40">
@@ -230,7 +230,7 @@ export default function BestNuzlockeStartersGuide() {
             </div>
             <div className="border-2 border-black p-4">
               <h3 className="font-mono font-bold text-sm text-black mb-2">Does the starter matter in a randomizer Nuzlocke?</h3>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">Much less — your starter is random. Use the Random Pokémon Generator to explore possible picks and build mental coverage maps before you start. In a randomizer Nuzlocke, the first-route catch is often more strategically important than the starter because you can choose when to catch it.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">Much less — your starter is random. Use the Random POKEMON Generator to explore possible picks and build mental coverage maps before you start. In a randomizer Nuzlocke, the first-route catch is often more strategically important than the starter because you can choose when to catch it.</p>
             </div>
             <div className="border-2 border-black p-4">
               <h3 className="font-mono font-bold text-sm text-black mb-2">Can you Nuzlocke with any starter?</h3>
@@ -252,15 +252,15 @@ export default function BestNuzlockeStartersGuide() {
             </Link>
             <Link href="/blog/monotype-challenge-guide" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Challenge Runs</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Monotype Challenge Guide — Every Type Ranked</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">POKEMON Monotype Challenge Guide — Every Type Ranked</p>
             </Link>
             <Link href="/blog/how-to-build-draft-league-pokemon-team" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Competitive</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League Pokémon Team</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League POKEMON Team</p>
             </Link>
             <Link href="/blog/pokemon-randomizer-tips-beginners" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Randomizer</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Randomizer Tips &amp; Tricks for Beginners</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">POKEMON Randomizer Tips &amp; Tricks for Beginners</p>
             </Link>
           </div>
         </section>

@@ -85,7 +85,7 @@ export default function StarterPokemonGeneratorPage() {
         </nav>
 
         <div className="max-w-6xl mx-auto mb-5 text-center">
-          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">RANDOM STARTER POKEMON GENERATOR</h1>
+          <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-black mb-3 md:mb-4 tracking-tight px-2 uppercase">STARTER POKEMON GENERATOR</h1>
           <p className="font-mono text-xs md:text-sm text-charcoal max-w-2xl mx-auto mb-4 leading-relaxed">
             Generate random <strong>Starter Pokemon</strong> from all 9 generations. All 27 starter lines from Bulbasaur to Sprigatito. Perfect for randomized Nuzlockes and challenge runs.
            Looking for standard Pokemon? Visit our <Link href="/" className="text-black underline font-bold hover:text-charcoal">main random Pokemon generator</Link>.</p>

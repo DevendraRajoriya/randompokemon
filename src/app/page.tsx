@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import StaticSeoContent from "@/components/StaticSeoContent";
 import FAQ from "@/components/FAQ";
 
-// ── POPULAR POKÉMON — hardcoded, zero-fetch, fully SSR'd ──────────────────────
+// ── POPULAR POKEMON — hardcoded, zero-fetch, fully SSR'd ──────────────────────
 // These 30 entries appear in static HTML on every homepage response so Googlebot
 // always has a crawl path to /pokemon/* detail pages without running JavaScript.
 const POPULAR_POKEMON = [
@@ -296,34 +296,20 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Static prose — server-rendered, boosts text-to-HTML ratio */}
-        <section className="mb-8 border-2 border-black slasher p-5 bg-white">
-          <h2 className="font-grotesk font-bold text-xl text-black uppercase mb-3">Generate a Random Pokémon — All 1,025 Species</h2>
-          <p className="font-mono text-xs text-charcoal leading-relaxed mb-3">
-            This free Random Pokémon Generator lets you instantly pick one or a full team of six from the complete National Pokédex — all 1,025 species across Generations 1 through 9. Whether you need a random starter for your next Nuzlocke, a draft pool for your Pokémon Draft League, or just want to discover a Pokémon you&apos;ve never used before, the generator has you covered in under a second.
-          </p>
-          <p className="font-mono text-xs text-charcoal leading-relaxed mb-3">
-            Use the <strong>Type filter</strong> to restrict results to any of the 18 Pokémon types — Fire, Water, Grass, Electric, Psychic, Dragon, Fairy, Ghost, Dark, Steel, Fighting, Rock, Ground, Ice, Flying, Bug, Poison, or Normal. Use the <strong>Region filter</strong> to pull from a specific generation: Kanto (Gen 1), Johto (Gen 2), Hoenn (Gen 3), Sinnoh (Gen 4), Unova (Gen 5), Kalos (Gen 6), Alola (Gen 7), Galar (Gen 8), or Paldea (Gen 9). The <strong>Rarity filter</strong> lets you include or exclude Legendary, Mythical, Paradox, Ultra Beast, and Sub-Legendary Pokémon.
-          </p>
-          <p className="font-mono text-xs text-charcoal leading-relaxed">
-            All generation data is sourced from <strong>PokeAPI</strong> and includes regional forms (Alolan, Galarian, Hisuian, Paldean), Mega Evolutions, Gigantamax forms, and all Scarlet &amp; Violet DLC additions. The generator runs entirely in your browser — no data is sent to our servers, there are no ads, and no login is required. Free forever.
-          </p>
-        </section>
-
         {/* Interactive Client Generator */}
         <HomeClient />
 
-        {/* ── POPULAR POKÉMON — server-rendered, zero-JS, crawlable ── */}
+        {/* ── POPULAR POKEMON — server-rendered, zero-JS, crawlable ── */}
         {/* 20 hardcoded entries give Googlebot a direct crawl path to   */}
         {/* /pokemon/* detail pages on every homepage visit.             */}
-        <section className="mt-10 md:mt-14 mb-2" aria-label="Popular Pokémon">
+        <section className="mt-10 md:mt-14 mb-2" aria-label="Popular POKEMON">
           <div className="flex items-end justify-between mb-5">
             <div>
               <div className="inline-block bg-black px-4 py-1 slasher border border-black mb-2">
                 <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">POPULAR</span>
               </div>
               <h2 className="font-grotesk font-bold text-2xl sm:text-3xl md:text-4xl text-black uppercase leading-none">
-                Fan-Favourite Pokémon
+                Fan-Favourite POKEMON
               </h2>
             </div>
             <Link
@@ -373,7 +359,7 @@ export default function Home() {
                       />
                       <Image
                         src={spriteUrl}
-                        alt={`${p.name} — ${p.types.join("/")} type Pokémon`}
+                        alt={`${p.name} — ${p.types.join("/")} type POKEMON`}
                         fill
                         sizes="(max-width: 640px) 44vw, (max-width: 1024px) 22vw, 18vw"
                         className="object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300 p-1"

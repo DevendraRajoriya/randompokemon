@@ -1,12 +1,12 @@
-import { Metadata } from "next";
+﻿import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Pokémon Monotype Challenge Guide — All 18 Types Ranked",
-  description: "Running a monotype Pokémon challenge? This guide ranks all 18 types by difficulty, lists the best picks for each, and explains how to handle rough gym matchups.",
+  title: "POKEMON Monotype Challenge Guide — All 18 Types Ranked",
+  description: "Running a monotype POKEMON challenge? This guide ranks all 18 types by difficulty, lists the best picks for each, and explains how to handle rough gym matchups.",
   keywords: ["pokemon monotype challenge", "monotype run guide", "hardest monotype run pokemon", "monotype challenge type ranking", "monotype nuzlocke guide"],
-  openGraph: { title: "Pokémon Monotype Challenge Guide - Every Type Ranked", description: "All 18 monotype challenges ranked by difficulty with best picks for each type.", type: "article", url: "https://www.randompokemon.co/blog/monotype-challenge-guide", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Monotype Challenge Guide" }] },
-  twitter: { card: "summary_large_image", title: "Pokémon Monotype Challenge Guide - Every Type Ranked", description: "All 18 monotype challenges ranked by difficulty with best picks for each type.", images: ["/og-image.png"] },
+  openGraph: { title: "POKEMON Monotype Challenge Guide - Every Type Ranked", description: "All 18 monotype challenges ranked by difficulty with best picks for each type.", type: "article", url: "https://www.randompokemon.co/blog/monotype-challenge-guide", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Monotype Challenge Guide" }] },
+  twitter: { card: "summary_large_image", title: "POKEMON Monotype Challenge Guide - Every Type Ranked", description: "All 18 monotype challenges ranked by difficulty with best picks for each type.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog/monotype-challenge-guide" },
 };
 
@@ -28,24 +28,24 @@ export default function MonotypeGuide() {
             <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">CHALLENGE RUNS</span>
           </div>
           <h1 className="font-grotesk font-bold text-3xl sm:text-4xl md:text-5xl text-black uppercase tracking-tight leading-tight mb-4">
-            Pokémon Monotype Challenge Guide — Every Type Ranked
+            POKEMON Monotype Challenge Guide — Every Type Ranked
           </h1>
           <p className="font-mono text-xs text-charcoal mb-6">13 min read · Updated May 2026</p>
           <p className="font-mono text-sm text-charcoal leading-relaxed border-l-4 border-black pl-4">
-            A monotype challenge restricts your team to a single Pokémon type for the entire game. Some types breeze through entire games while others make specific gyms nearly impossible. This guide ranks all 18 types by difficulty, lists the best monotype picks for each, and explains how to handle the hardest gym matchups.
+            A monotype challenge restricts your team to a single POKEMON type for the entire game. Some types breeze through entire games while others make specific gyms nearly impossible. This guide ranks all 18 types by difficulty, lists the best monotype picks for each, and explains how to handle the hardest gym matchups.
           </p>
         </header>
 
         <section className="mb-10">
           <h2 className="font-grotesk font-bold text-2xl text-black uppercase mb-4">What Is the Monotype Challenge?</h2>
           <p className="font-mono text-sm text-charcoal leading-relaxed mb-4">
-            The monotype challenge is one of the oldest self-imposed Pokémon restrictions. You choose one type before the game begins — Fire, Water, Psychic, whatever you like — and every Pokémon on your team must be that type (or dual-type including that type). HM usage rules vary, but most players allow 1 HM slave from outside the type.
+            The monotype challenge is one of the oldest self-imposed POKEMON restrictions. You choose one type before the game begins — Fire, Water, Psychic, whatever you like — and every POKEMON on your team must be that type (or dual-type including that type). HM usage rules vary, but most players allow 1 HM slave from outside the type.
           </p>
           <p className="font-mono text-sm text-charcoal leading-relaxed mb-4">
-            The challenge ranges from trivially easy (Water mono in Hoenn, where Surf trivialises half the gyms) to nearly impossible (Normal mono in Gen 1, where no Pokémon has a type advantage over anything). The difficulty depends heavily on both your chosen type and your chosen game.
+            The challenge ranges from trivially easy (Water mono in Hoenn, where Surf trivialises half the gyms) to nearly impossible (Normal mono in Gen 1, where no POKEMON has a type advantage over anything). The difficulty depends heavily on both your chosen type and your chosen game.
           </p>
           <p className="font-mono text-sm text-charcoal leading-relaxed">
-            Use the <Link href="/pokedex?type=fire" className="underline font-bold text-black hover:text-charcoal">Pokédex type filter</Link> to see every available Pokémon for your chosen mono type before the run begins. Planning your available pool before the first gym is the single most important preparation step for any monotype challenge.
+            Use the <Link href="/pokedex?type=fire" className="underline font-bold text-black hover:text-charcoal">Pokédex type filter</Link> to see every available POKEMON for your chosen mono type before the run begins. Planning your available pool before the first gym is the single most important preparation step for any monotype challenge.
           </p>
         </section>
 
@@ -62,7 +62,7 @@ export default function MonotypeGuide() {
                 <span className="font-mono text-xs font-bold border-2 border-black px-2 py-0.5 bg-cream">Psychic</span>
                 <span className="font-mono text-xs font-bold border-2 border-black px-2 py-0.5 bg-cream">Ground</span>
               </div>
-              <p className="font-mono text-sm text-charcoal leading-relaxed">Water has the widest available Pokémon pool across all games and strong options available early. Surf gives Water mono consistent coverage from the mid-game onwards. Psychic has overwhelming power in Gen 1–3 where Ghost and Dark types are scarce. Ground handles most of the gym lineup in any game because Electric, Fire, Rock, and Steel types are common across all gym leaders.</p>
+              <p className="font-mono text-sm text-charcoal leading-relaxed">Water has the widest available POKEMON pool across all games and strong options available early. Surf gives Water mono consistent coverage from the mid-game onwards. Psychic has overwhelming power in Gen 1–3 where Ghost and Dark types are scarce. Ground handles most of the gym lineup in any game because Electric, Fire, Rock, and Steel types are common across all gym leaders.</p>
             </div>
 
             <div className="bg-white border-2 border-black slasher p-5 md:p-6">
@@ -139,7 +139,7 @@ export default function MonotypeGuide() {
               <div className="w-1.5 bg-black flex-shrink-0 self-stretch" />
               <div>
                 <p className="font-mono font-bold text-xs text-black uppercase mb-1">Flying mono</p>
-                <p className="font-mono text-xs text-charcoal leading-relaxed">Gliscor, Skarmory, Landorus-Therian. Ground/Flying removes the Electric weakness — critical for Flying mono survival because Electric types appear constantly as wild Pokémon and gym leader aces. Skarmory&apos;s Steel typing adds enormous defensive value and makes it one of the sturdiest walls available to any mono type challenge.</p>
+                <p className="font-mono text-xs text-charcoal leading-relaxed">Gliscor, Skarmory, Landorus-Therian. Ground/Flying removes the Electric weakness — critical for Flying mono survival because Electric types appear constantly as wild POKEMON and gym leader aces. Skarmory&apos;s Steel typing adds enormous defensive value and makes it one of the sturdiest walls available to any mono type challenge.</p>
               </div>
             </div>
             <div className="flex gap-4 border-2 border-black/10 p-4 bg-white">
@@ -168,7 +168,7 @@ export default function MonotypeGuide() {
             </div>
             <div className="border-2 border-black/10 bg-cream/40 p-4">
               <p className="font-mono font-bold text-xs text-black uppercase mb-1">Allow dual-types that include your mono-type</p>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">The standard rule is: your Pokémon must have your chosen type. Charizard (Fire/Flying) counts for a Fire mono. This flexibility dramatically improves team building options and is the key rule that makes Hard tier types completable at all. Without dual-type flexibility, Bug mono and Ice mono become nearly unwinnable in most games.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">The standard rule is: your POKEMON must have your chosen type. Charizard (Fire/Flying) counts for a Fire mono. This flexibility dramatically improves team building options and is the key rule that makes Hard tier types completable at all. Without dual-type flexibility, Bug mono and Ice mono become nearly unwinnable in most games.</p>
             </div>
             <div className="border-2 border-black/10 bg-cream/40 p-4">
               <p className="font-mono font-bold text-xs text-black uppercase mb-1">Plan your HM slaves carefully</p>
@@ -176,11 +176,11 @@ export default function MonotypeGuide() {
             </div>
             <div className="border-2 border-black/10 bg-cream/40 p-4">
               <p className="font-mono font-bold text-xs text-black uppercase mb-1">Use our generator for type-filtered picks</p>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">The Random Pokémon Generator and Pokédex can filter by type so you can see every available Pokémon for your chosen mono before the run begins. Knowing your full available pool before the first gym is the most underrated preparation step for any monotype challenge.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">The Random POKEMON Generator and Pokédex can filter by type so you can see every available POKEMON for your chosen mono before the run begins. Knowing your full available pool before the first gym is the most underrated preparation step for any monotype challenge.</p>
             </div>
             <div className="border-2 border-black/10 bg-cream/40 p-4">
               <p className="font-mono font-bold text-xs text-black uppercase mb-1">Know your immunity and weakness ceiling</p>
-              <p className="font-mono text-xs text-charcoal leading-relaxed">Before the first gym, know what types hit you for 4× damage and plan routes to avoid those wild encounters or have a coverage solution ready. For Ice mono, this means knowing every route with Fire-type wild Pokémon. For Grass mono, this means mapping every route with Bug and Flying encounters before you walk in.</p>
+              <p className="font-mono text-xs text-charcoal leading-relaxed">Before the first gym, know what types hit you for 4× damage and plan routes to avoid those wild encounters or have a coverage solution ready. For Ice mono, this means knowing every route with Fire-type wild POKEMON. For Grass mono, this means mapping every route with Bug and Flying encounters before you walk in.</p>
             </div>
           </div>
         </section>
@@ -211,7 +211,7 @@ export default function MonotypeGuide() {
                 <tr className="hover:bg-white/50">
                   <td className="py-2 pr-6 font-bold text-black">Normal</td>
                   <td className="py-2 pr-6 text-red-700">Every gym</td>
-                  <td className="py-2 text-charcoal">Rely on sheer power difference, held item advantage, and high-bulk Pokémon like Snorlax and Blissey</td>
+                  <td className="py-2 text-charcoal">Rely on sheer power difference, held item advantage, and high-bulk POKEMON like Snorlax and Blissey</td>
                 </tr>
                 <tr className="hover:bg-white/50">
                   <td className="py-2 pr-6 font-bold text-black">Ice</td>
@@ -226,7 +226,7 @@ export default function MonotypeGuide() {
                 <tr className="hover:bg-white/50">
                   <td className="py-2 pr-6 font-bold text-black">Psychic</td>
                   <td className="py-2 pr-6 text-red-700">Ghost gyms (Gen 3+)</td>
-                  <td className="py-2 text-charcoal">Ghost is neutral vs. Psychic; use Dark coverage moves from dual-type Psychic/Dark Pokémon where available</td>
+                  <td className="py-2 text-charcoal">Ghost is neutral vs. Psychic; use Dark coverage moves from dual-type Psychic/Dark POKEMON where available</td>
                 </tr>
                 <tr className="hover:bg-white/50">
                   <td className="py-2 pr-6 font-bold text-black">Flying</td>
@@ -236,7 +236,7 @@ export default function MonotypeGuide() {
                 <tr className="hover:bg-white/50">
                   <td className="py-2 pr-6 font-bold text-black">Electric</td>
                   <td className="py-2 pr-6 text-red-700">Ground gym (Gym 5)</td>
-                  <td className="py-2 text-charcoal">Electric has no attacks that hit Ground types — use Psychic or Flying coverage from dual-type Electric Pokémon</td>
+                  <td className="py-2 text-charcoal">Electric has no attacks that hit Ground types — use Psychic or Flying coverage from dual-type Electric POKEMON</td>
                 </tr>
               </tbody>
             </table>
@@ -260,17 +260,17 @@ export default function MonotypeGuide() {
             </Link>
             <Link href="/blog/how-to-build-draft-league-pokemon-team" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Competitive</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League Pokémon Team</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">How to Build a Draft League POKEMON Team</p>
             </Link>
             <Link href="/blog/pokemon-randomizer-tips-beginners" className="block border-2 border-black/20 p-4 hover:bg-marigold hover:border-black transition-all group">
               <span className="font-mono text-[10px] text-charcoal/60 uppercase tracking-widest block mb-1 group-hover:text-black/60">Randomizer</span>
-              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">Pokémon Randomizer Tips &amp; Tricks for Beginners</p>
+              <p className="font-mono font-bold text-sm text-black leading-snug group-hover:text-black">POKEMON Randomizer Tips &amp; Tricks for Beginners</p>
             </Link>
           </div>
         </section>
         <section className="bg-black slasher p-8 text-center">
           <h2 className="font-grotesk font-bold text-2xl text-white uppercase mb-3">Find Your Monotype Team</h2>
-          <p className="font-mono text-sm text-white/70 mb-6">Filter the Pokédex by type to see every available Pokémon for your chosen mono before the run starts.</p>
+          <p className="font-mono text-sm text-white/70 mb-6">Filter the Pokédex by type to see every available POKEMON for your chosen mono before the run starts.</p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link href="/pokedex" className="bg-marigold text-black font-mono font-bold text-xs px-6 py-3 border-2 border-marigold hover:bg-yellow-400 transition-colors slasher">BROWSE POKÉDEX →</Link>
             <Link href="/" className="bg-transparent text-white font-mono font-bold text-xs px-6 py-3 border-2 border-white hover:bg-white hover:text-black transition-colors slasher">RANDOM GENERATOR</Link>
