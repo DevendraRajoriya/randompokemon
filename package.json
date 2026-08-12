@@ -11,6 +11,7 @@
     "indexnow:local": "tsx scripts/submit-indexnow.ts"
   },
   "dependencies": {
+    "@vercel/speed-insights": "^2.0.0",
     "html2canvas": "^1.4.1",
     "lucide-react": "^0.555.0",
     "next": "^16.2.1",
