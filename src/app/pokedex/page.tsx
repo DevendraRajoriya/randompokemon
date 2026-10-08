@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import PokedexClient from "./PokedexClient";
@@ -9,9 +9,9 @@ const POKEMON_SPECIES_COUNT = 1025;
 // ── METADATA ──────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
-  title: "Pokédex | Complete Pokemon Database | Random Pokemon Generator",
+  title: "Complete National Pokedex | All 1025 Pokemon (Gen 1-9)",
   description:
-    "Browse the complete Pokédex with all 1025 Pokemon species. Search, filter by type, and view detailed stats, evolutions, and abilities for every Pokemon from Gen 1–9.",
+    "Generate full Pokédex entries across all 1,025 Pokémon (Gen 1-9). Filter by type, stats, moves, and evolution chains.",
   keywords: [
     "pokedex",
     "pokemon database",
@@ -24,17 +24,18 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${siteUrl}/pokedex` },
   openGraph: {
-    title: "Pokédex | Complete Pokemon Database",
+    title: "Complete National Pokedex | All 1025 Pokemon (Gen 1-9)",
     description:
-      "Browse all 1025 Pokemon species with stats, types, and evolutions. The complete Pokemon database.",
+      "Generate full Pokédex entries across all 1,025 Pokémon (Gen 1-9). Filter by type, stats, moves, and evolution chains.",
     url: `${siteUrl}/pokedex`,
     type: "website",
+    siteName: "randompokemon.co",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokédex - Complete Pokemon Database" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pokédex | Complete Pokemon Database",
-    description: "Browse all 1025 Pokemon species with stats, types, and evolutions.",
+    title: "Complete National Pokedex | All 1025 Pokemon (Gen 1-9)",
+    description: "Generate full Pokédex entries across all 1,025 Pokémon (Gen 1-9). Filter by type, stats, and evolution chains.",
     images: ["/og-image.png"],
   },
 };

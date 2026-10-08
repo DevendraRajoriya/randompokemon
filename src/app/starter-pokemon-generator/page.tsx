@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Starter Pokemon Generator | Random Starter Picker All Generations",
-  description: "Generate random Starter Pokemon from all 9 generations. All 27 starter lines from Bulbasaur to Sprigatito. Perfect for Nuzlockes and challenge runs. Updated 2026.",
+  title: "Random Starter Pokemon Generator | Grass, Fire, Water",
+  description: "Generate random starter Pokémon from Gen 1 to 9 with base and final forms. Perfect for Nuzlocke and challenge runs.",
   keywords: ["starter pokemon generator", "random starter pokemon", "starter pokemon randomizer", "pokemon starter picker", "random starter picker all generations", "starter pokemon all gens"],
   alternates: { canonical: `${siteUrl}/starter-pokemon-generator` },
-  openGraph: { title: "Starter Pokemon Generator | Random Starter Picker All Gens", description: "Generate random Starter Pokemon from all 9 generations!", url: `${siteUrl}/starter-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Starter Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Starter Pokemon Generator | Random Starter Picker", description: "Generate random Starter Pokemon from all 9 generations!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Starter Pokemon Generator | Grass, Fire, Water", description: "Generate random starter Pokémon from Gen 1 to 9 with base and final forms. Perfect for Nuzlocke and challenge runs.", url: `${siteUrl}/starter-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Starter Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Starter Pokemon Generator | Grass, Fire, Water", description: "Generate random starter Pokémon from Gen 1 to 9 with base and final forms. Perfect for Nuzlocke and challenge runs.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

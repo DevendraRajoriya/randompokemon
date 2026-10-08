@@ -28,8 +28,8 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Hoenn Pokemon Generator | Gen 3 Random Team Builder",
-  description: "Generate random Hoenn Pokemon teams from Gen 3 (#252-386). Ruby, Sapphire & Emerald — 135 species with the Weather Trio, Regi Trio & Mega Evolutions. Free team builder.",
+  title: "Random Hoenn Pokemon Generator | Gen 3 Team Builder",
+  description: "Generate random Hoenn Pokémon (#252–#386) from Gen 3. Filter by type, abilities, and build classic weather teams.",
   keywords: [
     "hoenn pokemon generator",
     "gen 3 random team generator",
@@ -45,17 +45,18 @@ export const metadata: Metadata = {
     canonical: `${siteUrl}/hoenn-pokemon-generator`,
   },
   openGraph: {
-    title: "Hoenn Pokemon Generator | Gen 3 Random Team Builder",
+    title: "Random Hoenn Pokemon Generator | Gen 3 Team Builder",
     description:
-      "Generate random Hoenn Pokemon from Gen 3! Ruby, Sapphire & Emerald including the Weather Trio.",
+      "Generate random Hoenn Pokémon (#252–#386) from Gen 3. Filter by type, abilities, and build classic weather teams.",
     url: `${siteUrl}/hoenn-pokemon-generator`,
     type: "website",
+    siteName: "randompokemon.co",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Hoenn Pokemon Generator" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hoenn Pokemon Generator | Gen 3 Random Team Builder",
-    description: "Generate random Hoenn Pokemon from Gen 3! Weather Trio included.",
+    title: "Random Hoenn Pokemon Generator | Gen 3 Team Builder",
+    description: "Generate random Hoenn Pokémon (#252–#386) from Gen 3. Filter by type, abilities, and build classic weather teams.",
     images: ["/og-image.png"],
   },
 };

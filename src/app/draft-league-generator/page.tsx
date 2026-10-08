@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Users, Trophy, Shuffle, Settings, ArrowLeft } from "lucide-react";
@@ -20,12 +20,12 @@ const DRAFT_SPOTLIGHT = [
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "POKEMON Draft League Generator | Random Draft Pool Tool 2026",
-  description: "Create balanced Pokemon draft pools for leagues and tournaments. Generate random draft picks with type restrictions, tier lists, and fairness settings. Free draft tool!",
+  title: "Pokemon Draft League Generator | Tiered Roster Builder",
+  description: "Draft balanced Pokémon rosters for custom leagues and tournaments with tier limits, custom rules, and instant export.",
   keywords: ["pokemon draft league", "draft league generator", "pokemon draft tool", "random pokemon draft", "pokemon tournament draft", "draft league randomizer"],
   alternates: { canonical: `${siteUrl}/draft-league-generator` },
-  openGraph: { title: "Pokemon Draft League Generator | Random Draft Tool", description: "Create balanced Pokemon draft pools for leagues and tournaments.", url: `${siteUrl}/draft-league-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Draft League Generator" }] },
-  twitter: { card: "summary_large_image", title: "Pokemon Draft League Generator", description: "Create balanced Pokemon draft pools!", images: ["/og-image.png"] },
+  openGraph: { title: "Pokemon Draft League Generator | Tiered Roster Builder", description: "Draft balanced Pokémon rosters for custom leagues and tournaments with tier limits, custom rules, and instant export.", url: `${siteUrl}/draft-league-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Draft League Generator" }] },
+  twitter: { card: "summary_large_image", title: "Pokemon Draft League Generator | Tiered Roster Builder", description: "Draft balanced Pokémon rosters for custom leagues and tournaments with tier limits, custom rules, and instant export.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Unova Pokemon Generator | Gen 5 Random Team Builder (Black/White)",
-  description: "Generate random Unova Pokemon teams from Generation 5 (#494-649). Black, White, Black 2 & White 2 including the Tao Trio, 156 new Pokemon and the best story in the series. Updated 2026.",
+  title: "Random Unova Pokemon Generator | Gen 5 Team Builder",
+  description: "Generate random Unova Pokémon (#494–#649) from Gen 5. Filter by type, dual typings, and build competitive teams.",
   keywords: ["unova pokemon generator", "gen 5 random team generator", "unova pokemon team builder", "black white team generator", "unova randomizer", "gen 5 nuzlocke generator", "black 2 white 2 team builder"],
   alternates: { canonical: `${siteUrl}/unova-pokemon-generator` },
-  openGraph: { title: "Unova Pokemon Generator | Gen 5 Random Team Builder", description: "Generate random Unova Pokemon from Gen 5! Black & White.", url: `${siteUrl}/unova-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Unova Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Unova Pokemon Generator | Gen 5 Random Team Builder", description: "Generate random Unova Pokemon from Gen 5!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Unova Pokemon Generator | Gen 5 Team Builder", description: "Generate random Unova Pokémon (#494–#649) from Gen 5. Filter by type, dual typings, and build competitive teams.", url: `${siteUrl}/unova-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Unova Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Unova Pokemon Generator | Gen 5 Team Builder", description: "Generate random Unova Pokémon (#494–#649) from Gen 5. Filter by type, dual typings, and build competitive teams.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

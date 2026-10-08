@@ -1,5 +1,7 @@
 import { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 // Function to fetch all Pokemon names from PokeAPI
 async function getAllPokemonNames(): Promise<string[]> {
   try {

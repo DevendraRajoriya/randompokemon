@@ -5,12 +5,12 @@ import { Dice1, Sparkles, Gamepad2, Zap, ArrowLeft } from "lucide-react";
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Pokemon Randomizer Guide | Challenge Runs & Team Planning (2026)",
-  description: "Complete guide to Pokemon randomizers and challenge runs. Generate teams for ROM hack randomizers, plan challenge modes, and discover the best randomizer settings.",
+  title: "Pokemon Randomizer Guide | Challenge Runs & Rules",
+  description: "Create custom challenge runs and master ROM hack rules across Gen 1-9. Learn settings, tips, and team strategies.",
   keywords: ["pokemon randomizer", "randomizer guide", "pokemon rom hack", "challenge runs", "randomizer settings", "pokemon randomizer tool"],
-  alternates: { canonical: "/randomizer-guide" },
-  openGraph: { title: "Pokemon Randomizer Guide | Challenge Runs & Team Planning", description: "Complete guide to Pokemon randomizers and challenge runs.", url: `${siteUrl}/randomizer-guide`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Randomizer Guide" }] },
-  twitter: { card: "summary_large_image", title: "Pokemon Randomizer Guide | Challenge Runs & Team Planning", description: "Complete guide to Pokemon randomizers and challenge runs.", images: ["/og-image.png"] },
+  alternates: { canonical: `${siteUrl}/randomizer-guide` },
+  openGraph: { title: "Pokemon Randomizer Guide | Challenge Runs & Rules", description: "Create custom challenge runs and master ROM hack rules across Gen 1-9. Learn settings, tips, and team strategies.", url: `${siteUrl}/randomizer-guide`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Randomizer Guide" }] },
+  twitter: { card: "summary_large_image", title: "Pokemon Randomizer Guide | Challenge Runs & Rules", description: "Create custom challenge runs and master ROM hack rules across Gen 1-9. Learn settings, tips, and team strategies.", images: ["/og-image.png"] },
 };
 
 export default function RandomizerGuidePage() {

@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -15,9 +15,9 @@ const CardGeneratorClient = dynamic(
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "POKEMON Card Generator — All 1025 POKEMON | Create & Download Free Cards",
+  title: "Random Pokemon Card Generator | Custom TCG Card Maker",
   description:
-    "Create stunning Pokemon trading cards for all 1025 Pokemon! Search any Pokemon, preview premium card designs with stats, and download high-resolution PNG cards. Free forever.",
+    "Create custom Pokémon TCG cards instantly. Roll random stats, attacks, types, and custom artwork. Free download & print.",
   keywords: [
     "pokemon card generator",
     "pokemon card maker",
@@ -33,25 +33,26 @@ export const metadata: Metadata = {
     canonical: `${siteUrl}/pokemon-card-generator`,
   },
   openGraph: {
-    title: "Pokemon Card Generator | Create & Download Free Cards",
+    title: "Random Pokemon Card Generator | Custom TCG Card Maker",
     description:
-      "Create stunning Pokemon trading cards for all 1025 Pokemon! Search, preview, and download high-res PNG cards. Free tool.",
+      "Create custom Pokémon TCG cards instantly. Roll random stats, attacks, types, and custom artwork. Free download & print.",
     url: `${siteUrl}/pokemon-card-generator`,
     type: "website",
+    siteName: "randompokemon.co",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Pokemon Card Generator",
+        alt: "Random Pokemon Card Generator",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pokemon Card Generator | Create & Download Free Cards",
+    title: "Random Pokemon Card Generator | Custom TCG Card Maker",
     description:
-      "Create stunning Pokemon trading cards for all 1025 Pokemon! Free download.",
+      "Create custom Pokémon TCG cards instantly. Roll random stats, attacks, types, and custom artwork. Free download & print.",
     images: ["/og-image.png"],
   },
 };

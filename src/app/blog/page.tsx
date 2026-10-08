@@ -1,11 +1,11 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "POKEMON Guides & Strategy Blog | Random POKEMON Generator",
   description: "In-depth POKEMON guides covering Nuzlocke challenges, draft league strategy, randomizer tips, competitive team building, and more. Expert advice for every trainer.",
   keywords: ["pokemon nuzlocke guide", "draft league pokemon", "pokemon randomizer tips", "competitive pokemon team building", "pokemon challenge run guide", "best nuzlocke starters", "hardest nuzlocke challenges"],
-  openGraph: { title: "Pokemon Guides & Strategy Blog", description: "Expert Pokemon guides for Nuzlocke runs, draft leagues, randomizers, and competitive play.", type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Guides & Strategy Blog" }] },
+  openGraph: { title: "Pokemon Guides & Strategy Blog", description: "Expert Pokemon guides for Nuzlocke runs, draft leagues, randomizers, and competitive play.", type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Guides & Strategy Blog" }] },
   twitter: { card: "summary_large_image", title: "Pokemon Guides & Strategy Blog", description: "Expert Pokemon guides for Nuzlocke runs, draft leagues, randomizers, and competitive play.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog" },
 };

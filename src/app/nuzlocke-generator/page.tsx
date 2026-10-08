@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { Zap, Shield, Target, TrendingUp, ArrowLeft } from "lucide-react";
@@ -20,12 +20,12 @@ const NUZLOCKE_SPOTLIGHT = [
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Random Pokemon Nuzlocke Generator | Free Challenge Tool All 9 Generations",
-  description: "The ultimate Pokemon Nuzlocke generator with advanced filters for all 9 generations. Generate starter trios, simulate encounters, and build challenge teams. Free forever!",
+  title: "Random Nuzlocke Generator | Route Encounters & Rules",
+  description: "Roll random Nuzlocke encounters across Gen 1-9. Filter by region, exclude legendaries, and build challenge teams.",
   keywords: ["pokemon nuzlocke generator", "nuzlocke team generator", "pokemon nuzlocke tool", "nuzlocke challenge generator", "pokemon nuzlocke randomizer", "best nuzlocke generator"],
   alternates: { canonical: `${siteUrl}/nuzlocke-generator` },
-  openGraph: { title: "Pokemon Nuzlocke Generator | Free Challenge Tool", description: "The ultimate Nuzlocke generator for all 9 generations. Free!", url: `${siteUrl}/nuzlocke-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Nuzlocke Generator" }] },
-  twitter: { card: "summary_large_image", title: "Pokemon Nuzlocke Generator | Free Challenge Tool", description: "Generate Nuzlocke teams for all 9 generations!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Nuzlocke Generator | Route Encounters & Rules", description: "Roll random Nuzlocke encounters across Gen 1-9. Filter by region, exclude legendaries, and build challenge teams.", url: `${siteUrl}/nuzlocke-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Nuzlocke Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Nuzlocke Generator | Route Encounters & Rules", description: "Roll random Nuzlocke encounters across Gen 1-9. Filter by region, exclude legendaries, and build challenge teams.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

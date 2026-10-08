@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Legendary Pokemon Generator | Random Legendary & Mythical Picker",
-  description: "Generate random Legendary and Mythical Pokemon from all generations. All box legendaries, Ubers, mythicals and Ultra Beasts. Updated 2026.",
+  title: "Random Legendary Pokemon Generator | Mythicals & UBs",
+  description: "Generate random Legendary, Mythical, and Ultra Beast Pokémon from Gen 1-9. Filter by generation, type, and shiny forms.",
   keywords: ["legendary pokemon generator", "random legendary pokemon", "mythical pokemon generator", "uber pokemon randomizer", "legendary pokemon picker", "random legendary picker"],
   alternates: { canonical: `${siteUrl}/legendary-pokemon-generator` },
-  openGraph: { title: "Legendary Pokemon Generator | Random Legendary Picker", description: "Generate random Legendary and Mythical Pokemon from all generations!", url: `${siteUrl}/legendary-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Legendary Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Legendary Pokemon Generator | Random Legendary Picker", description: "Generate random Legendary and Mythical Pokemon!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Legendary Pokemon Generator | Mythicals & UBs", description: "Generate random Legendary, Mythical, and Ultra Beast Pokémon from Gen 1-9. Filter by generation, type, and shiny forms.", url: `${siteUrl}/legendary-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Legendary Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Legendary Pokemon Generator | Mythicals & UBs", description: "Generate random Legendary, Mythical, and Ultra Beast Pokémon from Gen 1-9. Filter by generation, type, and shiny forms.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

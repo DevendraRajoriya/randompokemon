@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Kanto Pokemon Generator | Gen 1 Random Team Builder (Red/Blue/Yellow)",
-  description: "Generate random Kanto Pokemon teams from Generation 1 (#1-151). The original 151 from Red, Blue, Yellow, FireRed & LeafGreen. Free online team builder. Updated 2026.",
+  title: "Random Kanto Pokemon Generator | Gen 1 Team Builder",
+  description: "Generate random Kanto Pokémon (#001–#151) from Gen 1. Filter by type, evolutions, and build classic retro teams.",
   keywords: ["kanto pokemon generator", "gen 1 random team generator", "original 151 team generator", "kanto pokemon team builder", "red blue yellow team builder", "gen 1 nuzlocke generator", "kanto randomizer", "random kanto pokemon picker"],
   alternates: { canonical: `${siteUrl}/kanto-pokemon-generator` },
-  openGraph: { title: "Kanto Pokemon Generator | Gen 1 Random Team Builder", description: "Generate random Kanto Pokemon from Gen 1! The original 151 Pokemon.", url: `${siteUrl}/kanto-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Kanto Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Kanto Pokemon Generator | Gen 1 Random Team Builder", description: "Generate random Kanto Pokemon from Gen 1!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Kanto Pokemon Generator | Gen 1 Team Builder", description: "Generate random Kanto Pokémon (#001–#151) from Gen 1. Filter by type, evolutions, and build classic retro teams.", url: `${siteUrl}/kanto-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Kanto Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Kanto Pokemon Generator | Gen 1 Team Builder", description: "Generate random Kanto Pokémon (#001–#151) from Gen 1. Filter by type, evolutions, and build classic retro teams.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

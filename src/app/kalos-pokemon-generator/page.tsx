@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Kalos Pokemon Generator | Gen 6 Random Team Builder (X/Y)",
-  description: "Generate random Kalos Pokemon teams from Generation 6 (#650-721). Pokemon X & Y including Xerneas, Yveltal, Zygarde, Mega Evolutions and the Fairy type. Free team builder. Updated 2026.",
+  title: "Random Kalos Pokemon Generator | Gen 6 Team Builder",
+  description: "Generate random Kalos Pokémon (#650–#721) from Gen 6. Filter by Fairy types, Megas, and build competitive teams.",
   keywords: ["kalos pokemon generator", "gen 6 random team generator", "kalos pokemon team builder", "pokemon x y team generator", "kalos randomizer", "gen 6 nuzlocke generator", "mega evolution generator", "kalos pokemon picker"],
   alternates: { canonical: `${siteUrl}/kalos-pokemon-generator` },
-  openGraph: { title: "Kalos Pokemon Generator | Gen 6 Random Team Builder", description: "Generate random Kalos Pokemon from Gen 6! X & Y including Mega Evolutions.", url: `${siteUrl}/kalos-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Kalos Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Kalos Pokemon Generator | Gen 6 Random Team Builder", description: "Generate random Kalos Pokemon from Gen 6!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Kalos Pokemon Generator | Gen 6 Team Builder", description: "Generate random Kalos Pokémon (#650–#721) from Gen 6. Filter by Fairy types, Megas, and build competitive teams.", url: `${siteUrl}/kalos-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Kalos Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Kalos Pokemon Generator | Gen 6 Team Builder", description: "Generate random Kalos Pokémon (#650–#721) from Gen 6. Filter by Fairy types, Megas, and build competitive teams.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

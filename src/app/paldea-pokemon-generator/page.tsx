@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Paldea Pokemon Generator | Gen 9 Random Team Builder (Scarlet/Violet)",
-  description: "Generate random Paldea Pokemon teams from Generation 9 (#906-1025). Scarlet & Violet including Koraidon, Miraidon, Paradox Pokemon, Terastallize, and Teal Mask DLC. Updated 2026.",
+  title: "Random Paldea Pokemon Generator | Gen 9 Team Builder",
+  description: "Generate random Paldea Pokémon (#899–#1025) from Gen 9. Filter by Terastallization, Paradox, and DLC forms.",
   keywords: ["paldea pokemon generator", "gen 9 random team generator", "paldea pokemon team builder", "scarlet violet team generator", "paldea randomizer", "gen 9 nuzlocke generator", "paradox pokemon generator", "terastallize team builder"],
   alternates: { canonical: `${siteUrl}/paldea-pokemon-generator` },
-  openGraph: { title: "Paldea Pokemon Generator | Gen 9 Random Team Builder", description: "Generate random Paldea Pokemon from Gen 9! Scarlet & Violet.", url: `${siteUrl}/paldea-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Paldea Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Paldea Pokemon Generator | Gen 9 Random Team Builder", description: "Generate random Paldea Pokemon from Gen 9!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Paldea Pokemon Generator | Gen 9 Team Builder", description: "Generate random Paldea Pokémon (#899–#1025) from Gen 9. Filter by Terastallization, Paradox, and DLC forms.", url: `${siteUrl}/paldea-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Paldea Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Paldea Pokemon Generator | Gen 9 Team Builder", description: "Generate random Paldea Pokémon (#899–#1025) from Gen 9. Filter by Terastallization, Paradox, and DLC forms.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

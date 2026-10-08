@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Sinnoh Pokemon Generator | Gen 4 Random Team Builder (Diamond/Pearl/Platinum)",
-  description: "Generate random Sinnoh Pokemon teams from Generation 4 (#387-493). Diamond, Pearl & Platinum including Arceus, Dialga, Palkia, Giratina. Updated 2026.",
+  title: "Random Sinnoh Pokemon Generator | Gen 4 Team Builder",
+  description: "Generate random Sinnoh Pokémon (#387–#493) from Gen 4. Filter by type, evolutions, and build regional gym teams.",
   keywords: ["sinnoh pokemon generator", "gen 4 random team generator", "sinnoh pokemon team builder", "diamond pearl team generator", "sinnoh randomizer", "gen 4 nuzlocke generator", "bdsp team builder"],
   alternates: { canonical: `${siteUrl}/sinnoh-pokemon-generator` },
-  openGraph: { title: "Sinnoh Pokemon Generator | Gen 4 Random Team Builder", description: "Generate random Sinnoh Pokemon from Gen 4! Diamond, Pearl & Platinum.", url: `${siteUrl}/sinnoh-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Sinnoh Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Sinnoh Pokemon Generator | Gen 4 Random Team Builder", description: "Generate random Sinnoh Pokemon from Gen 4!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Sinnoh Pokemon Generator | Gen 4 Team Builder", description: "Generate random Sinnoh Pokémon (#387–#493) from Gen 4. Filter by type, evolutions, and build regional gym teams.", url: `${siteUrl}/sinnoh-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Sinnoh Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Sinnoh Pokemon Generator | Gen 4 Team Builder", description: "Generate random Sinnoh Pokémon (#387–#493) from Gen 4. Filter by type, evolutions, and build regional gym teams.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

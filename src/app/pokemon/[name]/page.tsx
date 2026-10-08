@@ -1,4 +1,5 @@
-﻿import { Metadata } from "next";
+import { cache } from "react";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -256,15 +257,53 @@ function computeTypeEffectiveness(defTypes: string[]): Record<string, number> {
 }
 
 // ============ DATA FETCHING ============
-async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
+async function fetchWithRetry(url: string, retries = 3, delay = 1000): Promise<Response> {
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const res = await fetch(url, { next: { revalidate: 86400 } });
+      if (res.ok || res.status === 404) return res;
+      if (res.status === 429 || res.status >= 500) {
+        if (attempt < retries - 1) {
+          await new Promise((r) => setTimeout(r, delay * Math.pow(2, attempt)));
+          continue;
+        }
+      }
+      return res;
+    } catch (err) {
+      if (attempt < retries - 1) {
+        await new Promise((r) => setTimeout(r, delay * Math.pow(2, attempt)));
+        continue;
+      }
+      throw err;
+    }
+  }
+  return fetch(url, { next: { revalidate: 86400 } });
+}
+
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  try {
+    const res = await fetchWithRetry("https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0");
+    if (!res.ok) throw new Error(`PokeAPI error: ${res.status}`);
+    const data = await res.json();
+    return (data.results as { name: string }[]).map((pokemon) => ({
+      name: pokemon.name,
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
+}
+
+const getPokemon = cache(async (name: string): Promise<PokemonWithSpecies | null> => {
   try {
     // Step 1: fetch the POKEMON data first so we can read its canonical species URL.
     // Fetching species by name directly fails for alternate forms (e.g. pyroar-male → 404),
     // because PokéAPI only has species entries for the base form. The species.url field
     // in the POKEMON response always points to the correct base-species endpoint.
-    const pokemonRes = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/${name}`,
-      { next: { revalidate: 86400 } }
+    const pokemonRes = await fetchWithRetry(
+      `https://pokeapi.co/api/v2/pokemon/${name}`
     );
 
     if (!pokemonRes.ok) return null;
@@ -272,7 +311,7 @@ async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
     const pokemon: RawPokemon = await pokemonRes.json();
 
     // Step 2: use the species URL from the POKEMON data (handles all alternate forms).
-    const speciesRes = await fetch(pokemon.species.url, { next: { revalidate: 86400 } });
+    const speciesRes = await fetchWithRetry(pokemon.species.url);
 
     let speciesData: PokemonWithSpecies["species"] = {
       flavorText: "", genus: "POKEMON", generation: "Generation 1",
@@ -307,7 +346,7 @@ async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
       let evolutionChain: { name: string; id: number; method: string }[] = [];
       if (species.evolution_chain?.url) {
         try {
-          const evoRes = await fetch(species.evolution_chain.url, { next: { revalidate: 86400 } });
+          const evoRes = await fetchWithRetry(species.evolution_chain.url);
           if (evoRes.ok) {
             const evoData: EvolutionChain = await evoRes.json();
             evolutionChain = extractEvolutionChain(evoData.chain);
@@ -414,7 +453,8 @@ async function getPokemon(name: string): Promise<PokemonWithSpecies | null> {
     console.error("Error fetching Pokemon:", error);
     return null;
   }
-}
+});
+
 
 // ============ METADATA ============
 type Props = {
@@ -479,6 +519,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${formattedName} (#${paddedId}) - ${typesDisplay} Type | Pokemon Database`,
       description: uniqueDescription,
       url: `${siteUrl}/pokemon/${pokemon.name.toLowerCase()}`,
+      type: "website",
+      siteName: "randompokemon.co",
       images: [{
         url: pokemon.sprites.other?.["official-artwork"]?.front_default || pokemon.sprites.other?.home?.front_default || pokemon.sprites.front_default || "",
         width: 475, height: 475,

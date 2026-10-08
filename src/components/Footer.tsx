@@ -1,4 +1,4 @@
-﻿import { Mail } from "lucide-react";
+import { Mail, Coffee } from "lucide-react";
 import Link from "next/link";
 
 /**
@@ -25,6 +25,20 @@ export default function Footer() {
             <div className="inline-flex items-center gap-2 bg-black px-3 py-1.5 animate-scale-in">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
               <span className="font-mono text-xs text-white uppercase tracking-wider">System Online</span>
+            </div>
+
+            {/* Buy Me a Coffee Support Button */}
+            <div className="pt-2">
+              <a
+                href="https://buymeacoffee.com/lezend"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 bg-[#FFDD00]/20 hover:bg-[#FFDD00] text-black border-2 border-black font-mono text-xs font-bold uppercase tracking-wider transition-all duration-150 shadow-[2px_2px_0px_0px_#000] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px]"
+                title="Support on Buy Me a Coffee"
+              >
+                <Coffee size={14} className="text-black shrink-0" />
+                <span>☕ Buy Me a Coffee</span>
+              </a>
             </div>
           </div>
 
@@ -274,6 +288,16 @@ export default function Footer() {
                 <div className="font-mono text-xs text-charcoal uppercase">Connect</div>
                 <div className="flex gap-2">
                   <a
+                    href="https://buymeacoffee.com/lezend"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-[#FFDD00]/20 hover:bg-[#FFDD00] border-2 border-black flex items-center justify-center transition-smooth hover:scale-110"
+                    aria-label="Buy Me a Coffee"
+                    title="Support on Buy Me a Coffee"
+                  >
+                    <Coffee size={18} className="text-black" />
+                  </a>
+                  <a
                     href="mailto:shadowrajoriya@gmail.com"
                     className="w-10 h-10 bg-white border-2 border-black flex items-center justify-center hover:bg-marigold transition-smooth hover:scale-110"
                     aria-label="Email"
@@ -318,8 +342,8 @@ export default function Footer() {
               <div className="bg-red-600 text-white font-mono text-xs font-bold px-2 py-1 slasher shrink-0 animate-pulse-slow">
                 NOTICE
               </div>
-              <p className="font-mono text-sm leading-relaxed">
-                POKEMON is © 1995-2026 Nintendo / Creatures Inc. / GAME FREAK inc. TM, ® and character names are trademarks of Nintendo. This tool is not affiliated with, endorsed, or sponsored by Nintendo, The POKEMON Company, or any related entities.
+              <p className="font-mono text-sm leading-relaxed text-charcoal">
+                randompokemon.co is an unofficial, non-commercial fan-made tool. Pokémon and Pokémon character names, artwork, and trademarks are © 1995–2026 Nintendo / Creatures Inc. / GAME FREAK inc. No copyright or trademark infringement intended.
               </p>
             </div>
           </div>
@@ -330,7 +354,7 @@ export default function Footer() {
       <div className="border-t-2 border-black">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-4">
           <p className="font-mono text-xs text-charcoal text-center animate-fade-in">
-            Designed by <span className="font-bold text-black">Shadow Rajoriya</span> · Not affiliated with Nintendo
+            randompokemon.co is an unofficial, non-commercial fan-made tool · Designed by <span className="font-bold text-black">Shadow Rajoriya</span> · Not affiliated with Nintendo
           </p>
         </div>
       </div>

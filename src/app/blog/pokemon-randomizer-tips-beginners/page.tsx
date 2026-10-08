@@ -1,11 +1,11 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "POKEMON Randomizer Tips & Tricks for Beginners | randompokemon.co",
   description: "How to set up a POKEMON randomizer, best randomizer settings to use, and which games make the most fun randomizer experiences. Complete beginner guide.",
   keywords: ["pokemon randomizer tips", "how to randomize pokemon game", "pokemon randomizer settings", "best pokemon game to randomize", "universal randomizer guide"],
-  openGraph: { title: "POKEMON Randomizer Tips for Beginners", description: "Best randomizer settings, games to randomize, and tips for a great randomizer run.", type: "article", url: "https://www.randompokemon.co/blog/pokemon-randomizer-tips-beginners", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Randomizer Tips for Beginners" }] },
+  openGraph: { title: "POKEMON Randomizer Tips for Beginners", description: "Best randomizer settings, games to randomize, and tips for a great randomizer run.", type: "article", siteName: "randompokemon.co", url: "https://www.randompokemon.co/blog/pokemon-randomizer-tips-beginners", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Randomizer Tips for Beginners" }] },
   twitter: { card: "summary_large_image", title: "POKEMON Randomizer Tips for Beginners", description: "Best randomizer settings, games to randomize, and tips for a great randomizer run.", images: ["/og-image.png"] },
   alternates: { canonical: "https://www.randompokemon.co/blog/pokemon-randomizer-tips-beginners" },
 };

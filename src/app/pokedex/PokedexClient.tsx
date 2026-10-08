@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -68,7 +68,7 @@ async function fetchDetail(id: number, retries = 3): Promise<Pokemon> {
   let lastError: unknown;
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}?_cb=${Date.now()}`, {
+      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
         cache: 'no-store',
       });
       if (!res.ok) throw new Error(`${res.status}`);

@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import PokemonQuizClient from "./PokemonQuizClient";
@@ -6,9 +6,9 @@ import PokemonQuizClient from "./PokemonQuizClient";
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Pokemon Quiz — What Pokemon Are You? | Personality Quiz 2026",
+  title: "Pokemon Personality Quiz | What Pokemon Are You?",
   description:
-    "Take the Pokemon quiz to find out what Pokemon you are! Answer 10 personality questions and discover your Pokemon match — from Charizard to Eevee. The most accurate 'what Pokemon am I' quiz online.",
+    "Roll through 10 quick personality questions to discover which Pokémon matches your battle style and nature.",
   keywords: [
     "pokemon quiz",
     "what pokemon are you quiz",
@@ -17,22 +17,22 @@ export const metadata: Metadata = {
     "pokemon personality quiz",
     "pokemon character quiz",
     "what pokemon am i",
-    "pokemon quiz 2026",
     "which pokemon are you based on personality",
   ],
   alternates: { canonical: `${siteUrl}/pokemon-quiz` },
   openGraph: {
-    title: "Pokemon Quiz — What Pokemon Are You?",
+    title: "Pokemon Personality Quiz | What Pokemon Are You?",
     description:
-      "10 personality questions to find your Pokemon match. Are you Charizard, Eevee, Gengar, or Lucario? Take the quiz now!",
+      "Roll through 10 quick personality questions to discover which Pokémon matches your battle style and nature.",
     url: `${siteUrl}/pokemon-quiz`,
     type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Quiz — What Pokemon Are You?" }],
+    siteName: "randompokemon.co",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Pokemon Personality Quiz" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pokemon Quiz — What Pokemon Are You?",
-    description: "10 personality questions to find your Pokemon match. Take the quiz now!",
+    title: "Pokemon Personality Quiz | What Pokemon Are You?",
+    description: "Roll through 10 quick personality questions to discover which Pokémon matches your battle style and nature.",
     images: ["/og-image.png"],
   },
 };

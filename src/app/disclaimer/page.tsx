@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { AlertTriangle, Shield, Scale, FileText, ArrowLeft } from "lucide-react";
 
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Legal disclaimer for Random Pokemon Generator. Important copyright information, fair use policy, fan project status, and data sources. Please read before using our tool.",
   keywords: ["pokemon generator disclaimer", "copyright notice", "fair use pokemon", "fan made pokemon tool", "legal disclaimer"],
   alternates: { canonical: "/disclaimer" },
-  openGraph: { title: "Legal Disclaimer - Random Pokemon Generator", description: "Important legal information including copyright notices and fair use policy.", url: `${siteUrl}/disclaimer`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Random Pokemon Generator" }] },
+  openGraph: { title: "Legal Disclaimer - Random Pokemon Generator", description: "Important legal information including copyright notices and fair use policy.", url: `${siteUrl}/disclaimer`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Random Pokemon Generator" }] },
   twitter: { card: "summary_large_image", title: "Legal Disclaimer - Random Pokemon Generator", description: "Important legal information including copyright notices and fair use policy.", images: ["/og-image.png"] },
 };
 

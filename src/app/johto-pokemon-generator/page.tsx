@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Johto Pokemon Generator | Gen 2 Random Team Builder",
-  description: "Generate random Johto Pokemon teams from Gen 2 (#152-251). Gold, Silver & Crystal — featuring Lugia, Ho-Oh, the Legendary Beasts & 100 new species. Free team builder.",
+  title: "Random Johto Pokemon Generator | Gen 2 Team Builder",
+  description: "Generate random Johto Pokémon (#152–#251) from Gen 2. Filter by type, baby forms, and build balanced retro teams.",
   keywords: ["johto pokemon generator", "gen 2 random team generator", "johto pokemon team builder", "gold silver team generator", "johto randomizer", "gen 2 nuzlocke generator", "heartgold soulsilver team builder", "johto pokemon picker"],
   alternates: { canonical: `${siteUrl}/johto-pokemon-generator` },
-  openGraph: { title: "Johto Pokemon Generator | Gen 2 Random Team Builder", description: "Generate random Johto Pokemon from Gen 2! Gold, Silver & Crystal.", url: `${siteUrl}/johto-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Johto Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Johto Pokemon Generator | Gen 2 Random Team Builder", description: "Generate random Johto Pokemon from Gen 2!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Johto Pokemon Generator | Gen 2 Team Builder", description: "Generate random Johto Pokémon (#152–#251) from Gen 2. Filter by type, baby forms, and build balanced retro teams.", url: `${siteUrl}/johto-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Johto Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Johto Pokemon Generator | Gen 2 Team Builder", description: "Generate random Johto Pokémon (#152–#251) from Gen 2. Filter by type, baby forms, and build balanced retro teams.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

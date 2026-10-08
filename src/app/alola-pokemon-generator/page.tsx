@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Alola Pokemon Generator | Gen 7 Random Team Builder (Sun/Moon/USUM)",
-  description: "Generate random Alola Pokemon teams from Generation 7 (#722-809). Sun, Moon, Ultra Sun & Ultra Moon including Guardian Deities, Ultra Beasts, and Alolan regional forms. Updated 2026.",
+  title: "Random Alola Pokemon Generator | Gen 7 Team Builder",
+  description: "Generate random Alola Pokémon (#722–#809) from Gen 7. Filter by regional variants, UBs, and build island teams.",
   keywords: ["alola pokemon generator", "gen 7 random team generator", "alola pokemon team builder", "sun moon team generator", "alola randomizer", "gen 7 nuzlocke generator", "ultra beast generator", "alolan forms picker"],
   alternates: { canonical: `${siteUrl}/alola-pokemon-generator` },
-  openGraph: { title: "Alola Pokemon Generator | Gen 7 Random Team Builder", description: "Generate random Alola Pokemon from Gen 7! Sun & Moon.", url: `${siteUrl}/alola-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Alola Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Alola Pokemon Generator | Gen 7 Random Team Builder", description: "Generate random Alola Pokemon from Gen 7!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Alola Pokemon Generator | Gen 7 Team Builder", description: "Generate random Alola Pokémon (#722–#809) from Gen 7. Filter by regional variants, UBs, and build island teams.", url: `${siteUrl}/alola-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Alola Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Alola Pokemon Generator | Gen 7 Team Builder", description: "Generate random Alola Pokémon (#722–#809) from Gen 7. Filter by regional variants, UBs, and build island teams.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

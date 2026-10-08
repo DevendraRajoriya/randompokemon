@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Sparkles, ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Shiny Pokemon Generator | Random Rare Color Variants All Gens",
-  description: "Generate random shiny Pokemon with ultra-rare alternate color schemes from all 1,025 Pokemon. Perfect for shiny hunting, collectors, and unique team challenges. Updated 2026.",
+  title: "Random Shiny Pokemon Generator | Gen 1-9 Shiny Odds",
+  description: "Generate random shiny Pokémon across Gen 1-9. Filter by generation, types, and forms with direct sprite downloads.",
   keywords: ["shiny pokemon generator", "random shiny pokemon", "shiny pokemon randomizer", "shiny hunter tool", "random shiny picker", "shiny pokemon all generations"],
   alternates: { canonical: `${siteUrl}/shiny-pokemon-generator` },
-  openGraph: { title: "Shiny Pokemon Generator | Random Rare Color Variants", description: "Generate random shiny Pokemon from all 1,025 species!", url: `${siteUrl}/shiny-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Shiny Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Shiny Pokemon Generator | Random Rare Color Variants", description: "Generate random shiny Pokemon from all 1,025 species!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Shiny Pokemon Generator | Gen 1-9 Shiny Odds", description: "Generate random shiny Pokémon across Gen 1-9. Filter by generation, types, and forms with direct sprite downloads.", url: `${siteUrl}/shiny-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Shiny Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Shiny Pokemon Generator | Gen 1-9 Shiny Odds", description: "Generate random shiny Pokémon across Gen 1-9. Filter by generation, types, and forms with direct sprite downloads.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

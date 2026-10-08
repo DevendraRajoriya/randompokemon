@@ -1,4 +1,4 @@
-﻿import { Metadata } from "next";
+import { Metadata } from "next";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { ArrowLeft } from "lucide-react";
@@ -25,12 +25,12 @@ const CardShowcase = dynamic(() => import("@/components/CardShowcase"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Galar Pokemon Generator | Gen 8 Random Team Builder (Sword/Shield)",
-  description: "Generate random Galar Pokemon teams from Generation 8 (#810-905). Sword & Shield including Zacian, Zamazenta, Eternatus, Gigantamax forms and Crown Tundra DLC. Updated 2026.",
+  title: "Random Galar Pokemon Generator | Gen 8 Team Builder",
+  description: "Generate random Galar Pokémon (#810–#898) from Gen 8. Filter by Gigantamax forms, types, and build arena teams.",
   keywords: ["galar pokemon generator", "gen 8 random team generator", "galar pokemon team builder", "sword shield team generator", "galar randomizer", "gen 8 nuzlocke generator", "gigantamax generator", "dynamax team builder"],
   alternates: { canonical: `${siteUrl}/galar-pokemon-generator` },
-  openGraph: { title: "Galar Pokemon Generator | Gen 8 Random Team Builder", description: "Generate random Galar Pokemon from Gen 8! Sword & Shield.", url: `${siteUrl}/galar-pokemon-generator`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Galar Pokemon Generator" }] },
-  twitter: { card: "summary_large_image", title: "Galar Pokemon Generator | Gen 8 Random Team Builder", description: "Generate random Galar Pokemon from Gen 8!", images: ["/og-image.png"] },
+  openGraph: { title: "Random Galar Pokemon Generator | Gen 8 Team Builder", description: "Generate random Galar Pokémon (#810–#898) from Gen 8. Filter by Gigantamax forms, types, and build arena teams.", url: `${siteUrl}/galar-pokemon-generator`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Galar Pokemon Generator" }] },
+  twitter: { card: "summary_large_image", title: "Random Galar Pokemon Generator | Gen 8 Team Builder", description: "Generate random Galar Pokémon (#810–#898) from Gen 8. Filter by Gigantamax forms, types, and build arena teams.", images: ["/og-image.png"] },
 };
 
 const jsonLd = {

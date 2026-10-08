@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "How to Use Pokemon Generator - Expert Guide",
     description: "Master Pokemon team building with expert strategies for Nuzlocke, competitive play, and themed challenges.",
-    type: "article",
+    type: "website",
+    siteName: "randompokemon.co",
     url: "https://www.randompokemon.co/guide",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "How to Use Pokemon Generator" }],
   },

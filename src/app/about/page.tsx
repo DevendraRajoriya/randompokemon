@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Code, Trophy, Target, ArrowLeft } from "lucide-react";
 
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Learn about the Random Pokemon Generator — the world's leading free Pokemon database and team builder. All 1,025 Pokemon across 9 generations. Built by fans, for fans. Supporting Nuzlocke, Draft Leagues, and more since 2024.",
   keywords: ["about random pokemon generator", "pokemon team builder", "nuzlocke tool", "pokemon database", "fan made pokemon tool"],
   alternates: { canonical: `${siteUrl}/about` },
-  openGraph: { title: "About Us - Random Pokemon Generator", description: "The world's leading free Pokemon database and team builder. Built by fans, for fans worldwide.", url: `${siteUrl}/about`, type: "website", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Random Pokemon Generator" }] },
+  openGraph: { title: "About Us - Random Pokemon Generator", description: "The world's leading free Pokemon database and team builder. Built by fans, for fans worldwide.", url: `${siteUrl}/about`, type: "website", siteName: "randompokemon.co", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Random Pokemon Generator" }] },
   twitter: { card: "summary_large_image", title: "About Us - Random Pokemon Generator", description: "The world's leading free Pokemon database and team builder. Built by fans, for fans worldwide.", images: ["/og-image.png"] },
 };
 

@@ -1,9 +1,9 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, Zap, BookOpen, MapPin, Info, ChevronDown } from "lucide-react";
+import { Menu, X, Zap, BookOpen, MapPin, Info, ChevronDown, Coffee } from "lucide-react";
 
 const NAV_LINKS = [
     { href: "/", label: "Generator", icon: Zap },
@@ -199,15 +199,30 @@ export default function Header() {
                             </div>
                         </nav>
 
-                        {/* Mobile Menu Toggle */}
-                        <button
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="md:hidden w-10 h-10 flex items-center justify-center bg-black text-cream hover:bg-charcoal transition-colors"
-                            aria-label={mounted && mobileMenuOpen ? "Close menu" : "Open menu"}
-                            aria-expanded={mounted ? mobileMenuOpen : undefined}
-                        >
-                            {mounted && mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                        </button>
+                        {/* Right Actions: Support Button & Mobile Toggle */}
+                        <div className="flex items-center gap-2">
+                            <a
+                                href="https://buymeacoffee.com/lezend"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 md:px-3 md:py-2 bg-[#FFDD00]/20 hover:bg-[#FFDD00] text-black border-2 border-black font-mono text-xs font-bold uppercase tracking-wider transition-all duration-150 shadow-[2px_2px_0px_0px_#000] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px]"
+                                title="Support on Buy Me a Coffee"
+                                aria-label="Support on Buy Me a Coffee"
+                            >
+                                <Coffee size={14} className="text-black shrink-0" />
+                                <span className="hidden sm:inline">Support</span>
+                            </a>
+
+                            {/* Mobile Menu Toggle */}
+                            <button
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                className="md:hidden w-10 h-10 flex items-center justify-center bg-black text-cream hover:bg-charcoal transition-colors border-2 border-black"
+                                aria-label={mounted && mobileMenuOpen ? "Close menu" : "Open menu"}
+                                aria-expanded={mounted ? mobileMenuOpen : undefined}
+                            >
+                                {mounted && mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -276,6 +291,20 @@ export default function Header() {
                                         {link.label}
                                     </Link>
                                 ))}
+                            </div>
+
+                            {/* Mobile Support Button */}
+                            <div className="pt-2">
+                                <a
+                                    href="https://buymeacoffee.com/lezend"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="flex items-center justify-center gap-2 w-full py-3 px-3 bg-[#FFDD00] text-black border-2 border-black font-mono text-xs font-bold uppercase tracking-wider shadow-[2px_2px_0px_0px_#000] hover:shadow-none transition-all"
+                                >
+                                    <Coffee size={16} />
+                                    <span>☕ Support on Buy Me a Coffee</span>
+                                </a>
                             </div>
                         </nav>
                     </div>

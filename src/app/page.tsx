@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -73,9 +73,9 @@ const SeoContent = dynamic(() => import("@/components/SeoContent"), {
 const siteUrl = "https://www.randompokemon.co";
 
 export const metadata: Metadata = {
-  title: "Random Pokemon Generator",
+  title: "Random Pokemon Generator (Gen 1-9) | Showdown Export",
   description:
-    "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon from Gen 1-9. Free tool!",
+    "Roll random Pokémon and full teams instantly across Gen 1-9. Filter by type, shinies, and legends. Fast & export ready.",
   keywords: [
     "random pokemon generator",
     "random pokemon",
@@ -109,10 +109,10 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Random Pokemon Generator",
-    title: "Random Pokemon Generator",
+    siteName: "randompokemon.co",
+    title: "Random Pokemon Generator (Gen 1-9) | Showdown Export",
     description:
-      "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. Filter by type, region & rarity. All 1025 Pokemon. Free tool!",
+      "Roll random Pokémon and full teams instantly across Gen 1-9. Filter by type, shinies, and legends. Fast & export ready.",
     images: [
       {
         url: "/og-image.png",
@@ -124,9 +124,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Random Pokemon Generator",
+    title: "Random Pokemon Generator (Gen 1-9) | Showdown Export",
     description:
-      "Easily generate a random Pokemon or full teams instantly for Nuzlocke runs, Draft Leagues & challenge modes. All 1025 Pokemon. Free tool!",
+      "Roll random Pokémon and full teams instantly across Gen 1-9. Filter by type, shinies, and legends. Fast & export ready.",
     images: ["/og-image.png"],
   },
   robots: {
