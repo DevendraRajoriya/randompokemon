@@ -352,7 +352,10 @@ async function fetchPokemonById(id: number, retries = 3): Promise<Pokemon> {
     let lastError: unknown;
     for (let attempt = 0; attempt < retries; attempt++) {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        const timeoutId = setTimeout(
+            () => controller.abort(new DOMException(`Request for Pokemon ${id} timed out`, "TimeoutError")),
+            8000
+        );
         try {
             const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
                 signal: controller.signal,
@@ -367,7 +370,10 @@ async function fetchPokemonById(id: number, retries = 3): Promise<Pokemon> {
             clearTimeout(timeoutId);
             lastError = err;
             if (attempt < retries - 1) {
-                await new Promise((resolve) => setTimeout(resolve, 300 * Math.pow(2, attempt)));
+                // shorter backoff for timeouts since they already waited 8s
+                const isTimeout = err instanceof DOMException && err.name === "TimeoutError";
+                const delay = isTimeout ? 500 : 300 * Math.pow(2, attempt);
+                await new Promise((resolve) => setTimeout(resolve, delay));
             }
         }
     }
