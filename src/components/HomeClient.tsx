@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Zap, ChevronDown, X, Search, Share2, Coffee } from "lucide-react";
+import { Loader2, Zap, ChevronDown, X, Search, Share2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -973,8 +973,8 @@ export default function HomeClient({ initialIds }: { initialIds?: number[] } = {
 
 
 
-                {/* Action Buttons: Generate (Primary) & Support (Secondary) */}
-                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 md:mb-12">
+                {/* Generate Button */}
+                <div className="flex items-center justify-center mb-6 md:mb-12">
                     <button
                         onClick={generateTeam}
                         disabled={loading}
@@ -992,17 +992,6 @@ export default function HomeClient({ initialIds }: { initialIds?: number[] } = {
                             </span>
                         )}
                     </button>
-
-                    <a
-                        href="https://buymeacoffee.com/lezend"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full sm:w-auto px-4 py-2.5 md:px-6 md:py-4 inline-flex items-center justify-center gap-2 font-mono text-xs md:text-sm font-bold uppercase tracking-wider bg-[#FFDD00]/20 hover:bg-[#FFDD00] text-black border-2 border-black slasher shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#000] active:translate-y-1 active:shadow-none transition-all duration-150 btn-hover-lift"
-                        title="Support developer on Buy Me a Coffee"
-                    >
-                        <Coffee size={20} className="text-black shrink-0" />
-                        <span>☕ Support</span>
-                    </a>
                 </div>
 
                 {/* Loading State */}

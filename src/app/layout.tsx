@@ -5,8 +5,6 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import BackToTop from "@/components/BackToTop";
-import SupportBanner from "@/components/SupportBanner";
-import PledgeBanner from "@/components/PledgeBanner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { WebVitals, PerformanceMonitor } from "@/utils/performance";
 
@@ -228,8 +226,6 @@ export default function RootLayout({
         </ErrorBoundary>
         <Footer />
         <BackToTop />
-        <SupportBanner />
-        <PledgeBanner />
       </body>
     </html>
   );
