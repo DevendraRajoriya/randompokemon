@@ -210,6 +210,7 @@ export default function RootLayout({
             `,
           }}
         />
+        <script src="https://quge5.com/88/tag.min.js" data-zone="312338" async data-cfasync="false"></script>
         {/* Note: Fonts are loaded via next/font/google import, no manual preload needed */}
       </head>
       {/* suppressHydrationWarning needed because browser extensions and
